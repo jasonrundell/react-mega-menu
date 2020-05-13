@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react'
 
-import MegaMenu from "./components/MegaMenu";
+import MegaMenu from './components/MegaMenu'
 
-const data = {};
+const data = {}
 
 function App() {
   return (
     <div>
       <MegaMenu data={data} />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

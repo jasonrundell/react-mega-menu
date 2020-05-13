@@ -1,33 +1,35 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 
-import { MenuStateMachine } from "../../state-machines/menus";
+import { MenuStateMachine } from '../../state-machines/menus'
 
-import "./index.css";
+import './index.scss'
 
-const MegaMenu = ({ data }) => {
-  console.log(MenuStateMachine("hidden"));
-  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(MenuStateMachine);
-  const [isSubMenuOpen, setIsSubMenuOpen] = useState(MenuStateMachine);
+const MegaMenu = () => {
+  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState('')
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState('')
 
-  const toggleMegaMenuVisible = (e) => {
-    e.preventDefault();
-    setIsMegaMenuOpen(MenuStateMachine(isMegaMenuOpen));
-  };
+  const toggleMegaMenu = (e) => {
+    e.preventDefault()
+    if (isMegaMenuOpen === '') {
+      setIsMegaMenuOpen('open')
+    } else {
+      setIsMegaMenuOpen(MenuStateMachine(isMegaMenuOpen))
+    }
+  }
 
-  const doShowSubMenu = (e) => {
-    e.preventDefault();
-    setIsSubMenuOpen(true);
-  };
-
-  const doHideSubMenu = (e) => {
-    e.preventDefault();
-    setIsSubMenuOpen(false);
-  };
+  const toggleSubMenu = (e) => {
+    e.preventDefault()
+    if (isSubMenuOpen === '') {
+      setIsSubMenuOpen('open')
+    } else {
+      setIsSubMenuOpen(MenuStateMachine(isSubMenuOpen))
+    }
+  }
 
   return (
     <div role="navigation" className="nav__container">
-      <button className="nav__button--toggle" onClick={toggleMegaMenuVisible}>
+      <button className="nav__button--toggle" onClick={toggleMegaMenu}>
         X
       </button>
       <nav
@@ -45,7 +47,7 @@ const MegaMenu = ({ data }) => {
               href="/"
               className="nav__item--link"
               data-sub-menu-id="sub-menu-products"
-              onClick={doShowSubMenu}
+              onClick={toggleSubMenu}
               aria-haspopup="true"
               aria-expanded="false"
             >
@@ -59,7 +61,7 @@ const MegaMenu = ({ data }) => {
                 <a
                   href="/"
                   className="nav__item--link nav__item--link-back"
-                  onClick={doHideSubMenu}
+                  onClick={toggleSubMenu}
                 >
                   Products
                 </a>
@@ -85,32 +87,13 @@ const MegaMenu = ({ data }) => {
             <a
               href="/"
               className="nav__item--link"
-              onClick={doShowSubMenu}
+              onClick={toggleSubMenu}
               data-sub-menu-id="sub-menu-products"
               aria-haspopup="true"
               aria-expanded="false"
             >
               Features
             </a>
-            {/* <ul
-              className={`nav__list nav__sub ${isSubMenuOpen ? "" : "hidden"}`}
-            >
-              <li className="nav__item">
-                <a href="/" className="nav__item--link">
-                  Speed
-                </a>
-              </li>
-              <li className="nav__item">
-                <a href="/" className="nav__item--link">
-                  Power
-                </a>
-              </li>
-              <li className="nav__item nav__item--has-children">
-                <a href="/" className="nav__item--link">
-                  Agility
-                </a>
-              </li>
-            </ul> */}
           </li>
           <li className="nav__item">
             <a href="/" className="nav__item--link">
@@ -120,11 +103,11 @@ const MegaMenu = ({ data }) => {
         </ul>
       </nav>
     </div>
-  );
-};
+  )
+}
 
 MegaMenu.propTypes = {
   data: PropTypes.any.isRequired,
-};
+}
 
-export default MegaMenu;
+export default MegaMenu
