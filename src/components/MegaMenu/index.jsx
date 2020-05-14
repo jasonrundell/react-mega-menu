@@ -1,15 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
+// Components
+import HamburgerButton from '../Buttons/Hamburger'
+
+// State Machines
 import { MenuStateMachine } from '../../state-machines/menus'
 
+// CSS
 import './index.scss'
 
 const MegaMenu = () => {
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState('')
   const [isSubMenuOpen, setIsSubMenuOpen] = useState('')
+  const [activeMenus, setActiveMenus] = useState([]) // array that captures the ids of active menus
 
-  const toggleMegaMenu = (e) => {
+  const toggleMegaMenu = (e, menuId) => {
     e.preventDefault()
     if (isMegaMenuOpen === '') {
       setIsMegaMenuOpen('open')
@@ -18,22 +24,34 @@ const MegaMenu = () => {
       setIsMegaMenuOpen(MenuStateMachine(isMegaMenuOpen))
       setIsSubMenuOpen('closed')
     }
+
+    if (isMegaMenuOpen === 'open') {
+      setActiveMenus((activeMenus) => [...activeMenus, menuId])
+    } else if (isMegaMenuOpen === 'closed') {
+    }
+    console.log(`menuId = ${menuId}`)
   }
 
-  const toggleSubMenu = (e) => {
+  const toggleSubMenu = (e, menuId) => {
     e.preventDefault()
     if (isSubMenuOpen === '') {
       setIsSubMenuOpen('open')
     } else {
       setIsSubMenuOpen(MenuStateMachine(isSubMenuOpen))
     }
+    console.log(`menuId = ${menuId}`)
   }
+
+  useEffect(() => {
+    console.log(`activeMenus = ${activeMenus}`)
+  })
 
   return (
     <div role="navigation" className="nav__container">
-      <button className="nav__button--toggle" onClick={toggleMegaMenu}>
-        X
-      </button>
+      <HamburgerButton
+        state={isMegaMenuOpen}
+        onClick={(e) => toggleMegaMenu(e, 'nav-main')}
+      />
       <nav
         className={`nav__menu-container ${`nav--${isMegaMenuOpen}`}`}
         aria-label="Main Navigation"
@@ -49,7 +67,7 @@ const MegaMenu = () => {
               href="/"
               className="nav__item--link"
               data-sub-menu-id="sub-menu-products"
-              onClick={toggleSubMenu}
+              onClick={(e) => toggleSubMenu(e, 'nav-sub-products')}
               aria-haspopup="true"
               aria-expanded="false"
             >
@@ -63,7 +81,7 @@ const MegaMenu = () => {
                 <a
                   href="/"
                   className="nav__item--link nav__item--link-back"
-                  onClick={toggleSubMenu}
+                  onClick={(e) => toggleSubMenu(e, 'nav-sub-products')}
                 >
                   Products
                 </a>
@@ -89,13 +107,42 @@ const MegaMenu = () => {
             <a
               href="/"
               className="nav__item--link"
-              onClick={toggleSubMenu}
               data-sub-menu-id="sub-menu-products"
+              onClick={(e) => toggleSubMenu(e, 'nav-sub-features')}
               aria-haspopup="true"
               aria-expanded="false"
             >
               Features
             </a>
+            <ul
+              className={`nav__list nav__sub ${`nav--${isSubMenuOpen}`}`}
+              id="nav-sub-features"
+            >
+              <li className="nav__item">
+                <a
+                  href="/"
+                  className="nav__item--link nav__item--link-back"
+                  onClick={(e) => toggleSubMenu(e, 'nav-sub-features')}
+                >
+                  Speed
+                </a>
+              </li>
+              <li className="nav__item">
+                <a href="/" className="nav__item--link">
+                  Price
+                </a>
+              </li>
+              <li className="nav__item">
+                <a href="/" className="nav__item--link">
+                  Power
+                </a>
+              </li>
+              <li className="nav__item nav__item--has-children">
+                <a href="/" className="nav__item--link">
+                  Synergy
+                </a>
+              </li>
+            </ul>
           </li>
           <li className="nav__item">
             <a href="/" className="nav__item--link">
