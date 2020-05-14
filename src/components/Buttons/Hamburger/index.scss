@@ -40,16 +40,10 @@
     }
 
     &:nth-child(2) {
-      -webkit-transform: rotate(45deg);
-      -moz-transform: rotate(45deg);
-      -o-transform: rotate(45deg);
       transform: rotate(45deg);
     }
 
     &:nth-child(3) {
-      -webkit-transform: rotate(-45deg);
-      -moz-transform: rotate(-45deg);
-      -o-transform: rotate(-45deg);
       transform: rotate(-45deg);
     }
 
