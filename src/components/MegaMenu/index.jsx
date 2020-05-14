@@ -13,8 +13,10 @@ const MegaMenu = () => {
     e.preventDefault()
     if (isMegaMenuOpen === '') {
       setIsMegaMenuOpen('open')
+      setIsSubMenuOpen('closed')
     } else {
       setIsMegaMenuOpen(MenuStateMachine(isMegaMenuOpen))
+      setIsSubMenuOpen('closed')
     }
   }
 
@@ -33,7 +35,7 @@ const MegaMenu = () => {
         X
       </button>
       <nav
-        className={`nav__menu-container ${isMegaMenuOpen}`}
+        className={`nav__menu-container ${`nav--${isMegaMenuOpen}`}`}
         aria-label="Main Navigation"
       >
         <ul className="nav__list" id="nav-main">
@@ -54,7 +56,7 @@ const MegaMenu = () => {
               Products
             </a>
             <ul
-              className={`nav__list nav__sub ${isSubMenuOpen}`}
+              className={`nav__list nav__sub ${`nav--${isSubMenuOpen}`}`}
               id="nav-sub-products"
             >
               <li className="nav__item">
