@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 // Components
@@ -11,40 +11,41 @@ import { MenuStateMachine } from '../../state-machines/menus'
 import './index.scss'
 
 const MegaMenu = () => {
-  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState('')
-  const [isSubMenuOpen, setIsSubMenuOpen] = useState('')
+  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState('closed')
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState('closed')
   const [activeMenus, setActiveMenus] = useState([]) // array that captures the ids of active menus
+
+  const updateActiveMenus = (state, menuId) => {
+    if (state === 'open') {
+      // add menuId from activeMenus
+      setActiveMenus([...activeMenus, menuId])
+      // set menuId
+    } else if (state === 'closed') {
+      // remove menuId from activeMenus
+      setActiveMenus(activeMenus.filter((item) => item !== menuId))
+    }
+  }
 
   const toggleMegaMenu = (e, menuId) => {
     e.preventDefault()
-    if (isMegaMenuOpen === '') {
-      setIsMegaMenuOpen('open')
-      setIsSubMenuOpen('closed')
-    } else {
-      setIsMegaMenuOpen(MenuStateMachine(isMegaMenuOpen))
-      setIsSubMenuOpen('closed')
-    }
 
-    if (isMegaMenuOpen === 'open') {
-      setActiveMenus((activeMenus) => [...activeMenus, menuId])
-    } else if (isMegaMenuOpen === 'closed') {
-    }
-    console.log(`menuId = ${menuId}`)
+    const nextState = MenuStateMachine(isMegaMenuOpen)
+
+    setIsMegaMenuOpen(nextState)
+    setActiveMenus([])
+
+    updateActiveMenus(nextState, menuId)
   }
 
   const toggleSubMenu = (e, menuId) => {
     e.preventDefault()
-    if (isSubMenuOpen === '') {
-      setIsSubMenuOpen('open')
-    } else {
-      setIsSubMenuOpen(MenuStateMachine(isSubMenuOpen))
-    }
-    console.log(`menuId = ${menuId}`)
-  }
 
-  useEffect(() => {
-    console.log(`activeMenus = ${activeMenus}`)
-  })
+    const nextState = MenuStateMachine(isSubMenuOpen)
+
+    setIsSubMenuOpen(MenuStateMachine(isSubMenuOpen))
+
+    updateActiveMenus(nextState, menuId)
+  }
 
   return (
     <div role="navigation" className="nav__container">
@@ -74,7 +75,10 @@ const MegaMenu = () => {
               Products
             </a>
             <ul
-              className={`nav__list nav__sub ${`nav--${isSubMenuOpen}`}`}
+              className={`nav__list nav__sub ${
+                (activeMenus.includes('nav-sub-products') && `nav--open`) ||
+                `nav--closed`
+              }`}
               id="nav-sub-products"
             >
               <li className="nav__item">
@@ -115,7 +119,10 @@ const MegaMenu = () => {
               Features
             </a>
             <ul
-              className={`nav__list nav__sub ${`nav--${isSubMenuOpen}`}`}
+              className={`nav__list nav__sub ${
+                (activeMenus.includes('nav-sub-features') && `nav--open`) ||
+                `nav--closed`
+              }`}
               id="nav-sub-features"
             >
               <li className="nav__item">
