@@ -15,7 +15,6 @@ const MenuStateMachine = (state) => {
         stateChangedTo = validStates[0]
     }
   }
-  console.log(`MenuStateMachine return state = ${stateChangedTo}`)
   return stateChangedTo
 }
 
