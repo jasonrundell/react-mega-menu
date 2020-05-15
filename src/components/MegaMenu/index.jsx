@@ -66,7 +66,7 @@ const MegaMenu = () => {
           <li className="nav__item nav__item--has-children">
             <a
               href="/"
-              className="nav__item--link"
+              className="nav__item--link nav__item--link-forward"
               data-sub-menu-id="sub-menu-products"
               onClick={(e) => toggleSubMenu(e, 'nav-sub-products')}
               aria-haspopup="true"
@@ -101,16 +101,60 @@ const MegaMenu = () => {
                 </a>
               </li>
               <li className="nav__item nav__item--has-children">
-                <a href="/" className="nav__item--link">
+                <a
+                  href="/"
+                  className="nav__item--link nav__item--link-forward"
+                  data-sub-menu-id="sub-menu-products-computers"
+                  onClick={(e) =>
+                    toggleSubMenu(e, 'nav-sub-products-computers')
+                  }
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
                   Computers
                 </a>
+                <ul
+                  className={`nav__list nav__sub ${
+                    (activeMenus.includes('nav-sub-products-computers') &&
+                      `nav--open`) ||
+                    `nav--closed`
+                  }`}
+                  id="nav-sub-products-computers"
+                >
+                  <li className="nav__item">
+                    <a
+                      href="/"
+                      className="nav__item--link nav__item--link-back"
+                      onClick={(e) =>
+                        toggleSubMenu(e, 'nav-sub-products-computers')
+                      }
+                    >
+                      Computers
+                    </a>
+                  </li>
+                  <li className="nav__item">
+                    <a href="/" className="nav__item--link">
+                      PC
+                    </a>
+                  </li>
+                  <li className="nav__item">
+                    <a href="/" className="nav__item--link">
+                      Mac
+                    </a>
+                  </li>
+                  <li className="nav__item nav__item--has-children">
+                    <a href="/" className="nav__item--link">
+                      Chromebook
+                    </a>
+                  </li>
+                </ul>
               </li>
             </ul>
           </li>
           <li className="nav__item nav__item--has-children">
             <a
               href="/"
-              className="nav__item--link"
+              className="nav__item--link nav__item--link-forward"
               data-sub-menu-id="sub-menu-products"
               onClick={(e) => toggleSubMenu(e, 'nav-sub-features')}
               aria-haspopup="true"

@@ -65,26 +65,24 @@
   position: relative;
 }
 
-.nav__item--has-children .nav__item--link::after {
-  content: '>';
-  position: absolute;
-  right: 2rem;
-  bottom: 0;
-}
-
-.nav__item--has-children .nav__item--link-back::before {
-  content: '<';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-}
-
-.nav__item--has-children .nav__item--link-back::after {
-  content: '';
+.nav__item--link-forward {
+  &::after {
+    content: '>';
+    position: absolute;
+    right: 2rem;
+    bottom: 0;
+  }
 }
 
 .nav__item--link-back {
   padding-left: 2rem;
+
+  &::before {
+    content: '<';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+  }
 }
 
 .nav__sub {
