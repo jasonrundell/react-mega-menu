@@ -13,6 +13,7 @@ import './index.scss'
 const MegaMenu = () => {
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState('closed')
   const [isSubMenuOpen, setIsSubMenuOpen] = useState('closed')
+  const [isSubSubMenuOpen, setIsSubSubMenuOpen] = useState('closed')
   const [activeMenus, setActiveMenus] = useState([]) // array that captures the ids of active menus
 
   const updateActiveMenus = (state, menuId) => {
@@ -44,6 +45,16 @@ const MegaMenu = () => {
     const nextState = MenuStateMachine(isSubMenuOpen)
 
     setIsSubMenuOpen(MenuStateMachine(isSubMenuOpen))
+
+    updateActiveMenus(nextState, menuId)
+  }
+
+  const toggleSubSubMenu = (e, menuId) => {
+    e.preventDefault()
+
+    const nextState = MenuStateMachine(isSubSubMenuOpen)
+
+    setIsSubSubMenuOpen(MenuStateMachine(isSubSubMenuOpen))
 
     updateActiveMenus(nextState, menuId)
   }
@@ -149,7 +160,9 @@ const MegaMenu = () => {
                   id="menuitem-products-computers"
                   href="/"
                   className="nav__item--link nav__item--link-forward"
-                  onClick={(e) => toggleSubMenu(e, 'menu-products-computers')}
+                  onClick={(e) =>
+                    toggleSubSubMenu(e, 'menu-products-computers')
+                  }
                   aria-haspopup="true"
                   aria-controls="menu-products-computers"
                 >
@@ -177,7 +190,7 @@ const MegaMenu = () => {
                       href="/"
                       className="nav__item--link nav__item--link-back"
                       onClick={(e) =>
-                        toggleSubMenu(e, 'menu-products-computers')
+                        toggleSubSubMenu(e, 'menu-products-computers')
                       }
                       aria-haspopup="true"
                       aria-controls="menu-products-computers"
