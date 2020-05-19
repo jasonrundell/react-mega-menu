@@ -2,6 +2,9 @@
 
 This document contains resources leveraged for creating this project.
 
+View menu:
+[https://react-mega-menu.netlify.app](https://react-mega-menu.netlify.app)
+
 ## Resources
 
 [Web Accessibility Tutorials (WCAG) Menu Structure](https://www.w3.org/WAI/tutorials/menus/structure/)
