@@ -2,7 +2,9 @@
 
 This document contains resources leveraged for creating this project.
 
-View menu:
+## View demo
+
+Visit:
 [https://react-mega-menu.netlify.app](https://react-mega-menu.netlify.app)
 
 ## Resources
