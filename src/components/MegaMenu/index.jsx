@@ -11,13 +11,12 @@ import { MenuStateMachine } from '../../state-machines/menus'
 import './index.scss'
 
 const MegaMenu = () => {
-  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState('closed')
-  const [isSubMenuOpen, setIsSubMenuOpen] = useState('closed')
-  const [isSubSubMenuOpen, setIsSubSubMenuOpen] = useState('closed')
+  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState('')
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState('')
+  const [isSubSubMenuOpen, setIsSubSubMenuOpen] = useState('')
   const [activeMenus, setActiveMenus] = useState([]) // array that captures the ids of active menus
 
   const updateActiveMenus = (state, menuId) => {
-    console.log(`updateActiveMenus(${state},${menuId})`)
     if (state === 'open') {
       // add menuId from activeMenus
       setActiveMenus([...activeMenus, menuId])

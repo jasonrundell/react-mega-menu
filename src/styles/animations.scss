@@ -5,7 +5,7 @@
 
 @keyframes slideInLeft {
   from {
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(-100%, 0, 0);
   }
 
   to {
@@ -17,7 +17,6 @@
   @extend .animate__animated;
   animation-name: slideInLeft;
   animation-iteration-count: 1;
-  animation-fill-mode: forwards;
 }
 
 @keyframes slideOutLeft {
@@ -26,7 +25,7 @@
   }
 
   to {
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(-100%, 0, 0);
   }
 }
 
@@ -34,5 +33,4 @@
   @extend .animate__animated;
   animation-name: slideOutLeft;
   animation-iteration-count: 1;
-  animation-fill-mode: forwards;
 }

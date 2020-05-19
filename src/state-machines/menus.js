@@ -1,6 +1,6 @@
 const MenuStateMachine = (state) => {
   const validStates = ['closed', 'open']
-  const defaultState = 'closed'
+  const defaultState = 'open'
   let stateChangedTo = defaultState
 
   if (validStates.includes(state)) {
