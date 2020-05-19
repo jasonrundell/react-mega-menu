@@ -50,6 +50,7 @@ const MegaMenu = () => {
   return (
     <div role="navigation" className="nav__container">
       <HamburgerButton
+        label="Menu"
         state={isMegaMenuOpen}
         onClick={(e) => toggleMegaMenu(e, 'nav-main')}
       />
