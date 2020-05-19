@@ -231,6 +231,83 @@ const MegaMenu = () => {
               </li>
             </ul>
           </li>
+
+          <li
+            role="none"
+            id="nav-features"
+            className="nav__item nav__item--has-children"
+          >
+            <a
+              role="menuitem"
+              id="menuitem-features"
+              href="/"
+              className="nav__item--link nav__item--link-forward"
+              onClick={(e) => toggleSubMenu(e, 'menu-features')}
+              aria-haspopup="true"
+              aria-controls="menu-features"
+            >
+              Features
+            </a>
+            <ul
+              role="menu"
+              className={`nav__list nav__sub ${
+                (activeMenus.includes('menu-features') && `nav--open`) ||
+                `nav--closed`
+              }`}
+              id="menu-features"
+              aria-hidden="true"
+              aria-labelledby="menu-features"
+            >
+              <li role="none" id="nav-features-back" className="nav__item">
+                <a
+                  role="menuitem"
+                  id="menuitem-features-back"
+                  href="/"
+                  className="nav__item--link nav__item--link-back"
+                  onClick={(e) => toggleSubMenu(e, 'menu-features')}
+                  aria-haspopup="true"
+                  aria-controls="nav-main-features"
+                >
+                  Features
+                </a>
+              </li>
+              <li role="none" id="nav-features-speed" className="nav__item">
+                <a
+                  role="menuitem"
+                  id="menuitem-features-speed"
+                  href="/"
+                  className="nav__item--link"
+                >
+                  Speed
+                </a>
+              </li>
+              <li
+                role="none"
+                id="nav-features-autonomous"
+                className="nav__item"
+              >
+                <a
+                  role="menuitem"
+                  id="menuitem-features-autonomous"
+                  href="/"
+                  className="nav__item--link"
+                >
+                  Autonomous
+                </a>
+              </li>
+              <li role="none" id="nav-features-scalable" className="nav__item">
+                <a
+                  role="menuitem"
+                  id="menuitem-features-scalable"
+                  href="/"
+                  className="nav__item--link"
+                >
+                  Scalable
+                </a>
+              </li>
+            </ul>
+          </li>
+
           <li role="none" id="nav-contact" className="nav__item">
             <a
               role="menuitem"
