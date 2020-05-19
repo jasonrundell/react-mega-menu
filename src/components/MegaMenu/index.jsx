@@ -231,7 +231,6 @@ const MegaMenu = () => {
               </li>
             </ul>
           </li>
-
           <li
             role="none"
             id="nav-features"
@@ -307,7 +306,6 @@ const MegaMenu = () => {
               </li>
             </ul>
           </li>
-
           <li role="none" id="nav-contact" className="nav__item">
             <a
               role="menuitem"
