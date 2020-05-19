@@ -20,7 +20,6 @@ const MegaMenu = () => {
     if (state === 'open') {
       // add menuId from activeMenus
       setActiveMenus([...activeMenus, menuId])
-      // set menuId
     } else if (state === 'closed') {
       // remove menuId from activeMenus
       setActiveMenus(activeMenus.filter((item) => item !== menuId))
@@ -33,9 +32,15 @@ const MegaMenu = () => {
     const nextState = MenuStateMachine(isMegaMenuOpen)
 
     setIsMegaMenuOpen(nextState)
-    setActiveMenus([])
 
     updateActiveMenus(nextState, menuId)
+
+    if (isMegaMenuOpen === 'open') {
+      // reset main menu
+      setActiveMenus([])
+      setIsSubMenuOpen('closed')
+      setIsSubSubMenuOpen('closed')
+    }
   }
 
   const toggleSubMenu = (e, menuId) => {
