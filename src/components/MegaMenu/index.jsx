@@ -11,10 +11,17 @@ import { MenuStateMachine } from '../../state-machines/menus'
 import './index.scss'
 
 const MegaMenu = () => {
-  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState('')
-  const [isSubMenuOpen, setIsSubMenuOpen] = useState('')
-  const [isSubSubMenuOpen, setIsSubSubMenuOpen] = useState('')
+  const [megaMenuState, setMegaMenuState] = useState('')
+  const [subMenuState, setSubMenuState] = useState('')
+  const [subSubMenuState, setSubSubMenuState] = useState('')
   const [activeMenus, setActiveMenus] = useState([]) // array that captures the ids of active menus
+
+  const resetMenus = () => {
+    setActiveMenus([])
+    setMegaMenuState('closed')
+    setSubMenuState('closed')
+    setSubSubMenuState('closed')
+  }
 
   const updateActiveMenus = (state, menuId) => {
     if (state === 'open') {
@@ -29,26 +36,23 @@ const MegaMenu = () => {
   const toggleMegaMenu = (e, menuId) => {
     e.preventDefault()
 
-    const nextState = MenuStateMachine(isMegaMenuOpen)
+    const nextState = MenuStateMachine(megaMenuState)
 
-    setIsMegaMenuOpen(nextState)
+    setMegaMenuState(nextState)
 
     updateActiveMenus(nextState, menuId)
 
-    if (isMegaMenuOpen === 'open') {
-      // reset main menu
-      setActiveMenus([])
-      setIsSubMenuOpen('closed')
-      setIsSubSubMenuOpen('closed')
+    if (megaMenuState === 'open') {
+      resetMenus()
     }
   }
 
   const toggleSubMenu = (e, menuId) => {
     e.preventDefault()
 
-    const nextState = MenuStateMachine(isSubMenuOpen)
+    const nextState = MenuStateMachine(subMenuState)
 
-    setIsSubMenuOpen(MenuStateMachine(isSubMenuOpen))
+    setSubMenuState(MenuStateMachine(subMenuState))
 
     updateActiveMenus(nextState, menuId)
   }
@@ -56,9 +60,9 @@ const MegaMenu = () => {
   const toggleSubSubMenu = (e, menuId) => {
     e.preventDefault()
 
-    const nextState = MenuStateMachine(isSubSubMenuOpen)
+    const nextState = MenuStateMachine(subSubMenuState)
 
-    setIsSubSubMenuOpen(MenuStateMachine(isSubSubMenuOpen))
+    setSubSubMenuState(MenuStateMachine(subSubMenuState))
 
     updateActiveMenus(nextState, menuId)
   }
@@ -71,11 +75,11 @@ const MegaMenu = () => {
     <div role="navigation" className="nav__container">
       <HamburgerButton
         label="Menu"
-        state={isMegaMenuOpen}
+        state={megaMenuState}
         onClick={(e) => toggleMegaMenu(e, 'nav-main')}
       />
       <nav
-        className={`nav__menu-container ${`nav--${isMegaMenuOpen}`}`}
+        className={`nav__menu-container ${`nav--${megaMenuState}`}`}
         aria-label="Main Navigation"
       >
         <ul
