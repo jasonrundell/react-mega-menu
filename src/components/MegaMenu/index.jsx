@@ -117,7 +117,7 @@ const MegaMenu = () => {
             </a>
             <ul
               role="menu"
-              className={`nav__list nav__sub ${
+              className={`nav__list nav__sub nav__mega ${
                 (activeMenus.includes('menu-products') && `nav--open`) ||
                 `nav--closed`
               }`}
@@ -125,7 +125,11 @@ const MegaMenu = () => {
               aria-hidden="true"
               aria-labelledby="menu-products"
             >
-              <li role="none" id="nav-products-back" className="nav__item">
+              <li
+                role="none"
+                id="nav-products-back"
+                className="nav__item nav__item--heading"
+              >
                 <a
                   role="menuitem"
                   id="menuitem-products-back"
@@ -179,7 +183,7 @@ const MegaMenu = () => {
                 <ul
                   role="menu"
                   id="menu-products-computers"
-                  className={`nav__list nav__sub ${
+                  className={`nav__list nav__sub nav__sub-sub nav__mega ${
                     (activeMenus.includes('menu-products-computers') &&
                       `nav--open`) ||
                     `nav--closed`
@@ -190,7 +194,7 @@ const MegaMenu = () => {
                   <li
                     role="none"
                     id="nav-products-computers-back"
-                    className="nav__item"
+                    className="nav__item nav__item--heading"
                   >
                     <a
                       role="menuitem"
@@ -278,7 +282,11 @@ const MegaMenu = () => {
               aria-hidden="true"
               aria-labelledby="menu-features"
             >
-              <li role="none" id="nav-features-back" className="nav__item">
+              <li
+                role="none"
+                id="nav-features-back"
+                className="nav__item nav__item--heading"
+              >
                 <a
                   role="menuitem"
                   id="menuitem-features-back"
