@@ -1,4 +1,5 @@
 @import '../../styles/animations.scss';
+@import '../../styles/breakpoints.scss';
 
 .nav__container {
   position: fixed;
@@ -32,6 +33,14 @@
   padding-bottom: 1rem;
   padding-left: 1rem;
   border-right: 0.0625rem solid #333;
+
+  @include respond-to('large') {
+    left: 0;
+    top: 0;
+    border: none;
+    height: 4rem;
+    flex-direction: row;
+  }
 }
 
 .nav__list {
@@ -42,7 +51,10 @@
   flex-direction: column;
   justify-content: flex-start;
   align-content: center;
-  margin: 0;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-left: 0;
   padding-top: 1rem;
   padding-right: 1rem;
   padding-bottom: 1rem;
@@ -50,38 +62,82 @@
   width: 100%;
   height: calc(100vh - 4rem);
   z-index: 1;
+
+  @include respond-to('large') {
+    flex-direction: row;
+    height: 4rem;
+  }
 }
 
 .nav__item {
   list-style: none;
-  margin: 0 0 1rem 0;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 1rem;
+  margin-left: 0;
   padding: 0;
+  @include respond-to('large') {
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 2rem;
+    align-items: center;
+  }
 }
 
 .nav__item--link {
   text-decoration: none;
   width: 100%;
-  display: block;
+  display: flex;
   position: relative;
+  @include respond-to('large') {
+    align-items: center;
+    height: 4rem;
+  }
+
+  &:hover {
+    @include respond-to('large') {
+      background-color: rgba($color: #000000, $alpha: 0.1);
+    }
+  }
 }
 
 .nav__item--link-forward {
+  @include respond-to('large') {
+    margin-right: 1rem;
+  }
+
   &::after {
     content: '>';
     position: absolute;
     right: 2rem;
     bottom: 0;
+
+    @include respond-to('large') {
+      content: '^';
+      top: 1.5rem;
+      right: -1rem;
+    }
   }
 }
 
 .nav__item--link-back {
   padding-left: 2rem;
-
   &::before {
     content: '<';
     position: absolute;
     left: 0;
     bottom: 0;
+  }
+}
+
+.nav__item--heading {
+  font-weight: 700;
+  @include respond-to('large') {
+    // display: none;
   }
 }
 
@@ -96,13 +152,104 @@
   background-color: #fff;
   z-index: 2;
   border-right: 0.0625rem solid #333;
+
+  @include respond-to('large') {
+    left: auto;
+    top: 5rem;
+    border: none;
+    height: auto;
+    width: auto;
+    opacity: 0;
+  }
+
+  .nav__item {
+    @include respond-to('large') {
+      margin-left: 0;
+    }
+  }
+
+  .nav__sub {
+    @include respond-to('large') {
+      position: absolute;
+      left: 5rem;
+    }
+  }
+}
+
+.nav__mega {
+  @include respond-to('large') {
+    position: absolute;
+    width: 100%;
+    top: 5rem;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nav__item {
+    @include respond-to('large') {
+      display: block;
+    }
+  }
+
+  .nav__item--heading {
+    font-weight: 700;
+    @include respond-to('large') {
+      // display: none;
+    }
+  }
+
+  .nav__item--link-forward {
+    @include respond-to('large') {
+      display: none;
+    }
+  }
+
+  .nav__item--link-back {
+    @include respond-to('large') {
+      padding-left: 0;
+      &::before {
+        content: '';
+      }
+    }
+  }
+
+  .nav__sub {
+    @include respond-to('large') {
+      animation: none;
+      display: block;
+      position: static;
+      top: 0;
+      left: 0;
+      opacity: 1;
+      padding-left: 0;
+    }
+  }
 }
 
 /* State Effects */
 .nav--open {
-  @extend .animate__slide-in--left;
+  animation-duration: $slideDuration;
+  animation-fill-mode: both;
+  animation-name: slideInLeft;
+  animation-iteration-count: 1;
+
+  @include respond-to('large') {
+    animation-duration: $fadeDuration;
+    animation-name: fadeIn;
+    animation-iteration-count: 1;
+  }
 }
 
 .nav--closed {
-  @extend .animate__slide-out--left;
+  animation-duration: $slideDuration;
+  animation-fill-mode: both;
+  animation-name: slideOutLeft;
+  animation-iteration-count: 1;
+
+  @include respond-to('large') {
+    animation-duration: $fadeDuration;
+    animation-name: fadeOut;
+    animation-iteration-count: 1;
+  }
 }
