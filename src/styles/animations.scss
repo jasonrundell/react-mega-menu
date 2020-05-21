@@ -62,7 +62,7 @@ $fadeDuration: 0.2s;
   }
 }
 
-.animate__fade-in {
+.animate__fade-out {
   animation-duration: $fadeDuration;
   animation-fill-mode: both;
   animation-name: fadeOut;
