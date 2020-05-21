@@ -15,10 +15,12 @@ const MegaMenu = () => {
   const [subMenuState, setSubMenuState] = useState('')
   const [subSubMenuState, setSubSubMenuState] = useState('')
   const [activeMenus, setActiveMenus] = useState([]) // array that captures the ids of active menus
+  const [viewportWidth, setViewportWidth] = useState(368) // array that captures the ids of active menus
+
+  const viewportLarge = 1024
 
   const resetMenus = () => {
     setActiveMenus([])
-    setMegaMenuState('closed')
     setSubMenuState('closed')
     setSubSubMenuState('closed')
   }
@@ -53,8 +55,18 @@ const MegaMenu = () => {
     const nextState = MenuStateMachine(subMenuState)
 
     setSubMenuState(MenuStateMachine(subMenuState))
-
-    updateActiveMenus(nextState, menuId)
+    /* 
+      I haven't come up with single solution (yet) that takes care of 
+      opening and closing menus for both small and large screens, so for 
+      now I fork the logic based on viewport size.
+      */
+    if (viewportWidth >= viewportLarge) {
+      // hide all menus for large screens, show the menu clicked
+      setActiveMenus([menuId])
+    } else {
+      // remove menuId from activeMenus
+      updateActiveMenus(nextState, menuId)
+    }
   }
 
   const toggleSubSubMenu = (e, menuId) => {
@@ -68,8 +80,10 @@ const MegaMenu = () => {
   }
 
   useEffect(() => {
+    setViewportWidth(window.innerWidth)
     console.log(`activeMenus = ${activeMenus}`)
-  })
+    console.log(`viewportWidth = ${viewportWidth}`)
+  }, [activeMenus, viewportWidth])
 
   return (
     <div role="navigation" className="nav__container">
