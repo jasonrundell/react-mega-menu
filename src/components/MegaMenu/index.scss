@@ -225,6 +225,19 @@
       padding-left: 0;
     }
   }
+
+  .nav__sub-sub {
+    .nav__item {
+      @include respond-to('large') {
+        margin-left: 1rem;
+      }
+    }
+    .nav__item--heading {
+      @include respond-to('large') {
+        margin-left: 0;
+      }
+    }
+  }
 }
 
 /* State Effects */
