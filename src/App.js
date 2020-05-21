@@ -1,13 +1,18 @@
 import React from 'react'
 
+// Components
 import MegaMenu from './components/MegaMenu'
 
-const data = {}
+// CSS
+import './App.scss'
 
 function App() {
   return (
-    <div>
-      <MegaMenu data={data} />
+    <div className="page">
+      <MegaMenu />
+      <main id="main">
+        <h1>React Mega Menu</h1>
+      </main>
     </div>
   )
 }

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
 
 // Components
 import HamburgerButton from '../Buttons/Hamburger'
@@ -82,7 +81,6 @@ const MegaMenu = () => {
   useEffect(() => {
     setViewportWidth(window.innerWidth)
     console.log(`activeMenus = ${activeMenus}`)
-    console.log(`viewportWidth = ${viewportWidth}`)
   }, [activeMenus, viewportWidth])
 
   return (
@@ -115,155 +113,163 @@ const MegaMenu = () => {
           </li>
           <li
             role="none"
-            id="nav-products"
+            id="nav-Mega-Menu"
             className="nav__item nav__item--has-children"
           >
             <a
               role="menuitem"
-              id="menuitem-products"
+              id="menuitem-Mega-Menu"
               href="/"
               className="nav__item--link nav__item--link-forward"
-              onClick={(e) => toggleSubMenu(e, 'menu-products')}
+              onClick={(e) => toggleSubMenu(e, 'menu-Mega-Menu')}
               aria-haspopup="true"
-              aria-controls="menu-products"
+              aria-controls="menu-Mega-Menu"
             >
-              Products
+              Mega Menu
             </a>
             <ul
               role="menu"
               className={`nav__list nav__sub nav__mega ${
-                (activeMenus.includes('menu-products') && `nav--open`) ||
+                (activeMenus.includes('menu-Mega-Menu') && `nav--open`) ||
                 `nav--closed`
               }`}
-              id="menu-products"
+              id="menu-Mega-Menu"
               aria-hidden="true"
-              aria-labelledby="menu-products"
+              aria-labelledby="menu-Mega-Menu"
             >
               <li
                 role="none"
-                id="nav-products-back"
+                id="nav-Mega-Menu-back"
                 className="nav__item nav__item--heading"
               >
                 <a
                   role="menuitem"
-                  id="menuitem-products-back"
+                  id="menuitem-Mega-Menu-back"
                   href="/"
                   className="nav__item--link nav__item--link-back"
-                  onClick={(e) => toggleSubMenu(e, 'menu-products')}
+                  onClick={(e) => toggleSubMenu(e, 'menu-Mega-Menu')}
                   aria-haspopup="true"
-                  aria-controls="nav-main-products"
+                  aria-controls="nav-main-Mega-Menu"
                 >
-                  Products
-                </a>
-              </li>
-              <li role="none" id="nav-products-tvs" className="nav__item">
-                <a
-                  role="menuitem"
-                  id="menuitem-products-tvs"
-                  href="/"
-                  className="nav__item--link"
-                >
-                  TVs
-                </a>
-              </li>
-              <li role="none" id="nav-products-phones" className="nav__item">
-                <a
-                  role="menuitem"
-                  id="menuitem-products-phones"
-                  href="/"
-                  className="nav__item--link"
-                >
-                  Phones
+                  Mega-Menu
                 </a>
               </li>
               <li
                 role="none"
-                id="nav-products-computers"
+                id="nav-Mega-Menu-Sub-menu-item-1"
+                className="nav__item"
+              >
+                <a
+                  role="menuitem"
+                  id="menuitem-Mega-Menu-Sub-menu-item-1"
+                  href="/"
+                  className="nav__item--link"
+                >
+                  Sub menu item 1
+                </a>
+              </li>
+              <li
+                role="none"
+                id="nav-Mega-Menu-Sub-menu-item-2"
+                className="nav__item"
+              >
+                <a
+                  role="menuitem"
+                  id="menuitem-Mega-Menu-Sub-menu-item-2"
+                  href="/"
+                  className="nav__item--link"
+                >
+                  Sub menu item 2
+                </a>
+              </li>
+              <li
+                role="none"
+                id="nav-Mega-Menu-Sub-menu-item-3"
                 className="nav__item nav__item--has-children"
               >
                 <a
                   role="menuitem"
-                  id="menuitem-products-computers"
+                  id="menuitem-Mega-Menu-Sub-menu-item-3"
                   href="/"
                   className="nav__item--link nav__item--link-forward"
                   onClick={(e) =>
-                    toggleSubSubMenu(e, 'menu-products-computers')
+                    toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-3')
                   }
                   aria-haspopup="true"
-                  aria-controls="menu-products-computers"
+                  aria-controls="menu-Mega-Menu-Sub-menu-item-3"
                 >
-                  Computers
+                  Sub menu item 3
                 </a>
                 <ul
                   role="menu"
-                  id="menu-products-computers"
+                  id="menu-Mega-Menu-Sub-menu-item-3"
                   className={`nav__list nav__sub nav__sub-sub nav__mega ${
-                    (activeMenus.includes('menu-products-computers') &&
+                    (activeMenus.includes('menu-Mega-Menu-Sub-menu-item-3') &&
                       `nav--open`) ||
                     `nav--closed`
                   }`}
                   aria-hidden="true"
-                  aria-labelledby="menuitem-products-computers"
+                  aria-labelledby="menuitem-Mega-Menu-Sub-menu-item-3"
                 >
                   <li
                     role="none"
-                    id="nav-products-computers-back"
+                    id="nav-Mega-Menu-Sub-menu-item-3-back"
                     className="nav__item nav__item--heading"
                   >
                     <a
                       role="menuitem"
-                      id="menuitem-products-computers-back"
+                      id="menuitem-Mega-Menu-Sub-menu-item-3-back"
                       href="/"
                       className="nav__item--link nav__item--link-back"
                       onClick={(e) =>
-                        toggleSubSubMenu(e, 'menu-products-computers')
+                        toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-3')
                       }
                       aria-haspopup="true"
-                      aria-controls="menu-products-computers"
+                      aria-controls="menu-Mega-Menu-Sub-menu-item-3"
                     >
-                      Computers
+                      Sub menu item 3
                     </a>
                   </li>
                   <li
                     role="none"
-                    id="nav-products-computers-pc"
+                    id="nav-Mega-Menu-Sub-menu-item-3.1"
                     className="nav__item"
                   >
                     <a
                       role="menuitem"
-                      id="menuitem-products-computers-pc"
+                      id="menuitem-Mega-Menu-Sub-menu-item-3.1"
                       href="/"
                       className="nav__item--link"
                     >
-                      PC
+                      Sub menu item 3.1
                     </a>
                   </li>
                   <li
                     role="none"
-                    id="nav-products-computers-mac"
+                    id="nav-Mega-Menu-Sub-menu-item-3.2"
                     className="nav__item"
                   >
                     <a
                       role="menuitem"
-                      id="menuitem-products-computers-mac"
+                      id="menuitem-Mega-Menu-Sub-menu-item-3.2"
                       href="/"
                       className="nav__item--link"
                     >
-                      Mac
+                      Sub menu item 3.2
                     </a>
                   </li>
                   <li
                     role="none"
-                    id="nav-products-computers-chromebook"
+                    id="nav-Mega-Menu-Sub-menu-item-3.3"
                     className="nav__item nav__item--has-children"
                   >
                     <a
                       role="menuitem"
-                      id="menuitem-products-computers-chromebook"
+                      id="menuitem-Mega-Menu-Sub-menu-item-3.3"
                       href="/"
                       className="nav__item--link"
                     >
-                      Chromebook
+                      Sub menu item 3.3
                     </a>
                   </li>
                 </ul>
@@ -272,79 +278,87 @@ const MegaMenu = () => {
           </li>
           <li
             role="none"
-            id="nav-features"
+            id="nav-Simple-Menu"
             className="nav__item nav__item--has-children"
           >
             <a
               role="menuitem"
-              id="menuitem-features"
+              id="menuitem-Simple-Menu"
               href="/"
               className="nav__item--link nav__item--link-forward"
-              onClick={(e) => toggleSubMenu(e, 'menu-features')}
+              onClick={(e) => toggleSubMenu(e, 'menu-Simple-Menu')}
               aria-haspopup="true"
-              aria-controls="menu-features"
+              aria-controls="menu-Simple-Menu"
             >
-              Features
+              Simple Menu
             </a>
             <ul
               role="menu"
               className={`nav__list nav__sub ${
-                (activeMenus.includes('menu-features') && `nav--open`) ||
+                (activeMenus.includes('menu-Simple-Menu') && `nav--open`) ||
                 `nav--closed`
               }`}
-              id="menu-features"
+              id="menu-Simple-Menu"
               aria-hidden="true"
-              aria-labelledby="menu-features"
+              aria-labelledby="menu-Simple-Menu"
             >
               <li
                 role="none"
-                id="nav-features-back"
+                id="nav-Simple-Menu-back"
                 className="nav__item nav__item--heading"
               >
                 <a
                   role="menuitem"
-                  id="menuitem-features-back"
+                  id="menuitem-Simple-Menu-back"
                   href="/"
                   className="nav__item--link nav__item--link-back"
-                  onClick={(e) => toggleSubMenu(e, 'menu-features')}
+                  onClick={(e) => toggleSubMenu(e, 'menu-Simple-Menu')}
                   aria-haspopup="true"
-                  aria-controls="nav-main-features"
+                  aria-controls="nav-main-Simple-Menu"
                 >
-                  Features
-                </a>
-              </li>
-              <li role="none" id="nav-features-speed" className="nav__item">
-                <a
-                  role="menuitem"
-                  id="menuitem-features-speed"
-                  href="/"
-                  className="nav__item--link"
-                >
-                  Speed
+                  Simple Menu
                 </a>
               </li>
               <li
                 role="none"
-                id="nav-features-autonomous"
+                id="nav-Simple-Menu-Sub-menu-item-1"
                 className="nav__item"
               >
                 <a
                   role="menuitem"
-                  id="menuitem-features-autonomous"
+                  id="menuitem-Simple-Menu-Sub-menu-item-1"
                   href="/"
                   className="nav__item--link"
                 >
-                  Autonomous
+                  Sub menu item 1
                 </a>
               </li>
-              <li role="none" id="nav-features-scalable" className="nav__item">
+              <li
+                role="none"
+                id="nav-Simple-Menu-Sub-menu-item-2"
+                className="nav__item"
+              >
                 <a
                   role="menuitem"
-                  id="menuitem-features-scalable"
+                  id="menuitem-Simple-Menu-Sub-menu-item-2"
                   href="/"
                   className="nav__item--link"
                 >
-                  Scalable
+                  Sub menu item 2
+                </a>
+              </li>
+              <li
+                role="none"
+                id="nav-Simple-Menu-Sub-menu-item-3"
+                className="nav__item"
+              >
+                <a
+                  role="menuitem"
+                  id="menuitem-Simple-Menu-Sub-menu-item-3"
+                  href="/"
+                  className="nav__item--link"
+                >
+                  Sub menu item 3
                 </a>
               </li>
             </ul>
@@ -363,10 +377,6 @@ const MegaMenu = () => {
       </nav>
     </div>
   )
-}
-
-MegaMenu.propTypes = {
-  data: PropTypes.any.isRequired,
 }
 
 export default MegaMenu
