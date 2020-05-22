@@ -61,28 +61,14 @@ const MegaMenu = () => {
       */
     if (!isMobile) {
       // hide all menus for large screens, show the menu clicked
-      setActiveMenus([menuId])
+      if (activeMenus.includes(menuId)) {
+        setActiveMenus([])
+      } else {
+        setActiveMenus([menuId])
+      }
     } else {
       // remove menuId from activeMenus
       updateActiveMenus(nextState, menuId)
-    }
-  }
-
-  const showSubMenu = (e, menuId) => {
-    if (!isMobile) {
-      e.preventDefault()
-
-      setActiveMenus([menuId])
-      setSubMenuState('open')
-    }
-  }
-
-  const hideSubMenu = (e, menuId) => {
-    if (!isMobile) {
-      e.preventDefault()
-
-      setActiveMenus([])
-      setSubMenuState('closed')
     }
   }
 
@@ -102,8 +88,23 @@ const MegaMenu = () => {
     } else {
       setIsMobile(true)
     }
+
     console.log(`activeMenus = ${activeMenus}`)
   }, [activeMenus, isMobile])
+
+  const escFunction = (e) => {
+    if (e.keyCode === 27) {
+      resetMenus()
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('keydown', escFunction, false)
+
+    return () => {
+      document.removeEventListener('keydown', escFunction, false)
+    }
+  })
 
   return (
     <div role="navigation" className="nav__container">
@@ -145,9 +146,6 @@ const MegaMenu = () => {
                 (activeMenus.includes('menu-Mega-Menu') && `nav--active`) || ``
               }`}
               onClick={(e) => toggleSubMenu(e, 'menu-Mega-Menu')}
-              onFocus={(e) => showSubMenu(e, 'menu-Mega-Menu')}
-              onMouseOver={(e) => showSubMenu(e, 'menu-Mega-Menu')}
-              // onMouseOut={(e) => hideSubMenu(e, 'menu-Mega-Menu')}
               aria-haspopup="true"
               aria-controls="menu-Mega-Menu"
             >
@@ -161,9 +159,6 @@ const MegaMenu = () => {
               }`}
               id="menu-Mega-Menu"
               aria-labelledby="menu-Mega-Menu"
-              onFocus={(e) => showSubMenu(e, 'menu-Mega-Menu')}
-              onMouseOver={(e) => showSubMenu(e, 'menu-Mega-Menu')}
-              onMouseOut={(e) => hideSubMenu(e, 'menu-Mega-Menu')}
             >
               <li
                 role="none"
@@ -391,9 +386,6 @@ const MegaMenu = () => {
                     >
                       Sub menu item 4.1
                     </a>
-                    <p className="nav__item--description">
-                      Single line description that accompanies link
-                    </p>
                   </li>
                   <li
                     role="none"
@@ -408,10 +400,6 @@ const MegaMenu = () => {
                     >
                       Sub menu item 4.2
                     </a>
-                    <p className="nav__item--description">
-                      Double lined small description that accompanies link in
-                      the React Mega Menu project
-                    </p>
                   </li>
                   <li
                     role="none"
@@ -459,9 +447,6 @@ const MegaMenu = () => {
                 ``
               }`}
               onClick={(e) => toggleSubMenu(e, 'menu-Simple-Menu')}
-              onFocus={(e) => showSubMenu(e, 'menu-Simple-Menu')}
-              onMouseOver={(e) => showSubMenu(e, 'menu-Simple-Menu')}
-              onMouseOut={(e) => hideSubMenu(e, 'menu-Simple-Menu')}
               aria-haspopup="true"
               aria-controls="menu-Simple-Menu"
             >
@@ -475,9 +460,6 @@ const MegaMenu = () => {
               }`}
               id="menu-Simple-Menu"
               aria-labelledby="menu-Simple-Menu"
-              onFocus={(e) => showSubMenu(e, 'menu-Simple-Menu')}
-              onMouseOver={(e) => showSubMenu(e, 'menu-Simple-Menu')}
-              onMouseOut={(e) => hideSubMenu(e, 'menu-Simple-Menu')}
             >
               <li
                 role="none"
