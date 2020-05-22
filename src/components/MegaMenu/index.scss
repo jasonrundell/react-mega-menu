@@ -227,12 +227,6 @@
     }
   }
 
-  .nav__item--link-forward {
-    @include respond-to('large') {
-      font-weight: bold;
-    }
-  }
-
   .nav__item--heading {
     @include respond-to('large') {
       display: none;
