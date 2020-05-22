@@ -24,3 +24,8 @@ Visit:
 ## Accessible Menus
 
 [Deque University.com/](https://dequeuniversity.com/)
+
+## Icons
+
+Icons from the **Free for Web** download pack by
+[Font Awesome](https://fontawesome.com/download)
