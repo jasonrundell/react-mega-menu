@@ -127,7 +127,7 @@ const MegaMenu = () => {
             <a
               role="menuitem"
               id="menuitem-home"
-              href="/"
+              href="/#home"
               className="nav__item--link"
             >
               Home
@@ -141,7 +141,7 @@ const MegaMenu = () => {
             <a
               role="menuitem"
               id="menuitem-Mega-Menu"
-              href="/"
+              href="/#mega-menu"
               className={`nav__item--link nav__item--link-forward ${
                 (activeMenus.includes('menu-Mega-Menu') && `nav--active`) || ``
               }`}
@@ -173,7 +173,7 @@ const MegaMenu = () => {
                 <a
                   role="menuitem"
                   id="menuitem-Mega-Menu-back"
-                  href="/"
+                  href="/#mega-menu"
                   className="nav__item--link nav__item--link-back"
                   onClick={(e) => toggleSubMenu(e, 'menu-Mega-Menu')}
                   aria-haspopup="true"
@@ -190,7 +190,7 @@ const MegaMenu = () => {
                 <a
                   role="menuitem"
                   id="menuitem-Mega-Menu-Sub-menu-item-1"
-                  href="/"
+                  href="/#sub-menu-item-1"
                   className="nav__item--link"
                 >
                   Sub menu item 1
@@ -207,7 +207,7 @@ const MegaMenu = () => {
                 <a
                   role="menuitem"
                   id="menuitem-Mega-Menu-Sub-menu-item-2"
-                  href="/"
+                  href="/#sub-menu-item-2"
                   className="nav__item--link"
                 >
                   Sub menu item 2
@@ -225,7 +225,7 @@ const MegaMenu = () => {
                 <a
                   role="menuitem"
                   id="menuitem-Mega-Menu-Sub-menu-item-3"
-                  href="/"
+                  href="/#sub-menu-item-3"
                   className="nav__item--link nav__item--link-forward"
                   onClick={(e) =>
                     toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-3')
@@ -259,7 +259,7 @@ const MegaMenu = () => {
                     <a
                       role="menuitem"
                       id="menuitem-Mega-Menu-Sub-menu-item-3-back"
-                      href="/"
+                      href="/#sub-menu-item-3"
                       className="nav__item--link nav__item--link-back"
                       onClick={(e) =>
                         toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-3')
@@ -278,7 +278,7 @@ const MegaMenu = () => {
                     <a
                       role="menuitem"
                       id="menuitem-Mega-Menu-Sub-menu-item-3.1"
-                      href="/"
+                      href="/#sub-menu-item-3.1"
                       className="nav__item--link"
                     >
                       Sub menu item 3.1
@@ -295,7 +295,7 @@ const MegaMenu = () => {
                     <a
                       role="menuitem"
                       id="menuitem-Mega-Menu-Sub-menu-item-3.2"
-                      href="/"
+                      href="/#sub-menu-item-3.2"
                       className="nav__item--link"
                     >
                       Sub menu item 3.2
@@ -313,7 +313,7 @@ const MegaMenu = () => {
                     <a
                       role="menuitem"
                       id="menuitem-Mega-Menu-Sub-menu-item-3.3"
-                      href="/"
+                      href="/#sub-menu-item-3.3"
                       className="nav__item--link"
                     >
                       Sub menu item 3.3
@@ -335,7 +335,7 @@ const MegaMenu = () => {
                 <a
                   role="menuitem"
                   id="menuitem-Mega-Menu-Sub-menu-item-4"
-                  href="/"
+                  href="/#sub-menu-item-4"
                   className="nav__item--link nav__item--link-forward"
                   onClick={(e) =>
                     toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-4')
@@ -369,7 +369,7 @@ const MegaMenu = () => {
                     <a
                       role="menuitem"
                       id="menuitem-Mega-Menu-Sub-menu-item-4-back"
-                      href="/"
+                      href="/#sub-menu-item-4"
                       className="nav__item--link nav__item--link-back"
                       onClick={(e) =>
                         toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-43')
@@ -388,7 +388,7 @@ const MegaMenu = () => {
                     <a
                       role="menuitem"
                       id="menuitem-Mega-Menu-Sub-menu-item-4.1"
-                      href="/"
+                      href="/#sub-menu-item-4.1"
                       className="nav__item--link"
                     >
                       Sub menu item 4.1
@@ -405,7 +405,7 @@ const MegaMenu = () => {
                     <a
                       role="menuitem"
                       id="menuitem-Mega-Menu-Sub-menu-item-4.2"
-                      href="/"
+                      href="/#sub-menu-item-4.2"
                       className="nav__item--link"
                     >
                       Sub menu item 4.2
@@ -423,7 +423,7 @@ const MegaMenu = () => {
                     <a
                       role="menuitem"
                       id="menuitem-Mega-Menu-Sub-menu-item-4.3"
-                      href="/"
+                      href="/#sub-menu-item-4.3"
                       className="nav__item--link"
                     >
                       Sub menu item 4.3
@@ -437,7 +437,7 @@ const MegaMenu = () => {
                     <a
                       role="menuitem"
                       id="menuitem-Mega-Menu-Sub-menu-item-4.4"
-                      href="/"
+                      href="/#sub-menu-item-4.4"
                       className="nav__item--link"
                     >
                       Sub menu item 4.4
@@ -455,7 +455,7 @@ const MegaMenu = () => {
             <a
               role="menuitem"
               id="menuitem-Simple-Menu"
-              href="/"
+              href="/#simple-menu"
               className={`nav__item--link nav__item--link-forward ${
                 (activeMenus.includes('menu-Simple-Menu') && `nav--active`) ||
                 ``
@@ -488,7 +488,7 @@ const MegaMenu = () => {
                 <a
                   role="menuitem"
                   id="menuitem-Simple-Menu-back"
-                  href="/"
+                  href="/#simple-menu"
                   className="nav__item--link nav__item--link-back"
                   onClick={(e) => toggleSubMenu(e, 'menu-Simple-Menu')}
                   aria-haspopup="true"
@@ -505,7 +505,7 @@ const MegaMenu = () => {
                 <a
                   role="menuitem"
                   id="menuitem-Simple-Menu-Sub-menu-item-1"
-                  href="/"
+                  href="/#sub-menu-item-1"
                   className="nav__item--link"
                 >
                   Sub menu item 1
@@ -519,7 +519,7 @@ const MegaMenu = () => {
                 <a
                   role="menuitem"
                   id="menuitem-Simple-Menu-Sub-menu-item-2"
-                  href="/"
+                  href="/#sub-menu-item-2"
                   className="nav__item--link"
                 >
                   Sub menu item 2
@@ -533,7 +533,7 @@ const MegaMenu = () => {
                 <a
                   role="menuitem"
                   id="menuitem-Simple-Menu-Sub-menu-item-3"
-                  href="/"
+                  href="/#sub-menu-item-3"
                   className="nav__item--link"
                 >
                   Sub menu item 3
@@ -545,7 +545,7 @@ const MegaMenu = () => {
             <a
               role="menuitem"
               id="menuitem-contact"
-              href="/"
+              href="/#contact"
               className="nav__item--link"
             >
               Contact
