@@ -415,6 +415,34 @@ const MegaMenu = () => {
                       the React Mega Menu project
                     </p>
                   </li>
+                  <li
+                    role="none"
+                    id="nav-Mega-Menu-Sub-menu-item-4.3"
+                    className="nav__item"
+                  >
+                    <a
+                      role="menuitem"
+                      id="menuitem-Mega-Menu-Sub-menu-item-4.3"
+                      href="/"
+                      className="nav__item--link"
+                    >
+                      Sub menu item 4.3
+                    </a>
+                  </li>
+                  <li
+                    role="none"
+                    id="nav-Mega-Menu-Sub-menu-item-4.4"
+                    className="nav__item"
+                  >
+                    <a
+                      role="menuitem"
+                      id="menuitem-Mega-Menu-Sub-menu-item-4.4"
+                      href="/"
+                      className="nav__item--link"
+                    >
+                      Sub menu item 4.4
+                    </a>
+                  </li>
                 </ul>
               </li>
             </ul>
