@@ -285,3 +285,14 @@
     opacity: 0;
   }
 }
+
+.nav--active {
+  &::after {
+    @include respond-to('large') {
+      content: '^';
+      transform: rotate(180deg);
+      bottom: 1rem;
+      right: -1rem;
+    }
+  }
+}

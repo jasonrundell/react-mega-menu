@@ -142,7 +142,9 @@ const MegaMenu = () => {
               role="menuitem"
               id="menuitem-Mega-Menu"
               href="/"
-              className="nav__item--link nav__item--link-forward"
+              className={`nav__item--link nav__item--link-forward ${
+                (activeMenus.includes('menu-Mega-Menu') && `nav--active`) || ``
+              }`}
               onClick={(e) => toggleSubMenu(e, 'menu-Mega-Menu')}
               onMouseOver={(e) => showSubMenu(e, 'menu-Mega-Menu')}
               onMouseOut={(e) => hideSubMenu(e, 'menu-Mega-Menu')}
@@ -311,7 +313,10 @@ const MegaMenu = () => {
               role="menuitem"
               id="menuitem-Simple-Menu"
               href="/"
-              className="nav__item--link nav__item--link-forward"
+              className={`nav__item--link nav__item--link-forward ${
+                (activeMenus.includes('menu-Simple-Menu') && `nav--active`) ||
+                ``
+              }`}
               onClick={(e) => toggleSubMenu(e, 'menu-Simple-Menu')}
               onMouseOver={(e) => showSubMenu(e, 'menu-Simple-Menu')}
               onMouseOut={(e) => hideSubMenu(e, 'menu-Simple-Menu')}
