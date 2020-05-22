@@ -11,7 +11,19 @@ function App() {
     <div className="page">
       <MegaMenu />
       <main id="main">
-        <h1>React Mega Menu</h1>
+        <section>
+          <h1>React Mega Menu</h1>
+          <p>
+            A React project which aims to be a responsive and accessible
+            boilerplate Mega Menu.
+          </p>
+          <a
+            href="https://github.com/jasonrundell/react-mega-menu"
+            rel="noopener noreferrer"
+          >
+            Check out the open-source repository on GitHub
+          </a>
+        </section>
       </main>
     </div>
   )
