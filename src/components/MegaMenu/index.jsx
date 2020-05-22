@@ -14,7 +14,7 @@ const MegaMenu = () => {
   const [subMenuState, setSubMenuState] = useState('')
   const [subSubMenuState, setSubSubMenuState] = useState('')
   const [activeMenus, setActiveMenus] = useState([]) // array that captures the ids of active menus
-  const [viewportWidth, setViewportWidth] = useState(368) // array that captures the ids of active menus
+  const [isMobile, setIsMobile] = useState(true) // array that captures the ids of active menus
 
   const viewportLarge = 1024
 
@@ -59,12 +59,30 @@ const MegaMenu = () => {
       opening and closing menus for both small and large screens, so for 
       now I fork the logic based on viewport size.
       */
-    if (viewportWidth >= viewportLarge) {
+    if (!isMobile) {
       // hide all menus for large screens, show the menu clicked
       setActiveMenus([menuId])
     } else {
       // remove menuId from activeMenus
       updateActiveMenus(nextState, menuId)
+    }
+  }
+
+  const showSubMenu = (e, menuId) => {
+    if (!isMobile) {
+      e.preventDefault()
+
+      setActiveMenus([menuId])
+      setSubMenuState('open')
+    }
+  }
+
+  const hideSubMenu = (e, menuId) => {
+    if (!isMobile) {
+      e.preventDefault()
+
+      setActiveMenus([])
+      setSubMenuState('closed')
     }
   }
 
@@ -79,9 +97,13 @@ const MegaMenu = () => {
   }
 
   useEffect(() => {
-    setViewportWidth(window.innerWidth)
+    if (window.innerWidth >= viewportLarge) {
+      setIsMobile(false)
+    } else {
+      setIsMobile(true)
+    }
     console.log(`activeMenus = ${activeMenus}`)
-  }, [activeMenus, viewportWidth])
+  }, [activeMenus, isMobile])
 
   return (
     <div role="navigation" className="nav__container">
@@ -122,6 +144,8 @@ const MegaMenu = () => {
               href="/"
               className="nav__item--link nav__item--link-forward"
               onClick={(e) => toggleSubMenu(e, 'menu-Mega-Menu')}
+              onMouseOver={(e) => showSubMenu(e, 'menu-Mega-Menu')}
+              onMouseOut={(e) => hideSubMenu(e, 'menu-Mega-Menu')}
               aria-haspopup="true"
               aria-controls="menu-Mega-Menu"
             >
@@ -129,13 +153,15 @@ const MegaMenu = () => {
             </a>
             <ul
               role="menu"
-              className={`nav__list nav__sub nav__mega ${
+              className={`nav__list nav__sub nav__mega nav__dropdown ${
                 (activeMenus.includes('menu-Mega-Menu') && `nav--open`) ||
                 `nav--closed`
               }`}
               id="menu-Mega-Menu"
               aria-hidden="true"
               aria-labelledby="menu-Mega-Menu"
+              onMouseOver={(e) => showSubMenu(e, 'menu-Mega-Menu')}
+              onMouseOut={(e) => hideSubMenu(e, 'menu-Mega-Menu')}
             >
               <li
                 role="none"
@@ -151,7 +177,7 @@ const MegaMenu = () => {
                   aria-haspopup="true"
                   aria-controls="nav-main-Mega-Menu"
                 >
-                  Mega-Menu
+                  Mega Menu
                 </a>
               </li>
               <li
@@ -203,7 +229,7 @@ const MegaMenu = () => {
                 <ul
                   role="menu"
                   id="menu-Mega-Menu-Sub-menu-item-3"
-                  className={`nav__list nav__sub nav__sub-sub nav__mega ${
+                  className={`nav__list nav__sub nav__sub-sub ${
                     (activeMenus.includes('menu-Mega-Menu-Sub-menu-item-3') &&
                       `nav--open`) ||
                     `nav--closed`
@@ -287,6 +313,8 @@ const MegaMenu = () => {
               href="/"
               className="nav__item--link nav__item--link-forward"
               onClick={(e) => toggleSubMenu(e, 'menu-Simple-Menu')}
+              onMouseOver={(e) => showSubMenu(e, 'menu-Simple-Menu')}
+              onMouseOut={(e) => hideSubMenu(e, 'menu-Simple-Menu')}
               aria-haspopup="true"
               aria-controls="menu-Simple-Menu"
             >
@@ -294,13 +322,15 @@ const MegaMenu = () => {
             </a>
             <ul
               role="menu"
-              className={`nav__list nav__sub ${
+              className={`nav__list nav__sub nav__dropdown ${
                 (activeMenus.includes('menu-Simple-Menu') && `nav--open`) ||
                 `nav--closed`
               }`}
               id="menu-Simple-Menu"
               aria-hidden="true"
               aria-labelledby="menu-Simple-Menu"
+              onMouseOver={(e) => showSubMenu(e, 'menu-Simple-Menu')}
+              onMouseOut={(e) => hideSubMenu(e, 'menu-Simple-Menu')}
             >
               <li
                 role="none"
