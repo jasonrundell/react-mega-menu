@@ -20,6 +20,7 @@ const MegaMenu = () => {
   const viewportLarge = 1024
 
   const resetMenus = () => {
+    // close all menus and empty activeMenus array
     setActiveMenus([])
     setSubMenuState('closed')
     setSubSubMenuState('closed')
