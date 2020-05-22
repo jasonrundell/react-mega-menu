@@ -1,3 +1,5 @@
+@import '../../../styles/breakpoints.scss';
+
 .button--hamburger {
   border: none;
   background: none;
@@ -6,6 +8,10 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  @include respond-to('large') {
+    display: none;
+  }
 }
 
 .button--hamburger-slice-container {

@@ -1,7 +1,5 @@
-.animate__animated {
-  animation-duration: 0.75s;
-  animation-fill-mode: both;
-}
+$slideDuration: 0.75s;
+$fadeDuration: 0.2s;
 
 @keyframes slideInLeft {
   from {
@@ -14,7 +12,8 @@
 }
 
 .animate__slide-in--left {
-  @extend .animate__animated;
+  animation-duration: $slideDuration;
+  animation-fill-mode: both;
   animation-name: slideInLeft;
   animation-iteration-count: 1;
 }
@@ -30,7 +29,42 @@
 }
 
 .animate__slide-out--left {
-  @extend .animate__animated;
+  animation-duration: $slideDuration;
+  animation-fill-mode: both;
   animation-name: slideOutLeft;
+  animation-iteration-count: 1;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.animate__fade-in {
+  animation-duration: $fadeDuration;
+  animation-fill-mode: both;
+  animation-name: fadeIn;
+  animation-iteration-count: 1;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.animate__fade-out {
+  animation-duration: $fadeDuration;
+  animation-fill-mode: both;
+  animation-name: fadeOut;
   animation-iteration-count: 1;
 }

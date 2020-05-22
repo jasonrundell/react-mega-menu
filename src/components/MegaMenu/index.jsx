@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
 
 // Components
 import HamburgerButton from '../Buttons/Hamburger'
@@ -11,10 +10,19 @@ import { MenuStateMachine } from '../../state-machines/menus'
 import './index.scss'
 
 const MegaMenu = () => {
-  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState('')
-  const [isSubMenuOpen, setIsSubMenuOpen] = useState('')
-  const [isSubSubMenuOpen, setIsSubSubMenuOpen] = useState('')
+  const [megaMenuState, setMegaMenuState] = useState('')
+  const [subMenuState, setSubMenuState] = useState('')
+  const [subSubMenuState, setSubSubMenuState] = useState('')
   const [activeMenus, setActiveMenus] = useState([]) // array that captures the ids of active menus
+  const [isMobile, setIsMobile] = useState(true) // array that captures the ids of active menus
+
+  const viewportLarge = 1024
+
+  const resetMenus = () => {
+    setActiveMenus([])
+    setSubMenuState('closed')
+    setSubSubMenuState('closed')
+  }
 
   const updateActiveMenus = (state, menuId) => {
     if (state === 'open') {
@@ -29,53 +37,83 @@ const MegaMenu = () => {
   const toggleMegaMenu = (e, menuId) => {
     e.preventDefault()
 
-    const nextState = MenuStateMachine(isMegaMenuOpen)
+    const nextState = MenuStateMachine(megaMenuState)
 
-    setIsMegaMenuOpen(nextState)
+    setMegaMenuState(nextState)
 
     updateActiveMenus(nextState, menuId)
 
-    if (isMegaMenuOpen === 'open') {
-      // reset main menu
-      setActiveMenus([])
-      setIsSubMenuOpen('closed')
-      setIsSubSubMenuOpen('closed')
+    if (megaMenuState === 'open') {
+      resetMenus()
     }
   }
 
   const toggleSubMenu = (e, menuId) => {
     e.preventDefault()
 
-    const nextState = MenuStateMachine(isSubMenuOpen)
+    const nextState = MenuStateMachine(subMenuState)
 
-    setIsSubMenuOpen(MenuStateMachine(isSubMenuOpen))
+    setSubMenuState(MenuStateMachine(subMenuState))
+    /* 
+      I haven't come up with single solution (yet) that takes care of 
+      opening and closing menus for both small and large screens, so for 
+      now I fork the logic based on viewport size.
+      */
+    if (!isMobile) {
+      // hide all menus for large screens, show the menu clicked
+      setActiveMenus([menuId])
+    } else {
+      // remove menuId from activeMenus
+      updateActiveMenus(nextState, menuId)
+    }
+  }
 
-    updateActiveMenus(nextState, menuId)
+  const showSubMenu = (e, menuId) => {
+    if (!isMobile) {
+      e.preventDefault()
+
+      setActiveMenus([menuId])
+      setSubMenuState('open')
+    }
+  }
+
+  const hideSubMenu = (e, menuId) => {
+    if (!isMobile) {
+      e.preventDefault()
+
+      setActiveMenus([])
+      setSubMenuState('closed')
+    }
   }
 
   const toggleSubSubMenu = (e, menuId) => {
     e.preventDefault()
 
-    const nextState = MenuStateMachine(isSubSubMenuOpen)
+    const nextState = MenuStateMachine(subSubMenuState)
 
-    setIsSubSubMenuOpen(MenuStateMachine(isSubSubMenuOpen))
+    setSubSubMenuState(MenuStateMachine(subSubMenuState))
 
     updateActiveMenus(nextState, menuId)
   }
 
   useEffect(() => {
+    if (window.innerWidth >= viewportLarge) {
+      setIsMobile(false)
+    } else {
+      setIsMobile(true)
+    }
     console.log(`activeMenus = ${activeMenus}`)
-  })
+  }, [activeMenus, isMobile])
 
   return (
     <div role="navigation" className="nav__container">
       <HamburgerButton
         label="Menu"
-        state={isMegaMenuOpen}
+        state={megaMenuState}
         onClick={(e) => toggleMegaMenu(e, 'nav-main')}
       />
       <nav
-        className={`nav__menu-container ${`nav--${isMegaMenuOpen}`}`}
+        className={`nav__menu-container ${`nav--${megaMenuState}`}`}
         aria-label="Main Navigation"
       >
         <ul
@@ -89,7 +127,7 @@ const MegaMenu = () => {
             <a
               role="menuitem"
               id="menuitem-home"
-              href="/"
+              href="/#home"
               className="nav__item--link"
             >
               Home
@@ -97,151 +135,312 @@ const MegaMenu = () => {
           </li>
           <li
             role="none"
-            id="nav-products"
+            id="nav-Mega-Menu"
             className="nav__item nav__item--has-children"
           >
             <a
               role="menuitem"
-              id="menuitem-products"
-              href="/"
-              className="nav__item--link nav__item--link-forward"
-              onClick={(e) => toggleSubMenu(e, 'menu-products')}
+              id="menuitem-Mega-Menu"
+              href="/#mega-menu"
+              className={`nav__item--link nav__item--link-forward ${
+                (activeMenus.includes('menu-Mega-Menu') && `nav--active`) || ``
+              }`}
+              onClick={(e) => toggleSubMenu(e, 'menu-Mega-Menu')}
+              onMouseOver={(e) => showSubMenu(e, 'menu-Mega-Menu')}
+              onMouseOut={(e) => hideSubMenu(e, 'menu-Mega-Menu')}
               aria-haspopup="true"
-              aria-controls="menu-products"
+              aria-controls="menu-Mega-Menu"
             >
-              Products
+              Mega Menu
             </a>
             <ul
               role="menu"
-              className={`nav__list nav__sub ${
-                (activeMenus.includes('menu-products') && `nav--open`) ||
+              className={`nav__list nav__sub nav__mega nav__dropdown ${
+                (activeMenus.includes('menu-Mega-Menu') && `nav--open`) ||
                 `nav--closed`
               }`}
-              id="menu-products"
+              id="menu-Mega-Menu"
               aria-hidden="true"
-              aria-labelledby="menu-products"
+              aria-labelledby="menu-Mega-Menu"
+              onMouseOver={(e) => showSubMenu(e, 'menu-Mega-Menu')}
+              onMouseOut={(e) => hideSubMenu(e, 'menu-Mega-Menu')}
             >
-              <li role="none" id="nav-products-back" className="nav__item">
+              <li
+                role="none"
+                id="nav-Mega-Menu-back"
+                className="nav__item nav__item--heading"
+              >
                 <a
                   role="menuitem"
-                  id="menuitem-products-back"
-                  href="/"
+                  id="menuitem-Mega-Menu-back"
+                  href="/#mega-menu"
                   className="nav__item--link nav__item--link-back"
-                  onClick={(e) => toggleSubMenu(e, 'menu-products')}
+                  onClick={(e) => toggleSubMenu(e, 'menu-Mega-Menu')}
                   aria-haspopup="true"
-                  aria-controls="nav-main-products"
+                  aria-controls="nav-main-Mega-Menu"
                 >
-                  Products
-                </a>
-              </li>
-              <li role="none" id="nav-products-tvs" className="nav__item">
-                <a
-                  role="menuitem"
-                  id="menuitem-products-tvs"
-                  href="/"
-                  className="nav__item--link"
-                >
-                  TVs
-                </a>
-              </li>
-              <li role="none" id="nav-products-phones" className="nav__item">
-                <a
-                  role="menuitem"
-                  id="menuitem-products-phones"
-                  href="/"
-                  className="nav__item--link"
-                >
-                  Phones
+                  Mega Menu
                 </a>
               </li>
               <li
                 role="none"
-                id="nav-products-computers"
+                id="nav-Mega-Menu-Sub-menu-item-1"
+                className="nav__item"
+              >
+                <a
+                  role="menuitem"
+                  id="menuitem-Mega-Menu-Sub-menu-item-1"
+                  href="/#sub-menu-item-1"
+                  className="nav__item--link"
+                >
+                  Sub menu item 1
+                </a>
+                <p className="nav__item--description">
+                  Single line description that accompanies link
+                </p>
+              </li>
+              <li
+                role="none"
+                id="nav-Mega-Menu-Sub-menu-item-2"
+                className="nav__item"
+              >
+                <a
+                  role="menuitem"
+                  id="menuitem-Mega-Menu-Sub-menu-item-2"
+                  href="/#sub-menu-item-2"
+                  className="nav__item--link"
+                >
+                  Sub menu item 2
+                </a>
+                <p className="nav__item--description">
+                  Double lined small description that accompanies link in the
+                  React Mega Menu project
+                </p>
+              </li>
+              <li
+                role="none"
+                id="nav-Mega-Menu-Sub-menu-item-3"
                 className="nav__item nav__item--has-children"
               >
                 <a
                   role="menuitem"
-                  id="menuitem-products-computers"
-                  href="/"
+                  id="menuitem-Mega-Menu-Sub-menu-item-3"
+                  href="/#sub-menu-item-3"
                   className="nav__item--link nav__item--link-forward"
                   onClick={(e) =>
-                    toggleSubSubMenu(e, 'menu-products-computers')
+                    toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-3')
                   }
                   aria-haspopup="true"
-                  aria-controls="menu-products-computers"
+                  aria-controls="menu-Mega-Menu-Sub-menu-item-3"
                 >
-                  Computers
+                  Sub menu item 3
                 </a>
+                <p className="nav__item--description">
+                  Three lined small description that accompanies link in the
+                  React Mega Menu project. This maybe too much text? Who's to
+                  say, really. We'll leave it to fate to decide.
+                </p>
                 <ul
                   role="menu"
-                  id="menu-products-computers"
-                  className={`nav__list nav__sub ${
-                    (activeMenus.includes('menu-products-computers') &&
+                  id="menu-Mega-Menu-Sub-menu-item-3"
+                  className={`nav__list nav__sub nav__sub-sub ${
+                    (activeMenus.includes('menu-Mega-Menu-Sub-menu-item-3') &&
                       `nav--open`) ||
                     `nav--closed`
                   }`}
                   aria-hidden="true"
-                  aria-labelledby="menuitem-products-computers"
+                  aria-labelledby="menuitem-Mega-Menu-Sub-menu-item-3"
                 >
                   <li
                     role="none"
-                    id="nav-products-computers-back"
-                    className="nav__item"
+                    id="nav-Mega-Menu-Sub-menu-item-3-back"
+                    className="nav__item nav__item--heading"
                   >
                     <a
                       role="menuitem"
-                      id="menuitem-products-computers-back"
-                      href="/"
+                      id="menuitem-Mega-Menu-Sub-menu-item-3-back"
+                      href="/#sub-menu-item-3"
                       className="nav__item--link nav__item--link-back"
                       onClick={(e) =>
-                        toggleSubSubMenu(e, 'menu-products-computers')
+                        toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-3')
                       }
                       aria-haspopup="true"
-                      aria-controls="menu-products-computers"
+                      aria-controls="menu-Mega-Menu-Sub-menu-item-3"
                     >
-                      Computers
+                      Sub menu item 3
                     </a>
                   </li>
                   <li
                     role="none"
-                    id="nav-products-computers-pc"
+                    id="nav-Mega-Menu-Sub-menu-item-3.1"
                     className="nav__item"
                   >
                     <a
                       role="menuitem"
-                      id="menuitem-products-computers-pc"
-                      href="/"
+                      id="menuitem-Mega-Menu-Sub-menu-item-3.1"
+                      href="/#sub-menu-item-3.1"
                       className="nav__item--link"
                     >
-                      PC
+                      Sub menu item 3.1
                     </a>
+                    <p className="nav__item--description">
+                      Single line description that accompanies link
+                    </p>
                   </li>
                   <li
                     role="none"
-                    id="nav-products-computers-mac"
+                    id="nav-Mega-Menu-Sub-menu-item-3.2"
                     className="nav__item"
                   >
                     <a
                       role="menuitem"
-                      id="menuitem-products-computers-mac"
-                      href="/"
+                      id="menuitem-Mega-Menu-Sub-menu-item-3.2"
+                      href="/#sub-menu-item-3.2"
                       className="nav__item--link"
                     >
-                      Mac
+                      Sub menu item 3.2
                     </a>
+                    <p className="nav__item--description">
+                      Double lined small description that accompanies link in
+                      the React Mega Menu project
+                    </p>
                   </li>
                   <li
                     role="none"
-                    id="nav-products-computers-chromebook"
+                    id="nav-Mega-Menu-Sub-menu-item-3.3"
                     className="nav__item nav__item--has-children"
                   >
                     <a
                       role="menuitem"
-                      id="menuitem-products-computers-chromebook"
-                      href="/"
+                      id="menuitem-Mega-Menu-Sub-menu-item-3.3"
+                      href="/#sub-menu-item-3.3"
                       className="nav__item--link"
                     >
-                      Chromebook
+                      Sub menu item 3.3
+                    </a>
+                    <p className="nav__item--description">
+                      Three lined small description that accompanies link in the
+                      React Mega Menu project. This maybe too much text? Who's
+                      to say, really. We'll leave it to fate to decide.
+                    </p>
+                  </li>
+                </ul>
+              </li>
+
+              <li
+                role="none"
+                id="nav-Mega-Menu-Sub-menu-item-4"
+                className="nav__item nav__item--has-children"
+              >
+                <a
+                  role="menuitem"
+                  id="menuitem-Mega-Menu-Sub-menu-item-4"
+                  href="/#sub-menu-item-4"
+                  className="nav__item--link nav__item--link-forward"
+                  onClick={(e) =>
+                    toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-4')
+                  }
+                  aria-haspopup="true"
+                  aria-controls="menu-Mega-Menu-Sub-menu-item-4"
+                >
+                  Sub menu item 4
+                </a>
+                <p className="nav__item--description">
+                  Three lined small description that accompanies link in the
+                  React Mega Menu project. This maybe too much text? Who's to
+                  say, really. We'll leave it to fate to decide.
+                </p>
+                <ul
+                  role="menu"
+                  id="menu-Mega-Menu-Sub-menu-item-4"
+                  className={`nav__list nav__sub nav__sub-sub ${
+                    (activeMenus.includes('menu-Mega-Menu-Sub-menu-item-4') &&
+                      `nav--open`) ||
+                    `nav--closed`
+                  }`}
+                  aria-hidden="true"
+                  aria-labelledby="menuitem-Mega-Menu-Sub-menu-item-4"
+                >
+                  <li
+                    role="none"
+                    id="nav-Mega-Menu-Sub-menu-item-4-back"
+                    className="nav__item nav__item--heading"
+                  >
+                    <a
+                      role="menuitem"
+                      id="menuitem-Mega-Menu-Sub-menu-item-4-back"
+                      href="/#sub-menu-item-4"
+                      className="nav__item--link nav__item--link-back"
+                      onClick={(e) =>
+                        toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-43')
+                      }
+                      aria-haspopup="true"
+                      aria-controls="menu-Mega-Menu-Sub-menu-item-4"
+                    >
+                      Sub menu item 4
+                    </a>
+                  </li>
+                  <li
+                    role="none"
+                    id="nav-Mega-Menu-Sub-menu-item-4.1"
+                    className="nav__item"
+                  >
+                    <a
+                      role="menuitem"
+                      id="menuitem-Mega-Menu-Sub-menu-item-4.1"
+                      href="/#sub-menu-item-4.1"
+                      className="nav__item--link"
+                    >
+                      Sub menu item 4.1
+                    </a>
+                    <p className="nav__item--description">
+                      Single line description that accompanies link
+                    </p>
+                  </li>
+                  <li
+                    role="none"
+                    id="nav-Mega-Menu-Sub-menu-item-4.2"
+                    className="nav__item"
+                  >
+                    <a
+                      role="menuitem"
+                      id="menuitem-Mega-Menu-Sub-menu-item-4.2"
+                      href="/#sub-menu-item-4.2"
+                      className="nav__item--link"
+                    >
+                      Sub menu item 4.2
+                    </a>
+                    <p className="nav__item--description">
+                      Double lined small description that accompanies link in
+                      the React Mega Menu project
+                    </p>
+                  </li>
+                  <li
+                    role="none"
+                    id="nav-Mega-Menu-Sub-menu-item-4.3"
+                    className="nav__item"
+                  >
+                    <a
+                      role="menuitem"
+                      id="menuitem-Mega-Menu-Sub-menu-item-4.3"
+                      href="/#sub-menu-item-4.3"
+                      className="nav__item--link"
+                    >
+                      Sub menu item 4.3
+                    </a>
+                  </li>
+                  <li
+                    role="none"
+                    id="nav-Mega-Menu-Sub-menu-item-4.4"
+                    className="nav__item"
+                  >
+                    <a
+                      role="menuitem"
+                      id="menuitem-Mega-Menu-Sub-menu-item-4.4"
+                      href="/#sub-menu-item-4.4"
+                      className="nav__item--link"
+                    >
+                      Sub menu item 4.4
                     </a>
                   </li>
                 </ul>
@@ -250,75 +449,94 @@ const MegaMenu = () => {
           </li>
           <li
             role="none"
-            id="nav-features"
+            id="nav-Simple-Menu"
             className="nav__item nav__item--has-children"
           >
             <a
               role="menuitem"
-              id="menuitem-features"
-              href="/"
-              className="nav__item--link nav__item--link-forward"
-              onClick={(e) => toggleSubMenu(e, 'menu-features')}
+              id="menuitem-Simple-Menu"
+              href="/#simple-menu"
+              className={`nav__item--link nav__item--link-forward ${
+                (activeMenus.includes('menu-Simple-Menu') && `nav--active`) ||
+                ``
+              }`}
+              onClick={(e) => toggleSubMenu(e, 'menu-Simple-Menu')}
+              onMouseOver={(e) => showSubMenu(e, 'menu-Simple-Menu')}
+              onMouseOut={(e) => hideSubMenu(e, 'menu-Simple-Menu')}
               aria-haspopup="true"
-              aria-controls="menu-features"
+              aria-controls="menu-Simple-Menu"
             >
-              Features
+              Simple Menu
             </a>
             <ul
               role="menu"
-              className={`nav__list nav__sub ${
-                (activeMenus.includes('menu-features') && `nav--open`) ||
+              className={`nav__list nav__sub nav__dropdown ${
+                (activeMenus.includes('menu-Simple-Menu') && `nav--open`) ||
                 `nav--closed`
               }`}
-              id="menu-features"
+              id="menu-Simple-Menu"
               aria-hidden="true"
-              aria-labelledby="menu-features"
+              aria-labelledby="menu-Simple-Menu"
+              onMouseOver={(e) => showSubMenu(e, 'menu-Simple-Menu')}
+              onMouseOut={(e) => hideSubMenu(e, 'menu-Simple-Menu')}
             >
-              <li role="none" id="nav-features-back" className="nav__item">
+              <li
+                role="none"
+                id="nav-Simple-Menu-back"
+                className="nav__item nav__item--heading"
+              >
                 <a
                   role="menuitem"
-                  id="menuitem-features-back"
-                  href="/"
+                  id="menuitem-Simple-Menu-back"
+                  href="/#simple-menu"
                   className="nav__item--link nav__item--link-back"
-                  onClick={(e) => toggleSubMenu(e, 'menu-features')}
+                  onClick={(e) => toggleSubMenu(e, 'menu-Simple-Menu')}
                   aria-haspopup="true"
-                  aria-controls="nav-main-features"
+                  aria-controls="nav-main-Simple-Menu"
                 >
-                  Features
-                </a>
-              </li>
-              <li role="none" id="nav-features-speed" className="nav__item">
-                <a
-                  role="menuitem"
-                  id="menuitem-features-speed"
-                  href="/"
-                  className="nav__item--link"
-                >
-                  Speed
+                  Simple Menu
                 </a>
               </li>
               <li
                 role="none"
-                id="nav-features-autonomous"
+                id="nav-Simple-Menu-Sub-menu-item-1"
                 className="nav__item"
               >
                 <a
                   role="menuitem"
-                  id="menuitem-features-autonomous"
-                  href="/"
+                  id="menuitem-Simple-Menu-Sub-menu-item-1"
+                  href="/#sub-menu-item-1"
                   className="nav__item--link"
                 >
-                  Autonomous
+                  Sub menu item 1
                 </a>
               </li>
-              <li role="none" id="nav-features-scalable" className="nav__item">
+              <li
+                role="none"
+                id="nav-Simple-Menu-Sub-menu-item-2"
+                className="nav__item"
+              >
                 <a
                   role="menuitem"
-                  id="menuitem-features-scalable"
-                  href="/"
+                  id="menuitem-Simple-Menu-Sub-menu-item-2"
+                  href="/#sub-menu-item-2"
                   className="nav__item--link"
                 >
-                  Scalable
+                  Sub menu item 2
+                </a>
+              </li>
+              <li
+                role="none"
+                id="nav-Simple-Menu-Sub-menu-item-3"
+                className="nav__item"
+              >
+                <a
+                  role="menuitem"
+                  id="menuitem-Simple-Menu-Sub-menu-item-3"
+                  href="/#sub-menu-item-3"
+                  className="nav__item--link"
+                >
+                  Sub menu item 3
                 </a>
               </li>
             </ul>
@@ -327,7 +545,7 @@ const MegaMenu = () => {
             <a
               role="menuitem"
               id="menuitem-contact"
-              href="/"
+              href="/#contact"
               className="nav__item--link"
             >
               Contact
@@ -337,10 +555,6 @@ const MegaMenu = () => {
       </nav>
     </div>
   )
-}
-
-MegaMenu.propTypes = {
-  data: PropTypes.any.isRequired,
 }
 
 export default MegaMenu

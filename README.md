@@ -1,6 +1,14 @@
 # React Mega Menu
 
-This document contains resources leveraged for creating this project.
+A React project which aims to be a responsive and accessible boilerplate Mega
+Menu.
+
+## Objective
+
+- Responsive
+- Accessible
+- WCAG 2.1 AAA compliant
+- W3C valid
 
 ## View demo
 
@@ -16,3 +24,8 @@ Visit:
 ## Accessible Menus
 
 [Deque University.com/](https://dequeuniversity.com/)
+
+## Icons
+
+Icons from the **Free for Web** download pack by
+[Font Awesome](https://fontawesome.com/download)
