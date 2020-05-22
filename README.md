@@ -27,6 +27,8 @@ Visit:
 
 ["Building Accessible Menu Systems" by Heydon Pickering](https://www.smashingmagazine.com/2017/11/building-accessible-menu-systems/)
 
+[Using the aria-hidden attribute](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-hidden_attribute)
+
 ## Icons
 
 Icons from the **Free for Web** download pack by
