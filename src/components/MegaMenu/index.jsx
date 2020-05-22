@@ -163,7 +163,7 @@ const MegaMenu = () => {
               aria-hidden="true"
               aria-labelledby="menu-Mega-Menu"
               onMouseOver={(e) => showSubMenu(e, 'menu-Mega-Menu')}
-              onMouseOut={(e) => hideSubMenu(e, 'menu-Mega-Menu')}
+              // onMouseOut={(e) => hideSubMenu(e, 'menu-Mega-Menu')}
             >
               <li
                 role="none"
@@ -195,6 +195,9 @@ const MegaMenu = () => {
                 >
                   Sub menu item 1
                 </a>
+                <p className="nav__item--description">
+                  Single line description that accompanies link
+                </p>
               </li>
               <li
                 role="none"
@@ -209,6 +212,10 @@ const MegaMenu = () => {
                 >
                   Sub menu item 2
                 </a>
+                <p className="nav__item--description">
+                  Double lined small description that accompanies link in the
+                  React Mega Menu project
+                </p>
               </li>
               <li
                 role="none"
@@ -228,6 +235,11 @@ const MegaMenu = () => {
                 >
                   Sub menu item 3
                 </a>
+                <p className="nav__item--description">
+                  Three lined small description that accompanies link in the
+                  React Mega Menu project. This maybe too much text? Who's to
+                  say, really. We'll leave it to fate to decide.
+                </p>
                 <ul
                   role="menu"
                   id="menu-Mega-Menu-Sub-menu-item-3"
@@ -271,6 +283,9 @@ const MegaMenu = () => {
                     >
                       Sub menu item 3.1
                     </a>
+                    <p className="nav__item--description">
+                      Single line description that accompanies link
+                    </p>
                   </li>
                   <li
                     role="none"
@@ -285,6 +300,10 @@ const MegaMenu = () => {
                     >
                       Sub menu item 3.2
                     </a>
+                    <p className="nav__item--description">
+                      Double lined small description that accompanies link in
+                      the React Mega Menu project
+                    </p>
                   </li>
                   <li
                     role="none"
@@ -299,6 +318,102 @@ const MegaMenu = () => {
                     >
                       Sub menu item 3.3
                     </a>
+                    <p className="nav__item--description">
+                      Three lined small description that accompanies link in the
+                      React Mega Menu project. This maybe too much text? Who's
+                      to say, really. We'll leave it to fate to decide.
+                    </p>
+                  </li>
+                </ul>
+              </li>
+
+              <li
+                role="none"
+                id="nav-Mega-Menu-Sub-menu-item-4"
+                className="nav__item nav__item--has-children"
+              >
+                <a
+                  role="menuitem"
+                  id="menuitem-Mega-Menu-Sub-menu-item-4"
+                  href="/"
+                  className="nav__item--link nav__item--link-forward"
+                  onClick={(e) =>
+                    toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-4')
+                  }
+                  aria-haspopup="true"
+                  aria-controls="menu-Mega-Menu-Sub-menu-item-4"
+                >
+                  Sub menu item 4
+                </a>
+                <p className="nav__item--description">
+                  Three lined small description that accompanies link in the
+                  React Mega Menu project. This maybe too much text? Who's to
+                  say, really. We'll leave it to fate to decide.
+                </p>
+                <ul
+                  role="menu"
+                  id="menu-Mega-Menu-Sub-menu-item-4"
+                  className={`nav__list nav__sub nav__sub-sub ${
+                    (activeMenus.includes('menu-Mega-Menu-Sub-menu-item-4') &&
+                      `nav--open`) ||
+                    `nav--closed`
+                  }`}
+                  aria-hidden="true"
+                  aria-labelledby="menuitem-Mega-Menu-Sub-menu-item-4"
+                >
+                  <li
+                    role="none"
+                    id="nav-Mega-Menu-Sub-menu-item-4-back"
+                    className="nav__item nav__item--heading"
+                  >
+                    <a
+                      role="menuitem"
+                      id="menuitem-Mega-Menu-Sub-menu-item-4-back"
+                      href="/"
+                      className="nav__item--link nav__item--link-back"
+                      onClick={(e) =>
+                        toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-43')
+                      }
+                      aria-haspopup="true"
+                      aria-controls="menu-Mega-Menu-Sub-menu-item-4"
+                    >
+                      Sub menu item 4
+                    </a>
+                  </li>
+                  <li
+                    role="none"
+                    id="nav-Mega-Menu-Sub-menu-item-4.1"
+                    className="nav__item"
+                  >
+                    <a
+                      role="menuitem"
+                      id="menuitem-Mega-Menu-Sub-menu-item-4.1"
+                      href="/"
+                      className="nav__item--link"
+                    >
+                      Sub menu item 4.1
+                    </a>
+                    <p className="nav__item--description">
+                      Single line description that accompanies link
+                    </p>
+                  </li>
+                  <li
+                    role="none"
+                    id="nav-Mega-Menu-Sub-menu-item-4.2"
+                    className="nav__item"
+                  >
+                    <a
+                      role="menuitem"
+                      id="menuitem-Mega-Menu-Sub-menu-item-4.2"
+                      href="/"
+                      className="nav__item--link"
+                    >
+                      Sub menu item 4.2
+                    </a>
+                    <p className="nav__item--description">
+                      Double lined small description that accompanies link in
+                      the React Mega Menu project
+                    </p>
                   </li>
                 </ul>
               </li>
