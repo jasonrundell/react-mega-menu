@@ -15,6 +15,10 @@ Menu.
 Visit:
 [https://react-mega-menu.netlify.app](https://react-mega-menu.netlify.app)
 
+## Special Thanks
+
+[Donna Vitan for the accessibility consultation](https://donnavitan.com)
+
 ## Resources
 
 [Web Accessibility Tutorials (WCAG) Menu Structure](https://www.w3.org/WAI/tutorials/menus/structure/)
