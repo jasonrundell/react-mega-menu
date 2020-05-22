@@ -118,7 +118,6 @@ const MegaMenu = () => {
       >
         <ul
           role="menubar"
-          aria-hidden="false"
           aria-label="Main Menu"
           className="nav__list"
           id="menubar-main"
@@ -146,8 +145,9 @@ const MegaMenu = () => {
                 (activeMenus.includes('menu-Mega-Menu') && `nav--active`) || ``
               }`}
               onClick={(e) => toggleSubMenu(e, 'menu-Mega-Menu')}
+              onFocus={(e) => showSubMenu(e, 'menu-Mega-Menu')}
               onMouseOver={(e) => showSubMenu(e, 'menu-Mega-Menu')}
-              onMouseOut={(e) => hideSubMenu(e, 'menu-Mega-Menu')}
+              // onMouseOut={(e) => hideSubMenu(e, 'menu-Mega-Menu')}
               aria-haspopup="true"
               aria-controls="menu-Mega-Menu"
             >
@@ -160,8 +160,8 @@ const MegaMenu = () => {
                 `nav--closed`
               }`}
               id="menu-Mega-Menu"
-              aria-hidden="true"
               aria-labelledby="menu-Mega-Menu"
+              onFocus={(e) => showSubMenu(e, 'menu-Mega-Menu')}
               onMouseOver={(e) => showSubMenu(e, 'menu-Mega-Menu')}
               onMouseOut={(e) => hideSubMenu(e, 'menu-Mega-Menu')}
             >
@@ -248,7 +248,6 @@ const MegaMenu = () => {
                       `nav--open`) ||
                     `nav--closed`
                   }`}
-                  aria-hidden="true"
                   aria-labelledby="menuitem-Mega-Menu-Sub-menu-item-3"
                 >
                   <li
@@ -358,7 +357,6 @@ const MegaMenu = () => {
                       `nav--open`) ||
                     `nav--closed`
                   }`}
-                  aria-hidden="true"
                   aria-labelledby="menuitem-Mega-Menu-Sub-menu-item-4"
                 >
                   <li
@@ -372,7 +370,7 @@ const MegaMenu = () => {
                       href="/#sub-menu-item-4"
                       className="nav__item--link nav__item--link-back"
                       onClick={(e) =>
-                        toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-43')
+                        toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-4')
                       }
                       aria-haspopup="true"
                       aria-controls="menu-Mega-Menu-Sub-menu-item-4"
@@ -461,6 +459,7 @@ const MegaMenu = () => {
                 ``
               }`}
               onClick={(e) => toggleSubMenu(e, 'menu-Simple-Menu')}
+              onFocus={(e) => showSubMenu(e, 'menu-Simple-Menu')}
               onMouseOver={(e) => showSubMenu(e, 'menu-Simple-Menu')}
               onMouseOut={(e) => hideSubMenu(e, 'menu-Simple-Menu')}
               aria-haspopup="true"
@@ -475,8 +474,8 @@ const MegaMenu = () => {
                 `nav--closed`
               }`}
               id="menu-Simple-Menu"
-              aria-hidden="true"
               aria-labelledby="menu-Simple-Menu"
+              onFocus={(e) => showSubMenu(e, 'menu-Simple-Menu')}
               onMouseOver={(e) => showSubMenu(e, 'menu-Simple-Menu')}
               onMouseOut={(e) => hideSubMenu(e, 'menu-Simple-Menu')}
             >
