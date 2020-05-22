@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 
 // Components
 import HamburgerButton from '../Buttons/Hamburger'
@@ -15,6 +15,7 @@ const MegaMenu = () => {
   const [subSubMenuState, setSubSubMenuState] = useState('')
   const [activeMenus, setActiveMenus] = useState([]) // array that captures the ids of active menus
   const [isMobile, setIsMobile] = useState(true) // array that captures the ids of active menus
+  const wrapperRef = useRef(null) // used to detect clicks outside of component
 
   const viewportLarge = 1024
 
@@ -22,6 +23,26 @@ const MegaMenu = () => {
     setActiveMenus([])
     setSubMenuState('closed')
     setSubSubMenuState('closed')
+  }
+
+  const useOutsideAlerter = (ref) => {
+    useEffect(() => {
+      // Reset menu if clicked on outside of element
+      const handleClickOutside = (e) => {
+        if (ref.current && !ref.current.contains(e.target)) {
+          resetMenus()
+        }
+      }
+
+      // Bind the event listener to both mouse and key events
+      document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener('keydown', handleClickOutside)
+      return () => {
+        // Unbind the event listener to clean up
+        document.removeEventListener('mousedown', handleClickOutside)
+        document.removeEventListener('keydown', handleClickOutside)
+      }
+    }, [ref])
   }
 
   const updateActiveMenus = (state, menuId) => {
@@ -60,10 +81,11 @@ const MegaMenu = () => {
       now I fork the logic based on viewport size.
       */
     if (!isMobile) {
-      // hide all menus for large screens, show the menu clicked
       if (activeMenus.includes(menuId)) {
+        // menu is already open, remove it from activeMenus to close it
         setActiveMenus([])
       } else {
+        // menu is not yet active, add it to activeMenus to open it
         setActiveMenus([menuId])
       }
     } else {
@@ -88,8 +110,6 @@ const MegaMenu = () => {
     } else {
       setIsMobile(true)
     }
-
-    console.log(`activeMenus = ${activeMenus}`)
   }, [activeMenus, isMobile])
 
   const escFunction = (e) => {
@@ -106,8 +126,10 @@ const MegaMenu = () => {
     }
   })
 
+  useOutsideAlerter(wrapperRef) // create bindings for closing menu from outside events
+
   return (
-    <div role="navigation" className="nav__container">
+    <div role="navigation" className="nav__container" ref={wrapperRef}>
       <HamburgerButton
         label="Menu"
         state={megaMenuState}
