@@ -163,7 +163,7 @@ const MegaMenu = () => {
               aria-hidden="true"
               aria-labelledby="menu-Mega-Menu"
               onMouseOver={(e) => showSubMenu(e, 'menu-Mega-Menu')}
-              // onMouseOut={(e) => hideSubMenu(e, 'menu-Mega-Menu')}
+              onMouseOut={(e) => hideSubMenu(e, 'menu-Mega-Menu')}
             >
               <li
                 role="none"
