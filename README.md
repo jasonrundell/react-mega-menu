@@ -23,7 +23,9 @@ Visit:
 
 ## Accessible Menus
 
-[Deque University.com/](https://dequeuniversity.com/)
+[Deque University](https://dequeuniversity.com/)
+
+["Building Accessible Menu Systems" by Heydon Pickering](https://www.smashingmagazine.com/2017/11/building-accessible-menu-systems/)
 
 ## Icons
 
