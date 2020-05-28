@@ -25,6 +25,8 @@ Visit:
 
 [Web Accessibility Tutorials (WCAG) Fly-out Menus](https://www.w3.org/WAI/tutorials/menus/flyout/)
 
+[JavaScript Event KeyCodes by Wes Bos](https://keycode.info/)
+
 ## Accessible Menus
 
 [Deque University](https://dequeuniversity.com/)
