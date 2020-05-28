@@ -119,6 +119,13 @@ const MegaMenu = () => {
     }
   }
 
+  const a11yClick = (e) => {
+    const code = e.charCode || e.keyCode
+    if (code === 32 || code === 13) {
+      return true
+    }
+  }
+
   useEffect(() => {
     document.addEventListener('keydown', escFunction, false)
 
@@ -169,6 +176,9 @@ const MegaMenu = () => {
                 (activeMenus.includes('menu-Mega-Menu') && `nav--active`) || ``
               }`}
               onClick={(e) => toggleSubMenu(e, 'menu-Mega-Menu')}
+              onKeyDown={(e) =>
+                a11yClick(e) && toggleSubMenu(e, 'menu-Mega-Menu')
+              }
               aria-haspopup="true"
               aria-controls="menu-Mega-Menu"
             >
@@ -194,6 +204,9 @@ const MegaMenu = () => {
                   href="/#mega-menu"
                   className="nav__item--link nav__item--link-back"
                   onClick={(e) => toggleSubMenu(e, 'menu-Mega-Menu')}
+                  onKeyDown={(e) =>
+                    a11yClick(e) && toggleSubMenu(e, 'menu-Mega-Menu')
+                  }
                   aria-haspopup="true"
                   aria-controls="nav-main-Mega-Menu"
                 >
@@ -248,6 +261,10 @@ const MegaMenu = () => {
                   onClick={(e) =>
                     toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-3')
                   }
+                  onKeyDown={(e) =>
+                    a11yClick(e) &&
+                    toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-3')
+                  }
                   aria-haspopup="true"
                   aria-controls="menu-Mega-Menu-Sub-menu-item-3"
                 >
@@ -279,6 +296,10 @@ const MegaMenu = () => {
                       href="/#sub-menu-item-3"
                       className="nav__item--link nav__item--link-back"
                       onClick={(e) =>
+                        toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-3')
+                      }
+                      onKeyDown={(e) =>
+                        a11yClick(e) &&
                         toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-3')
                       }
                       aria-haspopup="true"
@@ -357,6 +378,10 @@ const MegaMenu = () => {
                   onClick={(e) =>
                     toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-4')
                   }
+                  onKeyDown={(e) =>
+                    a11yClick(e) &&
+                    toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-4')
+                  }
                   aria-haspopup="true"
                   aria-controls="menu-Mega-Menu-Sub-menu-item-4"
                 >
@@ -388,6 +413,10 @@ const MegaMenu = () => {
                       href="/#sub-menu-item-4"
                       className="nav__item--link nav__item--link-back"
                       onClick={(e) =>
+                        toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-4')
+                      }
+                      onKeyDown={(e) =>
+                        a11yClick(e) &&
                         toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-4')
                       }
                       aria-haspopup="true"
@@ -470,6 +499,9 @@ const MegaMenu = () => {
                 ``
               }`}
               onClick={(e) => toggleSubMenu(e, 'menu-Simple-Menu')}
+              onKeyDown={(e) =>
+                a11yClick(e) && toggleSubMenu(e, 'menu-Simple-Menu')
+              }
               aria-haspopup="true"
               aria-controls="menu-Simple-Menu"
             >
@@ -495,6 +527,9 @@ const MegaMenu = () => {
                   href="/#simple-menu"
                   className="nav__item--link nav__item--link-back"
                   onClick={(e) => toggleSubMenu(e, 'menu-Simple-Menu')}
+                  onKeyDown={(e) =>
+                    a11yClick(e) && toggleSubMenu(e, 'menu-Simple-Menu')
+                  }
                   aria-haspopup="true"
                   aria-controls="nav-main-Simple-Menu"
                 >
