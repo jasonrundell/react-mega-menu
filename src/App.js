@@ -24,6 +24,19 @@ function App() {
             Check out the open-source repository on GitHub
           </a>
         </section>
+        <section>
+          <h1>Features</h1>
+          <ul>
+            <li>
+              Unified menu: Maintain one menu instead of a 'desktop' version and
+              a 'mobile' version.
+            </li>
+            <li>Menus are accessible through key inputs</li>
+            <li>Fly-out menus</li>
+            <li>W3C Valid Markup</li>
+            <li>WCAG 2.1 AAA compliant</li>
+          </ul>
+        </section>
       </main>
     </div>
   )

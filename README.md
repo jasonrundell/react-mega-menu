@@ -3,12 +3,16 @@
 A React project which aims to be a responsive and accessible boilerplate Mega
 Menu.
 
-## Objective
+## Features
 
 - Responsive
 - Accessible
 - WCAG 2.1 AAA compliant
 - W3C valid
+- Fly-out menus
+- Unified menu: Maintain one menu instead of a 'desktop' version and a 'mobile'
+  version
+- Menus are accessible through key inputs
 
 ## View demo
 
