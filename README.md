@@ -44,3 +44,48 @@ Visit:
 
 Icons from the **Free for Web** download pack by
 [Font Awesome](https://fontawesome.com/download)
+
+```jsx
+
+// Main
+<ul
+  role="menubar"
+  aria-label="Main Menu"
+  className="nav__list"
+  id="menubar-main"
+>
+
+// Mega
+<ul
+  role="menu"
+  className={`nav__list nav__sub nav__mega nav__dropdown ${
+    (activeMenus.includes('menu-Mega-Menu') && `nav--open`) ||
+    `nav--closed`
+  }`}
+  id="menu-Mega-Menu"
+  aria-labelledby="menu-Mega-Menu"
+>
+
+// Sub sub
+<ul
+  role="menu"
+  id="menu-Mega-Menu-Sub-menu-item-3"
+  className={`nav__list nav__sub nav__sub-sub ${
+    (activeMenus.includes('menu-Mega-Menu-Sub-menu-item-3') &&
+      `nav--open`) ||
+    `nav--closed`
+  }`}
+  aria-labelledby="menuitem-Mega-Menu-Sub-menu-item-3"
+>
+
+// Dropdown
+<ul
+  role="menu"
+  className={`nav__list nav__sub nav__dropdown ${
+    (activeMenus.includes('menu-Simple-Menu') && `nav--open`) ||
+    `nav--closed`
+  }`}
+  id="menu-Simple-Menu"
+  aria-labelledby="menu-Simple-Menu"
+>
+```

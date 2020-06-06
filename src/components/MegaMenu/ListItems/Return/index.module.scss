@@ -1,0 +1,24 @@
+@import '../../../../styles/breakpoints.scss';
+
+.root {
+  list-style: none;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 1rem;
+  margin-left: 0;
+  padding: 0;
+  @include respond-to('large') {
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 2rem;
+    align-items: center;
+  }
+}
+
+.heading {
+  font-weight: 700;
+}

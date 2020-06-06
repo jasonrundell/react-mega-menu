@@ -20,8 +20,15 @@ const Nav = ({ children, ariaLabel, activeState }) => {
   )
 }
 
+Nav.defaultProps = {
+  ariaLabel: 'Main Navigation',
+  activeState: 'closed',
+}
+
 Nav.propTypes = {
   children: PropTypes.node.isRequired,
+  ariaLabel: PropTypes.string.isRequired,
+  activeState: PropTypes.oneOf(['open', 'closed']).isRequired,
 }
 
 export default Nav
