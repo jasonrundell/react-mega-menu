@@ -13,6 +13,7 @@ Menu.
 - Unified menu: Maintain one menu instead of a 'desktop' version and a 'mobile'
   version
 - Menus are accessible through key inputs
+- Styled with SASS modules
 
 ## View demo
 

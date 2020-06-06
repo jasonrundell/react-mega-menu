@@ -35,6 +35,7 @@ function App() {
             <li>Fly-out menus</li>
             <li>W3C Valid Markup</li>
             <li>WCAG 2.1 AAA compliant</li>
+            <li>Styled with SASS modules</li>
           </ul>
         </section>
       </main>

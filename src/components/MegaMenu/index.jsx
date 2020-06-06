@@ -1,7 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react'
 
 // Components
-import HamburgerButton from '../Buttons/Hamburger'
+import HamburgerButton from './Buttons/Hamburger'
+import Nav from './Nav'
 
 // State Machines
 import { MenuStateMachine } from '../../state-machines/menus'
@@ -143,10 +144,7 @@ const MegaMenu = () => {
         state={megaMenuState}
         onClick={(e) => toggleMegaMenu(e, 'nav-main')}
       />
-      <nav
-        className={`nav__menu-container ${`nav--${megaMenuState}`}`}
-        aria-label="Main Navigation"
-      >
+      <Nav activeState={megaMenuState} ariaLabel="Main Navigation">
         <ul
           role="menubar"
           aria-label="Main Menu"
@@ -591,7 +589,7 @@ const MegaMenu = () => {
             </a>
           </li>
         </ul>
-      </nav>
+      </Nav>
     </div>
   )
 }
