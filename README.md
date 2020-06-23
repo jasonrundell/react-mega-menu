@@ -32,6 +32,8 @@ Visit:
 
 [JavaScript Event KeyCodes by Wes Bos](https://keycode.info/)
 
+[Supporting the keyboard for mobile](http://simplyaccessible.com/article/mobile-keyboard-support/)
+
 ## Accessible Menus
 
 [Deque University](https://dequeuniversity.com/)
