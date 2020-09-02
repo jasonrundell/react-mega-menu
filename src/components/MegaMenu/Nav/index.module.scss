@@ -16,6 +16,7 @@
   padding-bottom: 1rem;
   padding-left: 1rem;
   border-right: 0.25rem solid #000;
+  overflow-y: scroll;
 
   @include respond-to('large') {
     left: 0;
@@ -25,6 +26,7 @@
     flex-direction: row;
     border-right: none;
     border-bottom: 0.0625rem solid #000;
+    overflow-y: initial;
   }
 
   &.closed {
