@@ -3,6 +3,10 @@ import React, { useRef, useState, useEffect } from 'react'
 // Components
 import HamburgerButton from './Buttons/Hamburger'
 import Nav from './Nav'
+import MainList from './Lists/Main'
+import MegaList from './Lists/Mega'
+import ReturnItem from './ListItems/Return'
+import ReturnLink from './Links/Return'
 
 // State Machines
 import { MenuStateMachine } from '../../state-machines/menus'
@@ -11,9 +15,9 @@ import { MenuStateMachine } from '../../state-machines/menus'
 import './index.scss'
 
 const MegaMenu = () => {
-  const [megaMenuState, setMegaMenuState] = useState('')
-  const [subMenuState, setSubMenuState] = useState('')
-  const [subSubMenuState, setSubSubMenuState] = useState('')
+  const [megaMenuState, setMegaMenuState] = useState('closed')
+  const [subMenuState, setSubMenuState] = useState('closed')
+  const [subSubMenuState, setSubSubMenuState] = useState('closed')
   const [activeMenus, setActiveMenus] = useState([]) // array that captures the ids of active menus
   const [isMobile, setIsMobile] = useState(true) // array that captures the ids of active menus
   const wrapperRef = useRef(null) // used to detect clicks outside of component
@@ -145,12 +149,7 @@ const MegaMenu = () => {
         onClick={(e) => toggleMegaMenu(e, 'nav-main')}
       />
       <Nav activeState={megaMenuState} ariaLabel="Main Navigation">
-        <ul
-          role="menubar"
-          aria-label="Main Menu"
-          className="nav__list"
-          id="menubar-main"
-        >
+        <MainList ariaLabel="Main Menu" id="menubar-main">
           <li role="none" id="nav-home" className="nav__item">
             <a
               role="menuitem"
@@ -182,35 +181,25 @@ const MegaMenu = () => {
             >
               Mega Menu
             </a>
-            <ul
-              role="menu"
-              className={`nav__list nav__sub nav__mega nav__dropdown ${
-                (activeMenus.includes('menu-Mega-Menu') && `nav--open`) ||
-                `nav--closed`
-              }`}
+            <MegaList
               id="menu-Mega-Menu"
-              aria-labelledby="menu-Mega-Menu"
+              activeState={
+                activeMenus.includes('menu-Mega-Menu') ? 'open' : 'closed'
+              }
             >
-              <li
-                role="none"
-                id="nav-Mega-Menu-back"
-                className="nav__item nav__item--heading"
-              >
-                <a
-                  role="menuitem"
+              <ReturnItem id="nav-Mega-Menu-back" isHeading={true}>
+                <ReturnLink
                   id="menuitem-Mega-Menu-back"
                   href="/#mega-menu"
-                  className="nav__item--link nav__item--link-back"
                   onClick={(e) => toggleSubMenu(e, 'menu-Mega-Menu')}
                   onKeyDown={(e) =>
                     a11yClick(e) && toggleSubMenu(e, 'menu-Mega-Menu')
                   }
-                  aria-haspopup="true"
-                  aria-controls="nav-main-Mega-Menu"
+                  ariaControls="nav-main-Mega-Menu"
                 >
                   Mega Menu
-                </a>
-              </li>
+                </ReturnLink>
+              </ReturnItem>
               <li
                 role="none"
                 id="nav-Mega-Menu-Sub-menu-item-1"
@@ -362,7 +351,6 @@ const MegaMenu = () => {
                   </li>
                 </ul>
               </li>
-
               <li
                 role="none"
                 id="nav-Mega-Menu-Sub-menu-item-4"
@@ -481,7 +469,7 @@ const MegaMenu = () => {
                   </li>
                 </ul>
               </li>
-            </ul>
+            </MegaList>
           </li>
           <li
             role="none"
@@ -588,7 +576,7 @@ const MegaMenu = () => {
               Contact
             </a>
           </li>
-        </ul>
+        </MainList>
       </Nav>
     </div>
   )
