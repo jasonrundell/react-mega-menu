@@ -190,7 +190,7 @@ const MegaMenu = () => {
               <ReturnItem id="nav-Mega-Menu-back" isHeading={true}>
                 <ReturnLink
                   id="menuitem-Mega-Menu-back"
-                  href="/#mega-menu"
+                  url="/#mega-menu"
                   onClick={(e) => toggleSubMenu(e, 'menu-Mega-Menu')}
                   onKeyDown={(e) =>
                     a11yClick(e) && toggleSubMenu(e, 'menu-Mega-Menu')
