@@ -8,7 +8,7 @@ import { classNames } from '../../../../utils/css'
 import styles from './index.module.scss'
 
 const ReturnItem = ({ children, isHeading, id }) => {
-  const rootClasses = classNames(styles.root, isHeading && styles[isHeading])
+  const rootClasses = classNames(styles.root, isHeading && styles['heading'])
 
   return (
     <li role="none" id={id} className={rootClasses}>
