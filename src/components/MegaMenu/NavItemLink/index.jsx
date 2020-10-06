@@ -12,6 +12,8 @@ const NavItemLink = ({
   role,
   href,
   isBack,
+  isForward,
+  isActive,
   className,
   onClick,
   onKeyDown,
@@ -22,6 +24,8 @@ const NavItemLink = ({
   const rootClasses = classNames(
     styles.root,
     isBack && styles['back'],
+    isForward && styles['forward'],
+    isActive && styles['active'],
     className && className
   )
   return (
@@ -43,6 +47,8 @@ const NavItemLink = ({
 NavItemLink.defaultProps = {
   role: 'menuitem',
   isBack: false,
+  isForward: false,
+  isActive: false,
 }
 
 NavItemLink.propTypes = {
@@ -50,6 +56,8 @@ NavItemLink.propTypes = {
   role: PropTypes.string,
   href: PropTypes.string.isRequired,
   isBack: PropTypes.bool,
+  isForward: PropTypes.bool,
+  isActive: PropTypes.bool,
   className: PropTypes.string,
   onClick: PropTypes.func,
   onKeyDown: PropTypes.func,

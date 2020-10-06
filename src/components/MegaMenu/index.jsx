@@ -9,6 +9,7 @@ import ReturnItem from './ListItems/Return'
 import ReturnLink from './Links/Return'
 import NavItem from './NavItem'
 import NavItemLink from './NavItemLink'
+import NavList from './NavList'
 
 // State Machines
 import { MenuStateMachine } from '../../state-machines/menus'
@@ -163,22 +164,21 @@ const MegaMenu = () => {
           </NavItem>
 
           <NavItem id="nav-Mega-Menu" role="none" isChildren>
-            <a
+            <NavItemLink
               role="menuitem"
               id="menuitem-Mega-Menu"
               href="/#mega-menu"
-              className={`nav__item--link nav__item--link-forward ${
-                (activeMenus.includes('menu-Mega-Menu') && `nav--active`) || ``
-              }`}
+              isForward
+              isActive={activeMenus.includes('menu-Mega-Menu') ? true : false}
               onClick={(e) => toggleSubMenu(e, 'menu-Mega-Menu')}
               onKeyDown={(e) =>
                 a11yClick(e) && toggleSubMenu(e, 'menu-Mega-Menu')
               }
-              aria-haspopup="true"
-              aria-controls="menu-Mega-Menu"
+              ariaHaspopup="true"
+              ariaControls="menu-Mega-Menu"
             >
               Mega Menu
-            </a>
+            </NavItemLink>
             <MegaList
               id="menu-Mega-Menu"
               activeState={
@@ -228,11 +228,11 @@ const MegaMenu = () => {
                 role="none"
                 isChildren
               >
-                <a
+                <NavItemLink
                   id="menuitem-Mega-Menu-Sub-menu-item-3"
                   role="menuitem"
                   href="/#sub-menu-item-3"
-                  className="nav__item--link nav__item--link-forward"
+                  isForward
                   onClick={(e) =>
                     toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-3')
                   }
@@ -240,25 +240,27 @@ const MegaMenu = () => {
                     a11yClick(e) &&
                     toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-3')
                   }
-                  aria-haspopup="true"
-                  aria-controls="menu-Mega-Menu-Sub-menu-item-3"
+                  ariaHaspopup="true"
+                  ariaControls="menu-Mega-Menu-Sub-menu-item-3"
                 >
                   Sub menu item 3
-                </a>
+                </NavItemLink>
                 <p className="nav__item--description">
                   Three lined small description that accompanies link in the
                   React Mega Menu project. This maybe too much text? Who's to
                   say, really. We'll leave it to fate to decide.
                 </p>
-                <ul
-                  role="menu"
+                <NavList
                   id="menu-Mega-Menu-Sub-menu-item-3"
-                  className={`nav__list nav__sub nav__sub-sub ${
-                    (activeMenus.includes('menu-Mega-Menu-Sub-menu-item-3') &&
-                      `nav--open`) ||
-                    `nav--closed`
-                  }`}
-                  aria-labelledby="menuitem-Mega-Menu-Sub-menu-item-3"
+                  role="menu"
+                  isSub
+                  isSubSub
+                  isOpen={
+                    activeMenus.includes('menu-Mega-Menu-Sub-menu-item-3')
+                      ? true
+                      : false
+                  }
+                  ariaLabelledby="menuitem-Mega-Menu-Sub-menu-item-3"
                 >
                   <NavItem
                     id="nav-Mega-Menu-Sub-menu-item-3-back"
@@ -313,32 +315,31 @@ const MegaMenu = () => {
                     role="none"
                     isChildren
                   >
-                    <a
-                      role="menuitem"
+                    <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-3.3"
+                      role="menuitem"
                       href="/#sub-menu-item-3.3"
-                      className="nav__item--link"
                     >
                       Sub menu item 3.3
-                    </a>
+                    </NavItemLink>
                     <p className="nav__item--description">
                       Three lined small description that accompanies link in the
                       React Mega Menu project. This maybe too much text? Who's
                       to say, really. We'll leave it to fate to decide.
                     </p>
                   </NavItem>
-                </ul>
+                </NavList>
               </NavItem>
               <NavItem
                 id="nav-Mega-Menu-Sub-menu-item-4"
                 role="none"
                 isChildren
               >
-                <a
-                  role="menuitem"
+                <NavItemLink
                   id="menuitem-Mega-Menu-Sub-menu-item-4"
+                  role="menuitem"
                   href="/#sub-menu-item-4"
-                  className="nav__item--link nav__item--link-forward"
+                  isForward
                   onClick={(e) =>
                     toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-4')
                   }
@@ -346,25 +347,27 @@ const MegaMenu = () => {
                     a11yClick(e) &&
                     toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-4')
                   }
-                  aria-haspopup="true"
-                  aria-controls="menu-Mega-Menu-Sub-menu-item-4"
+                  ariaHaspopup="true"
+                  ariaControls="menu-Mega-Menu-Sub-menu-item-4"
                 >
                   Sub menu item 4
-                </a>
+                </NavItemLink>
                 <p className="nav__item--description">
                   Three lined small description that accompanies link in the
                   React Mega Menu project. This maybe too much text? Who's to
                   say, really. We'll leave it to fate to decide.
                 </p>
-                <ul
-                  role="menu"
+                <NavList
                   id="menu-Mega-Menu-Sub-menu-item-4"
-                  className={`nav__list nav__sub nav__sub-sub ${
-                    (activeMenus.includes('menu-Mega-Menu-Sub-menu-item-4') &&
-                      `nav--open`) ||
-                    `nav--closed`
-                  }`}
-                  aria-labelledby="menuitem-Mega-Menu-Sub-menu-item-4"
+                  role="menu"
+                  isSub
+                  isSubSub
+                  isOpen={
+                    activeMenus.includes('menu-Mega-Menu-Sub-menu-item-4')
+                      ? true
+                      : false
+                  }
+                  ariaLabelledby="menuitem-Mega-Menu-Sub-menu-item-4"
                 >
                   <NavItem
                     id="nav-Mega-Menu-Sub-menu-item-4-back"
@@ -425,36 +428,33 @@ const MegaMenu = () => {
                       Sub menu item 4.4
                     </NavItemLink>
                   </NavItem>
-                </ul>
+                </NavList>
               </NavItem>
             </MegaList>
           </NavItem>
           <NavItem id="nav-Simple-Menu" role="none" isChildren>
-            <a
-              role="menuitem"
+            <NavItemLink
               id="menuitem-Simple-Menu"
+              role="menuitem"
               href="/#simple-menu"
-              className={`nav__item--link nav__item--link-forward ${
-                (activeMenus.includes('menu-Simple-Menu') && `nav--active`) ||
-                ``
-              }`}
+              isForward
+              isActive={activeMenus.includes('menu-Simple-Menu') ? true : false}
               onClick={(e) => toggleSubMenu(e, 'menu-Simple-Menu')}
               onKeyDown={(e) =>
                 a11yClick(e) && toggleSubMenu(e, 'menu-Simple-Menu')
               }
-              aria-haspopup="true"
-              aria-controls="menu-Simple-Menu"
+              ariaHaspopup="true"
+              ariaControls="menu-Simple-Menu"
             >
               Simple Menu
-            </a>
-            <ul
-              role="menu"
-              className={`nav__list nav__sub nav__dropdown ${
-                (activeMenus.includes('menu-Simple-Menu') && `nav--open`) ||
-                `nav--closed`
-              }`}
+            </NavItemLink>
+            <NavList
               id="menu-Simple-Menu"
-              aria-labelledby="menu-Simple-Menu"
+              role="menu"
+              isSub
+              isDropdown
+              isOpen={activeMenus.includes('menu-Simple-Menu') ? true : false}
+              ariaLabelledby="menu-Simple-Menu"
             >
               <NavItem id="nav-Simple-Menu-back" role="none" isHeading>
                 <NavItemLink
@@ -499,7 +499,7 @@ const MegaMenu = () => {
                   Sub menu item 3
                 </NavItemLink>
               </NavItem>
-            </ul>
+            </NavList>
           </NavItem>
           <NavItem id="nav-contact" role="none">
             <NavItemLink id="menuitem-contact" role="menuitem" href="/#contact">
