@@ -7,14 +7,14 @@ import { classNames } from '../../../utils/css'
 // CSS
 import styles from './index.module.scss'
 
-const Nav = ({ children, ariaLabel, activeState }) => {
+const Nav = ({ id, children, ariaLabel, activeState }) => {
   const rootClasses = classNames(
     styles.root,
     activeState && styles[activeState]
   )
 
   return (
-    <nav className={rootClasses} aria-label={ariaLabel}>
+    <nav id={id} className={rootClasses} aria-label={ariaLabel}>
       {children}
     </nav>
   )
@@ -26,6 +26,7 @@ Nav.defaultProps = {
 }
 
 Nav.propTypes = {
+  id: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   ariaLabel: PropTypes.string.isRequired,
   activeState: PropTypes.oneOf(['open', 'closed']).isRequired,

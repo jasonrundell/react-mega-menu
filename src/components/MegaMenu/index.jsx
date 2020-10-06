@@ -7,6 +7,8 @@ import MainList from './Lists/Main'
 import MegaList from './Lists/Mega'
 import ReturnItem from './ListItems/Return'
 import ReturnLink from './Links/Return'
+import NavItem from './NavItem'
+import NavItemLink from './NavItemLink'
 
 // State Machines
 import { MenuStateMachine } from '../../state-machines/menus'
@@ -148,23 +150,19 @@ const MegaMenu = () => {
         state={megaMenuState}
         onClick={(e) => toggleMegaMenu(e, 'nav-main')}
       />
-      <Nav activeState={megaMenuState} ariaLabel="Main Navigation">
-        <MainList ariaLabel="Main Menu" id="menubar-main">
-          <li role="none" id="nav-home" className="nav__item">
-            <a
-              role="menuitem"
-              id="menuitem-home"
-              href="/#home"
-              className="nav__item--link"
-            >
+      <Nav
+        id="site-nav"
+        activeState={megaMenuState}
+        ariaLabel="Main Navigation"
+      >
+        <MainList id="menubar-main" ariaLabel="Main Menu">
+          <NavItem role="none" id="nav-home">
+            <NavItemLink id="menuitem-home" role="menuitem" href="/#home">
               Home
-            </a>
-          </li>
-          <li
-            role="none"
-            id="nav-Mega-Menu"
-            className="nav__item nav__item--has-children"
-          >
+            </NavItemLink>
+          </NavItem>
+
+          <NavItem id="nav-Mega-Menu" role="none" hasChildren>
             <a
               role="menuitem"
               id="menuitem-Mega-Menu"
@@ -200,45 +198,35 @@ const MegaMenu = () => {
                   Mega Menu
                 </ReturnLink>
               </ReturnItem>
-              <li
-                role="none"
-                id="nav-Mega-Menu-Sub-menu-item-1"
-                className="nav__item"
-              >
-                <a
-                  role="menuitem"
+              <NavItem id="nav-Mega-Menu-Sub-menu-item-1" role="none">
+                <NavItemLink
                   id="menuitem-Mega-Menu-Sub-menu-item-1"
+                  role="menuitem"
                   href="/#sub-menu-item-1"
-                  className="nav__item--link"
                 >
                   Sub menu item 1
-                </a>
+                </NavItemLink>
                 <p className="nav__item--description">
                   Single line description that accompanies link
                 </p>
-              </li>
-              <li
-                role="none"
-                id="nav-Mega-Menu-Sub-menu-item-2"
-                className="nav__item"
-              >
-                <a
-                  role="menuitem"
+              </NavItem>
+              <NavItem id="nav-Mega-Menu-Sub-menu-item-2" role="none">
+                <NavItemLink
                   id="menuitem-Mega-Menu-Sub-menu-item-2"
+                  role="menuitem"
                   href="/#sub-menu-item-2"
-                  className="nav__item--link"
                 >
                   Sub menu item 2
-                </a>
+                </NavItemLink>
                 <p className="nav__item--description">
                   Double lined small description that accompanies link in the
                   React Mega Menu project
                 </p>
-              </li>
-              <li
-                role="none"
+              </NavItem>
+              <NavItem
                 id="nav-Mega-Menu-Sub-menu-item-3"
-                className="nav__item nav__item--has-children"
+                role="none"
+                hasChildren
               >
                 <a
                   role="menuitem"
@@ -272,10 +260,10 @@ const MegaMenu = () => {
                   }`}
                   aria-labelledby="menuitem-Mega-Menu-Sub-menu-item-3"
                 >
-                  <li
-                    role="none"
+                  <NavItem
                     id="nav-Mega-Menu-Sub-menu-item-3-back"
-                    className="nav__item nav__item--heading"
+                    role="none"
+                    isHeading
                   >
                     <a
                       role="menuitem"
@@ -294,46 +282,36 @@ const MegaMenu = () => {
                     >
                       Sub menu item 3
                     </a>
-                  </li>
-                  <li
-                    role="none"
-                    id="nav-Mega-Menu-Sub-menu-item-3.1"
-                    className="nav__item"
-                  >
-                    <a
-                      role="menuitem"
+                  </NavItem>
+                  <NavItem id="nav-Mega-Menu-Sub-menu-item-3.1" role="none">
+                    <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-3.1"
+                      role="menuitem"
                       href="/#sub-menu-item-3.1"
-                      className="nav__item--link"
                     >
                       Sub menu item 3.1
-                    </a>
+                    </NavItemLink>
                     <p className="nav__item--description">
                       Single line description that accompanies link
                     </p>
-                  </li>
-                  <li
-                    role="none"
-                    id="nav-Mega-Menu-Sub-menu-item-3.2"
-                    className="nav__item"
-                  >
-                    <a
-                      role="menuitem"
+                  </NavItem>
+                  <NavItem id="nav-Mega-Menu-Sub-menu-item-3.2" role="none">
+                    <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-3.2"
+                      role="menuitem"
                       href="/#sub-menu-item-3.2"
-                      className="nav__item--link"
                     >
                       Sub menu item 3.2
-                    </a>
+                    </NavItemLink>
                     <p className="nav__item--description">
                       Double lined small description that accompanies link in
                       the React Mega Menu project
                     </p>
-                  </li>
-                  <li
-                    role="none"
+                  </NavItem>
+                  <NavItem
                     id="nav-Mega-Menu-Sub-menu-item-3.3"
-                    className="nav__item nav__item--has-children"
+                    role="none"
+                    hasChildren
                   >
                     <a
                       role="menuitem"
@@ -348,13 +326,13 @@ const MegaMenu = () => {
                       React Mega Menu project. This maybe too much text? Who's
                       to say, really. We'll leave it to fate to decide.
                     </p>
-                  </li>
+                  </NavItem>
                 </ul>
-              </li>
-              <li
-                role="none"
+              </NavItem>
+              <NavItem
                 id="nav-Mega-Menu-Sub-menu-item-4"
-                className="nav__item nav__item--has-children"
+                role="none"
+                hasChildren
               >
                 <a
                   role="menuitem"
@@ -388,10 +366,10 @@ const MegaMenu = () => {
                   }`}
                   aria-labelledby="menuitem-Mega-Menu-Sub-menu-item-4"
                 >
-                  <li
-                    role="none"
+                  <NavItem
                     id="nav-Mega-Menu-Sub-menu-item-4-back"
-                    className="nav__item nav__item--heading"
+                    role="none"
+                    IsHeading
                   >
                     <a
                       role="menuitem"
@@ -410,72 +388,48 @@ const MegaMenu = () => {
                     >
                       Sub menu item 4
                     </a>
-                  </li>
-                  <li
-                    role="none"
-                    id="nav-Mega-Menu-Sub-menu-item-4.1"
-                    className="nav__item"
-                  >
-                    <a
-                      role="menuitem"
+                  </NavItem>
+                  <NavItem id="nav-Mega-Menu-Sub-menu-item-4.1" role="none">
+                    <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-4.1"
+                      role="menuitem"
                       href="/#sub-menu-item-4.1"
-                      className="nav__item--link"
                     >
                       Sub menu item 4.1
-                    </a>
-                  </li>
-                  <li
-                    role="none"
-                    id="nav-Mega-Menu-Sub-menu-item-4.2"
-                    className="nav__item"
-                  >
-                    <a
-                      role="menuitem"
+                    </NavItemLink>
+                  </NavItem>
+                  <NavItem id="nav-Mega-Menu-Sub-menu-item-4.2" role="none">
+                    <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-4.2"
+                      role="menuitem"
                       href="/#sub-menu-item-4.2"
-                      className="nav__item--link"
                     >
                       Sub menu item 4.2
-                    </a>
-                  </li>
-                  <li
-                    role="none"
-                    id="nav-Mega-Menu-Sub-menu-item-4.3"
-                    className="nav__item"
-                  >
-                    <a
-                      role="menuitem"
+                    </NavItemLink>
+                  </NavItem>
+                  <NavItem id="nav-Mega-Menu-Sub-menu-item-4.3" role="none">
+                    <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-4.3"
+                      role="menuitem"
                       href="/#sub-menu-item-4.3"
-                      className="nav__item--link"
                     >
                       Sub menu item 4.3
-                    </a>
-                  </li>
-                  <li
-                    role="none"
-                    id="nav-Mega-Menu-Sub-menu-item-4.4"
-                    className="nav__item"
-                  >
-                    <a
-                      role="menuitem"
+                    </NavItemLink>
+                  </NavItem>
+                  <NavItem id="nav-Mega-Menu-Sub-menu-item-4.4" role="none">
+                    <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-4.4"
+                      role="menuitem"
                       href="/#sub-menu-item-4.4"
-                      className="nav__item--link"
                     >
                       Sub menu item 4.4
-                    </a>
-                  </li>
+                    </NavItemLink>
+                  </NavItem>
                 </ul>
-              </li>
+              </NavItem>
             </MegaList>
-          </li>
-          <li
-            role="none"
-            id="nav-Simple-Menu"
-            className="nav__item nav__item--has-children"
-          >
+          </NavItem>
+          <NavItem id="nav-Simple-Menu" role="none" hasChildren>
             <a
               role="menuitem"
               id="menuitem-Simple-Menu"
@@ -502,11 +456,7 @@ const MegaMenu = () => {
               id="menu-Simple-Menu"
               aria-labelledby="menu-Simple-Menu"
             >
-              <li
-                role="none"
-                id="nav-Simple-Menu-back"
-                className="nav__item nav__item--heading"
-              >
+              <NavItem id="nav-Simple-Menu-back" role="none" isHeading>
                 <a
                   role="menuitem"
                   id="menuitem-Simple-Menu-back"
@@ -521,61 +471,41 @@ const MegaMenu = () => {
                 >
                   Simple Menu
                 </a>
-              </li>
-              <li
-                role="none"
-                id="nav-Simple-Menu-Sub-menu-item-1"
-                className="nav__item"
-              >
-                <a
-                  role="menuitem"
+              </NavItem>
+              <NavItem id="nav-Simple-Menu-Sub-menu-item-1" role="none">
+                <NavItemLink
                   id="menuitem-Simple-Menu-Sub-menu-item-1"
+                  role="menuitem"
                   href="/#sub-menu-item-1"
-                  className="nav__item--link"
                 >
                   Sub menu item 1
-                </a>
-              </li>
-              <li
-                role="none"
-                id="nav-Simple-Menu-Sub-menu-item-2"
-                className="nav__item"
-              >
-                <a
-                  role="menuitem"
+                </NavItemLink>
+              </NavItem>
+              <NavItem id="nav-Simple-Menu-Sub-menu-item-2" role="none">
+                <NavItemLink
                   id="menuitem-Simple-Menu-Sub-menu-item-2"
+                  role="menuitem"
                   href="/#sub-menu-item-2"
-                  className="nav__item--link"
                 >
                   Sub menu item 2
-                </a>
-              </li>
-              <li
-                role="none"
-                id="nav-Simple-Menu-Sub-menu-item-3"
-                className="nav__item"
-              >
-                <a
-                  role="menuitem"
+                </NavItemLink>
+              </NavItem>
+              <NavItem id="nav-Simple-Menu-Sub-menu-item-3" role="none">
+                <NavItemLink
                   id="menuitem-Simple-Menu-Sub-menu-item-3"
+                  role="menuitem"
                   href="/#sub-menu-item-3"
-                  className="nav__item--link"
                 >
                   Sub menu item 3
-                </a>
-              </li>
+                </NavItemLink>
+              </NavItem>
             </ul>
-          </li>
-          <li role="none" id="nav-contact" className="nav__item">
-            <a
-              role="menuitem"
-              id="menuitem-contact"
-              href="/#contact"
-              className="nav__item--link"
-            >
+          </NavItem>
+          <NavItem id="nav-contact" role="none">
+            <NavItemLink id="menuitem-contact" role="menuitem" href="/#contact">
               Contact
-            </a>
-          </li>
+            </NavItemLink>
+          </NavItem>
         </MainList>
       </Nav>
     </div>
