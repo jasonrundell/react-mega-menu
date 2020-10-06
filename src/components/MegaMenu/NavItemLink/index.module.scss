@@ -9,3 +9,16 @@
     height: 4rem;
   }
 }
+
+// .nav__item--link-back
+.back {
+  padding-left: 2rem;
+  &::before {
+    content: url('../../../images/icons/angle-left.svg');
+    position: absolute;
+    left: 0;
+    bottom: -30%;
+    width: 1rem;
+    height: 2rem;
+  }
+}
