@@ -162,7 +162,7 @@ const MegaMenu = () => {
             </NavItemLink>
           </NavItem>
 
-          <NavItem id="nav-Mega-Menu" role="none" hasChildren>
+          <NavItem id="nav-Mega-Menu" role="none" isChildren>
             <a
               role="menuitem"
               id="menuitem-Mega-Menu"
@@ -226,11 +226,11 @@ const MegaMenu = () => {
               <NavItem
                 id="nav-Mega-Menu-Sub-menu-item-3"
                 role="none"
-                hasChildren
+                isChildren
               >
                 <a
-                  role="menuitem"
                   id="menuitem-Mega-Menu-Sub-menu-item-3"
+                  role="menuitem"
                   href="/#sub-menu-item-3"
                   className="nav__item--link nav__item--link-forward"
                   onClick={(e) =>
@@ -265,11 +265,11 @@ const MegaMenu = () => {
                     role="none"
                     isHeading
                   >
-                    <a
-                      role="menuitem"
+                    <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-3-back"
+                      role="menuitem"
                       href="/#sub-menu-item-3"
-                      className="nav__item--link nav__item--link-back"
+                      isBack
                       onClick={(e) =>
                         toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-3')
                       }
@@ -277,11 +277,11 @@ const MegaMenu = () => {
                         a11yClick(e) &&
                         toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-3')
                       }
-                      aria-haspopup="true"
-                      aria-controls="menu-Mega-Menu-Sub-menu-item-3"
+                      ariaHaspopup="true"
+                      ariaControls="menu-Mega-Menu-Sub-menu-item-3"
                     >
                       Sub menu item 3
-                    </a>
+                    </NavItemLink>
                   </NavItem>
                   <NavItem id="nav-Mega-Menu-Sub-menu-item-3.1" role="none">
                     <NavItemLink
@@ -311,7 +311,7 @@ const MegaMenu = () => {
                   <NavItem
                     id="nav-Mega-Menu-Sub-menu-item-3.3"
                     role="none"
-                    hasChildren
+                    isChildren
                   >
                     <a
                       role="menuitem"
@@ -332,7 +332,7 @@ const MegaMenu = () => {
               <NavItem
                 id="nav-Mega-Menu-Sub-menu-item-4"
                 role="none"
-                hasChildren
+                isChildren
               >
                 <a
                   role="menuitem"
@@ -371,11 +371,11 @@ const MegaMenu = () => {
                     role="none"
                     IsHeading
                   >
-                    <a
-                      role="menuitem"
+                    <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-4-back"
+                      role="menuitem"
                       href="/#sub-menu-item-4"
-                      className="nav__item--link nav__item--link-back"
+                      isBack
                       onClick={(e) =>
                         toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-4')
                       }
@@ -383,11 +383,11 @@ const MegaMenu = () => {
                         a11yClick(e) &&
                         toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-4')
                       }
-                      aria-haspopup="true"
-                      aria-controls="menu-Mega-Menu-Sub-menu-item-4"
+                      ariaHaspopup="true"
+                      ariaControls="menu-Mega-Menu-Sub-menu-item-4"
                     >
                       Sub menu item 4
-                    </a>
+                    </NavItemLink>
                   </NavItem>
                   <NavItem id="nav-Mega-Menu-Sub-menu-item-4.1" role="none">
                     <NavItemLink
@@ -429,7 +429,7 @@ const MegaMenu = () => {
               </NavItem>
             </MegaList>
           </NavItem>
-          <NavItem id="nav-Simple-Menu" role="none" hasChildren>
+          <NavItem id="nav-Simple-Menu" role="none" isChildren>
             <a
               role="menuitem"
               id="menuitem-Simple-Menu"
@@ -457,20 +457,20 @@ const MegaMenu = () => {
               aria-labelledby="menu-Simple-Menu"
             >
               <NavItem id="nav-Simple-Menu-back" role="none" isHeading>
-                <a
-                  role="menuitem"
+                <NavItemLink
                   id="menuitem-Simple-Menu-back"
+                  role="menuitem"
                   href="/#simple-menu"
-                  className="nav__item--link nav__item--link-back"
+                  isBack
                   onClick={(e) => toggleSubMenu(e, 'menu-Simple-Menu')}
                   onKeyDown={(e) =>
                     a11yClick(e) && toggleSubMenu(e, 'menu-Simple-Menu')
                   }
-                  aria-haspopup="true"
-                  aria-controls="nav-main-Simple-Menu"
+                  ariaHaspopup="true"
+                  ariaControls="nav-main-Simple-Menu"
                 >
                   Simple Menu
-                </a>
+                </NavItemLink>
               </NavItem>
               <NavItem id="nav-Simple-Menu-Sub-menu-item-1" role="none">
                 <NavItemLink
