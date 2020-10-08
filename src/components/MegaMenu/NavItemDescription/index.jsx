@@ -8,7 +8,7 @@ import { classNames } from '../../../utils/css'
 import styles from './index.module.scss'
 
 const NavItemDescription = ({ className, children }) => {
-  const rootClasses = classNames(styles.root, className && className)
+  const rootClasses = classNames(styles['root'], className && className)
   return <p className={rootClasses}>{children}</p>
 }
 

@@ -9,7 +9,7 @@ import styles from './index.module.scss'
 
 const Nav = ({ id, children, ariaLabel, activeState }) => {
   const rootClasses = classNames(
-    styles.root,
+    styles['root'],
     activeState && styles[activeState]
   )
 

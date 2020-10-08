@@ -22,7 +22,7 @@ const NavItemLink = ({
   children,
 }) => {
   const rootClasses = classNames(
-    styles.root,
+    styles['root'],
     isBack && styles['back'],
     isForward && styles['forward'],
     isActive && styles['active'],

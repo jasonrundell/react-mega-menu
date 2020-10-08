@@ -17,7 +17,7 @@ const NavItem = ({
   children,
 }) => {
   const rootClasses = classNames(
-    styles.root,
+    styles['root'],
     isHeading && styles['heading'],
     isChildren && styles['children'],
     isForward && styles['forward'],
