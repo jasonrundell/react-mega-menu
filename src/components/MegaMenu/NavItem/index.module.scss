@@ -21,6 +21,9 @@
 
 .heading {
   font-weight: 700;
+  @include respond-to('large') {
+    display: none;
+  }
 }
 
 .children {

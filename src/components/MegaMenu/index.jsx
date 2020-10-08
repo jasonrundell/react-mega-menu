@@ -5,8 +5,6 @@ import HamburgerButton from './Buttons/Hamburger'
 import Nav from './Nav'
 import MainList from './Lists/Main'
 import MegaList from './Lists/Mega'
-import ReturnItem from './ListItems/Return'
-import ReturnLink from './Links/Return'
 import NavItem from './NavItem'
 import NavItemLink from './NavItemLink'
 import NavList from './NavList'
@@ -186,19 +184,20 @@ const MegaMenu = () => {
                 activeMenus.includes('menu-Mega-Menu') ? 'open' : 'closed'
               }
             >
-              <ReturnItem id="nav-Mega-Menu-back" isHeading={true}>
-                <ReturnLink
+              <NavItem id="nav-Mega-Menu-back" isHeading={true}>
+                <NavItemLink
                   id="menuitem-Mega-Menu-back"
-                  url="/#mega-menu"
+                  href="/#mega-menu"
                   onClick={(e) => toggleSubMenu(e, 'menu-Mega-Menu')}
                   onKeyDown={(e) =>
                     a11yClick(e) && toggleSubMenu(e, 'menu-Mega-Menu')
                   }
                   ariaControls="nav-main-Mega-Menu"
+                  isBack
                 >
                   Mega Menu
-                </ReturnLink>
-              </ReturnItem>
+                </NavItemLink>
+              </NavItem>
               <NavItem id="nav-Mega-Menu-Sub-menu-item-1" role="none">
                 <NavItemLink
                   id="menuitem-Mega-Menu-Sub-menu-item-1"
