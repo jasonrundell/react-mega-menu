@@ -10,12 +10,13 @@ import ReturnLink from './Links/Return'
 import NavItem from './NavItem'
 import NavItemLink from './NavItemLink'
 import NavList from './NavList'
+import NavItemDescription from './NavItemDescription'
 
 // State Machines
 import { MenuStateMachine } from '../../state-machines/menus'
 
 // CSS
-import './index.scss'
+import styles from './index.module.scss'
 
 const MegaMenu = () => {
   const [megaMenuState, setMegaMenuState] = useState('closed')
@@ -145,7 +146,7 @@ const MegaMenu = () => {
   useOutsideAlerter(wrapperRef) // create bindings for closing menu from outside events
 
   return (
-    <div role="navigation" className="nav__container" ref={wrapperRef}>
+    <div role="navigation" className={styles['root']} ref={wrapperRef}>
       <HamburgerButton
         label="Menu"
         state={megaMenuState}
@@ -206,9 +207,9 @@ const MegaMenu = () => {
                 >
                   Sub menu item 1
                 </NavItemLink>
-                <p className="nav__item--description">
+                <NavItemDescription>
                   Single line description that accompanies link
-                </p>
+                </NavItemDescription>
               </NavItem>
               <NavItem id="nav-Mega-Menu-Sub-menu-item-2" role="none">
                 <NavItemLink
@@ -218,10 +219,10 @@ const MegaMenu = () => {
                 >
                   Sub menu item 2
                 </NavItemLink>
-                <p className="nav__item--description">
+                <NavItemDescription>
                   Double lined small description that accompanies link in the
                   React Mega Menu project
-                </p>
+                </NavItemDescription>
               </NavItem>
               <NavItem
                 id="nav-Mega-Menu-Sub-menu-item-3"
@@ -245,11 +246,11 @@ const MegaMenu = () => {
                 >
                   Sub menu item 3
                 </NavItemLink>
-                <p className="nav__item--description">
+                <NavItemDescription>
                   Three lined small description that accompanies link in the
                   React Mega Menu project. This maybe too much text? Who's to
                   say, really. We'll leave it to fate to decide.
-                </p>
+                </NavItemDescription>
                 <NavList
                   id="menu-Mega-Menu-Sub-menu-item-3"
                   role="menu"
@@ -293,9 +294,9 @@ const MegaMenu = () => {
                     >
                       Sub menu item 3.1
                     </NavItemLink>
-                    <p className="nav__item--description">
+                    <NavItemDescription>
                       Single line description that accompanies link
-                    </p>
+                    </NavItemDescription>
                   </NavItem>
                   <NavItem id="nav-Mega-Menu-Sub-menu-item-3.2" role="none">
                     <NavItemLink
@@ -305,10 +306,10 @@ const MegaMenu = () => {
                     >
                       Sub menu item 3.2
                     </NavItemLink>
-                    <p className="nav__item--description">
+                    <NavItemDescription>
                       Double lined small description that accompanies link in
                       the React Mega Menu project
-                    </p>
+                    </NavItemDescription>
                   </NavItem>
                   <NavItem
                     id="nav-Mega-Menu-Sub-menu-item-3.3"
@@ -322,11 +323,11 @@ const MegaMenu = () => {
                     >
                       Sub menu item 3.3
                     </NavItemLink>
-                    <p className="nav__item--description">
+                    <NavItemDescription>
                       Three lined small description that accompanies link in the
                       React Mega Menu project. This maybe too much text? Who's
                       to say, really. We'll leave it to fate to decide.
-                    </p>
+                    </NavItemDescription>
                   </NavItem>
                 </NavList>
               </NavItem>
@@ -352,11 +353,11 @@ const MegaMenu = () => {
                 >
                   Sub menu item 4
                 </NavItemLink>
-                <p className="nav__item--description">
+                <NavItemDescription>
                   Three lined small description that accompanies link in the
                   React Mega Menu project. This maybe too much text? Who's to
                   say, really. We'll leave it to fate to decide.
-                </p>
+                </NavItemDescription>
                 <NavList
                   id="menu-Mega-Menu-Sub-menu-item-4"
                   role="menu"

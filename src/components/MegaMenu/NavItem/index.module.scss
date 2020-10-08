@@ -23,7 +23,6 @@
   font-weight: 700;
 }
 
-// nav__item--has-children
 .children {
   @include respond-to('large') {
     display: flex;
@@ -31,7 +30,6 @@
   }
 }
 
-// nav__item--link-forward
 .forward {
   @include respond-to('large') {
     margin-right: 1rem;

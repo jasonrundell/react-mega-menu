@@ -10,7 +10,6 @@
   }
 }
 
-// .nav__item--link-forward
 .forward {
   @include respond-to('large') {
     margin-right: 1rem;
@@ -33,7 +32,6 @@
   }
 }
 
-// .nav__item--link-back
 .back {
   padding-left: 2rem;
   &::before {
@@ -46,7 +44,6 @@
   }
 }
 
-// nav--active
 .active {
   &::after {
     @include respond-to('large') {
