@@ -25,8 +25,9 @@
 
     @include respond-to('large') {
       content: url('../../../images/icons/angle-up.svg');
-      top: 1.25rem;
-      right: -1.5rem;
+      top: 0.25rem;
+      right: -0.5rem;
+      bottom: initial;
       width: 1rem;
     }
   }
@@ -47,10 +48,8 @@
 .active {
   &::after {
     @include respond-to('large') {
-      content: url('../../../images/icons/angle-down.svg');
-      bottom: 1rem;
-      right: -1.5rem;
-      width: 1rem;
+      transform: rotate(180deg);
+      top: 0;
     }
   }
 }
