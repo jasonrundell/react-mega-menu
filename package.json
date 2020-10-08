@@ -41,7 +41,7 @@
   },
   "husky": {
     "hooks": {
-      "commit": "npm run format"
+      "pre-commit": "npm run format"
     }
   }
 }
