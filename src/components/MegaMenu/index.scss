@@ -1,0 +1,330 @@
+@import '../../styles/animations.scss';
+@import '../../styles/breakpoints.scss';
+
+.nav__container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4rem;
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  flex-direction: row;
+  background-color: #fff;
+  width: 100%;
+  padding-top: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  border-bottom: 0.0625rem solid #000;
+}
+
+.nav__menu-container {
+  position: absolute;
+  top: 4rem;
+  left: -100%;
+  width: 100%;
+  height: calc(100vh - 4rem);
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-top: 0.0625rem solid grey;
+  padding-top: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  border-right: 0.25rem solid #000;
+
+  @include respond-to('large') {
+    left: 0;
+    top: 0;
+    border-top: none;
+    height: 4rem;
+    flex-direction: row;
+    border-right: none;
+    border-bottom: 0.0625rem solid #000;
+  }
+
+  &.nav--closed {
+    @include respond-to('large') {
+      display: flex;
+      opacity: 1;
+    }
+  }
+
+  .nav__item:first-child {
+    @include respond-to('large') {
+      margin-left: 0;
+    }
+  }
+}
+
+.nav__list {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  padding-top: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  width: 100%;
+  height: calc(100vh - 4rem);
+  z-index: 1;
+
+  @include respond-to('large') {
+    flex-direction: row;
+    height: 4rem;
+  }
+}
+
+.nav__item {
+  list-style: none;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 1rem;
+  margin-left: 0;
+  padding: 0;
+  @include respond-to('large') {
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 2rem;
+    align-items: center;
+  }
+}
+
+.nav__item--link {
+  width: 100%;
+  display: flex;
+  position: relative;
+  @include respond-to('large') {
+    align-items: center;
+    height: 4rem;
+  }
+}
+
+.nav__item--description {
+  color: #000;
+  font-size: 0.75rem;
+  @include respond-to('large') {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.nav__item--link-forward {
+  @include respond-to('large') {
+    margin-right: 1rem;
+  }
+
+  &::after {
+    content: url('../../images/icons/angle-right.svg');
+    position: absolute;
+    right: 2rem;
+    bottom: -30%;
+    width: 1rem;
+    height: 2rem;
+
+    @include respond-to('large') {
+      content: url('../../images/icons/angle-up.svg');
+      top: 1.25rem;
+      right: -1.5rem;
+      width: 1rem;
+    }
+  }
+}
+
+.nav__item--link-back {
+  padding-left: 2rem;
+  &::before {
+    content: url('../../images/icons/angle-left.svg');
+    position: absolute;
+    left: 0;
+    bottom: -30%;
+    width: 1rem;
+    height: 2rem;
+  }
+}
+
+.nav__item--heading {
+  font-weight: 700;
+}
+
+.nav__sub {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: calc(100vh - 4rem);
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  z-index: 2;
+  border-right: 0.25rem solid #999;
+
+  @include respond-to('large') {
+    left: auto;
+    top: 4rem;
+    border: none;
+    height: auto;
+    width: auto;
+    opacity: 0;
+  }
+
+  .nav__item {
+    @include respond-to('large') {
+      margin-left: 0;
+    }
+  }
+
+  .nav__sub {
+    @include respond-to('large') {
+      position: absolute;
+      left: 5rem;
+    }
+  }
+
+  .nav__item--heading {
+    @include respond-to('large') {
+      display: none;
+    }
+  }
+}
+
+.nav__mega {
+  @include respond-to('large') {
+    position: absolute;
+    width: 100%;
+    top: 4rem;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .nav__item {
+    @include respond-to('large') {
+      display: block;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .nav__item--has-children {
+      @include respond-to('large') {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+
+  .nav__item--heading {
+    @include respond-to('large') {
+      display: none;
+    }
+  }
+
+  .nav__item--link-forward {
+    &::after {
+      @include respond-to('large') {
+        content: '';
+      }
+    }
+  }
+
+  .nav__item--link-back {
+    @include respond-to('large') {
+      padding-left: 0;
+      &::before {
+        content: '';
+      }
+    }
+  }
+
+  .nav__sub {
+    @include respond-to('large') {
+      animation: none;
+      display: block;
+      position: static;
+      top: 0;
+      left: 0;
+      opacity: 1;
+      padding-left: 0;
+    }
+  }
+
+  .nav__sub-sub {
+    .nav__item {
+      @include respond-to('large') {
+        margin-left: 1rem;
+      }
+    }
+    .nav__item--heading {
+      @include respond-to('large') {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+.nav__sub-sub {
+  border-right: 0.25rem solid #ccc;
+  @include respond-to('large') {
+    border-right: none;
+  }
+}
+
+.nav__dropdown {
+  @include respond-to('large') {
+    border-right: 0.25rem solid #666;
+    border-bottom: 0.25rem solid #333;
+    border-left: 0.25rem solid #666;
+  }
+}
+
+/* State Effects */
+.nav--open {
+  animation-duration: $slideDuration;
+  animation-fill-mode: both;
+  animation-name: slideInLeft;
+  animation-iteration-count: 1;
+
+  @include respond-to('large') {
+    animation: none;
+    display: flex;
+    opacity: 1;
+  }
+}
+
+.nav--closed {
+  animation-duration: $slideDuration;
+  animation-fill-mode: both;
+  animation-name: slideOutLeft;
+  animation-iteration-count: 1;
+
+  @include respond-to('large') {
+    animation: none;
+    display: none;
+    opacity: 0;
+  }
+}
+
+.nav--active {
+  &::after {
+    @include respond-to('large') {
+      content: url('../../images/icons/angle-down.svg');
+      bottom: 1rem;
+      right: -1.5rem;
+      width: 1rem;
+    }
+  }
+}
