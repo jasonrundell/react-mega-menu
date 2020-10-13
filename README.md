@@ -20,6 +20,10 @@ Menu.
 Visit:
 [https://react-mega-menu.netlify.app](https://react-mega-menu.netlify.app)
 
+## Build status
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5987a8b7-c2f7-419d-9484-5524a4e05815/deploy-status)](https://app.netlify.com/sites/react-mega-menu/deploys)
+
 ## Special Thanks
 
 [Donna Vitan for the accessibility consultation](https://donnavitan.com)
