@@ -5,6 +5,8 @@ import HamburgerButton from './Buttons/Hamburger'
 import Nav from './Nav'
 import MainList from './Lists/Main'
 import MegaList from './Lists/Mega'
+import MainNavItem from './MainNavItem'
+import MainNavItemLink from './MainNavItemLink'
 import NavItem from './NavItem'
 import NavItemLink from './NavItemLink'
 import NavList from './NavList'
@@ -156,14 +158,14 @@ const MegaMenu = () => {
         ariaLabel="Main Navigation"
       >
         <MainList id="menubar-main" ariaLabel="Main Menu">
-          <NavItem role="none" id="nav-home">
-            <NavItemLink id="menuitem-home" role="menuitem" href="/#home">
+          <MainNavItem role="none" id="nav-home">
+            <MainNavItemLink id="menuitem-home" role="menuitem" href="/#home">
               Home
-            </NavItemLink>
-          </NavItem>
+            </MainNavItemLink>
+          </MainNavItem>
 
-          <NavItem id="nav-Mega-Menu" role="none" isChildren>
-            <NavItemLink
+          <MainNavItem id="nav-Mega-Menu" role="none" isChildren>
+            <MainNavItemLink
               role="menuitem"
               id="menuitem-Mega-Menu"
               href="/#mega-menu"
@@ -177,7 +179,7 @@ const MegaMenu = () => {
               ariaControls="menu-Mega-Menu"
             >
               Mega Menu
-            </NavItemLink>
+            </MainNavItemLink>
             <MegaList
               id="menu-Mega-Menu"
               activeState={
@@ -330,6 +332,7 @@ const MegaMenu = () => {
                   </NavItem>
                 </NavList>
               </NavItem>
+
               <NavItem
                 id="nav-Mega-Menu-Sub-menu-item-4"
                 role="none"
@@ -372,7 +375,7 @@ const MegaMenu = () => {
                   <NavItem
                     id="nav-Mega-Menu-Sub-menu-item-4-back"
                     role="none"
-                    IsHeading
+                    isHeading
                   >
                     <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-4-back"
@@ -410,7 +413,11 @@ const MegaMenu = () => {
                       Sub menu item 4.2
                     </NavItemLink>
                   </NavItem>
-                  <NavItem id="nav-Mega-Menu-Sub-menu-item-4.3" role="none">
+                  <NavItem
+                    id="nav-Mega-Menu-Sub-menu-item-4.3"
+                    role="none"
+                    isChildren
+                  >
                     <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-4.3"
                       role="menuitem"
@@ -419,7 +426,11 @@ const MegaMenu = () => {
                       Sub menu item 4.3
                     </NavItemLink>
                   </NavItem>
-                  <NavItem id="nav-Mega-Menu-Sub-menu-item-4.4" role="none">
+                  <NavItem
+                    id="nav-Mega-Menu-Sub-menu-item-4.4"
+                    role="none"
+                    isChildren
+                  >
                     <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-4.4"
                       role="menuitem"
@@ -428,84 +439,42 @@ const MegaMenu = () => {
                       Sub menu item 4.4
                     </NavItemLink>
                   </NavItem>
+                  <NavItem
+                    id="nav-Mega-Menu-Sub-menu-item-4.5"
+                    role="none"
+                    isChildren
+                  >
+                    <NavItemLink
+                      id="menuitem-Mega-Menu-Sub-menu-item-4.5"
+                      role="menuitem"
+                      href="/#sub-menu-item-4.5"
+                    >
+                      Sub menu item 4.5
+                    </NavItemLink>
+                  </NavItem>
+                  <NavItem
+                    id="nav-Mega-Menu-Sub-menu-item-4.6"
+                    role="none"
+                    isChildren
+                  >
+                    <NavItemLink
+                      id="menuitem-Mega-Menu-Sub-menu-item-4.6"
+                      role="menuitem"
+                      href="/#sub-menu-item-4.6"
+                    >
+                      Sub menu item 4.6
+                    </NavItemLink>
+                  </NavItem>
                 </NavList>
               </NavItem>
+              
             </MegaList>
-          </NavItem>
-          <NavItem id="nav-Simple-Menu" role="none" isChildren>
-            <NavItemLink
-              id="menuitem-Simple-Menu"
-              role="menuitem"
-              href="/#simple-menu"
-              isForward
-              isActive={activeMenus.includes('menu-Simple-Menu') ? true : false}
-              onClick={(e) => toggleSubMenu(e, 'menu-Simple-Menu')}
-              onKeyDown={(e) =>
-                a11yClick(e) && toggleSubMenu(e, 'menu-Simple-Menu')
-              }
-              ariaHaspopup="true"
-              ariaControls="menu-Simple-Menu"
-            >
-              Simple Menu
-            </NavItemLink>
-            <NavList
-              id="menu-Simple-Menu"
-              role="menu"
-              isSub
-              isDropdown
-              isOpen={activeMenus.includes('menu-Simple-Menu') ? true : false}
-              ariaLabelledby="menu-Simple-Menu"
-            >
-              <NavItem id="nav-Simple-Menu-back" role="none" isHeading>
-                <NavItemLink
-                  id="menuitem-Simple-Menu-back"
-                  role="menuitem"
-                  href="/#simple-menu"
-                  isBack
-                  onClick={(e) => toggleSubMenu(e, 'menu-Simple-Menu')}
-                  onKeyDown={(e) =>
-                    a11yClick(e) && toggleSubMenu(e, 'menu-Simple-Menu')
-                  }
-                  ariaHaspopup="true"
-                  ariaControls="nav-main-Simple-Menu"
-                >
-                  Simple Menu
-                </NavItemLink>
-              </NavItem>
-              <NavItem id="nav-Simple-Menu-Sub-menu-item-1" role="none">
-                <NavItemLink
-                  id="menuitem-Simple-Menu-Sub-menu-item-1"
-                  role="menuitem"
-                  href="/#sub-menu-item-1"
-                >
-                  Sub menu item 1
-                </NavItemLink>
-              </NavItem>
-              <NavItem id="nav-Simple-Menu-Sub-menu-item-2" role="none">
-                <NavItemLink
-                  id="menuitem-Simple-Menu-Sub-menu-item-2"
-                  role="menuitem"
-                  href="/#sub-menu-item-2"
-                >
-                  Sub menu item 2
-                </NavItemLink>
-              </NavItem>
-              <NavItem id="nav-Simple-Menu-Sub-menu-item-3" role="none">
-                <NavItemLink
-                  id="menuitem-Simple-Menu-Sub-menu-item-3"
-                  role="menuitem"
-                  href="/#sub-menu-item-3"
-                >
-                  Sub menu item 3
-                </NavItemLink>
-              </NavItem>
-            </NavList>
-          </NavItem>
-          <NavItem id="nav-contact" role="none">
-            <NavItemLink id="menuitem-contact" role="menuitem" href="/#contact">
+          </MainNavItem>
+          <MainNavItem id="nav-contact" role="none">
+            <MainNavItemLink id="menuitem-contact" role="menuitem" href="/#contact">
               Contact
-            </NavItemLink>
-          </NavItem>
+            </MainNavItemLink>
+          </MainNavItem>
         </MainList>
       </Nav>
     </div>
