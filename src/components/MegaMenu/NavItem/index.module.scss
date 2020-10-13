@@ -17,6 +17,16 @@
     margin-left: 2rem;
     align-items: center;
   }
+
+  @include respond-to('large') {
+    display: block;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @include respond-to('large') {
+    margin-left: 0;
+  }
 }
 
 .heading {
@@ -28,8 +38,8 @@
 
 .children {
   @include respond-to('large') {
-    display: flex;
-    flex-direction: column;
+    // display: flex;
+    // flex-direction: column;
   }
 }
 

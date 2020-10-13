@@ -24,11 +24,7 @@
     height: 2rem;
 
     @include respond-to('large') {
-      content: url('../../../images/icons/angle-up.svg');
-      top: 0.25rem;
-      right: -0.5rem;
-      bottom: initial;
-      width: 1rem;
+      content: '';
     }
   }
 }
