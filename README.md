@@ -3,12 +3,17 @@
 A React project which aims to be a responsive and accessible boilerplate Mega
 Menu.
 
-## Objective
+## Features
 
 - Responsive
 - Accessible
 - WCAG 2.1 AAA compliant
 - W3C valid
+- Fly-out menus
+- Unified menu: Maintain one menu instead of a 'desktop' version and a 'mobile'
+  version
+- Menus are accessible through key inputs
+- Styled with SASS modules
 
 ## View demo
 
@@ -26,6 +31,8 @@ Visit:
 [Web Accessibility Tutorials (WCAG) Fly-out Menus](https://www.w3.org/WAI/tutorials/menus/flyout/)
 
 [JavaScript Event KeyCodes by Wes Bos](https://keycode.info/)
+
+[Supporting the keyboard for mobile](http://simplyaccessible.com/article/mobile-keyboard-support/)
 
 ## Accessible Menus
 

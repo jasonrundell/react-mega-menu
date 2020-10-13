@@ -1,6 +1,6 @@
 {
   "name": "react-mega-menu",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.10.1",
@@ -12,14 +12,17 @@
     "react-scripts": "3.4.1"
   },
   "devDependencies": {
+    "husky": "^4.3.0",
     "netlify-lambda": "^1.4.5",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format": "prettier --write src/**/*.{js,jsx.scss}"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -35,5 +38,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format"
+    }
   }
 }

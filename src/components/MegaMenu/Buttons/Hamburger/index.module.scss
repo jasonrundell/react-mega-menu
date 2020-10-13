@@ -1,4 +1,5 @@
-@import '../../../styles/breakpoints.scss';
+@import '../../../../styles/animations.scss';
+@import '../../../../styles/breakpoints.scss';
 
 .root {
   border: none;
@@ -67,6 +68,10 @@
       left: 50%;
     }
   }
+}
+
+.closed {
+  display: flex;
 }
 
 .label-container {

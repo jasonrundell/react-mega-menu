@@ -1,0 +1,10 @@
+@import '../../../styles/breakpoints.scss';
+
+.root {
+  color: #000;
+  font-size: 0.75rem;
+  @include respond-to('large') {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
