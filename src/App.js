@@ -14,7 +14,7 @@ function App() {
         <section>
           <h1>React Mega Menu</h1>
           <p>
-            A React project which aims to be a responsive and accessible
+            A React project which aims to be an accessible and responsive
             boilerplate Mega Menu.
           </p>
           <a
@@ -37,6 +37,30 @@ function App() {
             <li>WCAG 2.1 AAA compliant</li>
             <li>Styled with SASS modules</li>
           </ul>
+        </section>
+        <section>
+          <h1>Get the code</h1>
+          <p>
+            Check out the open-source repository on{' '}
+            <a
+              href="https://github.com/jasonrundell/react-mega-menu"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </a>
+          </p>
+        </section>
+        <section>
+          <h1>Roadmap/Issues</h1>
+          <p>
+            All issues are tracked on{' '}
+            <a
+              href="https://github.com/jasonrundell/react-mega-menu/issues"
+              rel="noopener noreferrer"
+            >
+              GitHub Issues
+            </a>
+          </p>
         </section>
       </main>
     </div>
