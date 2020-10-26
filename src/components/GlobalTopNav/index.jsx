@@ -240,11 +240,7 @@ const GlobalTopNav = () => {
                   React Mega Menu project
                 </NavItemDescription>
               </NavItem>
-              <NavItem
-                id="nav-Mega-Menu-Sub-menu-item-3"
-                role="none"
-                isChildren
-              >
+              <NavItem id="nav-Mega-Menu-Sub-menu-item-3" role="none">
                 <NavItemLink
                   id="menuitem-Mega-Menu-Sub-menu-item-3"
                   role="menuitem"
@@ -327,11 +323,7 @@ const GlobalTopNav = () => {
                       the React Mega Menu project
                     </NavItemDescription>
                   </NavItem>
-                  <NavItem
-                    id="nav-Mega-Menu-Sub-menu-item-3.3"
-                    role="none"
-                    isChildren
-                  >
+                  <NavItem id="nav-Mega-Menu-Sub-menu-item-3.3" role="none">
                     <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-3.3"
                       role="menuitem"
@@ -348,11 +340,7 @@ const GlobalTopNav = () => {
                 </NavList>
               </NavItem>
 
-              <NavItem
-                id="nav-Mega-Menu-Sub-menu-item-4"
-                role="none"
-                isChildren
-              >
+              <NavItem id="nav-Mega-Menu-Sub-menu-item-4" role="none">
                 <NavItemLink
                   id="menuitem-Mega-Menu-Sub-menu-item-4"
                   role="menuitem"
@@ -428,11 +416,7 @@ const GlobalTopNav = () => {
                       Sub menu item 4.2
                     </NavItemLink>
                   </NavItem>
-                  <NavItem
-                    id="nav-Mega-Menu-Sub-menu-item-4.3"
-                    role="none"
-                    isChildren
-                  >
+                  <NavItem id="nav-Mega-Menu-Sub-menu-item-4.3" role="none">
                     <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-4.3"
                       role="menuitem"
@@ -441,11 +425,7 @@ const GlobalTopNav = () => {
                       Sub menu item 4.3
                     </NavItemLink>
                   </NavItem>
-                  <NavItem
-                    id="nav-Mega-Menu-Sub-menu-item-4.4"
-                    role="none"
-                    isChildren
-                  >
+                  <NavItem id="nav-Mega-Menu-Sub-menu-item-4.4" role="none">
                     <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-4.4"
                       role="menuitem"
@@ -454,11 +434,7 @@ const GlobalTopNav = () => {
                       Sub menu item 4.4
                     </NavItemLink>
                   </NavItem>
-                  <NavItem
-                    id="nav-Mega-Menu-Sub-menu-item-4.5"
-                    role="none"
-                    isChildren
-                  >
+                  <NavItem id="nav-Mega-Menu-Sub-menu-item-4.5" role="none">
                     <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-4.5"
                       role="menuitem"
@@ -467,11 +443,7 @@ const GlobalTopNav = () => {
                       Sub menu item 4.5
                     </NavItemLink>
                   </NavItem>
-                  <NavItem
-                    id="nav-Mega-Menu-Sub-menu-item-4.6"
-                    role="none"
-                    isChildren
-                  >
+                  <NavItem id="nav-Mega-Menu-Sub-menu-item-4.6" role="none">
                     <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-4.6"
                       role="menuitem"
