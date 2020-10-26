@@ -3,6 +3,7 @@ import React, { useRef, useState, useEffect } from 'react'
 // Components
 import TopBar from '../TopBar'
 import Logo from '../Logo'
+import TopBarTitle from '../TopBarTitle'
 import Hamburger from '../Hamburger'
 import Nav from '../Nav'
 import MainList from '../MainList'
@@ -159,6 +160,7 @@ const GlobalTopNav = () => {
           alt="Your brand's logo"
           rel="home"
         />
+        <TopBarTitle>Your Brand Name</TopBarTitle>
       </TopBar>
       <Hamburger
         label="Menu"
