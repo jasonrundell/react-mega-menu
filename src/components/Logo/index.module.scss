@@ -1,0 +1,11 @@
+@import '../../styles/breakpoints.scss';
+
+.root {
+  // width: 100%;
+  display: flex;
+  position: relative;
+  height: 2rem;
+  @include respond-to('large') {
+    align-items: center;
+  }
+}

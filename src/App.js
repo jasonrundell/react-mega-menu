@@ -1,7 +1,7 @@
 import React from 'react'
 
 // Components
-import MegaMenu from './components/MegaMenu'
+import GlobalTopNav from './components/GlobalTopNav'
 
 // CSS
 import './App.scss'
@@ -9,7 +9,7 @@ import './App.scss'
 function App() {
   return (
     <div className="page">
-      <MegaMenu />
+      <GlobalTopNav />
       <main id="main">
         <section>
           <h1>React Mega Menu</h1>
