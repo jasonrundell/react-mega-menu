@@ -153,7 +153,12 @@ const GlobalTopNav = () => {
   return (
     <div role="navigation" className={styles['root']} ref={wrapperRef}>
       <TopBar>
-        <Logo id="menuitem-logo" src={LogoImage} alt="Your Site" rel="home" />
+        <Logo
+          id="menuitem-logo"
+          src={LogoImage}
+          alt="Your brand's logo"
+          rel="home"
+        />
       </TopBar>
       <Hamburger
         label="Menu"
