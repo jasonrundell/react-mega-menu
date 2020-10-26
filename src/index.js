@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import './index.scss'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
+import './utils/polyfills'
 
 ReactDOM.render(
   <React.StrictMode>
