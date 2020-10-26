@@ -36,9 +36,6 @@
   }
 }
 
-.children {
-}
-
 .forward {
   @include respond-to('large') {
     margin-right: 1rem;
