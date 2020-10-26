@@ -11,13 +11,6 @@ $fadeDuration: 0.2s;
   }
 }
 
-.animate__slide-in--left {
-  animation-duration: $slideDuration;
-  animation-fill-mode: both;
-  animation-name: slideInLeft;
-  animation-iteration-count: 1;
-}
-
 @keyframes slideOutLeft {
   from {
     transform: translate3d(100%, 0, 0);
@@ -26,13 +19,6 @@ $fadeDuration: 0.2s;
   to {
     transform: translate3d(-100%, 0, 0);
   }
-}
-
-.animate__slide-out--left {
-  animation-duration: $slideDuration;
-  animation-fill-mode: both;
-  animation-name: slideOutLeft;
-  animation-iteration-count: 1;
 }
 
 @keyframes fadeIn {
@@ -45,13 +31,6 @@ $fadeDuration: 0.2s;
   }
 }
 
-.animate__fade-in {
-  animation-duration: $fadeDuration;
-  animation-fill-mode: both;
-  animation-name: fadeIn;
-  animation-iteration-count: 1;
-}
-
 @keyframes fadeOut {
   from {
     opacity: 1;
@@ -60,11 +39,4 @@ $fadeDuration: 0.2s;
   to {
     opacity: 0;
   }
-}
-
-.animate__fade-out {
-  animation-duration: $fadeDuration;
-  animation-fill-mode: both;
-  animation-name: fadeOut;
-  animation-iteration-count: 1;
 }
