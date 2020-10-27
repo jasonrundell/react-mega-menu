@@ -49,26 +49,6 @@
     height: auto;
     padding-left: 0;
   }
-
-  .nav__item {
-    @include respond-to('large') {
-      margin-left: 0;
-    }
-  }
-
-  .sub {
-    background-color: pink;
-    @include respond-to('large') {
-      position: absolute;
-      left: 5rem;
-    }
-  }
-
-  .nav__item--heading {
-    @include respond-to('large') {
-      display: none;
-    }
-  }
 }
 
 .sub-sub {
