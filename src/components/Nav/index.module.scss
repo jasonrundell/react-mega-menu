@@ -45,8 +45,8 @@
 
 .open {
   animation-duration: $slideDuration;
-  animation-fill-mode: $slideInLeftToRightFillAnimationMode;
-  animation-name: slideInLeftToRight;
+  animation-fill-mode: $slideLeftToRightFillAnimationMode;
+  animation-name: slideLeftToRight;
   animation-iteration-count: 1;
 
   @include respond-to('large') {
@@ -58,8 +58,8 @@
 
 .closed {
   animation-duration: $slideDuration;
-  animation-fill-mode: $slideOutRightToLeftFillAnimationMode;
-  animation-name: slideOutRightToLeft;
+  animation-fill-mode: $slideRightToLeftFillAnimationMode;
+  animation-name: slideRightToLeft;
   animation-iteration-count: 1;
 
   @include respond-to('large') {

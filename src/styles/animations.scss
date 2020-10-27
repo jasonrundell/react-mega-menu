@@ -1,8 +1,8 @@
 $slideDuration: 0.75s;
-$slideInLeftToRightFillAnimationMode: forwards;
-$slideOutRightToLeftFillAnimationMode: forwards;
+$slideLeftToRightFillAnimationMode: forwards;
+$slideRightToLeftFillAnimationMode: forwards;
 
-@keyframes slideInLeftToRight {
+@keyframes slideLeftToRight {
   from {
     transform: translate3d(-100%, 0, 0);
   }
@@ -12,7 +12,7 @@ $slideOutRightToLeftFillAnimationMode: forwards;
   }
 }
 
-@keyframes slideOutRightToLeft {
+@keyframes slideRightToLeft {
   from {
     transform: translate3d(100%, 0, 0);
   }
