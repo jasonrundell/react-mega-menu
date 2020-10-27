@@ -7,7 +7,7 @@ import { classNames } from '../../utils/css'
 // CSS
 import styles from './index.module.scss'
 
-const Nav = ({ id, children, ariaLabel, activeState }) => {
+const Nav = ({ id, ariaLabel, activeState, children }) => {
   const rootClasses = classNames(
     styles['root'],
     activeState && styles[activeState]
@@ -22,14 +22,14 @@ const Nav = ({ id, children, ariaLabel, activeState }) => {
 
 Nav.defaultProps = {
   ariaLabel: 'Main Navigation',
-  activeState: 'closed',
+  activeState: '',
 }
 
 Nav.propTypes = {
   id: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
   ariaLabel: PropTypes.string.isRequired,
-  activeState: PropTypes.oneOf(['', 'open', 'closed']),
+  activeState: PropTypes.oneOf(['', 'open', 'closed']).isRequired,
+  children: PropTypes.node.isRequired,
 }
 
 export default Nav
