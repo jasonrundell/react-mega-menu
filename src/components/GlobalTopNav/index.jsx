@@ -25,9 +25,9 @@ import styles from './index.module.scss'
 import LogoImage from '../../images/logos/logo.svg'
 
 const GlobalTopNav = () => {
-  const [megaMenuState, setMegaMenuState] = useState('closed')
-  const [subMenuState, setSubMenuState] = useState('closed')
-  const [subSubMenuState, setSubSubMenuState] = useState('closed')
+  const [megaMenuState, setMegaMenuState] = useState('')
+  const [subMenuState, setSubMenuState] = useState('')
+  const [subSubMenuState, setSubSubMenuState] = useState('')
   const [activeMenus, setActiveMenus] = useState([]) // array that captures the ids of active menus
   const [isMobile, setIsMobile] = useState(true) // array that captures the ids of active menus
   const wrapperRef = useRef(null) // used to detect clicks outside of component

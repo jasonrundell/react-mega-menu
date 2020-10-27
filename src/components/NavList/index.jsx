@@ -38,7 +38,6 @@ const NavList = ({
 NavList.defaultProps = {
   role: 'menubar',
   ariaLabel: 'Main menu',
-  isOpen: false,
   isSub: false,
   isSubSub: false,
   isDropdown: false,
@@ -48,10 +47,10 @@ NavList.propTypes = {
   id: PropTypes.string.isRequired,
   role: PropTypes.string,
   children: PropTypes.node.isRequired,
-  isOpen: PropTypes.bool,
   isSub: PropTypes.bool,
   isSubSub: PropTypes.bool,
   isDropdown: PropTypes.bool,
+  activeState: PropTypes.oneOf(['', 'open', 'closed']),
   ariaLabelledby: PropTypes.string.isRequired,
 }
 

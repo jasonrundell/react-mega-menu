@@ -29,7 +29,7 @@ Nav.propTypes = {
   id: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   ariaLabel: PropTypes.string.isRequired,
-  activeState: PropTypes.oneOf(['open', 'closed']).isRequired,
+  activeState: PropTypes.oneOf(['', 'open', 'closed']),
 }
 
 export default Nav

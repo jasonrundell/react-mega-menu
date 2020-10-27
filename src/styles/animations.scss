@@ -1,6 +1,6 @@
 $slideDuration: 0.75s;
-$slideOpenFillAnimationMode: forwards;
-$slideRightToLeftFillAnimationMode: forwards;
+$slideOpenFillAnimationMode: both;
+$slideRightToLeftFillAnimationMode: both;
 
 @keyframes slideOpen {
   from {
