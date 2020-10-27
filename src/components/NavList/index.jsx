@@ -13,13 +13,12 @@ const NavList = ({
   isSub,
   isSubSub,
   isDropdown,
-  isOpen,
+  activeState,
   ariaLabelledby,
 }) => {
   const rootClasses = classNames(
     styles['root'],
-    isOpen && styles['open'],
-    !isOpen && styles['closed'],
+    styles[activeState],
     isSub && styles['sub'],
     isSubSub && styles['sub-sub'],
     isDropdown && styles['dropdown']

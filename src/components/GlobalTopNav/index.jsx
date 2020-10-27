@@ -268,10 +268,10 @@ const GlobalTopNav = () => {
                   role="menu"
                   isSub
                   isSubSub
-                  isOpen={
+                  activeState={
                     activeMenus.includes('menu-Mega-Menu-Sub-menu-item-3')
-                      ? true
-                      : false
+                      ? 'open'
+                      : 'closed'
                   }
                   ariaLabelledby="menuitem-Mega-Menu-Sub-menu-item-3"
                 >
@@ -368,10 +368,10 @@ const GlobalTopNav = () => {
                   role="menu"
                   isSub
                   isSubSub
-                  isOpen={
+                  activeState={
                     activeMenus.includes('menu-Mega-Menu-Sub-menu-item-4')
-                      ? true
-                      : false
+                      ? 'open'
+                      : 'closed'
                   }
                   ariaLabelledby="menuitem-Mega-Menu-Sub-menu-item-4"
                 >
