@@ -27,15 +27,21 @@ function App() {
         <section>
           <h1>Features</h1>
           <ul>
-            <li>
-              Unified menu: Maintain one menu instead of a 'desktop' version and
-              a 'mobile' version.
-            </li>
-            <li>Menus are accessible through key inputs</li>
-            <li>Fly-out menus</li>
-            <li>W3C Valid Markup</li>
+            <li>Responsive</li>
+
             <li>WCAG 2.1 AAA compliant</li>
+            <li>W3C valid markup</li>
+            <li>Fly-out menus</li>
+            <li>Accessible</li>
+            <li>Menus are accessible through key inputs</li>
+            <li>
+              Unified menu: Maintain one menu instead of one 'desktop' version
+              and one 'mobile' version.
+            </li>
             <li>Styled with SASS modules</li>
+            <li>
+              Supports and tested against IE 11, Edge, Safari, FireFox, Chrome
+            </li>
           </ul>
         </section>
         <section>

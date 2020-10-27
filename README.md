@@ -6,14 +6,15 @@ Menu.
 ## Features
 
 - Responsive
-- Accessible
 - WCAG 2.1 AAA compliant
-- W3C valid
+- W3C valid markup
 - Fly-out menus
-- Unified menu: Maintain one menu instead of a 'desktop' version and a 'mobile'
-  version
+- Accessible
+- Unified menu: Maintain one menu instead of one 'desktop' version and one
+  'mobile' version
 - Menus are accessible through key inputs
 - Styled with SASS modules
+- Supports and tested against IE 11, Edge, Safari, FireFox, Chrome
 
 ## View demo
 
