@@ -38,8 +38,8 @@
 
 .open {
   animation-duration: $slideDuration;
-  animation-fill-mode: $slideLeftToRightFillAnimationMode;
-  animation-name: slideLeftToRight;
+  animation-fill-mode: $slideOpenFillAnimationMode;
+  animation-name: slideOpen;
   animation-iteration-count: 1;
 
   @include respond-to('large') {
