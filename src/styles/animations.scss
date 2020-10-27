@@ -12,8 +12,6 @@ $slideOutRightToLeftFillAnimationMode: forwards;
   }
 }
 
-$slideOutRightToLeftFillAnimationMode: 'both';
-
 @keyframes slideOutRightToLeft {
   from {
     transform: translate3d(100%, 0, 0);
