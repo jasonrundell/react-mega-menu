@@ -14,8 +14,8 @@ function App() {
         <section>
           <h1>React Mega Menu</h1>
           <p>
-            A React project which aims to be an accessible and responsive
-            boilerplate Mega Menu.
+            A React project which aims to be an accessible, responsive,
+            boilerplate top navigation menu with a "Mega Menu"!
           </p>
           <a
             href="https://github.com/jasonrundell/react-mega-menu"

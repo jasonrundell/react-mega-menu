@@ -1,7 +1,7 @@
 # React Mega Menu
 
-A React project which aims to be a responsive and accessible boilerplate Mega
-Menu.
+A React project which aims to be an accessible, responsive, boilerplate top
+navigation menu with a "Mega Menu"!
 
 ## Features
 
