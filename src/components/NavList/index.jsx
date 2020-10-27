@@ -9,17 +9,17 @@ import styles from './index.module.scss'
 
 const NavList = ({
   id,
-  children,
+  role,
   isSub,
   isSubSub,
   isDropdown,
-  isOpen,
+  activeState,
   ariaLabelledby,
+  children,
 }) => {
   const rootClasses = classNames(
     styles['root'],
-    isOpen && styles['open'],
-    !isOpen && styles['closed'],
+    styles[activeState],
     isSub && styles['sub'],
     isSubSub && styles['sub-sub'],
     isDropdown && styles['dropdown']
@@ -27,7 +27,7 @@ const NavList = ({
   return (
     <ul
       id={id}
-      role="menubar"
+      role={role}
       aria-labelledby={ariaLabelledby}
       className={rootClasses}
     >
@@ -38,22 +38,21 @@ const NavList = ({
 
 NavList.defaultProps = {
   role: 'menubar',
-  ariaLabel: 'Main menu',
-  isOpen: false,
   isSub: false,
   isSubSub: false,
   isDropdown: false,
+  activeState: '',
 }
 
 NavList.propTypes = {
   id: PropTypes.string.isRequired,
   role: PropTypes.string,
-  children: PropTypes.node.isRequired,
-  isOpen: PropTypes.bool,
   isSub: PropTypes.bool,
   isSubSub: PropTypes.bool,
   isDropdown: PropTypes.bool,
+  activeState: PropTypes.oneOf(['', 'open', 'closed']).isRequired,
   ariaLabelledby: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 }
 
 export default NavList

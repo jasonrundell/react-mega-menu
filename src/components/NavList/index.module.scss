@@ -1,5 +1,5 @@
 @import '../../styles/breakpoints.scss';
-@import '../../styles/animations.scss';
+@import '../../styles/mixins.scss';
 
 .root {
   position: absolute;
@@ -49,26 +49,6 @@
     height: auto;
     padding-left: 0;
   }
-
-  .nav__item {
-    @include respond-to('large') {
-      margin-left: 0;
-    }
-  }
-
-  .sub {
-    background-color: pink;
-    @include respond-to('large') {
-      position: absolute;
-      left: 5rem;
-    }
-  }
-
-  .nav__item--heading {
-    @include respond-to('large') {
-      display: none;
-    }
-  }
 }
 
 .sub-sub {
@@ -87,10 +67,7 @@
 }
 
 .open {
-  animation-duration: $slideDuration;
-  animation-fill-mode: both;
-  animation-name: slideInLeft;
-  animation-iteration-count: 1;
+  @include open;
 
   @include respond-to('large') {
     animation: none;
@@ -98,10 +75,7 @@
 }
 
 .closed {
-  animation-duration: $slideDuration;
-  animation-fill-mode: both;
-  animation-name: slideOutLeft;
-  animation-iteration-count: 1;
+  @include closed;
 
   @include respond-to('large') {
     animation: none;

@@ -23,7 +23,7 @@ const Hamburger = ({ label, state, onClick }) => {
   )
 }
 
-Hamburger.defaultProps = { label: null, state: 'closed' }
+Hamburger.defaultProps = { label: null }
 Hamburger.propTypes = {
   label: PropTypes.string,
   state: PropTypes.oneOf(['', 'open', 'closed']),
