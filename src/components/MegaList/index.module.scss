@@ -1,5 +1,5 @@
 @import '../../styles/breakpoints.scss';
-@import '../../styles/animations.scss';
+@import '../../styles/mixins.scss';
 
 .root {
   position: absolute;
@@ -37,10 +37,7 @@
 }
 
 .open {
-  animation-duration: $slideDuration;
-  animation-fill-mode: $slideOpenFillAnimationMode;
-  animation-name: slideOpen;
-  animation-iteration-count: 1;
+  @include open;
 
   @include respond-to('large') {
     animation: none;
@@ -50,10 +47,7 @@
 }
 
 .closed {
-  animation-duration: $slideDuration;
-  animation-fill-mode: $slideRightToLeftFillAnimationMode;
-  animation-name: slideRightToLeft;
-  animation-iteration-count: 1;
+  @include closed;
 
   @include respond-to('large') {
     animation: none;

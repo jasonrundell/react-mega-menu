@@ -1,0 +1,16 @@
+@import './animations.scss';
+@import './breakpoints.scss';
+
+@mixin open {
+  animation-duration: $slideDuration;
+  animation-fill-mode: $slideOpenFillAnimationMode;
+  animation-name: slideOpen;
+  animation-iteration-count: 1;
+}
+
+@mixin closed {
+  animation-duration: $slideDuration;
+  animation-fill-mode: $slideRightToLeftFillAnimationMode;
+  animation-name: slideRightToLeft;
+  animation-iteration-count: 1;
+}
