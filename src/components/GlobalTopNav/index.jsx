@@ -220,6 +220,7 @@ const GlobalTopNav = () => {
                   id="menuitem-Mega-Menu-Sub-menu-item-1"
                   role="menuitem"
                   href="/?page=sub-menu-item-1"
+                  isHeading
                 >
                   Sub menu item 1
                 </NavItemLink>
@@ -232,6 +233,7 @@ const GlobalTopNav = () => {
                   id="menuitem-Mega-Menu-Sub-menu-item-2"
                   role="menuitem"
                   href="/?page=sub-menu-item-2"
+                  isHeading
                 >
                   Sub menu item 2
                 </NavItemLink>
@@ -245,6 +247,7 @@ const GlobalTopNav = () => {
                   id="menuitem-Mega-Menu-Sub-menu-item-3"
                   role="menuitem"
                   href="/?page=sub-menu-item-3"
+                  isHeading
                   isForward
                   onClick={(e) =>
                     toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-3')
@@ -345,6 +348,7 @@ const GlobalTopNav = () => {
                   id="menuitem-Mega-Menu-Sub-menu-item-4"
                   role="menuitem"
                   href="/?page=sub-menu-item-4"
+                  isHeading
                   isForward
                   onClick={(e) =>
                     toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-4')
