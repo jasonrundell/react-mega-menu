@@ -174,7 +174,7 @@ const GlobalTopNav = () => {
       >
         <MainList id="menubar-main" ariaLabel="Main Menu">
           <MainNavItem role="none" id="nav-home">
-            <MainNavItemLink id="menuitem-home" role="menuitem" href="/#home">
+            <MainNavItemLink id="menuitem-home" role="menuitem" href="/">
               Home
             </MainNavItemLink>
           </MainNavItem>
@@ -183,7 +183,7 @@ const GlobalTopNav = () => {
             <MainNavItemLink
               role="menuitem"
               id="menuitem-Mega-Menu"
-              href="/#mega-menu"
+              href="/?page=mega-menu"
               isForward
               isActive={activeMenus.includes('menu-Mega-Menu') ? true : false}
               onClick={(e) => toggleSubMenu(e, 'menu-Mega-Menu')}
@@ -204,7 +204,7 @@ const GlobalTopNav = () => {
               <NavItem id="nav-Mega-Menu-back" isHeading={true}>
                 <NavItemLink
                   id="menuitem-Mega-Menu-back"
-                  href="/#mega-menu"
+                  href="/?page=mega-menu"
                   onClick={(e) => toggleSubMenu(e, 'menu-Mega-Menu')}
                   onKeyDown={(e) =>
                     a11yClick(e) && toggleSubMenu(e, 'menu-Mega-Menu')
@@ -219,7 +219,7 @@ const GlobalTopNav = () => {
                 <NavItemLink
                   id="menuitem-Mega-Menu-Sub-menu-item-1"
                   role="menuitem"
-                  href="/#sub-menu-item-1"
+                  href="/?page=sub-menu-item-1"
                 >
                   Sub menu item 1
                 </NavItemLink>
@@ -231,7 +231,7 @@ const GlobalTopNav = () => {
                 <NavItemLink
                   id="menuitem-Mega-Menu-Sub-menu-item-2"
                   role="menuitem"
-                  href="/#sub-menu-item-2"
+                  href="/?page=sub-menu-item-2"
                 >
                   Sub menu item 2
                 </NavItemLink>
@@ -244,7 +244,7 @@ const GlobalTopNav = () => {
                 <NavItemLink
                   id="menuitem-Mega-Menu-Sub-menu-item-3"
                   role="menuitem"
-                  href="/#sub-menu-item-3"
+                  href="/?page=sub-menu-item-3"
                   isForward
                   onClick={(e) =>
                     toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-3')
@@ -283,7 +283,7 @@ const GlobalTopNav = () => {
                     <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-3-back"
                       role="menuitem"
-                      href="/#sub-menu-item-3"
+                      href="/?page=sub-menu-item-3"
                       isBack
                       onClick={(e) =>
                         toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-3')
@@ -302,7 +302,7 @@ const GlobalTopNav = () => {
                     <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-3.1"
                       role="menuitem"
-                      href="/#sub-menu-item-3.1"
+                      href="/?page=sub-menu-item-3.1"
                     >
                       Sub menu item 3.1
                     </NavItemLink>
@@ -314,7 +314,7 @@ const GlobalTopNav = () => {
                     <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-3.2"
                       role="menuitem"
-                      href="/#sub-menu-item-3.2"
+                      href="/?page=sub-menu-item-3.2"
                     >
                       Sub menu item 3.2
                     </NavItemLink>
@@ -327,7 +327,7 @@ const GlobalTopNav = () => {
                     <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-3.3"
                       role="menuitem"
-                      href="/#sub-menu-item-3.3"
+                      href="/?page=sub-menu-item-3.3"
                     >
                       Sub menu item 3.3
                     </NavItemLink>
@@ -344,7 +344,7 @@ const GlobalTopNav = () => {
                 <NavItemLink
                   id="menuitem-Mega-Menu-Sub-menu-item-4"
                   role="menuitem"
-                  href="/#sub-menu-item-4"
+                  href="/?page=sub-menu-item-4"
                   isForward
                   onClick={(e) =>
                     toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-4')
@@ -383,7 +383,7 @@ const GlobalTopNav = () => {
                     <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-4-back"
                       role="menuitem"
-                      href="/#sub-menu-item-4"
+                      href="/?page=sub-menu-item-4"
                       isBack
                       onClick={(e) =>
                         toggleSubSubMenu(e, 'menu-Mega-Menu-Sub-menu-item-4')
@@ -402,7 +402,7 @@ const GlobalTopNav = () => {
                     <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-4.1"
                       role="menuitem"
-                      href="/#sub-menu-item-4.1"
+                      href="/?page=sub-menu-item-4.1"
                     >
                       Sub menu item 4.1
                     </NavItemLink>
@@ -411,7 +411,7 @@ const GlobalTopNav = () => {
                     <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-4.2"
                       role="menuitem"
-                      href="/#sub-menu-item-4.2"
+                      href="/?page=sub-menu-item-4.2"
                     >
                       Sub menu item 4.2
                     </NavItemLink>
@@ -420,7 +420,7 @@ const GlobalTopNav = () => {
                     <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-4.3"
                       role="menuitem"
-                      href="/#sub-menu-item-4.3"
+                      href="/?page=sub-menu-item-4.3"
                     >
                       Sub menu item 4.3
                     </NavItemLink>
@@ -429,7 +429,7 @@ const GlobalTopNav = () => {
                     <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-4.4"
                       role="menuitem"
-                      href="/#sub-menu-item-4.4"
+                      href="/?page=sub-menu-item-4.4"
                     >
                       Sub menu item 4.4
                     </NavItemLink>
@@ -438,7 +438,7 @@ const GlobalTopNav = () => {
                     <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-4.5"
                       role="menuitem"
-                      href="/#sub-menu-item-4.5"
+                      href="/?page=sub-menu-item-4.5"
                     >
                       Sub menu item 4.5
                     </NavItemLink>
@@ -447,7 +447,7 @@ const GlobalTopNav = () => {
                     <NavItemLink
                       id="menuitem-Mega-Menu-Sub-menu-item-4.6"
                       role="menuitem"
-                      href="/#sub-menu-item-4.6"
+                      href="/?page=sub-menu-item-4.6"
                     >
                       Sub menu item 4.6
                     </NavItemLink>
@@ -460,7 +460,7 @@ const GlobalTopNav = () => {
             <MainNavItemLink
               id="menuitem-contact"
               role="menuitem"
-              href="/#contact"
+              href="/?page=contact"
             >
               Contact
             </MainNavItemLink>
