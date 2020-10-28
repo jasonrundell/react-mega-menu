@@ -22,6 +22,7 @@
   z-index: 1;
 
   @include respond-to('large') {
+    padding-top: 0;
     flex-direction: row;
     height: 4rem;
   }
@@ -67,17 +68,31 @@
 }
 
 .open {
-  @include open;
+  @include slideOpen;
+
+  @media (prefers-reduced-motion: reduce) {
+    transform: translate3d(100%, 0, 0);
+  }
 
   @include respond-to('large') {
     animation: none;
+    @media (prefers-reduced-motion: reduce) {
+      transform: none;
+    }
   }
 }
 
 .closed {
-  @include closed;
+  @include slideClosed;
+
+  @media (prefers-reduced-motion: reduce) {
+    transform: translate3d(-100%, 0, 0);
+  }
 
   @include respond-to('large') {
     animation: none;
+    @media (prefers-reduced-motion: reduce) {
+      transform: none;
+    }
   }
 }
