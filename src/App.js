@@ -27,17 +27,11 @@ function App() {
         <section>
           <h1>Features</h1>
           <ul>
-            <li>Responsive</li>
-
-            <li>WCAG 2.1 AAA compliant</li>
+            <li>WCAG 2.1 AA compliant</li>
             <li>W3C valid markup</li>
             <li>Fly-out menus</li>
-            <li>Accessible</li>
             <li>Menus are accessible through key inputs</li>
-            <li>
-              Unified menu: Maintain one menu instead of one 'desktop' version
-              and one 'mobile' version.
-            </li>
+            <li>Unified menu for all screen ratios</li>
             <li>Styled with SASS modules</li>
             <li>
               Supports and tested against IE 11, Edge, Safari, FireFox, Chrome
