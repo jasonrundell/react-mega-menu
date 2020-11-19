@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
 
 // Components
-// import SkipToMain from '../SkipToMain'
 import TopBar from '../TopBar'
 import Logo from '../Logo'
 import TopBarTitle from '../TopBarTitle'
@@ -154,7 +153,6 @@ const GlobalTopNav = () => {
 
   return (
     <div role="navigation" className={styles['root']} ref={wrapperRef}>
-      {/* <SkipToMain>Skip to main content</SkipToMain> */}
       <TopBar>
         <Logo
           id="menuitem-logo"
