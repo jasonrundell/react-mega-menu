@@ -1,6 +1,7 @@
 import React from 'react'
 
 // Components
+import SkipToMain from './components/SkipToMain'
 import GlobalTopNav from './components/GlobalTopNav'
 
 // CSS
@@ -9,6 +10,7 @@ import './App.scss'
 function App() {
   return (
     <div className="page">
+      <SkipToMain>Skip to main content</SkipToMain>
       <GlobalTopNav />
       <main id="main">
         <section>
