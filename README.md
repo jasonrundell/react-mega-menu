@@ -5,14 +5,11 @@ navigation menu with a "Mega Menu"!
 
 ## Features
 
-- Responsive
-- WCAG 2.1 AAA compliant
+- WCAG 2.1 AA compliant
 - W3C valid markup
 - Fly-out menus
-- Accessible
-- Unified menu: Maintain one menu instead of one 'desktop' version and one
-  'mobile' version
 - Menus are accessible through key inputs
+- Unified menu for all screen ratios
 - Styled with SASS modules
 - Supports and tested against IE 11, Edge, Safari, FireFox, Chrome
 
@@ -50,6 +47,8 @@ Visit:
 [JavaScript Event KeyCodes by Wes Bos](https://keycode.info/)
 
 [Supporting the keyboard for mobile](http://simplyaccessible.com/article/mobile-keyboard-support/)
+
+[a11y Project: Resources](https://www.a11yproject.com/resources/)
 
 ## Accessible Menus
 
