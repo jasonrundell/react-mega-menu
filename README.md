@@ -12,6 +12,8 @@ navigation menu with a "Mega Menu"!
 - Unified menu for all screen ratios
 - Styled with SASS modules
 - Supports and tested against IE 11, Edge, Safari, FireFox, Chrome
+- CSS animations with prefers-reduced-motion media query
+  [prefers-reduced-motion](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion)
 
 ## View demo
 
@@ -57,6 +59,47 @@ Visit:
 ["Building Accessible Menu Systems" by Heydon Pickering](https://www.smashingmagazine.com/2017/11/building-accessible-menu-systems/)
 
 [Using the aria-hidden attribute](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-hidden_attribute)
+
+## Reduced Motion Support
+
+Learn by reading these:
+
+- ["Your Interactive Makes Me Sick"](https://source.opennews.org/articles/motion-sick/)
+
+- ["Accessibility for Vestibular Disorders: How My Temporary Disability Changed My Perspective"](https://alistapart.com/article/accessibility-for-vestibular/)
+
+- ["An Introduction to the Reduced Motion Media Query"](https://css-tricks.com/introduction-reduced-motion-media-query/)
+
+- ["prefers-reduced-motion: Sometimes less movement is more"](https://web.dev/prefers-reduced-motion/)
+
+- [W3C: Understanding Success Criterion 2.3.3: Animation from Interactions](https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html)
+
+- [MDN Reference](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion)
+
+### How to test prefers-reduced-motion on Mac OS
+
+1. Open settings for **Accessibility**
+1. Toggle **Reduce motion** On/Off
+
+### How to test prefers-reduced-motion on iOS
+
+1. Open settings for **Accessibility**
+1. Toggle **Reduce motion** On/Off
+
+### How to test prefers-reduced-motion on Windows 10
+
+1. Press Windows key
+1. Search **Show animations in Windows**
+1. Toggle option On/Off
+
+### How to test prefers-reduced-motion on Android
+
+1. Search in your system Settings for **Remove animations** and toggle On/Off,
+   or
+1. Go to your systems settings > **Accessibility** and look for a toggle to
+   reduce motion or turn off animations
+1. If you have a browser app already open, you'll have to force quit it to have
+   the setting take effect
 
 ## Icons
 

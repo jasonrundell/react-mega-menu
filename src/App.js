@@ -38,6 +38,7 @@ function App() {
             <li>
               Supports and tested against IE 11, Edge, Safari, FireFox, Chrome
             </li>
+            <li>CSS animations with prefers-reduced-motion media query</li>
           </ul>
         </section>
         <section>
