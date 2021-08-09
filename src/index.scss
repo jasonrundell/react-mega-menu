@@ -1,0 +1,35 @@
+@import './styles/index.scss';
+@import './components/Hamburger/index.scss';
+@import './components/Logo/index.scss';
+@import './components/MainList/index.scss';
+@import './components/MainNavItem/index.scss';
+@import './components/MainNavItemLink/index.scss';
+@import './components/MegaList/index.scss';
+@import './components/Nav/index.scss';
+@import './components/NavItem/index.scss';
+@import './components/NavItemDescription/index.scss';
+@import './components/NavItemLink/index.scss';
+@import './components/NavList/index.scss';
+@import './components/TopBar/index.scss';
+
+.rmm__root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 8rem;
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  flex-direction: row;
+  background-color: #fff;
+  width: 100%;
+  padding-top: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  border-bottom: 0.0625rem solid #000;
+
+  @include respond-to('large') {
+    height: 4rem;
+  }
+}

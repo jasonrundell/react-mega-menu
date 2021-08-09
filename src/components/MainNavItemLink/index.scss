@@ -1,6 +1,4 @@
-@import '../../styles/breakpoints.scss';
-
-.root {
+.rmm__main-nav-item-link {
   width: 100%;
   display: flex;
   position: relative;
@@ -10,13 +8,13 @@
   }
 }
 
-.forward {
+.rmm__main-nav-item-link--forward {
   @include respond-to('large') {
     margin-right: 1rem;
   }
 
   &::after {
-    content: url('../../images/icons/angle-right.svg');
+    content: url('./images/icons/angle-right.svg');
     position: absolute;
     right: 2rem;
     bottom: -30%;
@@ -24,7 +22,7 @@
     height: 2rem;
 
     @include respond-to('large') {
-      content: url('../../images/icons/angle-up.svg');
+      content: url('./images/icons/angle-up.svg');
       top: 0.25rem;
       right: -0.5rem;
       bottom: initial;
@@ -33,10 +31,10 @@
   }
 }
 
-.back {
+.rmm__main-nav-item-link--back {
   padding-left: 2rem;
   &::before {
-    content: url('../../images/icons/angle-left.svg');
+    content: url('./images/icons/angle-left.svg');
     position: absolute;
     left: 0;
     bottom: -30%;
@@ -45,7 +43,7 @@
   }
 }
 
-.active {
+.rmm__main-nav-item-link--active {
   &::after {
     @include respond-to('large') {
       transform: rotate(180deg);

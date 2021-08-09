@@ -4,11 +4,11 @@ import PropTypes from 'prop-types'
 // Utils
 import { classNames } from '../../utils/css'
 
-// CSS
-import styles from './index.module.scss'
-
 const NavItemDescription = ({ className, children }) => {
-  const rootClasses = classNames(styles['root'], className && className)
+  const rootClasses = classNames(
+    'rmm__nav-item-description',
+    className && className
+  )
   return <p className={rootClasses}>{children}</p>
 }
 

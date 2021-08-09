@@ -4,13 +4,10 @@ import PropTypes from 'prop-types'
 // Utils
 import { classNames } from '../../utils/css'
 
-// CSS
-import styles from './index.module.scss'
-
 const MegaList = ({ id, activeState, children }) => {
   const rootClasses = classNames(
-    styles['root'],
-    activeState && styles[activeState]
+    'rmm__mega-list',
+    activeState && `rmm__mega-list--${activeState}`
   )
   return (
     <ul role="menu" className={rootClasses} id={id} aria-labelledby={id}>

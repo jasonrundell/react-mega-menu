@@ -4,9 +4,6 @@ import PropTypes from 'prop-types'
 // Utils
 import { classNames } from '../../utils/css'
 
-// CSS
-import styles from './index.module.scss'
-
 const MainNavItemLink = ({
   id,
   role,
@@ -22,10 +19,10 @@ const MainNavItemLink = ({
   children,
 }) => {
   const rootClasses = classNames(
-    styles['root'],
-    isBack && styles['back'],
-    isForward && styles['forward'],
-    isActive && styles['active'],
+    'rmm__main-nav-item-link',
+    isBack && 'rmm__main-nav-item-link--back',
+    isForward && 'rmm__main-nav-item-link--forward',
+    isActive && 'rmm__main-nav-item-link--active',
     className && className
   )
   return (

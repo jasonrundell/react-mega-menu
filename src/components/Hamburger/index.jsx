@@ -1,22 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-// CSS
-import styles from './index.module.scss'
-
 const Hamburger = ({ label, state, onClick }) => {
-  if (state === '') state = 'closed'
+  if (state === '') {
+    state = 'rmm__hamburger--closed'
+  } else if (state === 'open') {
+    state = 'rmm__hamburger--open'
+  }
   return (
-    <button className={`${styles['root']} ${styles[state]}`} onClick={onClick}>
-      <div className={styles['slice-container']}>
-        <span className={styles['slice']}></span>
-        <span className={styles['slice']}></span>
-        <span className={styles['slice']}></span>
-        <span className={styles['slice']}></span>
+    <button className={`rmm__hamburger ${state}`} onClick={onClick}>
+      <div className="rmm_hamburger--slice-container">
+        <span className="rmm_hamburger--slice"></span>
+        <span className="rmm_hamburger--slice"></span>
+        <span className="rmm_hamburger--slice"></span>
+        <span className="rmm_hamburger--slice"></span>
       </div>
       {label && (
-        <div className={styles['label-container']}>
-          <span className={styles['label']}>{label}</span>
+        <div className="rmm_hamburger--label-container">
+          <span className="rmm_hamburger--label">{label}</span>
         </div>
       )}
     </button>

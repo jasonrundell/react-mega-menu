@@ -1,7 +1,7 @@
 @import '../../styles/animations.scss';
 @import '../../styles/breakpoints.scss';
 
-.root {
+.rmm__top-bar {
   position: absolute;
   top: 0;
   left: 0;
@@ -19,12 +19,4 @@
   padding-left: 1rem;
   border-right: 0.25rem solid #000;
   overflow: hidden;
-
-  @include respond-to('large') {
-    left: 0;
-    border-top: none;
-    flex-direction: row;
-    border-right: none;
-    border-bottom: 0.0625rem solid #000;
-  }
 }

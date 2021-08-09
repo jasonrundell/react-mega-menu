@@ -1,16 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-// CSS
-import styles from './index.module.scss'
-
 const MainList = ({ id, children, ariaLabel }) => {
   return (
     <ul
       id={id}
       role="menubar"
       aria-label={ariaLabel}
-      className={styles['root']}
+      className="rmm__main-list"
     >
       {children}
     </ul>

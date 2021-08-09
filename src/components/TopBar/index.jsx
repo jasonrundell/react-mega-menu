@@ -4,11 +4,8 @@ import PropTypes from 'prop-types'
 // Utils
 import { classNames } from '../../utils/css'
 
-// CSS
-import styles from './index.module.scss'
-
 const TopBar = ({ id, className, children }) => {
-  const rootClasses = classNames(styles['root'], className && className)
+  const rootClasses = classNames('rmm__top-bar', className && className)
 
   return (
     <div id={id} className={rootClasses}>

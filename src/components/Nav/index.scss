@@ -1,42 +1,49 @@
 @import '../../styles/breakpoints.scss';
 @import '../../styles/mixins.scss';
 
-.root {
+.rmm__nav {
   position: absolute;
-  z-index: 2;
-  top: 0;
+  top: 8rem;
   left: -100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-content: center;
   width: 100%;
   height: calc(100vh - 4rem);
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-top: 0.0625rem solid grey;
   padding-top: 1rem;
   padding-right: 1rem;
   padding-bottom: 1rem;
   padding-left: 1rem;
-  border-right: 0.25rem solid #999;
-  background-color: #fff;
+  border-right: 0.25rem solid #000;
+  overflow-y: scroll;
 
   @include respond-to('large') {
-    position: absolute;
-    left: 0;
     top: 4rem;
-    display: flex;
-    flex-direction: row;
-    flex-direction: row;
-    width: 100%;
-    height: auto;
-    opacity: 0;
+    left: 0;
     border-top: none;
-    border-right: 0.25rem solid #666;
-    border-bottom: 0.25rem solid #333;
-    border-left: 0.25rem solid #666;
+    height: 4rem;
+    flex-direction: row;
+    border-right: none;
+    border-bottom: 0.0625rem solid #000;
+    overflow-y: initial;
+  }
+
+  &.rmm__nav--closed {
+    @include respond-to('large') {
+      display: flex;
+      opacity: 1;
+    }
+  }
+
+  li:first-child {
+    @include respond-to('large') {
+      margin-left: 0;
+    }
   }
 }
 
-.open {
+.rmm__nav--open {
   @include slideOpen;
 
   @media (prefers-reduced-motion: reduce) {
@@ -53,7 +60,7 @@
   }
 }
 
-.closed {
+.rmm__nav--closed {
   @include slideClosed;
 
   @media (prefers-reduced-motion: reduce) {

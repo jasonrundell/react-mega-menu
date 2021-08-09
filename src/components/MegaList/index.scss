@@ -1,49 +1,42 @@
 @import '../../styles/breakpoints.scss';
 @import '../../styles/mixins.scss';
 
-.root {
+.rmm__mega-list {
   position: absolute;
-  top: 8rem;
+  z-index: 2;
+  top: 0;
   left: -100%;
-  width: 100%;
-  height: calc(100vh - 4rem);
   display: flex;
   flex-direction: column;
-  background-color: #fff;
-  border-top: 0.0625rem solid grey;
+  justify-content: flex-start;
+  align-content: center;
+  width: 100%;
+  height: calc(100vh - 4rem);
   padding-top: 1rem;
   padding-right: 1rem;
   padding-bottom: 1rem;
   padding-left: 1rem;
-  border-right: 0.25rem solid #000;
-  overflow-y: scroll;
+  border-right: 0.25rem solid #999;
+  background-color: #fff;
 
   @include respond-to('large') {
-    top: 4rem;
+    position: absolute;
     left: 0;
-    border-top: none;
-    height: 4rem;
+    top: 4rem;
+    display: flex;
     flex-direction: row;
-    border-right: none;
-    border-bottom: 0.0625rem solid #000;
-    overflow-y: initial;
-  }
-
-  &.closed {
-    @include respond-to('large') {
-      display: flex;
-      opacity: 1;
-    }
-  }
-
-  li:first-child {
-    @include respond-to('large') {
-      margin-left: 0;
-    }
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    opacity: 0;
+    border-top: none;
+    border-right: 0.25rem solid #666;
+    border-bottom: 0.25rem solid #333;
+    border-left: 0.25rem solid #666;
   }
 }
 
-.open {
+.rmm__mega-list--open {
   @include slideOpen;
 
   @media (prefers-reduced-motion: reduce) {
@@ -60,7 +53,7 @@
   }
 }
 
-.closed {
+.rmm__mega-list--closed {
   @include slideClosed;
 
   @media (prefers-reduced-motion: reduce) {

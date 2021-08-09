@@ -1,7 +1,7 @@
 @import '../../styles/breakpoints.scss';
 @import '../../styles/mixins.scss';
 
-.root {
+.rmm__nav-list {
   position: absolute;
   top: 0;
   left: 0;
@@ -28,7 +28,7 @@
   }
 }
 
-.sub {
+.rmm__nav-list--sub {
   position: absolute;
   top: 0;
   left: -100%;
@@ -52,14 +52,14 @@
   }
 }
 
-.sub-sub {
+.rmm__nav-list--sub-sub {
   border-right: 0.25rem solid #ccc;
   @include respond-to('large') {
     border-right: none;
   }
 }
 
-.dropdown {
+.rmm__nav-list--dropdown {
   @include respond-to('large') {
     border-right: 0.25rem solid #666;
     border-bottom: 0.25rem solid #333;
@@ -67,7 +67,7 @@
   }
 }
 
-.open {
+.rmm__nav-list--open {
   @include slideOpen;
 
   @media (prefers-reduced-motion: reduce) {
@@ -82,7 +82,7 @@
   }
 }
 
-.closed {
+.rmm__nav-list--closed {
   @include slideClosed;
 
   @media (prefers-reduced-motion: reduce) {

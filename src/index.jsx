@@ -1,30 +1,30 @@
 import React, { useRef, useState, useEffect } from 'react'
 
 // Components
-import TopBar from '../TopBar'
-import Logo from '../Logo'
-import TopBarTitle from '../TopBarTitle'
-import Hamburger from '../Hamburger'
-import Nav from '../Nav'
-import MainList from '../MainList'
-import MegaList from '../MegaList'
-import MainNavItem from '../MainNavItem'
-import MainNavItemLink from '../MainNavItemLink'
-import NavItem from '../NavItem'
-import NavItemLink from '../NavItemLink'
-import NavList from '../NavList'
-import NavItemDescription from '../NavItemDescription'
+import TopBar from './components/TopBar'
+// import Logo from './components/Logo'
+import TopBarTitle from './components/TopBarTitle'
+import Hamburger from './components/Hamburger'
+import Nav from './components/Nav'
+import MainList from './components/MainList'
+import MegaList from './components/MegaList'
+import MainNavItem from './components/MainNavItem'
+import MainNavItemLink from './components/MainNavItemLink'
+import NavItem from './components/NavItem'
+import NavItemLink from './components/NavItemLink'
+import NavList from './components/NavList'
+import NavItemDescription from './components/NavItemDescription'
 
 // State Machines
-import { MenuStateMachine } from '../../state-machines/menus'
+import { MenuStateMachine } from './state-machines/menus'
 
 // CSS
-import styles from './index.module.scss'
+import './index.scss'
 
 // Images
-import LogoImage from '../../images/logos/logo.svg'
+// import LogoImage from './images/logos/logo.svg'
 
-const GlobalTopNav = () => {
+const Menu = () => {
   const [megaMenuState, setMegaMenuState] = useState('')
   const [subMenuState, setSubMenuState] = useState('')
   const [subSubMenuState, setSubSubMenuState] = useState('')
@@ -152,7 +152,7 @@ const GlobalTopNav = () => {
   useOutsideAlerter(wrapperRef) // create bindings for closing menu from outside events
 
   return (
-    <div role="navigation" className={styles['root']} ref={wrapperRef}>
+    <div role="navigation" className="rmm__root" ref={wrapperRef}>
       <TopBar>
         <Logo
           id="menuitem-logo"
@@ -475,4 +475,4 @@ const GlobalTopNav = () => {
   )
 }
 
-export default GlobalTopNav
+export default Menu
