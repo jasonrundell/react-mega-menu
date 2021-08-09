@@ -1,7 +1,6 @@
 {
-  "name": "react-mega-menu",
-  "version": "0.2.0",
-  "private": true,
+  "name": "@jasonrundell/react-mega-menu",
+  "version": "0.3.0",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
@@ -13,6 +12,9 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3"
+  },
+  "repository": {
+    "url": "git@github.com:jasonrundell/react-mega-menu.git"
   },
   "devDependencies": {
     "netlify-lambda": "^2.0.13",
