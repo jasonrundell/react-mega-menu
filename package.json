@@ -1,6 +1,6 @@
 {
   "name": "@jasonrundell/react-mega-menu",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
