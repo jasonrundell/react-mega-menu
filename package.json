@@ -6,7 +6,7 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.module.js",
   "unpkg": "./dist/index.umd.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "dependencies": {
     "husky": "^7.0.1",
     "node-sass": "^6.0.1",
