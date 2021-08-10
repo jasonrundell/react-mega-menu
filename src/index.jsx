@@ -125,7 +125,7 @@ const Menu = () => {
     }
   }, [activeMenus, isMobile])
 
-  const escFunction = (e) => {
+  const doEscape = (e) => {
     if (e.keyCode === 27) {
       resetMenus()
     }
@@ -139,10 +139,10 @@ const Menu = () => {
   }
 
   useEffect(() => {
-    document.addEventListener('keydown', escFunction, false)
+    document.addEventListener('keydown', doEscape, false)
 
     return () => {
-      document.removeEventListener('keydown', escFunction, false)
+      document.removeEventListener('keydown', doEscape, false)
     }
   })
 
