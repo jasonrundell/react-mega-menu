@@ -1,3 +1,3 @@
-import Menu from './src/'
+import Menu from './src/index'
 
 export { Menu }

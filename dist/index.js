@@ -1779,12 +1779,12 @@ Object.defineProperty(exports, "__esModule", {
 Object.defineProperty(exports, "Menu", {
   enumerable: true,
   get: function () {
-    return _src.default;
+    return _index.default;
   }
 });
 
-var _src = _interopRequireDefault(require("./src/"));
+var _index = _interopRequireDefault(require("./src/index"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./src/":"c2Qt"}]},{},["Focm"], null)
+},{"./src/index":"c2Qt"}]},{},["Focm"], null)
 //# sourceMappingURL=/index.js.map
