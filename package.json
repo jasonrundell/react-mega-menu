@@ -1,6 +1,6 @@
 {
   "name": "@jasonrundell/react-mega-menu",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "author": "jasonrundell <jason.rundell@gmail.com>",
   "source": "./src/index.js",
   "type": "module",
