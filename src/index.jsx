@@ -18,9 +18,6 @@ import NavItemDescription from './components/NavItemDescription'
 // State Machines
 import { MenuStateMachine } from './state-machines/menus'
 
-// CSS
-import './index.scss'
-
 // Images
 // import LogoImage from './images/logos/logo.svg'
 
