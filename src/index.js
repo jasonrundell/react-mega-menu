@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 
 // Components
 import TopBar from './components/TopBar'
-// import Logo from './components/Logo'
+import Logo from './components/Logo'
 import TopBarTitle from './components/TopBarTitle'
 import Hamburger from './components/Hamburger'
 import Nav from './components/Nav'
@@ -18,10 +18,7 @@ import NavItemDescription from './components/NavItemDescription'
 // State Machines
 import { MenuStateMachine } from './state-machines/menus'
 
-// Images
-// import LogoImage from './images/logos/logo.svg'
-
-const Menu = () => {
+const Menu = ({ logoImage }) => {
   const [megaMenuState, setMegaMenuState] = useState('')
   const [subMenuState, setSubMenuState] = useState('')
   const [subSubMenuState, setSubSubMenuState] = useState('')
@@ -151,12 +148,14 @@ const Menu = () => {
   return (
     <div role="navigation" className="rmm__root" ref={wrapperRef}>
       <TopBar>
-        {/* <Logo
-          id="menuitem-logo"
-          src={LogoImage}
-          alt="Your brand's logo"
-          rel="home"
-        /> */}
+        {logoImage && (
+          <Logo
+            id="menuitem-logo"
+            src={logoImage}
+            alt="Your brand's logo"
+            rel="home"
+          />
+        )}
         <TopBarTitle>Your Brand Name</TopBarTitle>
       </TopBar>
       <Hamburger
@@ -470,6 +469,11 @@ const Menu = () => {
       </Nav>
     </div>
   )
+}
+
+Menu.defaultProps = { logoImage: null }
+Menu.propTypes = {
+  logoImage: PropTypes.string,
 }
 
 export default Menu
