@@ -48,12 +48,12 @@ const Menu = () => {
       }
 
       // Bind the event listener to both mouse and key events
-      window.document.addEventListener('mousedown', handleClickOutside)
-      window.document.addEventListener('keydown', handleClickOutside)
+      document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener('keydown', handleClickOutside)
       return () => {
         // Unbind the event listener to clean up
-        window.document.removeEventListener('mousedown', handleClickOutside)
-        window.document.removeEventListener('keydown', handleClickOutside)
+        document.removeEventListener('mousedown', handleClickOutside)
+        document.removeEventListener('keydown', handleClickOutside)
       }
     }, [ref])
   }
@@ -139,13 +139,11 @@ const Menu = () => {
   }
 
   useEffect(() => {
-    window.document.addEventListener('keydown', doEscape, false)
+    document.addEventListener('keydown', doEscape, false)
 
-    const removeEscListener = () => {
-      window.document.removeEventListener('keydown', doEscape, false)
+    return () => {
+      document.removeEventListener('keydown', doEscape, false)
     }
-
-    return removeEscListener()
   })
 
   useOutsideAlerter(wrapperRef) // create bindings for closing menu from outside events
