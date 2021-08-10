@@ -3,9 +3,9 @@
   "author": "jasonrundell <jason.rundell@gmail.com>",
   "type": "module",
   "main": "./dist/index.js",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "scripts": {
-    "build": "parcel build src/index.jsx --no-minify --no-cache --public-url /",
+    "build": "parcel build index.js --no-minify --no-cache --public-url /",
     "format": "prettier --write src/**/*.{js,jsx}"
   },
   "dependencies": {
