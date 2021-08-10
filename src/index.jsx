@@ -151,12 +151,12 @@ const Menu = () => {
   return (
     <div role="navigation" className="rmm__root" ref={wrapperRef}>
       <TopBar>
-        <Logo
+        {/* <Logo
           id="menuitem-logo"
           src={LogoImage}
           alt="Your brand's logo"
           rel="home"
-        />
+        /> */}
         <TopBarTitle>Your Brand Name</TopBarTitle>
       </TopBar>
       <Hamburger

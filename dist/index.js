@@ -1542,12 +1542,7 @@ var Menu = function Menu() {
     role: "navigation",
     className: "rmm__root",
     ref: wrapperRef
-  }, /*#__PURE__*/_react.default.createElement(_TopBar.default, null, /*#__PURE__*/_react.default.createElement(Logo, {
-    id: "menuitem-logo",
-    src: LogoImage,
-    alt: "Your brand's logo",
-    rel: "home"
-  }), /*#__PURE__*/_react.default.createElement(_TopBarTitle.default, null, "Your Brand Name")), /*#__PURE__*/_react.default.createElement(_Hamburger.default, {
+  }, /*#__PURE__*/_react.default.createElement(_TopBar.default, null, /*#__PURE__*/_react.default.createElement(_TopBarTitle.default, null, "Your Brand Name")), /*#__PURE__*/_react.default.createElement(_Hamburger.default, {
     label: "Menu",
     state: megaMenuState,
     onClick: function onClick(e) {
