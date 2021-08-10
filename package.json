@@ -2,10 +2,17 @@
   "name": "@jasonrundell/react-mega-menu",
   "author": "jasonrundell <jason.rundell@gmail.com>",
   "type": "module",
-  "main": "./dist/index.js",
-  "version": "1.1.4",
+  "main": "./dist/index.cjs",
+  "version": "1.2.0",
+  "source": "index.js",
+  "exports": "./dist/index.modern.js",
+  "module": "./dist/index.module.js",
+  "unpkg": "./dist/index.umd.js",
   "scripts": {
-    "build": "parcel build index.js --no-minify --no-cache --public-url /",
+    "build": "npm run build:micro",
+    "build:parcel": "parcel build index.js --no-minify --no-cache --public-url /",
+    "build:micro": "microbundle",
+    "dev": "microbundle watch",
     "format": "prettier --write src/**/*.{js,jsx}"
   },
   "dependencies": {
@@ -15,6 +22,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
+    "microbundle": "^0.13.3",
     "parcel-bundler": "^1.12.5",
     "prettier": "^2.3.2",
     "prop-types": "^15.7.2"
