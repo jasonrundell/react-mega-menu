@@ -1,10 +1,10 @@
 {
   "name": "@jasonrundell/react-mega-menu",
   "author": "jasonrundell <jason.rundell@gmail.com>",
+  "source": "./src/index.js",
   "type": "module",
   "main": "./dist/index.cjs",
-  "version": "1.2.3",
-  "source": "index.js",
+  "version": "1.2.4",
   "exports": "./dist/index.modern.js",
   "module": "./dist/index.module.js",
   "unpkg": "./dist/index.umd.js",
