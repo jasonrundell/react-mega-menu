@@ -48,12 +48,12 @@ const Menu = () => {
       }
 
       // Bind the event listener to both mouse and key events
-      document.addEventListener('mousedown', handleClickOutside)
-      document.addEventListener('keydown', handleClickOutside)
+      window.document.addEventListener('mousedown', handleClickOutside)
+      window.document.addEventListener('keydown', handleClickOutside)
       return () => {
         // Unbind the event listener to clean up
-        document.removeEventListener('mousedown', handleClickOutside)
-        document.removeEventListener('keydown', handleClickOutside)
+        window.document.removeEventListener('mousedown', handleClickOutside)
+        window.document.removeEventListener('keydown', handleClickOutside)
       }
     }, [ref])
   }
@@ -139,10 +139,10 @@ const Menu = () => {
   }
 
   useEffect(() => {
-    document.addEventListener('keydown', doEscape, false)
+    window.document.addEventListener('keydown', doEscape, false)
 
     const removeEscListener = () => {
-      document.removeEventListener('keydown', doEscape, false)
+      window.document.removeEventListener('keydown', doEscape, false)
     }
 
     return removeEscListener()

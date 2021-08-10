@@ -1,6 +1,6 @@
 {
   "name": "@jasonrundell/react-mega-menu",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "author": "jasonrundell <jason.rundell@gmail.com>",
   "source": "./src/index.js",
   "type": "module",
@@ -11,7 +11,7 @@
   "scripts": {
     "build": "npm run build:micro",
     "build:parcel": "parcel build index.js --no-minify --no-cache --public-url /",
-    "build:micro": "microbundle",
+    "build:micro": "microbundle --jsx React.createElement",
     "dev": "microbundle watch",
     "format": "prettier --write src/**/*.{js,jsx}"
   },
