@@ -141,9 +141,11 @@ const Menu = () => {
   useEffect(() => {
     document.addEventListener('keydown', doEscape, false)
 
-    return () => {
+    const removeEscListener = () => {
       document.removeEventListener('keydown', doEscape, false)
     }
+
+    return removeEscListener()
   })
 
   useOutsideAlerter(wrapperRef) // create bindings for closing menu from outside events
