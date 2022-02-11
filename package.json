@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "husky": "^7.0.1",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.0",
     "react": "^17.0.2"
   },
   "devDependencies": {
