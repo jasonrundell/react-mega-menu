@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:jasonrundell/react-mega-menu.git"
+    "url": "git+ssh://git@github.com/jasonrundell/react-mega-menu.git"
   },
   "browserslist": {
     "production": [
@@ -48,5 +48,17 @@
       "pre-commit": "npm run format"
     }
   },
-  "license": "MIT"
+  "license": "MIT",
+  "description": "A React project which aims to be an accessible, responsive, boilerplate top\r navigation menu with a \"Mega Menu\"!",
+  "bugs": {
+    "url": "https://github.com/jasonrundell/react-mega-menu/issues"
+  },
+  "homepage": "https://github.com/jasonrundell/react-mega-menu#readme",
+  "keywords": [
+    "react",
+    "navigation",
+    "mega",
+    "menu",
+    "megamenu"
+  ]
 }
