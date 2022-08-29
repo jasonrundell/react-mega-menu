@@ -16,7 +16,7 @@ const MainNavItemLink = ({
   onKeyDown,
   ariaHaspopup,
   ariaControls,
-  children,
+  children
 }) => {
   const rootClasses = classNames(
     'rmm__main-nav-item-link',
@@ -45,7 +45,7 @@ MainNavItemLink.defaultProps = {
   role: 'menuitem',
   isBack: false,
   isForward: false,
-  isActive: false,
+  isActive: false
 }
 
 MainNavItemLink.propTypes = {
@@ -60,7 +60,7 @@ MainNavItemLink.propTypes = {
   onKeyDown: PropTypes.func,
   ariaHaspopup: PropTypes.string,
   ariaControls: PropTypes.string,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 }
 
 export default MainNavItemLink

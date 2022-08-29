@@ -12,7 +12,7 @@ const NavList = ({
   isDropdown,
   activeState,
   ariaLabelledby,
-  children,
+  children
 }) => {
   const rootClasses = classNames(
     'rmm__nav-list',
@@ -38,7 +38,7 @@ NavList.defaultProps = {
   isSub: false,
   isSubSub: false,
   isDropdown: false,
-  activeState: '',
+  activeState: ''
 }
 
 NavList.propTypes = {
@@ -49,7 +49,7 @@ NavList.propTypes = {
   isDropdown: PropTypes.bool,
   activeState: PropTypes.oneOf(['', 'open', 'closed']).isRequired,
   ariaLabelledby: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 }
 
 export default NavList

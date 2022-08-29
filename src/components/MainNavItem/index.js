@@ -11,7 +11,7 @@ const MainNavItem = ({
   isChildren,
   isForward,
   className,
-  children,
+  children
 }) => {
   const rootClasses = classNames(
     'rmm__main-nav-item',
@@ -31,7 +31,7 @@ MainNavItem.defaultProps = {
   role: 'none',
   isHeading: false,
   hasChildren: false,
-  isForward: false,
+  isForward: false
 }
 
 MainNavItem.propTypes = {
@@ -41,7 +41,7 @@ MainNavItem.propTypes = {
   isChildren: PropTypes.bool,
   isForward: PropTypes.bool,
   className: PropTypes.string,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 }
 
 export default MainNavItem

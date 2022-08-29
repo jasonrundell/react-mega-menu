@@ -17,13 +17,13 @@ const MegaList = ({ id, activeState, children }) => {
 }
 
 MegaList.defaultProps = {
-  activeState: '',
+  activeState: ''
 }
 
 MegaList.propTypes = {
   id: PropTypes.string.isRequired,
   activeState: PropTypes.oneOf(['open', 'closed']).isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 }
 
 export default MegaList

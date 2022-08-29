@@ -86,9 +86,9 @@ const Menu = ({ logoImage }) => {
     const nextState = MenuStateMachine(subMenuState)
 
     setSubMenuState(MenuStateMachine(subMenuState))
-    /* 
-      I haven't come up with single solution (yet) that takes care of 
-      opening and closing menus for both small and large screens, so for 
+    /*
+      I haven't come up with single solution (yet) that takes care of
+      opening and closing menus for both small and large screens, so for
       now I fork the logic based on viewport size.
       */
     if (!isMobile) {
@@ -182,7 +182,7 @@ const Menu = ({ logoImage }) => {
               id="menuitem-Mega-Menu"
               href="/?page=mega-menu"
               isForward
-              isActive={activeMenus.includes('menu-Mega-Menu') ? true : false}
+              isActive={!!activeMenus.includes('menu-Mega-Menu')}
               onClick={(e) => toggleSubMenu(e, 'menu-Mega-Menu')}
               onKeyDown={(e) =>
                 a11yClick(e) && toggleSubMenu(e, 'menu-Mega-Menu')
@@ -260,8 +260,8 @@ const Menu = ({ logoImage }) => {
                 </NavItemLink>
                 <NavItemDescription>
                   Three lined small description that accompanies link in the
-                  React Mega Menu project. This maybe too much text? Who's to
-                  say, really. We'll leave it to fate to decide.
+                  React Mega Menu project. This maybe too much text? Who&lsquo;s
+                  to say, really. We&lsquo;ll leave it to fate to decide.
                 </NavItemDescription>
                 <NavList
                   id="menu-Mega-Menu-Sub-menu-item-3"
@@ -333,8 +333,9 @@ const Menu = ({ logoImage }) => {
                     </NavItemLink>
                     <NavItemDescription>
                       Three lined small description that accompanies link in the
-                      React Mega Menu project. This maybe too much text? Who's
-                      to say, really. We'll leave it to fate to decide.
+                      React Mega Menu project. This maybe too much text?
+                      Who&lsquo;s to say, really. We&lsquo;ll leave it to fate
+                      to decide.
                     </NavItemDescription>
                   </NavItem>
                 </NavList>
@@ -361,8 +362,8 @@ const Menu = ({ logoImage }) => {
                 </NavItemLink>
                 <NavItemDescription>
                   Three lined small description that accompanies link in the
-                  React Mega Menu project. This maybe too much text? Who's to
-                  say, really. We'll leave it to fate to decide.
+                  React Mega Menu project. This maybe too much text? Who&lsqio;s
+                  to say, really. We&lsquo;ll leave it to fate to decide.
                 </NavItemDescription>
                 <NavList
                   id="menu-Mega-Menu-Sub-menu-item-4"
@@ -474,7 +475,7 @@ const Menu = ({ logoImage }) => {
 
 Menu.defaultProps = { logoImage: null }
 Menu.propTypes = {
-  logoImage: PropTypes.string,
+  logoImage: PropTypes.string
 }
 
 export default Menu

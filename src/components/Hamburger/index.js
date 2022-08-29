@@ -28,7 +28,7 @@ Hamburger.defaultProps = { label: null }
 Hamburger.propTypes = {
   label: PropTypes.string,
   state: PropTypes.oneOf(['', 'open', 'closed']),
-  onClick: PropTypes.func,
+  onClick: PropTypes.func
 }
 
 export default Hamburger

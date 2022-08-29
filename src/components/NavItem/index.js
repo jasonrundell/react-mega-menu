@@ -22,7 +22,7 @@ NavItem.defaultProps = {
   role: 'none',
   isHeading: false,
   hasChildren: false,
-  isForward: false,
+  isForward: false
 }
 
 NavItem.propTypes = {
@@ -31,7 +31,7 @@ NavItem.propTypes = {
   isHeading: PropTypes.bool,
   isForward: PropTypes.bool,
   className: PropTypes.string,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 }
 
 export default NavItem

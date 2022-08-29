@@ -15,13 +15,13 @@ const MainList = ({ id, children, ariaLabel }) => {
 }
 
 MainList.defaultProps = {
-  ariaLabel: 'Main menu',
+  ariaLabel: 'Main menu'
 }
 
 MainList.propTypes = {
   id: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
-  ariaLabel: PropTypes.string.isRequired,
+  ariaLabel: PropTypes.string.isRequired
 }
 
 export default MainList

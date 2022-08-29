@@ -15,13 +15,13 @@ const TopBar = ({ id, className, children }) => {
 }
 
 TopBar.defaultProps = {
-  id: 'top',
+  id: 'top'
 }
 
 TopBar.propTypes = {
   id: PropTypes.string,
   className: PropTypes.string,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 }
 
 export default TopBar

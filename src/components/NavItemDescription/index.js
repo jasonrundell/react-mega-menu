@@ -14,7 +14,7 @@ const NavItemDescription = ({ className, children }) => {
 
 NavItemDescription.propTypes = {
   className: PropTypes.string,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 }
 
 export default NavItemDescription

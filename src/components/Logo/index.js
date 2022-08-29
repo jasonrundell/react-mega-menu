@@ -11,7 +11,7 @@ const Logo = ({ id, src, rel, className, alt }) => {
 
 Logo.defaultProps = {
   alt: '',
-  rel: '',
+  rel: ''
 }
 
 Logo.propTypes = {
@@ -19,7 +19,7 @@ Logo.propTypes = {
   src: PropTypes.string.isRequired,
   className: PropTypes.string,
   rel: PropTypes.string,
-  alt: PropTypes.string,
+  alt: PropTypes.string
 }
 
 export default Logo

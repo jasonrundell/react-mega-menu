@@ -17,7 +17,7 @@ const TopBarTitle = ({ id, className, children }) => {
 TopBarTitle.propTypes = {
   id: PropTypes.string,
   className: PropTypes.string,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 }
 
 export default TopBarTitle
