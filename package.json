@@ -1,13 +1,9 @@
 {
   "name": "@jasonrundell/react-mega-menu",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "author": "jasonrundell <jason.rundell@gmail.com>",
   "source": "./src/index.js",
-  "type": "module",
-  "main": "./dist/index.cjs",
-  "exports": "./dist/index.modern.js",
-  "module": "./dist/index.module.js",
-  "unpkg": "./dist/index.umd.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "babel src --out-dir lib",
     "build:micro": "microbundle --jsx React.createElement",
