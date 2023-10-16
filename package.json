@@ -1,6 +1,6 @@
 {
   "name": "@jasonrundell/react-mega-menu",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "author": "jasonrundell <jason.rundell@gmail.com>",
   "source": "./src/index.js",
   "type": "module",
@@ -9,7 +9,7 @@
   "module": "./dist/index.module.js",
   "unpkg": "./dist/index.umd.js",
   "scripts": {
-    "build": "npm run build:micro",
+    "build": "babel src --out-dir lib",
     "build:micro": "microbundle --jsx React.createElement",
     "dev": "microbundle watch",
     "format": "prettier --write src/**/*.{js,jsx}"
@@ -19,7 +19,10 @@
     "sass": "^1.54.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.15.0",
+    "@babel/core": "^7.23.2",
+    "@babel/cli": "^7.23.0",
+    "@babel/preset-env": "^7.23.2",
+    "@babel/preset-react": "^7.22.15",
     "eslint": "^8.23.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
@@ -27,7 +30,6 @@
     "eslint-plugin-promise": "^6.0.1",
     "eslint-plugin-react": "^7.31.1",
     "husky": "^8.0.1",
-    "microbundle": "^0.15.1",
     "prettier": "^2.7.1",
     "prop-types": "^15.8.1"
   },
