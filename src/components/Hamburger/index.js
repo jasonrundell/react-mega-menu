@@ -30,6 +30,46 @@ const Hamburger = ({ label, state, onClick }) => {
     }
   `
 
+  const StyledHamburgerSliceContainer = styled.div`
+    width: 2rem;
+    position: relative;
+    display: block;
+    height: 1.25rem;
+  `
+
+  const StyledHamburgerSlice = styled.span`
+    display: block;
+    position: absolute;
+    height: 0.25rem;
+    width: 100%;
+    background: #000;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: 0.25s ease-in-out;
+    &:nth-child(1) {
+      top: 0;
+    }
+
+    &:nth-child(2),
+    &:nth-child(3) {
+      top: 0.5rem;
+    }
+
+    &:nth-child(4) {
+      top: 1rem;
+    }
+  `
+
+  const StyledHamburgerLabelContainer = styled.div`
+    margin-left: 1rem;
+  `
+
+  const StyledHamburgerLabel = styled.span`
+    font-size: 1rem;
+    font-weight: 700;
+  `
+
   if (state === '') {
     state = 'rmm__hamburger--closed'
   } else if (state === 'open') {
@@ -37,16 +77,16 @@ const Hamburger = ({ label, state, onClick }) => {
   }
   return (
     <StyledHamburger className={`rmm__hamburger ${state}`} onClick={onClick}>
-      <div className="rmm_hamburger--slice-container">
-        <span className="rmm_hamburger--slice"></span>
-        <span className="rmm_hamburger--slice"></span>
-        <span className="rmm_hamburger--slice"></span>
-        <span className="rmm_hamburger--slice"></span>
-      </div>
+      <StyledHamburgerSliceContainer>
+        <StyledHamburgerSlice />
+        <StyledHamburgerSlice />
+        <StyledHamburgerSlice />
+        <StyledHamburgerSlice />
+      </StyledHamburgerSliceContainer>
       {label && (
-        <div className="rmm_hamburger--label-container">
-          <span className="rmm_hamburger--label">{label}</span>
-        </div>
+        <StyledHamburgerLabelContainer>
+          <StyledHamburgerLabel>{label}</StyledHamburgerLabel>
+        </StyledHamburgerLabelContainer>
       )}
     </StyledHamburger>
   )
