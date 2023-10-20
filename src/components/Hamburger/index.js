@@ -76,7 +76,7 @@ const Hamburger = ({ label, state, onClick }) => {
     state = 'rmm__hamburger--open'
   }
   return (
-    <StyledHamburger className={`rmm__hamburger ${state}`} onClick={onClick}>
+    <StyledHamburger className={`${state}`} onClick={onClick}>
       <StyledHamburgerSliceContainer>
         <StyledHamburgerSlice />
         <StyledHamburgerSlice />
