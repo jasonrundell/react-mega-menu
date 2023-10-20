@@ -1,0 +1,23 @@
+$slideDuration: 0.75s;
+$slideOpenFillAnimationMode: both;
+$slideClosedFillAnimationMode: both;
+
+@keyframes slideOpen {
+  from {
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  to {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@keyframes slideClosed {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}

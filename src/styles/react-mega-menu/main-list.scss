@@ -1,0 +1,25 @@
+.rmm__main-list {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  padding-top: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  width: 100%;
+  height: calc(100vh - 4rem);
+  z-index: 1;
+
+  @include respond-to('large') {
+    flex-direction: row;
+    height: 4rem;
+  }
+}

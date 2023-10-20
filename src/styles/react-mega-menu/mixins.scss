@@ -1,0 +1,22 @@
+@import './animations.scss';
+@import './breakpoints.scss';
+
+@mixin slideOpen {
+  animation-duration: $slideDuration;
+  animation-fill-mode: $slideOpenFillAnimationMode;
+  animation-name: slideOpen;
+  animation-iteration-count: 1;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@mixin slideClosed {
+  animation-duration: $slideDuration;
+  animation-fill-mode: $slideClosedFillAnimationMode;
+  animation-name: slideClosed;
+  animation-iteration-count: 1;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}

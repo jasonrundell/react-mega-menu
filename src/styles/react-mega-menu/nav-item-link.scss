@@ -1,0 +1,53 @@
+.rmm__nav-item-link {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.rmm__nav-item-link--heading {
+  @include respond-to('large') {
+    height: 1rem;
+  }
+}
+
+.rmm__nav-item-link--forward {
+  @include respond-to('large') {
+    margin-right: 1rem;
+  }
+
+  &::after {
+    content: url('../../images/icons/angle-right.svg');
+    position: absolute;
+    right: 2rem;
+    bottom: -30%;
+    width: 1rem;
+    height: 2rem;
+
+    @include respond-to('large') {
+      content: '';
+    }
+  }
+}
+
+.rmm__nav-item-link--back {
+  padding-left: 2rem;
+  &::before {
+    content: url('../../images/icons/angle-left.svg');
+    position: absolute;
+    left: 0;
+    bottom: -30%;
+    width: 1rem;
+    height: 2rem;
+  }
+}
+
+.rmm__nav-item-link--active {
+  &::after {
+    @include respond-to('large') {
+      transform: rotate(180deg);
+      top: 0;
+    }
+  }
+}

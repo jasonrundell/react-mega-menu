@@ -1,0 +1,95 @@
+.rmm__nav-list {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  padding-top: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  width: 100%;
+  height: calc(100vh - 4rem);
+  z-index: 1;
+
+  @include respond-to('large') {
+    padding-top: 0;
+    flex-direction: row;
+    height: 4rem;
+  }
+}
+
+.rmm__nav-list--sub {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: calc(100vh - 4rem);
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  z-index: 2;
+  border-right: 0.25rem solid #999;
+
+  @include respond-to('large') {
+    animation: none;
+    display: block;
+    position: static;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    height: auto;
+    padding-left: 0;
+  }
+}
+
+.rmm__nav-list--sub-sub {
+  border-right: 0.25rem solid #ccc;
+  @include respond-to('large') {
+    border-right: none;
+  }
+}
+
+.rmm__nav-list--dropdown {
+  @include respond-to('large') {
+    border-right: 0.25rem solid #666;
+    border-bottom: 0.25rem solid #333;
+    border-left: 0.25rem solid #666;
+  }
+}
+
+.rmm__nav-list--open {
+  @include slideOpen;
+
+  @media (prefers-reduced-motion: reduce) {
+    transform: translate3d(100%, 0, 0);
+  }
+
+  @include respond-to('large') {
+    animation: none;
+    @media (prefers-reduced-motion: reduce) {
+      transform: none;
+    }
+  }
+}
+
+.rmm__nav-list--closed {
+  @include slideClosed;
+
+  @media (prefers-reduced-motion: reduce) {
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  @include respond-to('large') {
+    animation: none;
+    @media (prefers-reduced-motion: reduce) {
+      transform: none;
+    }
+  }
+}

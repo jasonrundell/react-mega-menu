@@ -1,0 +1,27 @@
+.rmm__top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  background-color: #000;
+  border-top: 0.0625rem solid grey;
+  padding-top: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  border-right: 0.25rem solid #000;
+  overflow: hidden;
+
+  @include respond-to('large') {
+    left: 0;
+    border-top: none;
+    flex-direction: row;
+    border-right: none;
+    border-bottom: 0.0625rem solid #000;
+  }
+}
