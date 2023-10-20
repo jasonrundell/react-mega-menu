@@ -1,12 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import styled from '@emotion/styled'
 
-// Utils
-import { classNames } from '../../utils/css'
+import { breakpoints as BreakPoints } from '../../config/styles'
 
-const Logo = ({ id, src, rel, className, alt }) => {
-  const rootClasses = classNames('rmm__logo', className && className)
-  return <img id={id} src={src} className={rootClasses} rel={rel} alt={alt} />
+const Logo = ({ id, src, rel, alt, ...props }) => {
+  const respondTo = (breakpoint) => {
+    const breakpoints = {
+      large: `@media (min-width: ${BreakPoints.large['min-width']})` // Example breakpoint for 'large'. You can adjust this value.
+      // Add other breakpoints as needed
+    }
+    return breakpoints[breakpoint] || null
+  }
+
+  const StyledLogo = styled.img`
+    display: flex;
+    position: relative;
+    height: 2rem;
+    margin-right: 1rem;
+
+    ${respondTo('large')} {
+      align-items: center;
+    }
+  `
+
+  return <StyledLogo id={id} src={src} rel={rel} alt={alt} {...props} />
 }
 
 Logo.defaultProps = {
@@ -17,7 +35,6 @@ Logo.defaultProps = {
 Logo.propTypes = {
   id: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
-  className: PropTypes.string,
   rel: PropTypes.string,
   alt: PropTypes.string
 }

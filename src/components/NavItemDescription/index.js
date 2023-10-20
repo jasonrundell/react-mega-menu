@@ -1,19 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import styled from '@emotion/styled'
 
-// Utils
-import { classNames } from '../../utils/css'
-
-const NavItemDescription = ({ className, children }) => {
-  const rootClasses = classNames(
-    'rmm__nav-item-description',
-    className && className
-  )
-  return <p className={rootClasses}>{children}</p>
+const NavItemDescription = ({ children, ...props }) => {
+  const StyledItemDescription = styled.p`
+    color: #000;
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  `
+  return <StyledItemDescription {...props}>{children}</StyledItemDescription>
 }
 
 NavItemDescription.propTypes = {
-  className: PropTypes.string,
   children: PropTypes.node.isRequired
 }
 
