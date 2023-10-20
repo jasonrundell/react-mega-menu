@@ -1,8 +1,76 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import styled from '@emotion/styled'
+import { breakpoints as BreakPoints } from '../../config/styles'
 
-// Utils
-import { classNames } from '../../utils/css'
+const respondTo = (breakpoint) => {
+  const breakpoints = {
+    large: `@media (min-width: ${BreakPoints.large['min-width']})`
+  }
+  return breakpoints[breakpoint] || null
+}
+
+const StylesNavItemLink = styled.a`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  margin-bottom: 1rem;
+
+  ${({ isHeading }) =>
+    isHeading &&
+    `
+    ${respondTo('large')} {
+      height: 1rem;
+    }
+  `}
+
+  ${({ isBack }) =>
+    isBack &&
+    `
+    padding-left: 2rem;
+    &::before {
+      content: url('../../images/icons/angle-left.svg');
+      position: absolute;
+      left: 0;
+      bottom: -30%;
+      width: 1rem;
+      height: 2rem;
+    }
+    `}
+
+  ${({ isForward }) =>
+    isForward &&
+    `
+    ${respondTo('large')} {
+      margin-right: 1rem;
+    }
+
+    &::after {
+      content: url('../../images/icons/angle-right.svg');
+      position: absolute;
+      right: 2rem;
+      bottom: -30%;
+      width: 1rem;
+      height: 2rem;
+    
+        ${respondTo('large')} {
+          content: '';
+        }
+      }
+    `}
+
+  ${({ isActive }) =>
+    isActive &&
+    `
+    &::after {
+      ${respondTo('large')} {
+        transform: rotate(180deg);
+        top: 0;
+      }
+    }
+  `}
+`
 
 const NavItemLink = ({
   id,
@@ -12,36 +80,30 @@ const NavItemLink = ({
   isHeading,
   isForward,
   isActive,
-  className,
   onClick,
   onKeyDown,
   ariaHaspopup,
   ariaControls,
-  children
-}) => {
-  const rootClasses = classNames(
-    'rmm__nav-item-link',
-    isBack && 'rmm__nav-item-link--back',
-    isHeading && 'rmm__nav-item-link--heading',
-    isForward && 'rmm__nav-item-link--forward',
-    isActive && 'rmm__nav-item-link--active',
-    className && className
-  )
-  return (
-    <a
-      id={id}
-      role={role}
-      href={href}
-      className={rootClasses}
-      onClick={onClick}
-      onKeyDown={onKeyDown}
-      aria-haspopup={ariaHaspopup}
-      aria-controls={ariaControls}
-    >
-      {children}
-    </a>
-  )
-}
+  children,
+  ...props
+}) => (
+  <StylesNavItemLink
+    id={id}
+    role={role}
+    href={href}
+    isBack={isBack}
+    isHeading={isHeading}
+    isForward={isForward}
+    isActive={isActive}
+    onClick={onClick}
+    onKeyDown={onKeyDown}
+    aria-haspopup={ariaHaspopup}
+    aria-controls={ariaControls}
+    {...props}
+  >
+    {children}
+  </StylesNavItemLink>
+)
 
 NavItemLink.defaultProps = {
   role: 'menuitem',
@@ -59,7 +121,6 @@ NavItemLink.propTypes = {
   isHeading: PropTypes.bool,
   isForward: PropTypes.bool,
   isActive: PropTypes.bool,
-  className: PropTypes.string,
   onClick: PropTypes.func,
   onKeyDown: PropTypes.func,
   ariaHaspopup: PropTypes.string,
