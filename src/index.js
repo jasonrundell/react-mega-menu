@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { breakpoints as BreakPoints } from '../../config/styles'
+import { breakpoints as BreakPoints } from './config/styles'
 
 // Components
 import TopBar from './components/TopBar'
