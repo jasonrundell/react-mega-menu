@@ -116,7 +116,13 @@ const StyledMegaList = styled.ul`
 `
 
 const MegaList = ({ id, activeState, children, ...props }) => (
-  <StyledMegaList role="menu" id={id} aria-labelledby={id} {...props}>
+  <StyledMegaList
+    activeState={activeState}
+    role="menu"
+    id={id}
+    aria-labelledby={id}
+    {...props}
+  >
     {children}
   </StyledMegaList>
 )
