@@ -99,23 +99,21 @@ const StyledHamburgerLabel = styled.span`
   font-weight: 700;
 `
 
-const Hamburger = ({ label, state, onClick, ...props }) => {
-  return (
-    <StyledHamburger state={state} onClick={onClick} {...props}>
-      <StyledHamburgerSliceContainer>
-        <StyledHamburgerSlice />
-        <StyledHamburgerSlice />
-        <StyledHamburgerSlice />
-        <StyledHamburgerSlice />
-      </StyledHamburgerSliceContainer>
-      {label && (
-        <StyledHamburgerLabelContainer>
-          <StyledHamburgerLabel>{label}</StyledHamburgerLabel>
-        </StyledHamburgerLabelContainer>
-      )}
-    </StyledHamburger>
-  )
-}
+const Hamburger = ({ label, state, onClick, ...props }) => (
+  <StyledHamburger state={state} onClick={onClick} {...props}>
+    <StyledHamburgerSliceContainer>
+      <StyledHamburgerSlice />
+      <StyledHamburgerSlice />
+      <StyledHamburgerSlice />
+      <StyledHamburgerSlice />
+    </StyledHamburgerSliceContainer>
+    {label && (
+      <StyledHamburgerLabelContainer>
+        <StyledHamburgerLabel>{label}</StyledHamburgerLabel>
+      </StyledHamburgerLabelContainer>
+    )}
+  </StyledHamburger>
+)
 
 Hamburger.defaultProps = { label: null, state: 'closed' }
 Hamburger.propTypes = {

@@ -78,18 +78,16 @@ const StyledNav = styled.nav`
   }
 `
 
-const Nav = ({ id, ariaLabel, activeState, children, ...props }) => {
-  return (
-    <StyledNav
-      id={id}
-      activeState={activeState}
-      aria-label={ariaLabel}
-      {...props}
-    >
-      {children}
-    </StyledNav>
-  )
-}
+const Nav = ({ id, ariaLabel, activeState, children, ...props }) => (
+  <StyledNav
+    id={id}
+    activeState={activeState}
+    aria-label={ariaLabel}
+    {...props}
+  >
+    {children}
+  </StyledNav>
+)
 
 Nav.defaultProps = {
   ariaLabel: 'Main Navigation',

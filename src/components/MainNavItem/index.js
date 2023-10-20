@@ -73,20 +73,18 @@ const MainNavItem = ({
   isForward,
   children,
   ...props
-}) => {
-  return (
-    <StyledMainNavItem
-      id={id}
-      role={role}
-      isHeading={isHeading}
-      isChildren={isChildren}
-      isForward={isForward}
-      {...props}
-    >
-      {children}
-    </StyledMainNavItem>
-  )
-}
+}) => (
+  <StyledMainNavItem
+    id={id}
+    role={role}
+    isHeading={isHeading}
+    isChildren={isChildren}
+    isForward={isForward}
+    {...props}
+  >
+    {children}
+  </StyledMainNavItem>
+)
 
 MainNavItem.defaultProps = {
   role: 'none',

@@ -22,9 +22,9 @@ const StyledLogo = styled.img`
   }
 `
 
-const Logo = ({ id, src, rel, alt, ...props }) => {
-  return <StyledLogo id={id} src={src} rel={rel} alt={alt} {...props} />
-}
+const Logo = ({ id, src, rel, alt, ...props }) => (
+  <StyledLogo id={id} src={src} rel={rel} alt={alt} {...props} />
+)
 
 Logo.defaultProps = {
   alt: '',
