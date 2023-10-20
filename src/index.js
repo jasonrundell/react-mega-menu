@@ -1,5 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import styled from '@emotion/styled'
+import { breakpoints as BreakPoints } from '../../config/styles'
 
 // Components
 import TopBar from './components/TopBar'
@@ -19,7 +21,36 @@ import NavItemDescription from './components/NavItemDescription'
 // State Machines
 import { MenuStateMachine } from './state-machines/menus'
 
-const Menu = ({ logoImage }) => {
+const respondTo = (breakpoint) => {
+  const breakpoints = {
+    large: `@media (min-width: ${BreakPoints.large['min-width']})`
+  }
+  return breakpoints[breakpoint] || null
+}
+
+const StyledMenu = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 8rem;
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  flex-direction: row;
+  background-color: #fff;
+  width: 100%;
+  padding-top: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  border-bottom: 0.0625rem solid #000;
+
+  ${respondTo('large')} {
+    height: 4rem;
+  }
+`
+
+const Menu = ({ logoImage, ...props }) => {
   const [megaMenuState, setMegaMenuState] = useState('')
   const [subMenuState, setSubMenuState] = useState('')
   const [subSubMenuState, setSubSubMenuState] = useState('')
@@ -147,7 +178,7 @@ const Menu = ({ logoImage }) => {
   useOutsideAlerter(wrapperRef) // create bindings for closing menu from outside events
 
   return (
-    <div role="navigation" className="rmm__root" ref={wrapperRef}>
+    <StyledMenu role="navigation" ref={wrapperRef} {...props}>
       <TopBar>
         {logoImage && (
           <Logo
@@ -469,7 +500,7 @@ const Menu = ({ logoImage }) => {
           </MainNavItem>
         </MainList>
       </Nav>
-    </div>
+    </StyledMenu>
   )
 }
 
