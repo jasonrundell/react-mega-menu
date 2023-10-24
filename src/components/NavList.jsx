@@ -178,7 +178,7 @@ NavList.defaultProps = {
   isSub: false,
   isSubSub: false,
   isDropdown: false,
-  activeState: ''
+  activeState: 'closed'
 }
 
 NavList.propTypes = {
@@ -187,7 +187,7 @@ NavList.propTypes = {
   isSub: PropTypes.bool,
   isSubSub: PropTypes.bool,
   isDropdown: PropTypes.bool,
-  activeState: PropTypes.oneOf(['', 'open', 'closed']).isRequired,
+  activeState: PropTypes.oneOf(['open', 'closed']).isRequired,
   ariaLabelledby: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired
 }

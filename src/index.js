@@ -99,6 +99,7 @@ const Menu = ({ logoImage, ...props }) => {
   }
 
   const toggleMegaMenu = (e, menuId) => {
+    console.log('toggleMegaMenu: menuId', menuId)
     e.preventDefault()
 
     const nextState = MenuStateMachine(megaMenuState)
@@ -113,6 +114,7 @@ const Menu = ({ logoImage, ...props }) => {
   }
 
   const toggleSubMenu = (e, menuId) => {
+    console.log('toggleSubMenu: menuId', menuId)
     e.preventDefault()
 
     const nextState = MenuStateMachine(subMenuState)

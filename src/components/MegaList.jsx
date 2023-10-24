@@ -128,12 +128,21 @@ const MegaList = ({ id, activeState, children, ...props }) => (
 )
 
 MegaList.defaultProps = {
-  activeState: ''
+  activeState: 'closed'
 }
 
 MegaList.propTypes = {
+  /**
+   * The id of the element that labels the mega list.
+   */
   id: PropTypes.string.isRequired,
+  /**
+   * The state of the mega list.
+   */
   activeState: PropTypes.oneOf(['open', 'closed']).isRequired,
+  /**
+   * The content of the mega list.
+   */
   children: PropTypes.node.isRequired
 }
 

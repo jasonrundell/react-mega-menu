@@ -20,7 +20,10 @@ const StyledNav = styled.nav`
   flex-direction: column;
   background-color: #fff;
   border-top: 0.0625rem solid grey;
-  padding: 1rem;
+  padding-top: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
   border-right: 0.25rem solid #000;
   overflow-y: scroll;
 
@@ -38,6 +41,24 @@ const StyledNav = styled.nav`
   ${({ activeState }) =>
     activeState === 'open' &&
     `
+    animation-duration: 0.75s;
+    animation-fill-mode: both;
+    animation-name: slideOpen;
+    animation-iteration-count: 1;
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+
+    @keyframes slideOpen {
+      from {
+        transform: translate3d(-100%, 0, 0);
+      }
+    
+      to {
+        transform: translate3d(100%, 0, 0);
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       transform: translate3d(100%, 0, 0);
     }
@@ -56,6 +77,24 @@ const StyledNav = styled.nav`
   ${({ activeState }) =>
     activeState === 'closed' &&
     `
+    animation-duration: 0.75s;
+    animation-fill-mode: both;
+    animation-name: slideClosed;
+    animation-iteration-count: 1;
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+
+    @keyframes slideClosed {
+      from {
+        transform: translate3d(100%, 0, 0);
+      }
+    
+      to {
+        transform: translate3d(-100%, 0, 0);
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       transform: translate3d(-100%, 0, 0);
     }
@@ -91,13 +130,25 @@ const Nav = ({ id, ariaLabel, activeState, children, ...props }) => (
 
 Nav.defaultProps = {
   ariaLabel: 'Main Navigation',
-  activeState: ''
+  activeState: 'closed'
 }
 
 Nav.propTypes = {
+  /**
+   * The id of the element.
+   */
   id: PropTypes.string.isRequired,
+  /**
+   * The aria-label of the element.
+   */
   ariaLabel: PropTypes.string.isRequired,
+  /**
+   * The state of the mega list.
+   */
   activeState: PropTypes.oneOf(['', 'open', 'closed']).isRequired,
+  /**
+   * The content of the mega list.
+   */
   children: PropTypes.node.isRequired
 }
 
