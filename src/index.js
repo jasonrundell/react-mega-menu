@@ -44,6 +44,7 @@ const StyledMenu = styled.div`
   padding-bottom: 1rem;
   padding-left: 1rem;
   border-bottom: 0.0625rem solid #000;
+  z-index: 9999;
 
   ${respondTo('large')} {
     height: 4rem;
