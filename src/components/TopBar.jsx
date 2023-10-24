@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { breakpoints as BreakPoints } from '../../config/styles'
+import { breakpoints as BreakPoints } from '../config/styles'
 
 const respondTo = (breakpoint) => {
   const breakpoints = {
