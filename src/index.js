@@ -44,7 +44,7 @@ const StyledMenu = styled.div`
   padding-bottom: 1rem;
   padding-left: 1rem;
   border-bottom: 0.0625rem solid #000;
-  z-index: 9999;
+  z-index: 9000;
 
   ${respondTo('large')} {
     height: 4rem;
@@ -189,7 +189,7 @@ const Menu = ({ logoImage, ...props }) => {
             rel="home"
           />
         )}
-        <TopBarTitle>Your Brand Name</TopBarTitle>
+        <TopBarTitle>Your BRAND Name</TopBarTitle>
       </TopBar>
       <Hamburger
         label="Menu"

@@ -38,8 +38,6 @@ const StyledMainNavItem = styled.li`
     }
   `}
 
-  ${({ isChildren }) => isChildren && respondTo('large')}
-
   ${({ isForward }) =>
     isForward &&
     `
@@ -69,7 +67,6 @@ const MainNavItem = ({
   id,
   role,
   isHeading,
-  isChildren,
   isForward,
   children,
   ...props
@@ -78,7 +75,6 @@ const MainNavItem = ({
     id={id}
     role={role}
     isHeading={isHeading}
-    isChildren={isChildren}
     isForward={isForward}
     {...props}
   >
@@ -89,16 +85,29 @@ const MainNavItem = ({
 MainNavItem.defaultProps = {
   role: 'none',
   isHeading: false,
-  hasChildren: false,
   isForward: false
 }
 
 MainNavItem.propTypes = {
+  /**
+   * The id attribute of the list item.
+   */
   id: PropTypes.string.isRequired,
+  /**
+   * The role attribute of the list item.
+   */
   role: PropTypes.string,
+  /**
+   * Whether the list item is a heading.
+   */
   isHeading: PropTypes.bool,
-  isChildren: PropTypes.bool,
+  /**
+   * Whether the list item is a forward navigation item.
+   */
   isForward: PropTypes.bool,
+  /**
+   * The content of the list item.
+   */
   children: PropTypes.node.isRequired
 }
 

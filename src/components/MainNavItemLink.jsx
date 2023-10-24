@@ -14,39 +14,11 @@ const StyledMainNavItemLink = styled.a`
   width: 100%;
   display: flex;
   position: relative;
-  align-items: ${({ isLarge }) => (isLarge ? 'center' : 'initial')};
-  height: ${({ isLarge }) => (isLarge ? '4rem' : 'auto')};
-  margin-right: ${({ isForward, isLarge }) =>
-    isForward && isLarge ? '1rem' : '0'};
-  padding-left: ${({ isBack }) => (isBack ? '2rem' : '0')};
-
-  &::after {
-    content: ${({ isForward }) =>
-      isForward ? "url('../../images/icons/angle-right.svg')" : 'none'};
-    position: absolute;
-    right: ${({ isForward, isLarge }) =>
-      isForward && !isLarge ? '2rem' : 'initial'};
-    bottom: ${({ isForward, isLarge }) =>
-      isForward && !isLarge ? '-30%' : 'initial'};
-    top: ${({ isForward, isLarge }) =>
-      isForward && isLarge ? '0.25rem' : 'initial'};
-    width: 1rem;
-    height: 2rem;
-    transform: ${({ isActive, isLarge }) =>
-      isActive && isLarge ? 'rotate(180deg)' : 'none'};
-  }
-
-  &::before {
-    content: ${({ isBack }) =>
-      isBack ? "url('../../images/icons/angle-left.svg')" : 'none'};
-    position: absolute;
-    left: 0;
-    bottom: -30%;
-    width: 1rem;
-    height: 2rem;
-  }
 
   ${respondTo('large')} {
+    align-items: center;
+    height: 4rem;
+
     &::after {
       content: ${({ isForward }) =>
         isForward ? "url('../../images/icons/angle-up.svg')" : 'none'};
@@ -54,6 +26,56 @@ const StyledMainNavItemLink = styled.a`
       bottom: initial;
     }
   }
+
+  ${({ isForward }) =>
+    isForward &&
+    `
+    ${respondTo('large')} {
+      margin-right: 1rem;
+    }
+
+    &::after {
+      content: url('../../images/icons/angle-right.svg');
+      position: absolute;
+      right: 2rem;
+      bottom: -30%;
+      width: 1rem;
+      height: 2rem;
+  
+      ${respondTo('large')} {
+        content: url('../../images/icons/angle-up.svg');
+        top: 0.25rem;
+        right: -0.5rem;
+        bottom: initial;
+        width: 1rem;
+      }
+    }
+  `}
+
+  ${({ isBack }) =>
+    isBack &&
+    `
+    padding-left: 2rem;
+    &::before {
+      content: url('../../images/icons/angle-left.svg');
+      position: absolute;
+      left: 0;
+      bottom: -30%;
+      width: 1rem;
+      height: 2rem;
+    }
+  `}
+
+  ${({ isActive }) =>
+    isActive &&
+    `
+    &::after {
+      ${respondTo('large')} {
+        transform: rotate(180deg);
+        top: 0;
+      }
+    }
+  `}
 `
 
 const MainNavItemLink = ({

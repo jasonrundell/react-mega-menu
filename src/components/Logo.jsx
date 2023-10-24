@@ -32,9 +32,21 @@ Logo.defaultProps = {
 }
 
 Logo.propTypes = {
+  /**
+   * The id of the logo.
+   */
   id: PropTypes.string.isRequired,
+  /**
+   * The src of the logo.
+   */
   src: PropTypes.string.isRequired,
+  /**
+   * The rel of the logo.
+   */
   rel: PropTypes.string,
+  /**
+   * The alt of the logo.
+   */
   alt: PropTypes.string
 }
 

@@ -24,11 +24,6 @@
   }
 }
 
-.rmm__main-nav-item--children {
-  @include respond-to('large') {
-  }
-}
-
 .rmm__main-nav-item--forward {
   @include respond-to('large') {
     margin-right: 1rem;

@@ -20,7 +20,6 @@ const StyledHamburger = styled.button`
   display: flex;
   flex-direction: row;
   align-items: center;
-  z-index: 1000;
 
   ${({ state }) =>
     state === 'closed' &&
@@ -117,8 +116,17 @@ const Hamburger = ({ label, state, onClick, ...props }) => (
 
 Hamburger.defaultProps = { label: null, state: 'closed' }
 Hamburger.propTypes = {
+  /**
+   * The text label to display next to the hamburger icon
+   */
   label: PropTypes.string,
+  /**
+   * The current state of the hamburger icon
+   */
   state: PropTypes.oneOf(['', 'open', 'closed']),
+  /**
+   * The function to call when the hamburger icon is clicked
+   */
   onClick: PropTypes.func
 }
 
