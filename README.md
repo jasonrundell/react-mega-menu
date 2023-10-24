@@ -18,23 +18,13 @@ navigation menu with a "Mega Menu"!
 ## View demo
 
 Visit:
-[https://react-mega-menu.netlify.app](https://react-mega-menu.netlify.app)
-
-[![Netlify Status](https://api.netlify.com/api/v1/badges/5987a8b7-c2f7-419d-9484-5524a4e05815/deploy-status)](https://app.netlify.com/sites/react-mega-menu/deploys)
-
-## Build status
-
-[![Netlify Status](https://api.netlify.com/api/v1/badges/5987a8b7-c2f7-419d-9484-5524a4e05815/deploy-status)](https://app.netlify.com/sites/react-mega-menu/deploys)
+[https://react-mega-menu-demo.vercel.app](https://react-mega-menu-demo.vercel.app)
 
 ## Deploy
 
-### Netlify
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-default)
-
 ### Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/gatsbyjs/gatsby-starter-default)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/project?template=https://github.com/jasonrundell/react-mega-menu-demo)
 
 ## Special Thanks
 
