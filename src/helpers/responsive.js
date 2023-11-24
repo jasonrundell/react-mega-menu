@@ -6,3 +6,5 @@ export const respondTo = (breakpoint) => {
   }
   return breakpoints[breakpoint] || null
 }
+
+export const viewportLarge = 1024

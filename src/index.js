@@ -1,15 +1,17 @@
 import React, { useRef, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { v4 as uuidv4 } from 'uuid'
+
+// Helpers
 import { click as a11yClick, escape as a11yEscape } from './helpers/a11y'
-import { respondTo } from './helpers/responsive'
+import { respondTo, viewportLarge } from './helpers/responsive'
 import {
   renderMainMenuItem,
   renderLinkMenuItem,
   renderMegaMenuItem,
   renderSubMenuItem,
-  stateMachine
+  stateMachine,
+  generateMenuIds
 } from './helpers/menu'
 
 // Components
@@ -43,25 +45,6 @@ const StyledMenu = styled.div`
   }
 `
 
-// function that will use uuidv4 to generate unique ids for each menu item in menuConfig
-const generateMenuIds = (menuConfig) => {
-  const newMenuConfig = { ...menuConfig }
-  newMenuConfig.menu.items.forEach((item) => {
-    item.id = uuidv4()
-    if (item.items) {
-      item.items.forEach((subItem) => {
-        subItem.id = uuidv4()
-        if (subItem.items) {
-          subItem.items.forEach((subSubItem) => {
-            subSubItem.id = uuidv4()
-          })
-        }
-      })
-    }
-  })
-  return newMenuConfig
-}
-
 const Menu = ({ menuConfig, ...props }) => {
   const [megaMenuState, setMegaMenuState] = useState('')
   const [subMenuState, setSubMenuState] = useState('')
@@ -69,8 +52,6 @@ const Menu = ({ menuConfig, ...props }) => {
   const [activeMenus, setActiveMenus] = useState([]) // array that captures the ids of active menus
   const [isMobile, setIsMobile] = useState(true) // array that captures the ids of active menus
   const wrapperRef = useRef(null) // used to detect clicks outside of component
-
-  const viewportLarge = 1024
 
   const resetMenus = () => {
     // close all menus and empty activeMenus array

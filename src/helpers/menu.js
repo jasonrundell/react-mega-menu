@@ -1,5 +1,7 @@
 import React from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
+// Components
 import MegaList from '../components/MegaList'
 import MainNavItem from '../components/MainNavItem'
 import MainNavItemLink from '../components/MainNavItemLink'
@@ -213,4 +215,23 @@ export const stateMachine = (state) => {
     }
   }
   return stateChangedTo
+}
+
+export // function that will use uuidv4 to generate unique ids for each menu item in menuConfig
+const generateMenuIds = (menuConfig) => {
+  const newMenuConfig = { ...menuConfig }
+  newMenuConfig.menu.items.forEach((item) => {
+    item.id = uuidv4()
+    if (item.items) {
+      item.items.forEach((subItem) => {
+        subItem.id = uuidv4()
+        if (subItem.items) {
+          subItem.items.forEach((subSubItem) => {
+            subSubItem.id = uuidv4()
+          })
+        }
+      })
+    }
+  })
+  return newMenuConfig
 }
