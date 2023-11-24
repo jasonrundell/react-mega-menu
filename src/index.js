@@ -2,8 +2,9 @@ import React, { useRef, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { v4 as uuidv4 } from 'uuid'
-import { breakpoints as BreakPoints } from './config/breakpoints'
 import { click as a11yClick, escape as a11yEscape } from './helpers/a11y'
+import { respondTo } from './helpers/responsive'
+import { MenuStateMachine } from './helpers/MenuStateMachine'
 
 // Components
 import TopBar from './components/TopBar'
@@ -19,16 +20,6 @@ import NavItem from './components/NavItem'
 import NavItemLink from './components/NavItemLink'
 import NavList from './components/NavList'
 import NavItemDescription from './components/NavItemDescription'
-
-// State Machines
-import { MenuStateMachine } from './helpers/MenuStateMachine'
-
-const respondTo = (breakpoint) => {
-  const breakpoints = {
-    large: `@media (min-width: ${BreakPoints.large['min-width']})`
-  }
-  return breakpoints[breakpoint] || null
-}
 
 const StyledMenu = styled.div`
   position: fixed;
