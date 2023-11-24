@@ -1,15 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { breakpoints as BreakPoints } from '../config/styles'
-
-const respondTo = (breakpoint) => {
-  const breakpoints = {
-    large: `@media (min-width: ${BreakPoints.large['min-width']})` // Example breakpoint for 'large'. You can adjust this value.
-    // Add other breakpoints as needed
-  }
-  return breakpoints[breakpoint] || null
-}
+import { respondTo } from '../helpers/responsive'
 
 const StyledTopBar = styled.div`
   position: absolute;
