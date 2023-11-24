@@ -171,15 +171,15 @@ const Menu = ({ menuConfig, ...props }) => {
 
   // function that will use uuidv4 to generate unique ids for each menu item in menuConfig
   const generateMenuIds = (menuConfig) => {
-    const newMenuConfig = menuConfig
-    newMenuConfig.menu.items.map((item, index) => {
+    const newMenuConfig = { ...menuConfig }
+    newMenuConfig.menu.items.forEach((item) => {
       item.id = uuidv4()
       if (item.items) {
-        item.items.map((item, index) => {
-          item.id = uuidv4()
-          if (item.items) {
-            item.items.map((item, index) => {
-              item.id = uuidv4()
+        item.items.forEach((subItem) => {
+          subItem.id = uuidv4()
+          if (subItem.items) {
+            subItem.items.forEach((subSubItem) => {
+              subSubItem.id = uuidv4()
             })
           }
         })
@@ -188,13 +188,9 @@ const Menu = ({ menuConfig, ...props }) => {
     return newMenuConfig
   }
 
-  const renderMainMenuItem = (item) => {
+  const renderMainMenuItem = (item, index) => {
     return (
-      <MainNavItem
-        role="none"
-        id={`rmm-main-nav-item-${item.id}`}
-        key={item.id}
-      >
+      <MainNavItem role="none" id={`rmm-main-nav-item-${item.id}`} key={index}>
         <MainNavItemLink
           id={`rmm-main-nav-item-link-${item.id}`}
           role="menuitem"
@@ -206,9 +202,9 @@ const Menu = ({ menuConfig, ...props }) => {
     )
   }
 
-  const renderLinkMenuItem = (item) => {
+  const renderLinkMenuItem = (item, index) => {
     return (
-      <NavItem id={`rmm-nav-item-${item.id}`} role="none" key={item.id}>
+      <NavItem id={`rmm-nav-item-${item.id}`} role="none" key={index}>
         <NavItemLink
           id={`rmm-nav-item-link-${item.id}`}
           role="menuitem"
@@ -223,13 +219,13 @@ const Menu = ({ menuConfig, ...props }) => {
     )
   }
 
-  const renderMegaMenuItem = (item) => {
+  const renderMegaMenuItem = (item, index) => {
     return (
       <MainNavItem
         id={`rmm-main-nav-item-${item.id} `}
         role="none"
         isChildren
-        key={item.id}
+        key={index}
       >
         <MainNavItemLink
           id={`rmm-main-nav-item-link-${item.id}`}
@@ -387,13 +383,13 @@ const Menu = ({ menuConfig, ...props }) => {
           {menuConfig.menu.items.map((item, index) => {
             switch (item.type) {
               case 'main':
-                return renderMainMenuItem(item)
+                return renderMainMenuItem(item, index)
               case 'link':
-                return renderLinkMenuItem(item)
+                return renderLinkMenuItem(item, index)
               case 'mega':
-                return renderMegaMenuItem(item)
+                return renderMegaMenuItem(item, index)
               case 'sub':
-                return renderSubMenuItem(item)
+                return renderSubMenuItem(item, index)
               default:
                 return null
             }
