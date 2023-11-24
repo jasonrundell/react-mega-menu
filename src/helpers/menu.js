@@ -1,0 +1,216 @@
+import React from 'react'
+
+import MegaList from '../components/MegaList'
+import MainNavItem from '../components/MainNavItem'
+import MainNavItemLink from '../components/MainNavItemLink'
+import NavItem from '../components/NavItem'
+import NavItemLink from '../components/NavItemLink'
+import NavList from '../components/NavList'
+import NavItemDescription from '../components/NavItemDescription'
+
+export const renderMainMenuItem = (item, index) => {
+  return (
+    <MainNavItem role="none" id={`rmm-main-nav-item-${item.id}`} key={index}>
+      <MainNavItemLink
+        id={`rmm-main-nav-item-link-${item.id}`}
+        role="menuitem"
+        href={item.url}
+      >
+        {item.label}
+      </MainNavItemLink>
+    </MainNavItem>
+  )
+}
+
+export const renderLinkMenuItem = (item, index) => {
+  return (
+    <NavItem id={`rmm-nav-item-${item.id}`} role="none" key={index}>
+      <NavItemLink
+        id={`rmm-nav-item-link-${item.id}`}
+        role="menuitem"
+        href={item.url}
+      >
+        {item.label}
+      </NavItemLink>
+      {item.description && (
+        <NavItemDescription>{item.description}</NavItemDescription>
+      )}
+    </NavItem>
+  )
+}
+
+export const renderMegaMenuItem = (
+  item,
+  index,
+  activeMenus,
+  toggleSubMenu,
+  toggleSubSubMenu,
+  a11yClick,
+  renderLinkMenuItem,
+  renderSubMenuItem
+) => {
+  return (
+    <MainNavItem
+      id={`rmm-main-nav-item-${item.id} `}
+      role="none"
+      isChildren
+      key={index}
+    >
+      <MainNavItemLink
+        id={`rmm-main-nav-item-link-${item.id}`}
+        role="menuitem"
+        href={item.url}
+        isForward
+        isActive={!!activeMenus.includes(`rmm-mega-list-id-${item.id}`)}
+        onClick={(e) => toggleSubMenu(e, `rmm-mega-list-id-${item.id}`)}
+        onKeyDown={(e) =>
+          a11yClick(e) && toggleSubMenu(e, `rmm-mega-list-id-${item.id}`)
+        }
+        ariaHaspopup="true"
+        ariaControls={`rmm-mega-list-id-${item.id}`}
+      >
+        {item.label}
+      </MainNavItemLink>
+      <MegaList
+        id={`rmm-mega-list-id-${item.id}`}
+        activeState={
+          activeMenus.includes(`rmm-mega-list-id-${item.id}`)
+            ? 'open'
+            : 'closed'
+        }
+      >
+        <NavItem id={`rmm-nav-item-${item.id}`} isHeading>
+          <NavItemLink
+            id={`rmm-nav-item-link-${item.id}`}
+            href={item.url}
+            isBack
+            onClick={(e) => toggleSubMenu(e, `rmm-mega-list-id-${item.id}`)}
+            onKeyDown={(e) =>
+              a11yClick(e) && toggleSubMenu(e, `rmm-mega-list-id-${item.id}`)
+            }
+            ariaHaspopup="true"
+            ariaControls={`rmm-mega-list-id-${item.id}`}
+          >
+            {item.label}
+          </NavItemLink>
+        </NavItem>
+        {item.items.map((item, index) => {
+          switch (item.type) {
+            case 'link':
+              return renderLinkMenuItem(item, index)
+            case 'mega':
+              return renderMegaMenuItem(
+                item,
+                index,
+                activeMenus,
+                toggleSubMenu,
+                toggleSubSubMenu,
+                a11yClick,
+                renderLinkMenuItem,
+                renderSubMenuItem
+              )
+            case 'sub':
+              return renderSubMenuItem(
+                item,
+                index,
+                activeMenus,
+                toggleSubMenu,
+                toggleSubSubMenu,
+                a11yClick,
+                renderLinkMenuItem
+              )
+            default:
+              return null
+          }
+        })}
+      </MegaList>
+    </MainNavItem>
+  )
+}
+
+export const renderSubMenuItem = (
+  item,
+  index,
+  activeMenus,
+  toggleSubMenu,
+  toggleSubSubMenu,
+  a11yClick,
+  renderLinkMenuItem
+) => {
+  return (
+    <NavItem id={`rmm-nav-tem-${item.id}`} key={index}>
+      <NavItemLink
+        id={`rmm-nav-item-link-${item.id}`}
+        role="menuitem"
+        href={item.url}
+        isForward
+        onClick={(e) => toggleSubSubMenu(e, `rmm-nav-list-id-${item.id}`)}
+        onKeyDown={(e) =>
+          a11yClick(e) && toggleSubSubMenu(e, `rmm-nav-list-id-${item.id}`)
+        }
+        ariaHaspopup="true"
+        ariaControls={`rmm-nav-list-id-${item.id}`}
+      >
+        {item.label}
+      </NavItemLink>
+      {item.description && (
+        <NavItemDescription>{item.description}</NavItemDescription>
+      )}
+      <NavList
+        id={`rmm-nav-list-id-${item.id}`}
+        role="menu"
+        isSub
+        isSubSub
+        activeState={
+          activeMenus.includes(`rmm-nav-list-id-${item.id}`) ? 'open' : 'closed'
+        }
+        ariaLabelledby={`rmm-nav-item-link-${item.id}`}
+      >
+        <NavItem id={`rmm-nav-item-sub-${item.id}`} role="none" isHeading>
+          <NavItemLink
+            id={`rmm-nav-item-link-sub-${item.id}`}
+            role="menuitem"
+            href={item.url}
+            isBack
+            onClick={(e) => toggleSubMenu(e, `rmm-nav-list-id-${item.id}`)}
+            onKeyDown={(e) =>
+              a11yClick(e) && toggleSubMenu(e, `rmm-nav-list-id-${item.id}`)
+            }
+            ariaHaspopup="true"
+            ariaControls={`rmm-nav-list-id-${item.id}`}
+          >
+            {item.label}
+          </NavItemLink>
+        </NavItem>
+        {item.items.map((item, index) => {
+          switch (item.type) {
+            case 'link':
+              return renderLinkMenuItem(item, index)
+            default:
+              return null
+          }
+        })}
+      </NavList>
+    </NavItem>
+  )
+}
+
+export const stateMachine = (state) => {
+  const validStates = ['closed', 'open']
+  const defaultState = 'open'
+  let stateChangedTo = defaultState
+
+  if (validStates.includes(state)) {
+    switch (state) {
+      case validStates[0]:
+        stateChangedTo = validStates[1]
+        break
+      case validStates[1]:
+        stateChangedTo = validStates[0]
+        break
+      default:
+        stateChangedTo = validStates[0]
+    }
+  }
+  return stateChangedTo
+}
