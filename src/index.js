@@ -52,6 +52,44 @@ const StyledMenu = styled.div`
   }
 `
 
+const a11yClick = (e) => {
+  const code = e.charCode || e.keyCode
+  if (code === 32 || code === 13) {
+    return true
+  }
+}
+
+const renderMainMenuItem = (item, index) => {
+  return (
+    <MainNavItem role="none" id={`rmm-main-nav-item-${item.id}`} key={index}>
+      <MainNavItemLink
+        id={`rmm-main-nav-item-link-${item.id}`}
+        role="menuitem"
+        href={item.url}
+      >
+        {item.label}
+      </MainNavItemLink>
+    </MainNavItem>
+  )
+}
+
+const renderLinkMenuItem = (item, index) => {
+  return (
+    <NavItem id={`rmm-nav-item-${item.id}`} role="none" key={index}>
+      <NavItemLink
+        id={`rmm-nav-item-link-${item.id}`}
+        role="menuitem"
+        href={item.url}
+      >
+        {item.label}
+      </NavItemLink>
+      {item.description && (
+        <NavItemDescription>{item.description}</NavItemDescription>
+      )}
+    </NavItem>
+  )
+}
+
 const Menu = ({ menuConfig, ...props }) => {
   const [megaMenuState, setMegaMenuState] = useState('')
   const [subMenuState, setSubMenuState] = useState('')
@@ -162,13 +200,6 @@ const Menu = ({ menuConfig, ...props }) => {
     }
   }
 
-  const a11yClick = (e) => {
-    const code = e.charCode || e.keyCode
-    if (code === 32 || code === 13) {
-      return true
-    }
-  }
-
   // function that will use uuidv4 to generate unique ids for each menu item in menuConfig
   const generateMenuIds = (menuConfig) => {
     const newMenuConfig = { ...menuConfig }
@@ -186,37 +217,6 @@ const Menu = ({ menuConfig, ...props }) => {
       }
     })
     return newMenuConfig
-  }
-
-  const renderMainMenuItem = (item, index) => {
-    return (
-      <MainNavItem role="none" id={`rmm-main-nav-item-${item.id}`} key={index}>
-        <MainNavItemLink
-          id={`rmm-main-nav-item-link-${item.id}`}
-          role="menuitem"
-          href={item.url}
-        >
-          {item.label}
-        </MainNavItemLink>
-      </MainNavItem>
-    )
-  }
-
-  const renderLinkMenuItem = (item, index) => {
-    return (
-      <NavItem id={`rmm-nav-item-${item.id}`} role="none" key={index}>
-        <NavItemLink
-          id={`rmm-nav-item-link-${item.id}`}
-          role="menuitem"
-          href={item.url}
-        >
-          {item.label}
-        </NavItemLink>
-        {item.description && (
-          <NavItemDescription>{item.description}</NavItemDescription>
-        )}
-      </NavItem>
-    )
   }
 
   const renderMegaMenuItem = (item, index) => {
@@ -268,11 +268,11 @@ const Menu = ({ menuConfig, ...props }) => {
           {item.items.map((item, index) => {
             switch (item.type) {
               case 'link':
-                return renderLinkMenuItem(item)
+                return renderLinkMenuItem(item, index)
               case 'mega':
-                return renderMegaMenuItem(item)
+                return renderMegaMenuItem(item, index)
               case 'sub':
-                return renderSubMenuItem(item)
+                return renderSubMenuItem(item, index)
               default:
                 return null
             }
@@ -282,24 +282,9 @@ const Menu = ({ menuConfig, ...props }) => {
     )
   }
 
-  useEffect(() => {
-    document.addEventListener('keydown', doEscape, false)
-
-    return () => {
-      document.removeEventListener('keydown', doEscape, false)
-    }
-  })
-
-  useEffect(() => {
-    // add unique ids to th menuConfig object menu items so that we can call targets in the DOM
-    menuConfig = generateMenuIds(menuConfig)
-  }, [])
-
-  useOutsideAlerter(wrapperRef) // create bindings for closing menu from outside events
-
-  const renderSubMenuItem = (item) => {
+  const renderSubMenuItem = (item, index) => {
     return (
-      <NavItem id={`rmm-nav-tem-${item.id}`} key={item.id}>
+      <NavItem id={`rmm-nav-tem-${item.id}`} key={index}>
         <NavItemLink
           id={`rmm-nav-item-link-${item.id}`}
           role="menuitem"
@@ -348,7 +333,7 @@ const Menu = ({ menuConfig, ...props }) => {
           {item.items.map((item, index) => {
             switch (item.type) {
               case 'link':
-                return renderLinkMenuItem(item)
+                return renderLinkMenuItem(item, index)
               default:
                 return null
             }
@@ -357,6 +342,21 @@ const Menu = ({ menuConfig, ...props }) => {
       </NavItem>
     )
   }
+
+  useEffect(() => {
+    document.addEventListener('keydown', doEscape, false)
+
+    return () => {
+      document.removeEventListener('keydown', doEscape, false)
+    }
+  })
+
+  useEffect(() => {
+    // add unique ids to th menuConfig object menu items so that we can call targets in the DOM
+    menuConfig = generateMenuIds(menuConfig)
+  }, [])
+
+  useOutsideAlerter(wrapperRef) // create bindings for closing menu from outside events
 
   return (
     <StyledMenu role="navigation" ref={wrapperRef} {...props}>
