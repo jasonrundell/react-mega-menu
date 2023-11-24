@@ -59,6 +59,12 @@ const a11yClick = (e) => {
   }
 }
 
+const doEscape = (e, resetMenus) => {
+  if (e.keyCode === 27) {
+    resetMenus()
+  }
+}
+
 const renderMainMenuItem = (item, index) => {
   return (
     <MainNavItem role="none" id={`rmm-main-nav-item-${item.id}`} key={index}>
@@ -205,12 +211,6 @@ const Menu = ({ menuConfig, ...props }) => {
     updateActiveMenus(nextState, menuId)
   }
 
-  const doEscape = (e) => {
-    if (e.keyCode === 27) {
-      resetMenus()
-    }
-  }
-
   const renderMegaMenuItem = (item, index) => {
     return (
       <MainNavItem
@@ -341,12 +341,12 @@ const Menu = ({ menuConfig, ...props }) => {
   }, [])
 
   useEffect(() => {
-    document.addEventListener('keydown', doEscape, false)
-
+    const handleEscape = (e) => doEscape(e, resetMenus)
+    window.addEventListener('keydown', handleEscape)
     return () => {
-      document.removeEventListener('keydown', doEscape, false)
+      window.removeEventListener('keydown', handleEscape)
     }
-  })
+  }, [resetMenus])
 
   useEffect(() => {
     if (window.innerWidth >= viewportLarge) {
