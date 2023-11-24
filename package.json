@@ -1,6 +1,6 @@
 {
   "name": "@jasonrundell/react-mega-menu",
-  "version": "1.6.1",
+  "version": "1.7.1",
   "author": "jasonrundell <jason.rundell@gmail.com>",
   "source": "./src/index.js",
   "main": "lib/index.js",
@@ -9,10 +9,11 @@
     "format": "prettier --write src/**/*.{js,jsx}"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "react": "^18.2.0",
     "sass": "^1.54.5",
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0"
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.23.0",
@@ -50,6 +51,6 @@
     "navigation",
     "mega",
     "menu",
-    "megamenu"
+    "mega menu"
   ]
 }

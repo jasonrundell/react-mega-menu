@@ -20,7 +20,6 @@ const StylesNavItemLink = styled.a`
   ${({ isHeading }) =>
     isHeading &&
     `
-    font-weight: 700;
     ${respondTo('large')} {
       height: 1rem;
     }

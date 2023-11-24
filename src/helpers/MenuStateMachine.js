@@ -1,4 +1,4 @@
-const MenuStateMachine = (state) => {
+export const MenuStateMachine = (state) => {
   const validStates = ['closed', 'open']
   const defaultState = 'open'
   let stateChangedTo = defaultState
@@ -17,5 +17,3 @@ const MenuStateMachine = (state) => {
   }
   return stateChangedTo
 }
-
-export { MenuStateMachine }

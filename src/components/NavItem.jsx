@@ -34,7 +34,6 @@ const StyledNavItem = styled.li`
   ${({ isHeading }) =>
     isHeading &&
     `
-    font-weight: 700;
     ${respondTo('large')} {
       display: none;
     }
