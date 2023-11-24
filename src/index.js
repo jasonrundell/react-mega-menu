@@ -90,6 +90,25 @@ const renderLinkMenuItem = (item, index) => {
   )
 }
 
+// function that will use uuidv4 to generate unique ids for each menu item in menuConfig
+const generateMenuIds = (menuConfig) => {
+  const newMenuConfig = { ...menuConfig }
+  newMenuConfig.menu.items.forEach((item) => {
+    item.id = uuidv4()
+    if (item.items) {
+      item.items.forEach((subItem) => {
+        subItem.id = uuidv4()
+        if (subItem.items) {
+          subItem.items.forEach((subSubItem) => {
+            subSubItem.id = uuidv4()
+          })
+        }
+      })
+    }
+  })
+  return newMenuConfig
+}
+
 const Menu = ({ menuConfig, ...props }) => {
   const [megaMenuState, setMegaMenuState] = useState('')
   const [subMenuState, setSubMenuState] = useState('')
@@ -186,37 +205,10 @@ const Menu = ({ menuConfig, ...props }) => {
     updateActiveMenus(nextState, menuId)
   }
 
-  useEffect(() => {
-    if (window.innerWidth >= viewportLarge) {
-      setIsMobile(false)
-    } else {
-      setIsMobile(true)
-    }
-  }, [activeMenus, isMobile])
-
   const doEscape = (e) => {
     if (e.keyCode === 27) {
       resetMenus()
     }
-  }
-
-  // function that will use uuidv4 to generate unique ids for each menu item in menuConfig
-  const generateMenuIds = (menuConfig) => {
-    const newMenuConfig = { ...menuConfig }
-    newMenuConfig.menu.items.forEach((item) => {
-      item.id = uuidv4()
-      if (item.items) {
-        item.items.forEach((subItem) => {
-          subItem.id = uuidv4()
-          if (subItem.items) {
-            subItem.items.forEach((subSubItem) => {
-              subSubItem.id = uuidv4()
-            })
-          }
-        })
-      }
-    })
-    return newMenuConfig
   }
 
   const renderMegaMenuItem = (item, index) => {
@@ -344,6 +336,11 @@ const Menu = ({ menuConfig, ...props }) => {
   }
 
   useEffect(() => {
+    // generate unique ids for each menu item in menuConfig
+    menuConfig = generateMenuIds(menuConfig)
+  }, [])
+
+  useEffect(() => {
     document.addEventListener('keydown', doEscape, false)
 
     return () => {
@@ -352,9 +349,12 @@ const Menu = ({ menuConfig, ...props }) => {
   })
 
   useEffect(() => {
-    // add unique ids to th menuConfig object menu items so that we can call targets in the DOM
-    menuConfig = generateMenuIds(menuConfig)
-  }, [])
+    if (window.innerWidth >= viewportLarge) {
+      setIsMobile(false)
+    } else {
+      setIsMobile(true)
+    }
+  }, [activeMenus, isMobile])
 
   useOutsideAlerter(wrapperRef) // create bindings for closing menu from outside events
 
