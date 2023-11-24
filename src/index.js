@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { v4 as uuidv4 } from 'uuid'
 import { breakpoints as BreakPoints } from './config/breakpoints'
+import { click as a11yClick, escape as a11yEscape } from './helpers/a11y'
 
 // Components
 import TopBar from './components/TopBar'
@@ -52,19 +53,6 @@ const StyledMenu = styled.div`
   }
 `
 
-const a11yClick = (e) => {
-  const code = e.charCode || e.keyCode
-  if (code === 32 || code === 13) {
-    return true
-  }
-}
-
-const doEscape = (e, resetMenus) => {
-  if (e.keyCode === 27) {
-    resetMenus()
-  }
-}
-
 const renderMainMenuItem = (item, index) => {
   return (
     <MainNavItem role="none" id={`rmm-main-nav-item-${item.id}`} key={index}>
@@ -92,6 +80,162 @@ const renderLinkMenuItem = (item, index) => {
       {item.description && (
         <NavItemDescription>{item.description}</NavItemDescription>
       )}
+    </NavItem>
+  )
+}
+
+const renderMegaMenuItem = (
+  item,
+  index,
+  activeMenus,
+  toggleSubMenu,
+  toggleSubSubMenu,
+  a11yClick,
+  renderLinkMenuItem,
+  renderSubMenuItem
+) => {
+  return (
+    <MainNavItem
+      id={`rmm-main-nav-item-${item.id} `}
+      role="none"
+      isChildren
+      key={index}
+    >
+      <MainNavItemLink
+        id={`rmm-main-nav-item-link-${item.id}`}
+        role="menuitem"
+        href={item.url}
+        isForward
+        isActive={!!activeMenus.includes(`rmm-mega-list-id-${item.id}`)}
+        onClick={(e) => toggleSubMenu(e, `rmm-mega-list-id-${item.id}`)}
+        onKeyDown={(e) =>
+          a11yClick(e) && toggleSubMenu(e, `rmm-mega-list-id-${item.id}`)
+        }
+        ariaHaspopup="true"
+        ariaControls={`rmm-mega-list-id-${item.id}`}
+      >
+        {item.label}
+      </MainNavItemLink>
+      <MegaList
+        id={`rmm-mega-list-id-${item.id}`}
+        activeState={
+          activeMenus.includes(`rmm-mega-list-id-${item.id}`)
+            ? 'open'
+            : 'closed'
+        }
+      >
+        <NavItem id={`rmm-nav-item-${item.id}`} isHeading>
+          <NavItemLink
+            id={`rmm-nav-item-link-${item.id}`}
+            href={item.url}
+            isBack
+            onClick={(e) => toggleSubMenu(e, `rmm-mega-list-id-${item.id}`)}
+            onKeyDown={(e) =>
+              a11yClick(e) && toggleSubMenu(e, `rmm-mega-list-id-${item.id}`)
+            }
+            ariaHaspopup="true"
+            ariaControls={`rmm-mega-list-id-${item.id}`}
+          >
+            {item.label}
+          </NavItemLink>
+        </NavItem>
+        {item.items.map((item, index) => {
+          switch (item.type) {
+            case 'link':
+              return renderLinkMenuItem(item, index)
+            case 'mega':
+              return renderMegaMenuItem(
+                item,
+                index,
+                activeMenus,
+                toggleSubMenu,
+                toggleSubSubMenu,
+                a11yClick,
+                renderLinkMenuItem,
+                renderSubMenuItem
+              )
+            case 'sub':
+              return renderSubMenuItem(
+                item,
+                index,
+                activeMenus,
+                toggleSubMenu,
+                toggleSubSubMenu,
+                a11yClick,
+                renderLinkMenuItem
+              )
+            default:
+              return null
+          }
+        })}
+      </MegaList>
+    </MainNavItem>
+  )
+}
+
+const renderSubMenuItem = (
+  item,
+  index,
+  activeMenus,
+  toggleSubMenu,
+  toggleSubSubMenu,
+  a11yClick,
+  renderLinkMenuItem
+) => {
+  return (
+    <NavItem id={`rmm-nav-tem-${item.id}`} key={index}>
+      <NavItemLink
+        id={`rmm-nav-item-link-${item.id}`}
+        role="menuitem"
+        href={item.url}
+        isForward
+        onClick={(e) => toggleSubSubMenu(e, `rmm-nav-list-id-${item.id}`)}
+        onKeyDown={(e) =>
+          a11yClick(e) && toggleSubSubMenu(e, `rmm-nav-list-id-${item.id}`)
+        }
+        ariaHaspopup="true"
+        ariaControls={`rmm-nav-list-id-${item.id}`}
+      >
+        {item.label}
+      </NavItemLink>
+      {item.description && (
+        <NavItemDescription>{item.description}</NavItemDescription>
+      )}
+      <NavList
+        id={`rmm-nav-list-id-${item.id}`}
+        role="menu"
+        isSub
+        isSubSub
+        activeState={
+          activeMenus.includes(`rmm-nav-list-id-${item.id}`) ? 'open' : 'closed'
+        }
+        ariaLabelledby={`rmm-nav-item-link-${item.id}`}
+      >
+        <NavItem id={`rmm-nav-item-sub-${item.id}`} role="none" isHeading>
+          <NavItemLink
+            id={`rmm-nav-item-link-sub-${item.id}`}
+            role="menuitem"
+            href={item.url}
+            isBack
+            onClick={(e) => toggleSubMenu(e, `rmm-nav-list-id-${item.id}`)}
+            onKeyDown={(e) =>
+              a11yClick(e) && toggleSubMenu(e, `rmm-nav-list-id-${item.id}`)
+            }
+            ariaHaspopup="true"
+            ariaControls={`rmm-nav-list-id-${item.id}`}
+          >
+            {item.label}
+          </NavItemLink>
+        </NavItem>
+        {item.items.map((item, index) => {
+          switch (item.type) {
+            case 'link':
+              return renderLinkMenuItem(item, index)
+            default:
+              return null
+          }
+        })}
+      </NavList>
     </NavItem>
   )
 }
@@ -211,137 +355,13 @@ const Menu = ({ menuConfig, ...props }) => {
     updateActiveMenus(nextState, menuId)
   }
 
-  const renderMegaMenuItem = (item, index) => {
-    return (
-      <MainNavItem
-        id={`rmm-main-nav-item-${item.id} `}
-        role="none"
-        isChildren
-        key={index}
-      >
-        <MainNavItemLink
-          id={`rmm-main-nav-item-link-${item.id}`}
-          role="menuitem"
-          href={item.url}
-          isForward
-          isActive={!!activeMenus.includes(`rmm-mega-list-id-${item.id}`)}
-          onClick={(e) => toggleSubMenu(e, `rmm-mega-list-id-${item.id}`)}
-          onKeyDown={(e) =>
-            a11yClick(e) && toggleSubMenu(e, `rmm-mega-list-id-${item.id}`)
-          }
-          ariaHaspopup="true"
-          ariaControls={`rmm-mega-list-id-${item.id}`}
-        >
-          {item.label}
-        </MainNavItemLink>
-        <MegaList
-          id={`rmm-mega-list-id-${item.id}`}
-          activeState={
-            activeMenus.includes(`rmm-mega-list-id-${item.id}`)
-              ? 'open'
-              : 'closed'
-          }
-        >
-          <NavItem id={`rmm-nav-item-${item.id}`} isHeading>
-            <NavItemLink
-              id={`rmm-nav-item-link-${item.id}`}
-              href={item.url}
-              isBack
-              onClick={(e) => toggleSubMenu(e, `rmm-mega-list-id-${item.id}`)}
-              onKeyDown={(e) =>
-                a11yClick(e) && toggleSubMenu(e, `rmm-mega-list-id-${item.id}`)
-              }
-              ariaHaspopup="true"
-              ariaControls={`rmm-mega-list-id-${item.id}`}
-            >
-              {item.label}
-            </NavItemLink>
-          </NavItem>
-          {item.items.map((item, index) => {
-            switch (item.type) {
-              case 'link':
-                return renderLinkMenuItem(item, index)
-              case 'mega':
-                return renderMegaMenuItem(item, index)
-              case 'sub':
-                return renderSubMenuItem(item, index)
-              default:
-                return null
-            }
-          })}
-        </MegaList>
-      </MainNavItem>
-    )
-  }
-
-  const renderSubMenuItem = (item, index) => {
-    return (
-      <NavItem id={`rmm-nav-tem-${item.id}`} key={index}>
-        <NavItemLink
-          id={`rmm-nav-item-link-${item.id}`}
-          role="menuitem"
-          href={item.url}
-          isForward
-          onClick={(e) => toggleSubSubMenu(e, `rmm-nav-list-id-${item.id}`)}
-          onKeyDown={(e) =>
-            a11yClick(e) && toggleSubSubMenu(e, `rmm-nav-list-id-${item.id}`)
-          }
-          ariaHaspopup="true"
-          ariaControls={`rmm-nav-list-id-${item.id}`}
-        >
-          {item.label}
-        </NavItemLink>
-        {item.description && (
-          <NavItemDescription>{item.description}</NavItemDescription>
-        )}
-        <NavList
-          id={`rmm-nav-list-id-${item.id}`}
-          role="menu"
-          isSub
-          isSubSub
-          activeState={
-            activeMenus.includes(`rmm-nav-list-id-${item.id}`)
-              ? 'open'
-              : 'closed'
-          }
-          ariaLabelledby={`rmm-nav-item-link-${item.id}`}
-        >
-          <NavItem id={`rmm-nav-item-sub-${item.id}`} role="none" isHeading>
-            <NavItemLink
-              id={`rmm-nav-item-link-sub-${item.id}`}
-              role="menuitem"
-              href={item.url}
-              isBack
-              onClick={(e) => toggleSubMenu(e, `rmm-nav-list-id-${item.id}`)}
-              onKeyDown={(e) =>
-                a11yClick(e) && toggleSubMenu(e, `rmm-nav-list-id-${item.id}`)
-              }
-              ariaHaspopup="true"
-              ariaControls={`rmm-nav-list-id-${item.id}`}
-            >
-              {item.label}
-            </NavItemLink>
-          </NavItem>
-          {item.items.map((item, index) => {
-            switch (item.type) {
-              case 'link':
-                return renderLinkMenuItem(item, index)
-              default:
-                return null
-            }
-          })}
-        </NavList>
-      </NavItem>
-    )
-  }
-
   useEffect(() => {
     // generate unique ids for each menu item in menuConfig
     menuConfig = generateMenuIds(menuConfig)
   }, [])
 
   useEffect(() => {
-    const handleEscape = (e) => doEscape(e, resetMenus)
+    const handleEscape = (e) => a11yEscape(e, resetMenus)
     window.addEventListener('keydown', handleEscape)
     return () => {
       window.removeEventListener('keydown', handleEscape)
@@ -387,9 +407,26 @@ const Menu = ({ menuConfig, ...props }) => {
               case 'link':
                 return renderLinkMenuItem(item, index)
               case 'mega':
-                return renderMegaMenuItem(item, index)
+                return renderMegaMenuItem(
+                  item,
+                  index,
+                  activeMenus,
+                  toggleSubMenu,
+                  toggleSubSubMenu,
+                  a11yClick,
+                  renderLinkMenuItem,
+                  renderSubMenuItem
+                )
               case 'sub':
-                return renderSubMenuItem(item, index)
+                return renderSubMenuItem(
+                  item,
+                  index,
+                  activeMenus,
+                  toggleSubMenu,
+                  toggleSubSubMenu,
+                  a11yClick,
+                  renderLinkMenuItem
+                )
               default:
                 return null
             }
