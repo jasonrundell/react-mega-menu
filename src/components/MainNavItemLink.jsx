@@ -1,6 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
+
 import { respondTo } from '../helpers/responsive'
 
 const StyledMainNavItemLink = styled.a`
@@ -11,64 +14,7 @@ const StyledMainNavItemLink = styled.a`
   ${respondTo('large')} {
     align-items: center;
     height: 4rem;
-
-    &::after {
-      content: ${({ isForward }) =>
-        isForward ? "url('../../images/icons/angle-up.svg')" : 'none'};
-      right: ${({ isForward }) => (isForward ? '-0.5rem' : 'initial')};
-      bottom: initial;
-    }
   }
-
-  ${({ isForward }) =>
-    isForward &&
-    `
-    ${respondTo('large')} {
-      margin-right: 1rem;
-    }
-
-    &::after {
-      content: url('../../images/icons/angle-right.svg');
-      position: absolute;
-      right: 2rem;
-      bottom: -30%;
-      width: 1rem;
-      height: 2rem;
-  
-      ${respondTo('large')} {
-        content: url('../../images/icons/angle-up.svg');
-        top: 0.25rem;
-        right: -0.5rem;
-        bottom: initial;
-        width: 1rem;
-      }
-    }
-  `}
-
-  ${({ isBack }) =>
-    isBack &&
-    `
-    padding-left: 2rem;
-    &::before {
-      content: url('../../images/icons/angle-left.svg');
-      position: absolute;
-      left: 0;
-      bottom: -30%;
-      width: 1rem;
-      height: 2rem;
-    }
-  `}
-
-  ${({ isActive }) =>
-    isActive &&
-    `
-    &::after {
-      ${respondTo('large')} {
-        transform: rotate(180deg);
-        top: 0;
-      }
-    }
-  `}
 `
 
 const MainNavItemLink = ({
@@ -99,6 +45,11 @@ const MainNavItemLink = ({
     {...props}
   >
     {children}
+    <FontAwesomeIcon
+      className="rmm__icon--right"
+      icon={isActive ? faChevronDown : faChevronUp}
+      style={{ marginLeft: '8px' }}
+    />
   </StyledMainNavItemLink>
 )
 

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 
 const StyledTopBarTitle = styled.h1`
-  color: #fff;
   font-size: 1.5rem;
 `
 

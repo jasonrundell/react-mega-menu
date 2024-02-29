@@ -31,13 +31,11 @@ const StyledMenu = styled.div`
   justify-content: flex-start;
   align-content: center;
   flex-direction: row;
-  background-color: #fff;
   width: 100%;
   padding-top: 1rem;
   padding-right: 1rem;
   padding-bottom: 1rem;
   padding-left: 1rem;
-  border-bottom: 0.0625rem solid #000;
   z-index: 9000;
 
   ${respondTo('large')} {
@@ -163,27 +161,36 @@ const Menu = ({ menuConfig, ...props }) => {
   useOutsideAlerter(wrapperRef) // create bindings for closing menu from outside events
 
   return (
-    <StyledMenu role="navigation" ref={wrapperRef} {...props}>
-      <TopBar>
+    <StyledMenu
+      role="navigation"
+      ref={wrapperRef}
+      {...props}
+      className="rmm__menu"
+    >
+      <TopBar className="rmm__topbar">
         <Logo
           id={menuConfig.topbar.id}
           src={menuConfig.topbar.logo.src}
           alt={menuConfig.topbar.logo.alt}
           rel={menuConfig.topbar.logo.rel}
         />
-        <TopBarTitle>{menuConfig.topbar.title}</TopBarTitle>
+        <TopBarTitle className="rmm__title">
+          {menuConfig.topbar.title}
+        </TopBarTitle>
       </TopBar>
       <Hamburger
         label="Menu"
         state={megaMenuState}
         onClick={(e) => toggleMegaMenu(e, 'nav-main')}
+        className="rmm__hamburger"
       />
       <Nav
         id="site-nav"
         activeState={megaMenuState}
         ariaLabel="Main Navigation"
+        className="rmm__nav"
       >
-        <MainList id="rmm-main" ariaLabel="Main Menu">
+        <MainList id="rmm-main" ariaLabel="Main Menu" className="rmm__nav-list">
           {menuConfig.menu.items.map((item, index) => {
             switch (item.type) {
               case 'main':

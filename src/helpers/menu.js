@@ -12,11 +12,17 @@ import NavItemDescription from '../components/NavItemDescription'
 
 export const renderMainMenuItem = (item, index) => {
   return (
-    <MainNavItem role="none" id={`rmm-main-nav-item-${item.id}`} key={index}>
+    <MainNavItem
+      role="none"
+      id={`rmm-main-nav-item-${item.id}`}
+      key={index}
+      className="rmm__main-nav-item"
+    >
       <MainNavItemLink
         id={`rmm-main-nav-item-link-${item.id}`}
         role="menuitem"
         href={item.url}
+        className="rmm__main-nav-item-link"
       >
         {item.label}
       </MainNavItemLink>
@@ -26,16 +32,24 @@ export const renderMainMenuItem = (item, index) => {
 
 export const renderLinkMenuItem = (item, index) => {
   return (
-    <NavItem id={`rmm-nav-item-${item.id}`} role="none" key={index}>
+    <NavItem
+      id={`rmm-nav-item-${item.id}`}
+      role="none"
+      key={index}
+      className="rmm__nav-item"
+    >
       <NavItemLink
         id={`rmm-nav-item-link-${item.id}`}
         role="menuitem"
         href={item.url}
+        className="rmm__nav-item-link"
       >
         {item.label}
       </NavItemLink>
       {item.description && (
-        <NavItemDescription>{item.description}</NavItemDescription>
+        <NavItemDescription className="rmm__nav-item-description">
+          {item.description}
+        </NavItemDescription>
       )}
     </NavItem>
   )
@@ -57,6 +71,7 @@ export const renderMegaMenuItem = (
       role="none"
       isChildren
       key={index}
+      className="rmm__main-nav-item"
     >
       <MainNavItemLink
         id={`rmm-main-nav-item-link-${item.id}`}
@@ -70,6 +85,7 @@ export const renderMegaMenuItem = (
         }
         ariaHaspopup="true"
         ariaControls={`rmm-mega-list-id-${item.id}`}
+        className="rmm__main-nav-item-link"
       >
         {item.label}
       </MainNavItemLink>
@@ -80,8 +96,13 @@ export const renderMegaMenuItem = (
             ? 'open'
             : 'closed'
         }
+        className="rmm__mega-list"
       >
-        <NavItem id={`rmm-nav-item-${item.id}`} isHeading>
+        <NavItem
+          id={`rmm-nav-item-${item.id}`}
+          isHeading
+          className="rmm__nav-item"
+        >
           <NavItemLink
             id={`rmm-nav-item-link-${item.id}`}
             href={item.url}
@@ -92,6 +113,7 @@ export const renderMegaMenuItem = (
             }
             ariaHaspopup="true"
             ariaControls={`rmm-mega-list-id-${item.id}`}
+            className="rmm__nav-item-link"
           >
             {item.label}
           </NavItemLink>
@@ -140,7 +162,11 @@ export const renderSubMenuItem = (
   renderLinkMenuItem
 ) => {
   return (
-    <NavItem id={`rmm-nav-tem-${item.id}`} key={index}>
+    <NavItem
+      id={`rmm-nav-tem-${item.id}`}
+      key={index}
+      className="rmm__nav-item"
+    >
       <NavItemLink
         id={`rmm-nav-item-link-${item.id}`}
         role="menuitem"
@@ -152,11 +178,14 @@ export const renderSubMenuItem = (
         }
         ariaHaspopup="true"
         ariaControls={`rmm-nav-list-id-${item.id}`}
+        className="rmm__nav-item-link"
       >
         {item.label}
       </NavItemLink>
       {item.description && (
-        <NavItemDescription>{item.description}</NavItemDescription>
+        <NavItemDescription className="rmm__nav-item-description">
+          {item.description}
+        </NavItemDescription>
       )}
       <NavList
         id={`rmm-nav-list-id-${item.id}`}
@@ -167,8 +196,14 @@ export const renderSubMenuItem = (
           activeMenus.includes(`rmm-nav-list-id-${item.id}`) ? 'open' : 'closed'
         }
         ariaLabelledby={`rmm-nav-item-link-${item.id}`}
+        className="rmm__nav-list"
       >
-        <NavItem id={`rmm-nav-item-sub-${item.id}`} role="none" isHeading>
+        <NavItem
+          id={`rmm-nav-item-sub-${item.id}`}
+          role="none"
+          isHeading
+          className="rmm__nav-item"
+        >
           <NavItemLink
             id={`rmm-nav-item-link-sub-${item.id}`}
             role="menuitem"
@@ -180,6 +215,7 @@ export const renderSubMenuItem = (
             }
             ariaHaspopup="true"
             ariaControls={`rmm-nav-list-id-${item.id}`}
+            className="rmm__nav-item-link"
           >
             {item.label}
           </NavItemLink>

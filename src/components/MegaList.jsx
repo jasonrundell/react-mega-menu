@@ -18,8 +18,6 @@ const StyledMegaList = styled.ul`
   padding-right: 1rem;
   padding-bottom: 1rem;
   padding-left: 1rem;
-  border-right: 0.25rem solid #999;
-  background-color: #fff;
 
   ${respondTo('large')} {
     position: absolute;
@@ -31,10 +29,6 @@ const StyledMegaList = styled.ul`
     width: 100%;
     height: auto;
     opacity: 0;
-    border-top: none;
-    border-right: 0.25rem solid #666;
-    border-bottom: 0.25rem solid #333;
-    border-left: 0.25rem solid #666;
   }
 
   ${({ activeState }) =>

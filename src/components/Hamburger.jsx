@@ -62,7 +62,6 @@ const StyledHamburgerSlice = styled.span`
   position: absolute;
   height: 0.25rem;
   width: 100%;
-  background: #000;
   opacity: 1;
   left: 0;
   transform: rotate(0deg);
@@ -94,14 +93,16 @@ const StyledHamburgerLabel = styled.span`
 const Hamburger = ({ label, state, onClick, ...props }) => (
   <StyledHamburger state={state} onClick={onClick} {...props}>
     <StyledHamburgerSliceContainer>
-      <StyledHamburgerSlice />
-      <StyledHamburgerSlice />
-      <StyledHamburgerSlice />
-      <StyledHamburgerSlice />
+      <StyledHamburgerSlice className="rmm__hamburger--slice" />
+      <StyledHamburgerSlice className="rmm__hamburger--slice" />
+      <StyledHamburgerSlice className="rmm__hamburger--slice" />
+      <StyledHamburgerSlice className="rmm__hamburger--slice" />
     </StyledHamburgerSliceContainer>
     {label && (
       <StyledHamburgerLabelContainer>
-        <StyledHamburgerLabel>{label}</StyledHamburgerLabel>
+        <StyledHamburgerLabel className="rmm__hamburger--label">
+          {label}
+        </StyledHamburgerLabel>
       </StyledHamburgerLabelContainer>
     )}
   </StyledHamburger>
