@@ -11,7 +11,6 @@ const StyledNav = styled.nav`
   height: calc(100vh - 4rem);
   display: flex;
   flex-direction: column;
-  background-color: #fff;
   border-top: 0.0625rem solid grey;
   padding-top: 1rem;
   padding-right: 1rem;
