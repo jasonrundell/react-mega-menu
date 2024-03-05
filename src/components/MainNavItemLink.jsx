@@ -48,7 +48,7 @@ const MainNavItemLink = ({
     <FontAwesomeIcon
       className="rmm__icon--right"
       icon={isActive ? faChevronDown : faChevronUp}
-      style={{ marginLeft: '8px' }}
+      style={{ width: '1rem', marginLeft: '0.5rem' }}
     />
   </StyledMainNavItemLink>
 )

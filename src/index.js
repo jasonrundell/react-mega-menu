@@ -13,6 +13,12 @@ import {
   stateMachine,
   generateMenuIds
 } from './helpers/menu'
+import {
+  MENU_ITEM_TYPE_MAIN,
+  MENU_ITEM_TYPE_LINK,
+  MENU_ITEM_TYPE_MEGA,
+  MENU_ITEM_TYPE_SUB
+} from './config/menuItemTypes'
 
 // Components
 import TopBar from './components/TopBar'
@@ -193,11 +199,11 @@ const Menu = ({ menuConfig, ...props }) => {
         <MainList id="rmm-main" ariaLabel="Main Menu" className="rmm__nav-list">
           {menuConfig.menu.items.map((item, index) => {
             switch (item.type) {
-              case 'main':
+              case MENU_ITEM_TYPE_MAIN:
                 return renderMainMenuItem(item, index)
-              case 'link':
+              case MENU_ITEM_TYPE_LINK:
                 return renderLinkMenuItem(item, index)
-              case 'mega':
+              case MENU_ITEM_TYPE_MEGA:
                 return renderMegaMenuItem(
                   item,
                   index,
@@ -208,7 +214,7 @@ const Menu = ({ menuConfig, ...props }) => {
                   renderLinkMenuItem,
                   renderSubMenuItem
                 )
-              case 'sub':
+              case MENU_ITEM_TYPE_SUB:
                 return renderSubMenuItem(
                   item,
                   index,

@@ -11,22 +11,17 @@ const StyledNav = styled.nav`
   height: calc(100vh - 4rem);
   display: flex;
   flex-direction: column;
-  border-top: 0.0625rem solid grey;
   padding-top: 1rem;
   padding-right: 1rem;
   padding-bottom: 1rem;
   padding-left: 1rem;
-  border-right: 0.25rem solid #000;
   overflow-y: scroll;
 
   ${respondTo('large')} {
     top: 4rem;
     left: 0;
-    border-top: none;
     height: 4rem;
     flex-direction: row;
-    border-right: none;
-    border-bottom: 0.0625rem solid #000;
     overflow-y: initial;
   }
 

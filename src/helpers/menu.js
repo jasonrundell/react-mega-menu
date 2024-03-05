@@ -10,6 +10,12 @@ import NavItemLink from '../components/NavItemLink'
 import NavList from '../components/NavList'
 import NavItemDescription from '../components/NavItemDescription'
 
+import {
+  MENU_ITEM_TYPE_LINK,
+  MENU_ITEM_TYPE_MEGA,
+  MENU_ITEM_TYPE_SUB
+} from '../config/menuItemTypes'
+
 export const renderMainMenuItem = (item, index) => {
   return (
     <MainNavItem
@@ -120,9 +126,9 @@ export const renderMegaMenuItem = (
         </NavItem>
         {item.items.map((item, index) => {
           switch (item.type) {
-            case 'link':
+            case MENU_ITEM_TYPE_LINK:
               return renderLinkMenuItem(item, index)
-            case 'mega':
+            case MENU_ITEM_TYPE_MEGA:
               return renderMegaMenuItem(
                 item,
                 index,
@@ -133,7 +139,7 @@ export const renderMegaMenuItem = (
                 renderLinkMenuItem,
                 renderSubMenuItem
               )
-            case 'sub':
+            case MENU_ITEM_TYPE_SUB:
               return renderSubMenuItem(
                 item,
                 index,
@@ -190,13 +196,14 @@ export const renderSubMenuItem = (
       <NavList
         id={`rmm-nav-list-id-${item.id}`}
         role="menu"
-        isSub
-        isSubSub
+        type={item.type}
         activeState={
           activeMenus.includes(`rmm-nav-list-id-${item.id}`) ? 'open' : 'closed'
         }
         ariaLabelledby={`rmm-nav-item-link-${item.id}`}
-        className="rmm__nav-list"
+        className={`rmm__nav-list rmm__nav-list--${item.type} ${
+          item.type === MENU_ITEM_TYPE_SUB ? 'rmm__nav-list--dropdown' : null
+        }`}
       >
         <NavItem
           id={`rmm-nav-item-sub-${item.id}`}
@@ -222,7 +229,7 @@ export const renderSubMenuItem = (
         </NavItem>
         {item.items.map((item, index) => {
           switch (item.type) {
-            case 'link':
+            case MENU_ITEM_TYPE_LINK:
               return renderLinkMenuItem(item, index)
             default:
               return null
