@@ -107,8 +107,7 @@ export const renderMegaMenuItem = (
       >
         <NavItem
           id={`rmm-nav-item-${item.id}`}
-          isHeading
-          className="rmm__nav-item"
+          className="rmm__nav-item rmm__nav-item--heading"
         >
           <NavItemLink
             id={`rmm-nav-item-link-${item.id}`}
@@ -207,8 +206,7 @@ export const renderSubMenuItem = (
         <NavItem
           id={`rmm-nav-item-sub-${item.id}`}
           role="none"
-          isHeading
-          className="rmm__nav-item"
+          className="rmm__nav-item rmm__nav-item--heading"
         >
           <NavItemLink
             id={`rmm-nav-item-link-sub-${item.id}`}

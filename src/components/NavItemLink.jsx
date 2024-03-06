@@ -10,14 +10,6 @@ const StylesNavItemLink = styled.a`
   position: relative;
   margin-bottom: 1rem;
 
-  ${({ isHeading }) =>
-    isHeading &&
-    `
-    ${respondTo('large')} {
-      height: 1rem;
-    }
-  `}
-
   ${({ isActive }) =>
     isActive &&
     `
@@ -34,7 +26,6 @@ const NavItemLink = ({
   id,
   role,
   href,
-  isHeading,
   isActive,
   onClick,
   onKeyDown,
@@ -47,7 +38,6 @@ const NavItemLink = ({
     id={id}
     role={role}
     href={href}
-    isHeading={isHeading}
     isActive={isActive}
     onClick={onClick}
     onKeyDown={onKeyDown}
@@ -61,7 +51,6 @@ const NavItemLink = ({
 
 NavItemLink.defaultProps = {
   role: 'menuitem',
-  isHeading: false,
   isActive: false
 }
 
@@ -69,7 +58,6 @@ NavItemLink.propTypes = {
   id: PropTypes.string.isRequired,
   role: PropTypes.string,
   href: PropTypes.string.isRequired,
-  isHeading: PropTypes.bool,
   isActive: PropTypes.bool,
   onClick: PropTypes.func,
   onKeyDown: PropTypes.func,

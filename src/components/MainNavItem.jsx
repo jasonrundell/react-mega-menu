@@ -21,26 +21,16 @@ const StyledMainNavItem = styled.li`
     margin-left: 2rem;
     align-items: center;
   }
-
-  ${({ isHeading }) =>
-    isHeading &&
-    `
-    font-weight: 700;
-    ${respondTo('large')} {
-      display: none;
-    }
-  `}
 `
 
-const MainNavItem = ({ id, role, isHeading, children, ...props }) => (
-  <StyledMainNavItem id={id} role={role} isHeading={isHeading} {...props}>
+const MainNavItem = ({ id, role, children, ...props }) => (
+  <StyledMainNavItem id={id} role={role} {...props}>
     {children}
   </StyledMainNavItem>
 )
 
 MainNavItem.defaultProps = {
-  role: 'none',
-  isHeading: false
+  role: 'none'
 }
 
 MainNavItem.propTypes = {
@@ -52,10 +42,6 @@ MainNavItem.propTypes = {
    * The role attribute of the list item.
    */
   role: PropTypes.string,
-  /**
-   * Whether the list item is a heading.
-   */
-  isHeading: PropTypes.bool,
   /**
    * The content of the list item.
    */

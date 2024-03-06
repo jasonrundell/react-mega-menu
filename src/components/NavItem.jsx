@@ -23,32 +23,22 @@ const StyledNavItem = styled.li`
     padding-left: 1rem;
     padding-right: 1rem;
   }
-
-  ${({ isHeading }) =>
-    isHeading &&
-    `
-    ${respondTo('large')} {
-      display: none;
-    }
-  `}
 `
 
-const NavItem = ({ id, role, isHeading, children, ...props }) => (
-  <StyledNavItem isHeading={isHeading} id={id} role={role} {...props}>
+const NavItem = ({ id, role, children, ...props }) => (
+  <StyledNavItem id={id} role={role} {...props}>
     {children}
   </StyledNavItem>
 )
 
 NavItem.defaultProps = {
   role: 'none',
-  isHeading: false,
   hasChildren: false
 }
 
 NavItem.propTypes = {
   id: PropTypes.string.isRequired,
   role: PropTypes.string,
-  isHeading: PropTypes.bool,
   children: PropTypes.node.isRequired
 }
 
