@@ -5,6 +5,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 
 import { respondTo } from '../helpers/responsive'
+import {
+  MENU_ITEM_TYPE_LINK,
+  MENU_ITEM_TYPE_MEGA,
+  MENU_ITEM_TYPES
+} from '../config/menuItemTypes'
 
 const StyledMainNavItemLink = styled.a`
   width: 100%;
@@ -20,6 +25,7 @@ const StyledMainNavItemLink = styled.a`
 const MainNavItemLink = ({
   id,
   role,
+  type,
   href,
   isBack,
   isForward,
@@ -45,16 +51,19 @@ const MainNavItemLink = ({
     {...props}
   >
     {children}
-    <FontAwesomeIcon
-      className="rmm__icon--right"
-      icon={isActive ? faChevronDown : faChevronUp}
-      style={{ width: '1rem', marginLeft: '0.5rem' }}
-    />
+    {type === MENU_ITEM_TYPE_MEGA && (
+      <FontAwesomeIcon
+        className="rmm__icon--right"
+        icon={isActive ? faChevronDown : faChevronUp}
+        style={{ width: '1rem', marginLeft: '0.5rem' }}
+      />
+    )}
   </StyledMainNavItemLink>
 )
 
 MainNavItemLink.defaultProps = {
   role: 'menuitem',
+  type: MENU_ITEM_TYPE_LINK,
   isBack: false,
   isForward: false,
   isActive: false
@@ -63,6 +72,7 @@ MainNavItemLink.defaultProps = {
 MainNavItemLink.propTypes = {
   id: PropTypes.string.isRequired,
   role: PropTypes.string,
+  type: PropTypes.oneOf(MENU_ITEM_TYPES),
   href: PropTypes.string.isRequired,
   isBack: PropTypes.bool,
   isForward: PropTypes.bool,

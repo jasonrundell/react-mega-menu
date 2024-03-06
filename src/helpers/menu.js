@@ -27,6 +27,7 @@ export const renderMainMenuItem = (item, index) => {
       <MainNavItemLink
         id={`rmm-main-nav-item-link-${item.id}`}
         role="menuitem"
+        type={item.type}
         href={item.url}
         className="rmm__main-nav-item-link"
       >
@@ -82,6 +83,7 @@ export const renderMegaMenuItem = (
       <MainNavItemLink
         id={`rmm-main-nav-item-link-${item.id}`}
         role="menuitem"
+        type={item.type}
         href={item.url}
         isForward
         isActive={!!activeMenus.includes(`rmm-mega-list-id-${item.id}`)}
