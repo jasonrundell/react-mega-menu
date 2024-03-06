@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 
 import { respondTo } from '../helpers/responsive'
 import {
@@ -27,8 +25,6 @@ const MainNavItemLink = ({
   role,
   type,
   href,
-  isBack,
-  isForward,
   isActive,
   onClick,
   onKeyDown,
@@ -45,17 +41,13 @@ const MainNavItemLink = ({
     onKeyDown={onKeyDown}
     aria-haspopup={ariaHaspopup}
     aria-controls={ariaControls}
-    isBack={isBack}
-    isForward={isForward}
     isActive={isActive}
     {...props}
   >
     {children}
     {type === MENU_ITEM_TYPE_MEGA && (
-      <FontAwesomeIcon
-        className="rmm__icon--right"
-        icon={isActive ? faChevronDown : faChevronUp}
-        style={{ width: '1rem', marginLeft: '0.5rem' }}
+      <span
+        className={`rmm__main-nav-item-link--icon ${isActive ? 'active' : ''}`}
       />
     )}
   </StyledMainNavItemLink>
@@ -64,8 +56,6 @@ const MainNavItemLink = ({
 MainNavItemLink.defaultProps = {
   role: 'menuitem',
   type: MENU_ITEM_TYPE_LINK,
-  isBack: false,
-  isForward: false,
   isActive: false
 }
 
@@ -74,8 +64,6 @@ MainNavItemLink.propTypes = {
   role: PropTypes.string,
   type: PropTypes.oneOf(MENU_ITEM_TYPES),
   href: PropTypes.string.isRequired,
-  isBack: PropTypes.bool,
-  isForward: PropTypes.bool,
   isActive: PropTypes.bool,
   onClick: PropTypes.func,
   onKeyDown: PropTypes.func,

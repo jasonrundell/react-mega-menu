@@ -85,7 +85,6 @@ export const renderMegaMenuItem = (
         role="menuitem"
         type={item.type}
         href={item.url}
-        isForward
         isActive={!!activeMenus.includes(`rmm-mega-list-id-${item.id}`)}
         onClick={(e) => toggleSubMenu(e, `rmm-mega-list-id-${item.id}`)}
         onKeyDown={(e) =>
@@ -93,7 +92,7 @@ export const renderMegaMenuItem = (
         }
         ariaHaspopup="true"
         ariaControls={`rmm-mega-list-id-${item.id}`}
-        className="rmm__main-nav-item-link"
+        className="rmm__main-nav-item-link rmm__main-nav-item-link--forward"
       >
         {item.label}
       </MainNavItemLink>
@@ -114,14 +113,13 @@ export const renderMegaMenuItem = (
           <NavItemLink
             id={`rmm-nav-item-link-${item.id}`}
             href={item.url}
-            isBack
             onClick={(e) => toggleSubMenu(e, `rmm-mega-list-id-${item.id}`)}
             onKeyDown={(e) =>
               a11yClick(e) && toggleSubMenu(e, `rmm-mega-list-id-${item.id}`)
             }
             ariaHaspopup="true"
             ariaControls={`rmm-mega-list-id-${item.id}`}
-            className="rmm__nav-item-link"
+            className="rmm__nav-item-link rmm__nav-item-link--back"
           >
             {item.label}
           </NavItemLink>
@@ -179,14 +177,13 @@ export const renderSubMenuItem = (
         id={`rmm-nav-item-link-${item.id}`}
         role="menuitem"
         href={item.url}
-        isForward
         onClick={(e) => toggleSubSubMenu(e, `rmm-nav-list-id-${item.id}`)}
         onKeyDown={(e) =>
           a11yClick(e) && toggleSubSubMenu(e, `rmm-nav-list-id-${item.id}`)
         }
         ariaHaspopup="true"
         ariaControls={`rmm-nav-list-id-${item.id}`}
-        className="rmm__nav-item-link"
+        className="rmm__nav-item-link rmm__nav-item-link--forward"
       >
         {item.label}
       </NavItemLink>
@@ -204,7 +201,7 @@ export const renderSubMenuItem = (
         }
         ariaLabelledby={`rmm-nav-item-link-${item.id}`}
         className={`rmm__nav-list rmm__nav-list--${item.type} ${
-          item.type === MENU_ITEM_TYPE_SUB ? 'rmm__nav-list--dropdown' : null
+          item.type === MENU_ITEM_TYPE_SUB ? 'rmm__nav-list--dropdown' : ''
         }`}
       >
         <NavItem
@@ -217,14 +214,13 @@ export const renderSubMenuItem = (
             id={`rmm-nav-item-link-sub-${item.id}`}
             role="menuitem"
             href={item.url}
-            isBack
             onClick={(e) => toggleSubMenu(e, `rmm-nav-list-id-${item.id}`)}
             onKeyDown={(e) =>
               a11yClick(e) && toggleSubMenu(e, `rmm-nav-list-id-${item.id}`)
             }
             ariaHaspopup="true"
             ariaControls={`rmm-nav-list-id-${item.id}`}
-            className="rmm__nav-item-link"
+            className="rmm__nav-item-link rmm__nav-item-link--back"
           >
             {item.label}
           </NavItemLink>

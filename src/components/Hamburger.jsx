@@ -4,8 +4,6 @@ import styled from '@emotion/styled'
 import { respondTo } from '../helpers/responsive'
 
 const StyledHamburger = styled.button`
-  border: none;
-  background: none;
   transition: 0.5s ease-in-out;
   position: absolute;
   top: 5.25rem;

@@ -31,40 +31,10 @@ const StyledNavItem = styled.li`
       display: none;
     }
   `}
-
-  ${({ isForward }) =>
-    isForward &&
-    `
-    ${respondTo('large')} {
-      margin-right: 1rem;
-    }
-
-    &::after {
-      content: url('../../images/icons/angle-right.svg');
-      position: absolute;
-      right: 2rem;
-      bottom: -30%;
-      width: 1rem;
-      height: 2rem;
-  
-      ${respondTo('large')} {
-        content: url('../../images/icons/angle-up.svg');
-        top: 1.25rem;
-        right: -1.5rem;
-        width: 1rem;
-      }
-    }
-  `}
 `
 
-const NavItem = ({ id, role, isHeading, isForward, children, ...props }) => (
-  <StyledNavItem
-    isHeading={isHeading}
-    isForward={isForward}
-    id={id}
-    role={role}
-    {...props}
-  >
+const NavItem = ({ id, role, isHeading, children, ...props }) => (
+  <StyledNavItem isHeading={isHeading} id={id} role={role} {...props}>
     {children}
   </StyledNavItem>
 )
@@ -72,15 +42,13 @@ const NavItem = ({ id, role, isHeading, isForward, children, ...props }) => (
 NavItem.defaultProps = {
   role: 'none',
   isHeading: false,
-  hasChildren: false,
-  isForward: false
+  hasChildren: false
 }
 
 NavItem.propTypes = {
   id: PropTypes.string.isRequired,
   role: PropTypes.string,
   isHeading: PropTypes.bool,
-  isForward: PropTypes.bool,
   children: PropTypes.node.isRequired
 }
 

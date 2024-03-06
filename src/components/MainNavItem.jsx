@@ -30,55 +30,17 @@ const StyledMainNavItem = styled.li`
       display: none;
     }
   `}
-
-  ${({ isForward }) =>
-    isForward &&
-    `
-    ${respondTo('large')} {
-      margin-right: 1rem;
-    }
-
-    &::after {
-      content: url('../../images/icons/angle-right.svg');
-      position: absolute;
-      right: 2rem;
-      bottom: -30%;
-      width: 1rem;
-      height: 2rem;
-
-      ${respondTo('large')} {
-        content: url('../../images/icons/angle-up.svg');
-        top: 1.25rem;
-        right: -1.5rem;
-        width: 1rem;
-      }
-    }
-  `}
 `
 
-const MainNavItem = ({
-  id,
-  role,
-  isHeading,
-  isForward,
-  children,
-  ...props
-}) => (
-  <StyledMainNavItem
-    id={id}
-    role={role}
-    isHeading={isHeading}
-    isForward={isForward}
-    {...props}
-  >
+const MainNavItem = ({ id, role, isHeading, children, ...props }) => (
+  <StyledMainNavItem id={id} role={role} isHeading={isHeading} {...props}>
     {children}
   </StyledMainNavItem>
 )
 
 MainNavItem.defaultProps = {
   role: 'none',
-  isHeading: false,
-  isForward: false
+  isHeading: false
 }
 
 MainNavItem.propTypes = {
@@ -94,10 +56,6 @@ MainNavItem.propTypes = {
    * Whether the list item is a heading.
    */
   isHeading: PropTypes.bool,
-  /**
-   * Whether the list item is a forward navigation item.
-   */
-  isForward: PropTypes.bool,
   /**
    * The content of the list item.
    */
