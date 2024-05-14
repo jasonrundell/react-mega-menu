@@ -49,7 +49,7 @@ const StyledMenu = styled.div`
   }
 `
 
-const Menu = ({ menuConfig, ...props }) => {
+const Menu = ({ menuConfig, className, ...props }) => {
   const [megaMenuState, setMegaMenuState] = useState('')
   const [subMenuState, setSubMenuState] = useState('')
   const [subSubMenuState, setSubSubMenuState] = useState('')
@@ -168,10 +168,11 @@ const Menu = ({ menuConfig, ...props }) => {
 
   return (
     <StyledMenu
+      id={props.id || 'rmm__menu'}
       role="navigation"
       ref={wrapperRef}
+      className={`rmm__menu ${className}`}
       {...props}
-      className="rmm__menu"
     >
       <TopBar className="rmm__topbar">
         <Logo
@@ -191,12 +192,16 @@ const Menu = ({ menuConfig, ...props }) => {
         className="rmm__hamburger"
       />
       <Nav
-        id="site-nav"
+        id={props.id || 'rmm__nav'}
         activeState={megaMenuState}
         ariaLabel="Main Navigation"
-        className="rmm__nav"
+        className={`rmm__nav ${className}`}
       >
-        <MainList id="rmm-main" ariaLabel="Main Menu" className="rmm__nav-list">
+        <MainList
+          id={props.id || 'rmm__main'}
+          ariaLabel="Main Menu"
+          className="rmm__nav-list"
+        >
           {menuConfig.menu.items.map((item, index) => {
             switch (item.type) {
               case MENU_ITEM_TYPE_MAIN:
@@ -439,7 +444,9 @@ Menu.propTypes = {
         })
       )
     })
-  }).isRequired
+  }).isRequired,
+  id: PropTypes.string,
+  className: PropTypes.string
 }
 
 export default Menu
