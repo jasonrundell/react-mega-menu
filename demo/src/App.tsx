@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Menu } from '../../src'
+import { Menu } from '../../src/index'
 import './App.css'
 import './rmm-themes.css'
 
