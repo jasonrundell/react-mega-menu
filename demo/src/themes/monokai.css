@@ -19,6 +19,7 @@
   border-top: 0.0625rem solid #75715e;
   border-right: 0.25rem solid #75715e;
   height: 2rem;
+  padding: 1rem;
 }
 
 .rmm__theme--monokai[class*='css-'] .rmm__nav {

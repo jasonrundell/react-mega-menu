@@ -16,6 +16,7 @@
 
 .rmm__theme--light[class*='css-'] .rmm__topbar {
   height: 2rem;
+  padding: 1rem;
 }
 
 .rmm__theme--light[class*='css-'] .rmm__hamburger {

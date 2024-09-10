@@ -19,6 +19,7 @@
   border-top: 0.0625rem solid #ccc;
   border-right: 0.25rem solid #ccc;
   height: 2rem;
+  padding: 1rem;
 }
 
 .rmm__theme--skeleton[class*='css-'] .rmm__nav {
