@@ -12,9 +12,7 @@ const StyledNav = styled.nav`
   display: flex;
   flex-direction: column;
   padding-top: 1rem;
-  padding-right: 1rem;
   padding-bottom: 1rem;
-  padding-left: 1rem;
   overflow-y: scroll;
 
   ${respondTo('large')} {

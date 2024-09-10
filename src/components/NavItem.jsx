@@ -17,11 +17,7 @@ const StyledNavItem = styled.li`
     justify-content: flex-start;
     height: auto;
     margin-top: 0;
-    margin-right: 0;
     margin-bottom: 0;
-    margin-left: 0;
-    padding-left: 1rem;
-    padding-right: 1rem;
   }
 `
 
