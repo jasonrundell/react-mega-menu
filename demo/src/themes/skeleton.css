@@ -1,0 +1,164 @@
+/* 
+ * When making custom styles for the React Mega Menu components, it's important to include [class*="css-"] 
+ * due to the nature of the emotion library adding it's dynamic styles AFTER the custom class name 
+ */
+
+/* Theme: skeleton */
+
+.rmm__theme--skeleton[class*='css-'],
+.rmm__theme--skeleton[class*='css-'] .rmm__topbar,
+.rmm__theme--skeleton[class*='css-'] .rmm__nav,
+.rmm__theme--skeleton[class*='css-'] .rmm__mega-list,
+.rmm__theme--skeleton[class*='css-'] .rmm__nav-list,
+.rmm__theme--skeleton[class*='css-'] .rmm__nav-list--sub {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.rmm__theme--skeleton[class*='css-'] .rmm__topbar {
+  border-top: 0.0625rem solid #ccc;
+  border-right: 0.25rem solid #ccc;
+  height: 2rem;
+}
+
+.rmm__theme--skeleton[class*='css-'] .rmm__nav {
+  border-top: 0.0625rem solid #ccc;
+}
+
+.rmm__theme--skeleton[class*='css-'] .rmm__hamburger {
+  border: none;
+  background: none;
+}
+
+.rmm__theme--skeleton[class*='css-'] .rmm__hamburger--label {
+  color: #333;
+}
+
+.rmm__theme--skeleton[class*='css-'] .rmm__hamburger--slice {
+  background-color: #333;
+}
+
+.rmm__theme--skeleton[class*='css-'] .rmm__nav-list,
+.rmm__theme--skeleton[class*='css-'] .rmm__mega-list {
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+.rmm__theme--skeleton[class*='css-'] .rmm__nav-list--sub {
+  margin-top: 0;
+  margin-left: 0;
+}
+
+.rmm__theme--skeleton[class*='css-'] .rmm__main-nav-item-link--icon {
+  content: url(/images/icons/skeleton/angle-right.svg);
+  position: absolute;
+  right: 2rem;
+  bottom: -30%;
+  width: 1rem;
+  height: 2rem;
+}
+
+.rmm__theme--skeleton[class*='css-'] .rmm__nav-item-link {
+  color: #333;
+  align-items: center;
+  height: 2rem;
+}
+
+.rmm__theme--skeleton[class*='css-'] .rmm__nav-item-link--forward:after {
+  content: url(/images/icons/skeleton/angle-right.svg);
+  position: absolute;
+  right: 2rem;
+  top: 0;
+  width: 1rem;
+}
+
+.rmm__theme--skeleton[class*='css-'] .rmm__nav-item-link--back {
+  padding-left: 2rem;
+}
+
+.rmm__theme--skeleton[class*='css-'] .rmm__nav-item-link--back:before {
+  content: url(/images/icons/skeleton/angle-left.svg);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1rem;
+}
+
+.rmm__theme--skeleton[class*='css-'] h1,
+.rmm__theme--skeleton[class*='css-'] .rmm__title,
+.rmm__theme--skeleton[class*='css-'] .rmm__main-nav-item-link,
+.rmm__theme--skeleton[class*='css-'] .rmm__nav-item-description {
+  color: #333;
+}
+
+.rmm__theme--skeleton[class*='css-'] .rmm__nav-item-description {
+  padding-right: 2.5rem;
+}
+
+.rmm__theme--skeleton[class*='css-'] .rmm__main-nav-item,
+.rmm__theme--skeleton[class*='css-'] .rmm__menu {
+  background-color: #f5f5f5;
+}
+
+.rmm__theme--skeleton[class*='css-'] .rmm__menu {
+  border-bottom: 0.0625rem solid #333;
+}
+
+.rmm__theme--skeleton[class*='css-'] .rmm__nav-item--heading {
+  font-weight: 700;
+}
+
+@media (min-width: 64rem) {
+  .rmm__theme--skeleton[class*='css-'] .rmm__topbar {
+    border-top: none;
+    border-right: none;
+  }
+
+  .rmm__theme--skeleton[class*='css-'] .rmm__menu {
+    top: 4rem;
+    height: auto;
+    border-top: 0.0625rem solid #333;
+  }
+
+  .rmm__theme--skeleton[class*='css-'] .rmm__nav {
+    border-top: none;
+    border-right: none;
+    border-bottom: 0.0625rem solid #ccc;
+  }
+
+  .rmm__theme--skeleton[class*='css-'] .rmm__nav-list,
+  .rmm__theme--skeleton[class*='css-'] .rmm__mega-list {
+    margin-top: 0;
+    margin-left: 1rem;
+  }
+
+  .rmm__theme--skeleton[class*='css-'] .rmm__mega-list {
+    border-top: none;
+    border-right: 0.25rem solid #ccc;
+    border-bottom: 0.25rem solid #999;
+    margin-left: 0;
+    padding-left: 1rem;
+  }
+
+  .rmm__theme--skeleton[class*='css-'] .rmm__nav-item--heading {
+    display: none;
+  }
+
+  .rmm__theme--skeleton[class*='css-'] .rmm__main-nav-item-link--icon {
+    content: url(/images/icons/skeleton/angle-up.svg);
+    position: relative;
+    left: 0.5rem;
+    bottom: initial;
+    width: 1rem;
+  }
+
+  .rmm__theme--skeleton[class*='css-'] .rmm__main-nav-item-link--icon.active {
+    transform: rotate(180deg);
+    top: 0px;
+  }
+
+  .rmm__theme--skeleton[class*='css-'] .rmm__nav-item-link--forward:after,
+  .rmm__theme--skeleton[class*='css-'] .rmm__nav-item-link--back:before {
+    content: none;
+  }
+}

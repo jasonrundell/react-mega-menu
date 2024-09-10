@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Menu } from '../../src/index'
 import './App.css'
-import './rmm-themes.css'
+import './themes/light.css'
+import './themes/dark.css'
+import './themes/monokai.css'
+import './themes/skeleton.css'
 
 function App() {
   const [headEnabled, setHeadEnabled] = useState(true)
