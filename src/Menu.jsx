@@ -61,7 +61,7 @@ const defaultMenuConfig = {
   menu: {
     items: [
       {
-        label: 'Homexxxx',
+        label: 'Home',
         type: 'main',
         url: '/'
       },
@@ -230,11 +230,7 @@ const defaultMenuConfig = {
   }
 }
 
-export const Menu = ({
-  menuConfig = defaultMenuConfig,
-  className,
-  ...props
-}) => {
+export const Menu = ({ config = defaultMenuConfig, className, ...props }) => {
   const [megaMenuState, setMegaMenuState] = useState('')
   const [subMenuState, setSubMenuState] = useState('')
   const [subSubMenuState, setSubSubMenuState] = useState('')
@@ -329,8 +325,8 @@ export const Menu = ({
   }
 
   useEffect(() => {
-    // generate unique ids for each menu item in menuConfig
-    menuConfig = generateMenuIds(menuConfig)
+    // generate unique ids for each menu item in config
+    config = generateMenuIds(config)
   }, [])
 
   useEffect(() => {
@@ -361,14 +357,12 @@ export const Menu = ({
     >
       <TopBar className="rmm__topbar">
         <Logo
-          id={menuConfig.topbar.id}
-          src={menuConfig.topbar.logo.src}
-          alt={menuConfig.topbar.logo.alt}
-          rel={menuConfig.topbar.logo.rel}
+          id={config.topbar.id}
+          src={config.topbar.logo.src}
+          alt={config.topbar.logo.alt}
+          rel={config.topbar.logo.rel}
         />
-        <TopBarTitle className="rmm__title">
-          {menuConfig.topbar.title}
-        </TopBarTitle>
+        <TopBarTitle className="rmm__title">{config.topbar.title}</TopBarTitle>
       </TopBar>
       <Hamburger
         label="Menu"
@@ -387,7 +381,7 @@ export const Menu = ({
           ariaLabel="Main Menu"
           className="rmm__nav-list"
         >
-          {menuConfig.menu.items.map((item, index) => {
+          {config.menu.items.map((item, index) => {
             switch (item.type) {
               case MENU_ITEM_TYPE_MAIN:
                 return renderMainMenuItem(item, index)
@@ -425,7 +419,7 @@ export const Menu = ({
 }
 
 Menu.propTypes = {
-  menuConfig: PropTypes.shape({
+  config: PropTypes.shape({
     topbar: PropTypes.shape({
       id: PropTypes.string.isRequired,
       logo: PropTypes.shape({

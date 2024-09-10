@@ -11,10 +11,8 @@ function App() {
 
   /**
    * Here's an example of a menu configuration object.
-   * This is the object that is currently used for the default values in the
-   * React Mega Menu project.
    */
-  const defaultMenuConfig = {
+  const menuConfig = {
     topbar: {
       id: 'topbar',
       logo: {
@@ -27,7 +25,7 @@ function App() {
     menu: {
       items: [
         {
-          label: 'HOMESSSS',
+          label: 'Home',
           type: 'main',
           url: '/'
         },
@@ -280,7 +278,7 @@ function App() {
       <button onClick={toggleHead}>
         {headEnabled ? 'Disable Styling' : 'Enable Styling'}
       </button>
-      <Menu config={defaultMenuConfig} />
+      <Menu config={menuConfig} />
       <main>
         <h1>Themes</h1>
         <ul>
