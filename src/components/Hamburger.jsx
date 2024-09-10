@@ -88,7 +88,7 @@ const StyledHamburgerLabel = styled.span`
   font-weight: 700;
 `
 
-const Hamburger = ({ label, state, onClick, ...props }) => (
+const Hamburger = ({ label = null, state = 'closed', onClick, ...props }) => (
   <StyledHamburger state={state} onClick={onClick} {...props}>
     <StyledHamburgerSliceContainer>
       <StyledHamburgerSlice className="rmm__hamburger--slice" />
@@ -106,7 +106,6 @@ const Hamburger = ({ label, state, onClick, ...props }) => (
   </StyledHamburger>
 )
 
-Hamburger.defaultProps = { label: null, state: 'closed' }
 Hamburger.propTypes = {
   /**
    * The text label to display next to the hamburger icon

@@ -48,8 +48,193 @@ const StyledMenu = styled.div`
     height: 4rem;
   }
 `
+const defaultMenuConfig = {
+  topbar: {
+    id: 'topbar',
+    logo: {
+      src: 'https://via.placeholder.com/150x50',
+      alt: 'Placeholder Logo',
+      rel: 'home'
+    },
+    title: 'Your Site Title'
+  },
+  menu: {
+    items: [
+      {
+        label: 'Homexxxx',
+        type: 'main',
+        url: '/'
+      },
+      {
+        label: 'About',
+        type: 'main',
+        url: '/?about'
+      },
+      {
+        label: 'Store',
+        type: 'mega',
+        url: '/?store',
+        items: [
+          {
+            label: 'Deals',
+            type: 'link',
+            url: '/?deals',
+            description:
+              "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide."
+          },
+          {
+            label: 'Kitchen',
+            type: 'link',
+            url: '/?kitchen',
+            description:
+              "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide."
+          },
+          {
+            label: 'Outdoors',
+            type: 'sub',
+            url: '/?outdoors',
+            description:
+              "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide.",
+            items: [
+              {
+                label: 'Tools',
+                type: 'link',
+                url: '/?tools',
+                description: 'Single line description that accompanies link'
+              },
+              {
+                label: 'Plants',
+                type: 'link',
+                url: '/?plants',
+                description: 'Single line description that accompanies link'
+              },
+              {
+                label: 'Patio',
+                type: 'link',
+                url: '/?patio',
+                description: 'Single line description that accompanies link'
+              },
+              {
+                label: 'Decking',
+                type: 'link',
+                url: '/?decking',
+                description: 'Single line description that accompanies link'
+              }
+            ]
+          },
+          {
+            label: 'Bedroom',
+            type: 'sub',
+            url: '/?bedroom',
+            description:
+              "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide.",
+            items: [
+              {
+                label: 'Beds',
+                type: 'link',
+                url: '/?beds',
+                description: 'Single line description that accompanies link'
+              },
+              {
+                label: 'Dressers',
+                type: 'link',
+                url: '/?dressers',
+                description:
+                  'Double lined small description that accompanies link in the React Mega Menu project'
+              },
+              {
+                label: 'Nightstands',
+                type: 'link',
+                url: '/?nightstands',
+                description:
+                  'Double lined small description that accompanies link in the React Mega Menu project'
+              },
+              {
+                label: 'Benches',
+                type: 'link',
+                url: '/?benches',
+                description:
+                  'Double lined small description that accompanies link in the React Mega Menu project'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        label: 'Blog',
+        type: 'mega',
+        url: '/?blog',
+        items: [
+          {
+            label: 'Latest Post Title',
+            type: 'link',
+            url: '/?latest-post-title',
+            description:
+              'Double lined small description that accompanies link in the React Mega Menu project'
+          },
+          {
+            label: 'Categories',
+            type: 'sub',
+            url: '/?categories',
+            items: [
+              {
+                label: 'News',
+                type: 'link',
+                url: '/?news'
+              },
+              {
+                label: 'Recipes',
+                type: 'link',
+                url: '/?recipes'
+              },
+              {
+                label: 'Health',
+                type: 'link',
+                url: '/?health'
+              },
+              {
+                label: 'Diet',
+                type: 'link',
+                url: '/?diet'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        label: 'Help',
+        type: 'mega',
+        url: '/?help',
+        items: [
+          {
+            label: 'FAQ',
+            type: 'link',
+            url: '/?faq',
+            description: 'Single line description that accompanies link'
+          },
+          {
+            label: 'Knowledge Base',
+            type: 'link',
+            url: '/?knowledge-base',
+            description:
+              'Double lined small description that accompanies link in the React Mega Menu project'
+          }
+        ]
+      },
+      {
+        label: 'Contact',
+        type: 'main',
+        url: '/?contact'
+      }
+    ]
+  }
+}
 
-const Menu = ({ menuConfig, className, ...props }) => {
+export const Menu = ({
+  menuConfig = defaultMenuConfig,
+  className,
+  ...props
+}) => {
   const [megaMenuState, setMegaMenuState] = useState('')
   const [subMenuState, setSubMenuState] = useState('')
   const [subSubMenuState, setSubSubMenuState] = useState('')
@@ -239,190 +424,6 @@ const Menu = ({ menuConfig, className, ...props }) => {
   )
 }
 
-Menu.defaultProps = {
-  menuConfig: {
-    topbar: {
-      id: 'topbar',
-      logo: {
-        src: 'https://via.placeholder.com/150x50',
-        alt: 'Placeholder Logo',
-        rel: 'home'
-      },
-      title: 'Your Site Title'
-    },
-    menu: {
-      items: [
-        {
-          label: 'Home',
-          type: 'main',
-          url: '/'
-        },
-        {
-          label: 'About',
-          type: 'main',
-          url: '/?about'
-        },
-        {
-          label: 'Store',
-          type: 'mega',
-          url: '/?store',
-          items: [
-            {
-              label: 'Deals',
-              type: 'link',
-              url: '/?deals',
-              description:
-                "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide."
-            },
-            {
-              label: 'Kitchen',
-              type: 'link',
-              url: '/?kitchen',
-              description:
-                "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide."
-            },
-            {
-              label: 'Outdoors',
-              type: 'sub',
-              url: '/?outdoors',
-              description:
-                "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide.",
-              items: [
-                {
-                  label: 'Tools',
-                  type: 'link',
-                  url: '/?tools',
-                  description: 'Single line description that accompanies link'
-                },
-                {
-                  label: 'Plants',
-                  type: 'link',
-                  url: '/?plants',
-                  description: 'Single line description that accompanies link'
-                },
-                {
-                  label: 'Patio',
-                  type: 'link',
-                  url: '/?patio',
-                  description: 'Single line description that accompanies link'
-                },
-                {
-                  label: 'Decking',
-                  type: 'link',
-                  url: '/?decking',
-                  description: 'Single line description that accompanies link'
-                }
-              ]
-            },
-            {
-              label: 'Bedroom',
-              type: 'sub',
-              url: '/?bedroom',
-              description:
-                "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide.",
-              items: [
-                {
-                  label: 'Beds',
-                  type: 'link',
-                  url: '/?beds',
-                  description: 'Single line description that accompanies link'
-                },
-                {
-                  label: 'Dressers',
-                  type: 'link',
-                  url: '/?dressers',
-                  description:
-                    'Double lined small description that accompanies link in the React Mega Menu project'
-                },
-                {
-                  label: 'Nightstands',
-                  type: 'link',
-                  url: '/?nightstands',
-                  description:
-                    'Double lined small description that accompanies link in the React Mega Menu project'
-                },
-                {
-                  label: 'Benches',
-                  type: 'link',
-                  url: '/?benches',
-                  description:
-                    'Double lined small description that accompanies link in the React Mega Menu project'
-                }
-              ]
-            }
-          ]
-        },
-        {
-          label: 'Blog',
-          type: 'mega',
-          url: '/?blog',
-          items: [
-            {
-              label: 'Latest Post Title',
-              type: 'link',
-              url: '/?latest-post-title',
-              description:
-                'Double lined small description that accompanies link in the React Mega Menu project'
-            },
-            {
-              label: 'Categories',
-              type: 'sub',
-              url: '/?categories',
-              items: [
-                {
-                  label: 'News',
-                  type: 'link',
-                  url: '/?news'
-                },
-                {
-                  label: 'Recipes',
-                  type: 'link',
-                  url: '/?recipes'
-                },
-                {
-                  label: 'Health',
-                  type: 'link',
-                  url: '/?health'
-                },
-                {
-                  label: 'Diet',
-                  type: 'link',
-                  url: '/?diet'
-                }
-              ]
-            }
-          ]
-        },
-        {
-          label: 'Help',
-          type: 'mega',
-          url: '/?help',
-          items: [
-            {
-              label: 'FAQ',
-              type: 'link',
-              url: '/?faq',
-              description: 'Single line description that accompanies link'
-            },
-            {
-              label: 'Knowledge Base',
-              type: 'link',
-              url: '/?knowledge-base',
-              description:
-                'Double lined small description that accompanies link in the React Mega Menu project'
-            }
-          ]
-        },
-        {
-          label: 'Contact',
-          type: 'main',
-          url: '/?contact'
-        }
-      ]
-    }
-  }
-}
-
 Menu.propTypes = {
   menuConfig: PropTypes.shape({
     topbar: PropTypes.shape({
@@ -444,7 +445,7 @@ Menu.propTypes = {
         })
       )
     })
-  }).isRequired,
+  }),
   id: PropTypes.string,
   className: PropTypes.string
 }

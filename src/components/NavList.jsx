@@ -128,9 +128,9 @@ const StyledNavList = styled.ul`
 
 const NavList = ({
   id,
-  role,
-  type,
-  activeState,
+  role = 'menubar',
+  type = MENU_ITEM_TYPE_LINK,
+  activeState = 'closed',
   ariaLabelledby,
   children,
   ...props
@@ -146,12 +146,6 @@ const NavList = ({
     {children}
   </StyledNavList>
 )
-
-NavList.defaultProps = {
-  role: 'menubar',
-  type: MENU_ITEM_TYPE_LINK,
-  activeState: 'closed'
-}
 
 NavList.propTypes = {
   id: PropTypes.string.isRequired,

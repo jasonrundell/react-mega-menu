@@ -23,15 +23,11 @@ const StyledMainNavItem = styled.li`
   }
 `
 
-const MainNavItem = ({ id, role, children, ...props }) => (
+const MainNavItem = ({ id, role = 'none', children, ...props }) => (
   <StyledMainNavItem id={id} role={role} {...props}>
     {children}
   </StyledMainNavItem>
 )
-
-MainNavItem.defaultProps = {
-  role: 'none'
-}
 
 MainNavItem.propTypes = {
   /**

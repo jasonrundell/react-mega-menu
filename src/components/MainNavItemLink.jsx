@@ -22,10 +22,10 @@ const StyledMainNavItemLink = styled.a`
 
 const MainNavItemLink = ({
   id,
-  role,
-  type,
+  role = 'menuItem',
+  type = MENU_ITEM_TYPE_LINK,
   href,
-  isActive,
+  isActive = false,
   onClick,
   onKeyDown,
   ariaHaspopup,
@@ -52,12 +52,6 @@ const MainNavItemLink = ({
     )}
   </StyledMainNavItemLink>
 )
-
-MainNavItemLink.defaultProps = {
-  role: 'menuitem',
-  type: MENU_ITEM_TYPE_LINK,
-  isActive: false
-}
 
 MainNavItemLink.propTypes = {
   id: PropTypes.string.isRequired,

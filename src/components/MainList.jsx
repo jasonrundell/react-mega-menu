@@ -29,15 +29,11 @@ const StyledList = styled.ul`
   }
 `
 
-const MainList = ({ id, ariaLabel, children, ...props }) => (
+const MainList = ({ id, ariaLabel = 'Main menu', children, ...props }) => (
   <StyledList id={id} role="menubar" aria-label={ariaLabel} {...props}>
     {children}
   </StyledList>
 )
-
-MainList.defaultProps = {
-  ariaLabel: 'Main menu'
-}
 
 MainList.propTypes = {
   /**

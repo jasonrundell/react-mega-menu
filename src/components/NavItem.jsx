@@ -25,16 +25,11 @@ const StyledNavItem = styled.li`
   }
 `
 
-const NavItem = ({ id, role, children, ...props }) => (
+const NavItem = ({ id, role = 'none', children, ...props }) => (
   <StyledNavItem id={id} role={role} {...props}>
     {children}
   </StyledNavItem>
 )
-
-NavItem.defaultProps = {
-  role: 'none',
-  hasChildren: false
-}
 
 NavItem.propTypes = {
   id: PropTypes.string.isRequired,

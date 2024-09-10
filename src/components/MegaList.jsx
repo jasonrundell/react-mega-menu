@@ -102,7 +102,7 @@ const StyledMegaList = styled.ul`
   `}
 `
 
-const MegaList = ({ id, activeState, children, ...props }) => (
+const MegaList = ({ id, activeState = 'closed', children, ...props }) => (
   <StyledMegaList
     activeState={activeState}
     role="menu"
@@ -113,10 +113,6 @@ const MegaList = ({ id, activeState, children, ...props }) => (
     {children}
   </StyledMegaList>
 )
-
-MegaList.defaultProps = {
-  activeState: 'closed'
-}
 
 MegaList.propTypes = {
   /**

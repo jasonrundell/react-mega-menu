@@ -104,7 +104,13 @@ const StyledNav = styled.nav`
   }
 `
 
-const Nav = ({ id, ariaLabel, activeState, children, ...props }) => (
+const Nav = ({
+  id,
+  ariaLabel = 'Main Navigation',
+  activeState = 'closed',
+  children,
+  ...props
+}) => (
   <StyledNav
     id={id}
     activeState={activeState}
@@ -114,11 +120,6 @@ const Nav = ({ id, ariaLabel, activeState, children, ...props }) => (
     {children}
   </StyledNav>
 )
-
-Nav.defaultProps = {
-  ariaLabel: 'Main Navigation',
-  activeState: 'closed'
-}
 
 Nav.propTypes = {
   /**

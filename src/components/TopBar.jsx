@@ -25,16 +25,11 @@ const StyledTopBar = styled.div`
   }
 `
 
-const TopBar = ({ id, children, ...props }) => (
+const TopBar = ({ id = 'top', children, ...props }) => (
   <StyledTopBar id={id} {...props}>
     {children}
   </StyledTopBar>
 )
-
-TopBar.defaultProps = {
-  id: 'top'
-}
-
 TopBar.propTypes = {
   id: PropTypes.string,
   children: PropTypes.node.isRequired

@@ -24,9 +24,9 @@ const StylesNavItemLink = styled.a`
 
 const NavItemLink = ({
   id,
-  role,
+  role = 'menuitem',
   href,
-  isActive,
+  isActive = false,
   onClick,
   onKeyDown,
   ariaHaspopup,
@@ -48,11 +48,6 @@ const NavItemLink = ({
     {children}
   </StylesNavItemLink>
 )
-
-NavItemLink.defaultProps = {
-  role: 'menuitem',
-  isActive: false
-}
 
 NavItemLink.propTypes = {
   id: PropTypes.string.isRequired,
