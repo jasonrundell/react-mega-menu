@@ -243,6 +243,22 @@ function App() {
   }
 
   useEffect(() => {
+    // change theme when href contains ?theme= and use the param value for the theme to change to
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search)
+      const theme = urlParams.get('theme')
+      const rmmNav = document.getElementById('rmm__menu')
+      if (rmmNav) {
+        if (theme) {
+          rmmNav.classList.add(`rmm__theme--${theme}`)
+        } else {
+          rmmNav.classList.add('rmm__theme--light')
+        }
+      }
+    }
+  }, [])
+
+  useEffect(() => {
     if (headEnabled) {
       if (headElement && !document.documentElement.contains(headElement)) {
         document.documentElement.insertBefore(headElement, document.body)
@@ -250,20 +266,6 @@ function App() {
     } else {
       if (headElement && document.documentElement.contains(headElement)) {
         headElement.remove()
-      }
-    }
-
-    // change theme when href contains ?theme= and use the param value for the theme to change to
-    if (typeof window !== 'undefined') {
-      const urlParams = new URLSearchParams(window.location.search)
-      const theme = urlParams.get('theme')
-      const rmmNav = document.getElementById('rmm__nav')
-      if (rmmNav) {
-        if (theme) {
-          rmmNav.classList.add(`rmm__theme--${theme}`)
-        } else {
-          rmmNav.classList.add('rmm__theme--light')
-        }
       }
     }
   }, [headEnabled, headElement])
@@ -285,7 +287,7 @@ function App() {
           <li>
             <button
               onClick={() => {
-                const rmmNav = document.getElementById('rmm__nav')
+                const rmmNav = document.getElementById('rmm__menu')
                 if (rmmNav) {
                   rmmNav.classList.remove('rmm__theme--dark')
                   rmmNav.classList.remove('rmm__theme--monokai')
@@ -299,7 +301,7 @@ function App() {
           <li>
             <button
               onClick={() => {
-                const rmmNav = document.getElementById('rmm__nav')
+                const rmmNav = document.getElementById('rmm__menu')
                 if (rmmNav) {
                   rmmNav.classList.remove('rmm__theme--light')
                   rmmNav.classList.remove('rmm__theme--monokai')
@@ -313,7 +315,7 @@ function App() {
           <li>
             <button
               onClick={() => {
-                const rmmNav = document.getElementById('rmm__nav')
+                const rmmNav = document.getElementById('rmm__menu')
                 if (rmmNav) {
                   rmmNav.classList.remove('rmm__theme--light')
                   rmmNav.classList.remove('rmm__theme--dark')
@@ -327,7 +329,7 @@ function App() {
           <li>
             <button
               onClick={() => {
-                const rmmNav = document.getElementById('rmm__nav')
+                const rmmNav = document.getElementById('rmm__menu')
                 if (rmmNav) {
                   rmmNav.classList.remove('rmm__theme--light')
                   rmmNav.classList.remove('rmm__theme--dark')
