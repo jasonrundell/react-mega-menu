@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { respondTo } from '../helpers/responsive'
+import { getAnimationStyles } from '../helpers/animationStyles'
 
 const StyledNav = styled.nav`
   position: absolute;
@@ -23,77 +24,7 @@ const StyledNav = styled.nav`
     overflow-y: initial;
   }
 
-  ${({ activeState }) =>
-    activeState === 'open' &&
-    `
-    animation-duration: 0.75s;
-    animation-fill-mode: both;
-    animation-name: slideOpen;
-    animation-iteration-count: 1;
-    @media (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
-
-    @keyframes slideOpen {
-      from {
-        transform: translate3d(-100%, 0, 0);
-      }
-    
-      to {
-        transform: translate3d(100%, 0, 0);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transform: translate3d(100%, 0, 0);
-    }
-
-    ${respondTo('large')} {
-      animation: none;
-      display: flex;
-      opacity: 1;
-
-      @media (prefers-reduced-motion: reduce) {
-        transform: none;
-      }
-    }
-  `}
-
-  ${({ activeState }) =>
-    activeState === 'closed' &&
-    `
-    animation-duration: 0.75s;
-    animation-fill-mode: both;
-    animation-name: slideClosed;
-    animation-iteration-count: 1;
-    @media (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
-
-    @keyframes slideClosed {
-      from {
-        transform: translate3d(100%, 0, 0);
-      }
-    
-      to {
-        transform: translate3d(-100%, 0, 0);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transform: translate3d(-100%, 0, 0);
-    }
-
-    ${respondTo('large')} {
-      animation: none;
-      display: none;
-      opacity: 0;
-
-      @media (prefers-reduced-motion: reduce) {
-        transform: none;
-      }
-    }
-  `}
+  ${({ activeState }) => getAnimationStyles(activeState)}
 
   li:first-child {
     ${respondTo('large')} {

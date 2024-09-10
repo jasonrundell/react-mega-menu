@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { respondTo } from '../helpers/responsive'
+import { getAnimationStyles } from '../helpers/animationStyles'
 
 import {
   MENU_ITEM_TYPE_LINK,
@@ -21,16 +22,11 @@ const StyledNavList = styled.ul`
   margin-right: 0;
   margin-bottom: 0;
   margin-left: 0;
-  padding-top: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
   width: 100%;
   height: calc(100vh - 4rem);
   z-index: 1;
 
   ${respondTo('large')} {
-    padding-top: 0;
     flex-direction: row;
     height: 4rem;
   }
@@ -55,75 +51,10 @@ const StyledNavList = styled.ul`
       left: 0;
       opacity: 1;
       height: auto;
-      padding-left: 0;
     }
   `}
 
-  ${({ activeState }) =>
-    activeState === 'open' &&
-    `
-    animation-duration: 0.75s;
-    animation-fill-mode: both;
-    animation-name: slideOpen;
-    animation-iteration-count: 1;
-    @media (prefers-reduced-motion: reduce) {
-      transform: translate3d(100%, 0, 0);
-    }
-
-    @keyframes slideOpen {
-      from {
-        transform: translate3d(-100%, 0, 0);
-      }
-    
-      to {
-        transform: translate3d(100%, 0, 0);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transform: translate3d(100%, 0, 0);
-    }
-
-    ${respondTo('large')} {
-      animation: none;
-      @media (prefers-reduced-motion: reduce) {
-        transform: none;
-      }
-    }
-  `}
-
-  ${({ activeState }) =>
-    activeState === 'closed' &&
-    `
-    animation-duration: 0.75s;
-    animation-fill-mode: both;
-    animation-name: slideClosed;
-    animation-iteration-count: 1;
-    @media (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
-
-    @keyframes slideClosed {
-      from {
-        transform: translate3d(100%, 0, 0);
-      }
-    
-      to {
-        transform: translate3d(-100%, 0, 0);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transform: translate3d(-100%, 0, 0);
-    }
-
-    ${respondTo('large')} {
-      animation: none;
-      @media (prefers-reduced-motion: reduce) {
-        transform: none;
-      }
-    }
-  `}
+  ${({ activeState }) => getAnimationStyles(activeState)}
 `
 
 const NavList = ({

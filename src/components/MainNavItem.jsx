@@ -9,7 +9,6 @@ const StyledMainNavItem = styled.li`
   margin-right: 0;
   margin-bottom: 1rem;
   margin-left: 0;
-  padding: 0;
 
   ${respondTo('large')} {
     display: flex;

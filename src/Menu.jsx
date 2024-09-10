@@ -38,10 +38,6 @@ const StyledMenu = styled.div`
   align-content: center;
   flex-direction: row;
   width: 100%;
-  padding-top: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
   z-index: 9000;
 
   ${respondTo('large')} {

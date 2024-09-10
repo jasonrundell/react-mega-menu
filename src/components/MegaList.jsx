@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { respondTo } from '../helpers/responsive'
+import { getAnimationStyles } from '../helpers/animationStyles'
 
 const StyledMegaList = styled.ul`
   position: absolute;
@@ -14,10 +15,6 @@ const StyledMegaList = styled.ul`
   align-content: center;
   width: 100%;
   height: calc(100vh - 4rem);
-  padding-top: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
 
   ${respondTo('large')} {
     position: absolute;
@@ -25,81 +22,12 @@ const StyledMegaList = styled.ul`
     top: 4rem;
     display: flex;
     flex-direction: row;
-    flex-direction: row;
     width: 100%;
     height: auto;
     opacity: 0;
   }
 
-  ${({ activeState }) =>
-    activeState === 'open' &&
-    `
-    animation-duration: 0.75s;
-    animation-fill-mode: both;
-    animation-name: slideOpen;
-    animation-iteration-count: 1;
-    @media (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
-
-    @keyframes slideOpen {
-      from {
-        transform: translate3d(-100%, 0, 0);
-      }
-    
-      to {
-        transform: translate3d(100%, 0, 0);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transform: translate3d(100%, 0, 0);
-    }
-
-    ${respondTo('large')} {
-      animation: none;
-      display: flex;
-      opacity: 1;
-      @media (prefers-reduced-motion: reduce) {
-        transform: none;
-      }
-    }
-  `}
-
-  ${({ activeState }) =>
-    activeState === 'closed' &&
-    `
-    animation-duration: 0.75s;
-    animation-fill-mode: both;
-    animation-name: slideClosed;
-    animation-iteration-count: 1;
-    @media (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
-
-    @keyframes slideClosed {
-      from {
-        transform: translate3d(100%, 0, 0);
-      }
-    
-      to {
-        transform: translate3d(-100%, 0, 0);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transform: translate3d(-100%, 0, 0);
-    }
-
-    ${respondTo('large')} {
-      animation: none;
-      display: none;
-      opacity: 0;
-      @media (prefers-reduced-motion: reduce) {
-        transform: none;
-      }
-    }
-  `}
+  ${({ activeState }) => getAnimationStyles(activeState)}
 `
 
 const MegaList = ({ id, activeState = 'closed', children, ...props }) => (
