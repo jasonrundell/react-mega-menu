@@ -39,6 +39,12 @@
   background-color: #f8f8f2;
 }
 
+.rmm__theme--monokai[class*='css-'] .rmm__menu {
+  border-top: 0.0625rem solid #f8f8f2;
+  border-bottom: 0.0625rem solid #f8f8f2;
+  top: 8rem;
+}
+
 .rmm__theme--monokai[class*='css-'] .rmm__nav-list,
 .rmm__theme--monokai[class*='css-'] .rmm__mega-list {
   margin-top: 1rem;
@@ -99,10 +105,6 @@
 .rmm__theme--monokai[class*='css-'] .rmm__main-nav-item,
 .rmm__theme--monokai[class*='css-'] .rmm__menu {
   background-color: #272822;
-}
-
-.rmm__theme--monokai[class*='css-'] .rmm__menu {
-  border-bottom: 0.0625rem solid #f8f8f2;
 }
 
 .rmm__theme--monokai[class*='css-'] .rmm__nav-item--heading {

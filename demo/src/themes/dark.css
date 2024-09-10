@@ -38,6 +38,12 @@
   background-color: #fff;
 }
 
+.rmm__theme--dark[class*='css-'] .rmm__menu {
+  border-top: 0.0625rem solid #fff;
+  border-bottom: 0.0625rem solid #fff;
+  top: 8rem;
+}
+
 .rmm__theme--dark[class*='css-'] .rmm__nav-list,
 .rmm__theme--dark[class*='css-'] .rmm__mega-list {
   margin-top: 1rem;
@@ -98,10 +104,6 @@
 .rmm__theme--dark[class*='css-'] .rmm__main-nav-item,
 .rmm__theme--dark[class*='css-'] .rmm__menu {
   background-color: #000;
-}
-
-.rmm__theme--dark[class*='css-'] .rmm__menu {
-  border-bottom: 0.0625rem solid #fff;
 }
 
 .rmm__theme--dark[class*='css-'] .rmm__nav-item--heading {

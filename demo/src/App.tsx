@@ -225,6 +225,11 @@ function App() {
                   label: 'Monokai',
                   type: 'link',
                   url: '/?theme=monokai'
+                },
+                {
+                  label: 'Skeleton',
+                  type: 'link',
+                  url: '/?theme=skeleton'
                 }
               ]
             },
@@ -294,6 +299,7 @@ function App() {
                 if (rmmNav) {
                   rmmNav.classList.remove('rmm__theme--dark')
                   rmmNav.classList.remove('rmm__theme--monokai')
+                  rmmNav.classList.remove('rmm__theme--skeleton')
                   rmmNav.classList.add('rmm__theme--light')
                 }
               }}
@@ -308,6 +314,7 @@ function App() {
                 if (rmmNav) {
                   rmmNav.classList.remove('rmm__theme--light')
                   rmmNav.classList.remove('rmm__theme--monokai')
+                  rmmNav.classList.remove('rmm__theme--skeleton')
                   rmmNav.classList.add('rmm__theme--dark')
                 }
               }}
@@ -322,6 +329,7 @@ function App() {
                 if (rmmNav) {
                   rmmNav.classList.remove('rmm__theme--light')
                   rmmNav.classList.remove('rmm__theme--dark')
+                  rmmNav.classList.remove('rmm__theme--skeleton')
                   rmmNav.classList.add('rmm__theme--monokai')
                 }
               }}
@@ -337,6 +345,7 @@ function App() {
                   rmmNav.classList.remove('rmm__theme--light')
                   rmmNav.classList.remove('rmm__theme--dark')
                   rmmNav.classList.remove('rmm__theme--monokai')
+                  rmmNav.classList.add('rmm__theme--skeleton')
                 }
               }}
             >
