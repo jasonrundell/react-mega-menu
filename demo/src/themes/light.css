@@ -23,6 +23,7 @@
 .rmm__theme--light[class*='css-'] .rmm__nav-list--sub {
   background-color: var(--light-bg-color);
   color: var(--light-text-color);
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .rmm__theme--light[class*='css-'] .rmm__topbar {
@@ -155,6 +156,33 @@
     border-right: 0.25rem solid #666;
     border-bottom: 0.25rem solid #333;
     margin-left: 0;
+  }
+
+  .rmm__theme--light[class*='css-'] .rmm__nav-list .rmm__nav-list {
+    padding-bottom: 1rem;
+  }
+
+  .rmm__theme--light[class*='css-'] .rmm__nav-list--sub {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rmm__theme--light[class*='css-'] .rmm__nav-list--sub .rmm__nav-item {
+    padding-bottom: 1rem;
+  }
+
+  .rmm__theme--light[class*='css-'] .rmm__nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: auto;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .rmm__theme--light[class*='css-'] .rmm__nav-item--heading {

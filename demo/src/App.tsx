@@ -248,14 +248,16 @@ const menuConfig = {
 }
 
 function App() {
+  const themes = ['light', 'dark', 'monokai', 'retro', 'synthwave']
+
+  // states for toggling head styling and changing themes
   const [headEnabled, setHeadEnabled] = useState(true)
   const [headElement, setHeadElement] = useState<HTMLElement | null>(
     document.head
   )
-
-  const themes = ['light', 'dark', 'monokai', 'retro', 'synthwave']
   const [currentTheme, setCurrentTheme] = useState(themes[0])
 
+  // Apply the theme class to the menu when the component mounts
   useEffect(() => {
     // change theme when href contains ?theme= and use the param value for the theme to change to
     if (typeof window !== 'undefined') {
@@ -269,17 +271,17 @@ function App() {
           rmmNav.classList.add('rmm__theme--light')
         }
       }
-    }
-  }, [])
 
-  useEffect(() => {
-    const rmmNav = document.getElementById('rmm__menu')
-    if (rmmNav) {
-      themes.forEach((theme) => rmmNav.classList.remove(`rmm__theme--${theme}`))
-      rmmNav.classList.add(`rmm__theme--${currentTheme}`)
+      if (rmmNav) {
+        themes.forEach((theme) =>
+          rmmNav.classList.remove(`rmm__theme--${theme}`)
+        )
+        rmmNav.classList.add(`rmm__theme--${currentTheme}`)
+      }
     }
   }, [currentTheme, themes])
 
+  // Insert or remove the head element based on the headEnabled state
   useEffect(() => {
     if (headEnabled) {
       if (headElement && !document.documentElement.contains(headElement)) {
@@ -329,13 +331,32 @@ function App() {
 
   return (
     <div>
-      <h1>React Mega Menu Demo</h1>
-      <button onClick={toggleHead}>
-        {headEnabled ? 'Disable Styling' : 'Enable Styling'}
-      </button>
       <Menu config={menuConfig} />
       <main>
-        <h1>Themes</h1>
+        <h1>React Mega Menu Demo</h1>
+        <hr />
+        <p>
+          A React project which aims to be an accessible, responsive,
+          boilerplate top navigation menu with a "Mega Menu"!
+        </p>
+        <h2>Features</h2>
+        <ul>
+          <li>WCAG 2.1 AA compliant</li>
+          <li>W3C valid markup</li>
+          <li>Fly-out menus</li>
+          <li>Menus are accessible through key inputs</li>
+          <li>Unified menu for all screen ratios</li>
+          <li>Styled (lightly) with Emotion</li>
+          <li>Supports and tested against Edge, Safari, FireFox, and Chrome</li>
+          <li>
+            CSS animations with <code>prefers-reduced-motion</code> media query
+          </li>
+        </ul>
+        <hr />
+        <button onClick={toggleHead}>
+          {headEnabled ? 'Disable Styling' : 'Enable Styling'}
+        </button>
+        <h2>Menu Themes</h2>
         <ul>
           {themes.map((theme) => (
             <li key={theme}>

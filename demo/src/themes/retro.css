@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Fredoka:wght@300..700&family=Press+Start+2P&display=swap');
+
 :root {
   --retro-bg-color: #f4e3c1; /* Warm beige background */
   --retro-text-color: #4a3f35; /* Dark brown text */
@@ -21,7 +23,9 @@
 .rmm__theme--retro[class*='css-'] .rmm__nav,
 .rmm__theme--retro[class*='css-'] .rmm__mega-list,
 .rmm__theme--retro[class*='css-'] .rmm__nav-list,
-.rmm__theme--retro[class*='css-'] .rmm__nav-list--sub {
+.rmm__theme--retro[class*='css-'] .rmm__nav-list--sub,
+.rmm__theme--retro[class*='css-'] #rmm__hamburger--label {
+  font-family: 'Fredoka', sans-serif;
   background-color: var(--retro-bg-color);
   color: var(--retro-text-color);
 }
@@ -158,6 +162,19 @@
     border-right: 0.25rem solid #d94f04; /* Darker orange */
     border-bottom: 0.25rem solid #e1ba70; /* Muted yellow */
     margin-left: 0;
+  }
+
+  .rmm__theme--retro[class*='css-'] .rmm__nav-list .rmm__nav-list {
+    padding-bottom: 1rem;
+  }
+
+  .rmm__theme--retro[class*='css-'] .rmm__nav-list--sub {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rmm__theme--retro[class*='css-'] .rmm__nav-list--sub .rmm__nav-item {
+    padding-bottom: 1rem;
   }
 
   .rmm__theme--retro[class*='css-'] .rmm__nav-item--heading {

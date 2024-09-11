@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Press+Start+2P&display=swap');
+
 :root {
   --monokai-bg-color: #272822; /* Dark background */
   --monokai-text-color: #f8f8f2; /* Light text */
@@ -20,7 +22,9 @@
 .rmm__theme--monokai[class*='css-'] .rmm__nav,
 .rmm__theme--monokai[class*='css-'] .rmm__mega-list,
 .rmm__theme--monokai[class*='css-'] .rmm__nav-list,
-.rmm__theme--monokai[class*='css-'] .rmm__nav-list--sub {
+.rmm__theme--monokai[class*='css-'] .rmm__nav-list--sub,
+.rmm__theme--monokai[class*='css-'] #rmm__hamburger--label {
+  font-family: 'Fira Code', monospace;
   background-color: var(--monokai-bg-color);
   color: var(--monokai-text-color);
 }
@@ -155,6 +159,19 @@
     border-right: 0.25rem solid #66d9ef;
     border-bottom: 0.25rem solid #a6e22e; /* Monokai green */
     margin-left: 0;
+  }
+
+  .rmm__theme--monokai[class*='css-'] .rmm__nav-list .rmm__nav-list {
+    padding-bottom: 1rem;
+  }
+
+  .rmm__theme--monokai[class*='css-'] .rmm__nav-list--sub {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rmm__theme--monokai[class*='css-'] .rmm__nav-list--sub .rmm__nav-item {
+    padding-bottom: 1rem;
   }
 
   .rmm__theme--monokai[class*='css-'] .rmm__nav-item--heading {

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 :root {
   --synthwave-bg-color-dark: #1a1a2e;
   --synthwave-bg-color-gradient-start: #0f0c29;
@@ -18,7 +20,9 @@
 .rmm__theme--synthwave[class*='css-'] .rmm__nav,
 .rmm__theme--synthwave[class*='css-'] .rmm__mega-list,
 .rmm__theme--synthwave[class*='css-'] .rmm__nav-list,
-.rmm__theme--synthwave[class*='css-'] .rmm__nav-list--sub {
+.rmm__theme--synthwave[class*='css-'] .rmm__nav-list--sub,
+.rmm__theme--synthwave[class*='css-'] #rmm__hamburger--label {
+  font-family: 'Press Start 2P', system-ui;
   background-color: var(--synthwave-bg-color-dark);
   color: var(--synthwave-text-color-light);
 }
@@ -166,6 +170,19 @@
     border-right: 0.25rem solid var(--synthwave-neon-pink);
     border-bottom: 0.25rem solid var(--synthwave-neon-cyan);
     margin-left: 0;
+  }
+
+  .rmm__theme--synthwave[class*='css-'] .rmm__nav-list .rmm__nav-list {
+    padding-bottom: 1rem;
+  }
+
+  .rmm__theme--synthwave[class*='css-'] .rmm__nav-list--sub {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rmm__theme--synthwave[class*='css-'] .rmm__nav-list--sub .rmm__nav-item {
+    padding-bottom: 1rem;
   }
 
   .rmm__theme--synthwave[class*='css-'] .rmm__nav-item--heading {

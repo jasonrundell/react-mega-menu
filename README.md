@@ -10,10 +10,10 @@ navigation menu with a "Mega Menu"!
 - Fly-out menus
 - Menus are accessible through key inputs
 - Unified menu for all screen ratios
-- Styled with SASS modules
-- Supports and tested against IE 11, Edge, Safari, FireFox, Chrome
-- CSS animations with prefers-reduced-motion media query
-  [prefers-reduced-motion](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion)
+- Styled (lightly) with [Emotion](https://emotion.sh)
+- Supports and tested against Edge, Safari, FireFox, Chrome
+- CSS animations with [prefers-reduced-motion](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion) media query
+  
 
 ## View demo
 
