@@ -19,7 +19,7 @@ navigation menu with a "Mega Menu"!
 ## View demo
 
 Visit:
-[https://react-mega-menu.vercel.app](https://react-mega-menu.vercel.app)
+[https://jasonrundell-react-mega-menu.vercel.app/](https://jasonrundell-react-mega-menu.vercel.app)
 
 ## Deploy
 
