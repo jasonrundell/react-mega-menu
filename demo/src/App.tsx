@@ -219,9 +219,14 @@ const menuConfig = {
                 url: '/?theme=monokai'
               },
               {
-                label: 'Skeleton',
+                label: 'Retro',
                 type: 'link',
-                url: '/?theme=skeleton'
+                url: '/?theme=retro'
+              },
+              {
+                label: 'Synthwave',
+                type: 'link',
+                url: '/?theme=synthwave'
               }
             ]
           },
