@@ -346,10 +346,17 @@ function App() {
           <li>Fly-out menus</li>
           <li>Menus are accessible through key inputs</li>
           <li>Unified menu for all screen ratios</li>
-          <li>Styled (lightly) with Emotion</li>
+          <li>
+            Styled (lightly) with <a href="https://emotion.sh">Emotion</a>
+          </li>
+          <li>Theme support with vanilla CSS (examples included)</li>
           <li>Supports and tested against Edge, Safari, FireFox, and Chrome</li>
           <li>
-            CSS animations with <code>prefers-reduced-motion</code> media query
+            CSS animations with{' '}
+            <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion">
+              prefers-reduced-motion
+            </a>{' '}
+            media query
           </li>
         </ul>
         <hr />
