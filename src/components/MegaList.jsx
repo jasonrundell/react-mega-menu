@@ -14,6 +14,8 @@ const StyledMegaList = styled.ul`
   align-content: center;
   width: 100%;
   height: calc(100vh - 4rem);
+  margin: 0;
+  padding: 0;
 
   ${respondTo('large')} {
     position: absolute;

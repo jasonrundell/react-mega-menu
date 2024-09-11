@@ -364,7 +364,7 @@ export const Menu = ({ config = defaultMenuConfig, className, ...props }) => {
         label="Menu"
         state={megaMenuState}
         onClick={(e) => toggleMegaMenu(e, 'nav-main')}
-        className="rmm__hamburger"
+        id="rmm__hamburger"
       />
       <Nav
         id={props.id || 'rmm__nav'}

@@ -1,53 +1,54 @@
-/* 
- * When making custom styles for the React Mega Menu components, it's important to include [class*="css-"] 
- * due to the nature of the emotion library adding it's dynamic styles AFTER the custom class name 
- */
+:root {
+  --dark-bg-color: #222;
+  --dark-text-color: #fff;
+  --dark-border-color: #fff;
+  --dark-icon-right: url(/images/icons/dark/angle-right.svg);
+  --dark-icon-left: url(/images/icons/dark/angle-left.svg);
+  --dark-icon-up: url(/images/icons/dark/angle-up.svg);
+  --menu-top-spacing: 8rem;
+  --menu-padding-left: 1rem;
+  --nav-item-padding-left: 1rem;
+  --menu-border-width: 0.0625rem;
+  --margin-large-screen-topbar: 1rem;
+}
 
-/* Theme: dark */
 .rmm__theme--dark[class*='css-'],
 .rmm__theme--dark[class*='css-'] .rmm__topbar,
 .rmm__theme--dark[class*='css-'] .rmm__nav,
 .rmm__theme--dark[class*='css-'] .rmm__mega-list,
 .rmm__theme--dark[class*='css-'] .rmm__nav-list,
 .rmm__theme--dark[class*='css-'] .rmm__nav-list--sub {
-  background-color: #000;
-  color: #fff;
+  background-color: var(--dark-bg-color);
+  color: var(--dark-text-color);
 }
 
 .rmm__theme--dark[class*='css-'] .rmm__topbar {
-  border-top: 0.0625rem solid #fff;
-  border-right: 0.25rem solid #fff;
   height: 2rem;
-  padding: 1rem;
+  padding: var(--menu-padding-left);
 }
 
-.rmm__theme--dark[class*='css-'] .rmm__nav {
-  border-top: 0.0625rem solid #fff;
-}
-
-.rmm__theme--dark[class*='css-'] .rmm__hamburger {
+.rmm__theme--dark[class*='css-'] #rmm__hamburger {
   border: none;
   background: none;
 }
 
-.rmm__theme--dark[class*='css-'] .rmm__hamburger--label {
-  color: #fff;
+.rmm__theme--dark[class*='css-'] #rmm__hamburger--label {
+  margin-left: var(--menu-padding-left);
+  color: var(--dark-text-color);
 }
 
 .rmm__theme--dark[class*='css-'] .rmm__hamburger--slice {
-  background-color: #fff;
+  background-color: var(--dark-text-color);
 }
 
 .rmm__theme--dark[class*='css-'] .rmm__menu {
-  border-top: 0.0625rem solid #fff;
-  border-bottom: 0.0625rem solid #fff;
-  top: 8rem;
+  border-top: var(--menu-border-width) solid var(--dark-border-color);
+  border-bottom: var(--menu-border-width) solid var(--dark-border-color);
+  top: var(--menu-top-spacing);
 }
 
-.rmm__theme--dark[class*='css-'] .rmm__nav-list,
-.rmm__theme--dark[class*='css-'] .rmm__mega-list {
-  margin-top: 1rem;
-  margin-left: 1rem;
+.rmm__theme--dark[class*='css-'] .rmm__nav-list {
+  margin-top: var(--menu-padding-left);
 }
 
 .rmm__theme--dark[class*='css-'] .rmm__nav-list--sub {
@@ -56,7 +57,7 @@
 }
 
 .rmm__theme--dark[class*='css-'] .rmm__main-nav-item-link--icon {
-  content: url(/images/icons/dark/angle-right.svg);
+  content: var(--dark-icon-right);
   position: absolute;
   right: 2rem;
   bottom: -30%;
@@ -64,14 +65,22 @@
   height: 2rem;
 }
 
-.rmm__theme--dark[class*='css-'] .rmm__nav-item-link {
-  color: #fff;
-  align-items: center;
-  height: 2rem;
+.rmm__theme--dark[class*='css-'] .rmm__nav-item {
+  padding-left: var(--nav-item-padding-left);
 }
 
+.rmm__theme--dark[class*='css-'] .rmm__nav-item-link {
+  color: var(--dark-text-color);
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+.rmm__theme--dark[class*='css-'] .rmm__nav-item-link--forward {
+  height: 2rem;
+}
 .rmm__theme--dark[class*='css-'] .rmm__nav-item-link--forward:after {
-  content: url(/images/icons/dark/angle-right.svg);
+  content: var(--dark-icon-right);
   position: absolute;
   right: 2rem;
   top: 0;
@@ -80,10 +89,11 @@
 
 .rmm__theme--dark[class*='css-'] .rmm__nav-item-link--back {
   padding-left: 2rem;
+  height: 2rem;
 }
 
 .rmm__theme--dark[class*='css-'] .rmm__nav-item-link--back:before {
-  content: url(/images/icons/dark/angle-left.svg);
+  content: var(--dark-icon-left);
   position: absolute;
   left: 0;
   top: 0;
@@ -94,7 +104,7 @@
 .rmm__theme--dark[class*='css-'] .rmm__title,
 .rmm__theme--dark[class*='css-'] .rmm__main-nav-item-link,
 .rmm__theme--dark[class*='css-'] .rmm__nav-item-description {
-  color: #fff;
+  color: var(--dark-text-color);
 }
 
 .rmm__theme--dark[class*='css-'] .rmm__nav-item-description {
@@ -103,7 +113,11 @@
 
 .rmm__theme--dark[class*='css-'] .rmm__main-nav-item,
 .rmm__theme--dark[class*='css-'] .rmm__menu {
-  background-color: #000;
+  background-color: var(--dark-bg-color);
+}
+
+.rmm__theme--dark[class*='css-'] .rmm__main-nav-item {
+  padding-left: var(--menu-padding-left);
 }
 
 .rmm__theme--dark[class*='css-'] .rmm__nav-item--heading {
@@ -114,33 +128,29 @@
   .rmm__theme--dark[class*='css-'] .rmm__topbar {
     border-top: none;
     border-right: none;
-    border-bottom: 0.0625rem solid #fff;
   }
 
   .rmm__theme--dark[class*='css-'] .rmm__menu {
     top: 4rem;
     height: auto;
-    border-top: 0.0625rem solid #fff;
+    border-top: var(--menu-border-width) solid var(--dark-border-color);
   }
 
   .rmm__theme--dark[class*='css-'] .rmm__nav {
     border-top: none;
-    border-right: none;
-    border-bottom: 0.0625rem solid #fff;
+    border-bottom: var(--menu-border-width) solid var(--dark-border-color);
   }
 
   .rmm__theme--dark[class*='css-'] .rmm__nav-list,
   .rmm__theme--dark[class*='css-'] .rmm__mega-list {
     margin-top: 0;
-    margin-left: 1rem;
   }
 
   .rmm__theme--dark[class*='css-'] .rmm__mega-list {
     border-top: none;
-    border-right: 0.25rem solid #e7e7e7;
-    border-bottom: 0.25rem solid #a3a3a3;
+    border-right: 0.25rem solid #999;
+    border-bottom: 0.25rem solid #666;
     margin-left: 0;
-    padding-left: 1rem;
   }
 
   .rmm__theme--dark[class*='css-'] .rmm__nav-item--heading {
@@ -148,7 +158,7 @@
   }
 
   .rmm__theme--dark[class*='css-'] .rmm__main-nav-item-link--icon {
-    content: url(/images/icons/dark/angle-up.svg);
+    content: var(--dark-icon-up);
     position: relative;
     left: 0.5rem;
     bottom: initial;

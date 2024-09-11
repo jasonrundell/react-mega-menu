@@ -11,6 +11,7 @@ import {
 } from '../config/menuItemTypes'
 
 const StyledNavList = styled.ul`
+  z-index: 1;
   position: absolute;
   top: 0;
   left: 0;
@@ -18,13 +19,10 @@ const StyledNavList = styled.ul`
   flex-direction: column;
   justify-content: flex-start;
   align-content: center;
-  margin-top: 0;
-  margin-right: 0;
-  margin-bottom: 0;
-  margin-left: 0;
+  margin: 0;
+  padding: 0;
   width: 100%;
   height: calc(100vh - 4rem);
-  z-index: 1;
 
   ${respondTo('large')} {
     flex-direction: row;

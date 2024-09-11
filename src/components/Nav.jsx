@@ -12,8 +12,8 @@ const StyledNav = styled.nav`
   height: calc(100vh - 4rem);
   display: flex;
   flex-direction: column;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  margin: 0;
+  padding: 0;
   overflow-y: scroll;
 
   ${respondTo('large')} {
@@ -26,7 +26,7 @@ const StyledNav = styled.nav`
 
   ${({ activeState }) => getAnimationStyles(activeState)}
 
-  li:first-child {
+  li:first-of-type {
     ${respondTo('large')} {
       margin-left: 0;
     }

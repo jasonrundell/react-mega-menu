@@ -1,0 +1,8 @@
+{
+  "endOfLine": "lf",
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "none",
+  "proseWrap": "always",
+  "htmlWhitespaceSensitivity": "strict"
+}

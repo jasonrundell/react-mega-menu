@@ -25,18 +25,18 @@ const StyledHamburger = styled.button`
     state === '' ||
     (state === 'open' &&
       `
-      span:nth-child(1) {
+      span:nth-of-type(1) {
         top: 1rem;
         width: 0%;
         left: 50%;
       }
-      span:nth-child(2) {
+      span:nth-of-type(2) {
         transform: rotate(45deg);
       }
-      span:nth-child(3) {
+      span:nth-of-type(3) {
         transform: rotate(-45deg);
       }
-      span:nth-child(4) {
+      span:nth-of-type(4) {
         top: 1rem;
         width: 0%;
         left: 50%;
@@ -65,22 +65,18 @@ const StyledHamburgerSlice = styled.span`
   transform: rotate(0deg);
   transition: 0.25s ease-in-out;
 
-  &:nth-child(1) {
+  &:nth-of-type(1) {
     top: 0;
   }
 
-  &:nth-child(2),
-  &:nth-child(3) {
+  &:nth-of-type(2),
+  &:nth-of-type(3) {
     top: 0.5rem;
   }
 
-  &:nth-child(4) {
+  &:nth-of-type(4) {
     top: 1rem;
   }
-`
-
-const StyledHamburgerLabelContainer = styled.div`
-  margin-left: 1rem;
 `
 
 const StyledHamburgerLabel = styled.span`
@@ -90,18 +86,18 @@ const StyledHamburgerLabel = styled.span`
 
 const Hamburger = ({ label = null, state = 'closed', onClick, ...props }) => (
   <StyledHamburger state={state} onClick={onClick} {...props}>
-    <StyledHamburgerSliceContainer>
+    <StyledHamburgerSliceContainer id="rmm__hamburger-slices">
       <StyledHamburgerSlice className="rmm__hamburger--slice" />
       <StyledHamburgerSlice className="rmm__hamburger--slice" />
       <StyledHamburgerSlice className="rmm__hamburger--slice" />
       <StyledHamburgerSlice className="rmm__hamburger--slice" />
     </StyledHamburgerSliceContainer>
     {label && (
-      <StyledHamburgerLabelContainer>
-        <StyledHamburgerLabel className="rmm__hamburger--label">
+      <div id="rmm__hamburger--label--container">
+        <StyledHamburgerLabel id="rmm__hamburger--label">
           {label}
         </StyledHamburgerLabel>
-      </StyledHamburgerLabelContainer>
+      </div>
     )}
   </StyledHamburger>
 )
