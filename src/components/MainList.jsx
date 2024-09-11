@@ -11,14 +11,8 @@ const StyledList = styled.ul`
   flex-direction: column;
   justify-content: flex-start;
   align-content: center;
-  margin-top: 0;
-  margin-right: 0;
-  margin-bottom: 0;
-  margin-left: 0;
-  padding-top: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
+  margin: 0;
+  padding: 0;
   width: 100%;
   height: calc(100vh - 4rem);
   z-index: 1;
@@ -29,15 +23,11 @@ const StyledList = styled.ul`
   }
 `
 
-const MainList = ({ id, ariaLabel, children, ...props }) => (
+const MainList = ({ id, ariaLabel = 'Main menu', children, ...props }) => (
   <StyledList id={id} role="menubar" aria-label={ariaLabel} {...props}>
     {children}
   </StyledList>
 )
-
-MainList.defaultProps = {
-  ariaLabel: 'Main menu'
-}
 
 MainList.propTypes = {
   /**

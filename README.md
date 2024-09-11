@@ -10,21 +10,22 @@ navigation menu with a "Mega Menu"!
 - Fly-out menus
 - Menus are accessible through key inputs
 - Unified menu for all screen ratios
-- Styled with SASS modules
-- Supports and tested against IE 11, Edge, Safari, FireFox, Chrome
-- CSS animations with prefers-reduced-motion media query
-  [prefers-reduced-motion](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion)
+- Styled (lightly) with [Emotion](https://emotion.sh)
+- Theme support with vanilla CSS (examples included)
+- Supports and tested against Edge, Safari, FireFox, Chrome
+- CSS animations with [prefers-reduced-motion](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion) media query
+  
 
 ## View demo
 
 Visit:
-[https://react-mega-menu-demo.vercel.app](https://react-mega-menu-demo.vercel.app)
+[https://react-mega-menu.vercel.app](https://react-mega-menu.vercel.app)
 
 ## Deploy
 
 ### Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/project?template=https://github.com/jasonrundell/react-mega-menu-demo)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/project?template=https://github.com/jasonrundell/react-mega-menu)
 
 ## Special Thanks
 
@@ -78,9 +79,9 @@ Learn by reading these:
 
 ### How to test prefers-reduced-motion on Windows 10
 
-1. Press Windows key
-1. Search **Show animations in Windows**
-1. Toggle option On/Off
+1. Press the Win+R keys to open Run, type SystemPropertiesPerformance.exe into Run, and click/tap on OK to directly open to the Visual Effects tab in Performance Options.
+1. Check (enable - default) or uncheck (disable) `Animate controls and elements inside windows`.
+1. If you don't see an immediate change, then you can restart the explorer process or sign out and sign in to apply instead.
 
 ### How to test prefers-reduced-motion on Android
 

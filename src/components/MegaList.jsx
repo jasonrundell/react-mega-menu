@@ -14,12 +14,8 @@ const StyledMegaList = styled.ul`
   align-content: center;
   width: 100%;
   height: calc(100vh - 4rem);
-  padding-top: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
-  border-right: 0.25rem solid #999;
-  background-color: #fff;
+  margin: 0;
+  padding: 0;
 
   ${respondTo('large')} {
     position: absolute;
@@ -31,10 +27,6 @@ const StyledMegaList = styled.ul`
     width: 100%;
     height: auto;
     opacity: 0;
-    border-top: none;
-    border-right: 0.25rem solid #666;
-    border-bottom: 0.25rem solid #333;
-    border-left: 0.25rem solid #666;
   }
 
   ${({ activeState }) =>
@@ -108,7 +100,7 @@ const StyledMegaList = styled.ul`
   `}
 `
 
-const MegaList = ({ id, activeState, children, ...props }) => (
+const MegaList = ({ id, activeState = 'closed', children, ...props }) => (
   <StyledMegaList
     activeState={activeState}
     role="menu"
@@ -119,10 +111,6 @@ const MegaList = ({ id, activeState, children, ...props }) => (
     {children}
   </StyledMegaList>
 )
-
-MegaList.defaultProps = {
-  activeState: 'closed'
-}
 
 MegaList.propTypes = {
   /**

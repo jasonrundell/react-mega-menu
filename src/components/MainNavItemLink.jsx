@@ -1,7 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
+
 import { respondTo } from '../helpers/responsive'
+import {
+  MENU_ITEM_TYPE_LINK,
+  MENU_ITEM_TYPE_MEGA,
+  MENU_ITEM_TYPES
+} from '../config/menuItemTypes'
 
 const StyledMainNavItemLink = styled.a`
   width: 100%;
@@ -11,73 +17,15 @@ const StyledMainNavItemLink = styled.a`
   ${respondTo('large')} {
     align-items: center;
     height: 4rem;
-
-    &::after {
-      content: ${({ isForward }) =>
-        isForward ? "url('../../images/icons/angle-up.svg')" : 'none'};
-      right: ${({ isForward }) => (isForward ? '-0.5rem' : 'initial')};
-      bottom: initial;
-    }
   }
-
-  ${({ isForward }) =>
-    isForward &&
-    `
-    ${respondTo('large')} {
-      margin-right: 1rem;
-    }
-
-    &::after {
-      content: url('../../images/icons/angle-right.svg');
-      position: absolute;
-      right: 2rem;
-      bottom: -30%;
-      width: 1rem;
-      height: 2rem;
-  
-      ${respondTo('large')} {
-        content: url('../../images/icons/angle-up.svg');
-        top: 0.25rem;
-        right: -0.5rem;
-        bottom: initial;
-        width: 1rem;
-      }
-    }
-  `}
-
-  ${({ isBack }) =>
-    isBack &&
-    `
-    padding-left: 2rem;
-    &::before {
-      content: url('../../images/icons/angle-left.svg');
-      position: absolute;
-      left: 0;
-      bottom: -30%;
-      width: 1rem;
-      height: 2rem;
-    }
-  `}
-
-  ${({ isActive }) =>
-    isActive &&
-    `
-    &::after {
-      ${respondTo('large')} {
-        transform: rotate(180deg);
-        top: 0;
-      }
-    }
-  `}
 `
 
 const MainNavItemLink = ({
   id,
-  role,
+  role = 'menuItem',
+  type = MENU_ITEM_TYPE_LINK,
   href,
-  isBack,
-  isForward,
-  isActive,
+  isActive = false,
   onClick,
   onKeyDown,
   ariaHaspopup,
@@ -93,28 +41,23 @@ const MainNavItemLink = ({
     onKeyDown={onKeyDown}
     aria-haspopup={ariaHaspopup}
     aria-controls={ariaControls}
-    isBack={isBack}
-    isForward={isForward}
     isActive={isActive}
     {...props}
   >
     {children}
+    {type === MENU_ITEM_TYPE_MEGA && (
+      <span
+        className={`rmm__main-nav-item-link--icon ${isActive ? 'active' : ''}`}
+      />
+    )}
   </StyledMainNavItemLink>
 )
-
-MainNavItemLink.defaultProps = {
-  role: 'menuitem',
-  isBack: false,
-  isForward: false,
-  isActive: false
-}
 
 MainNavItemLink.propTypes = {
   id: PropTypes.string.isRequired,
   role: PropTypes.string,
+  type: PropTypes.oneOf(MENU_ITEM_TYPES),
   href: PropTypes.string.isRequired,
-  isBack: PropTypes.bool,
-  isForward: PropTypes.bool,
   isActive: PropTypes.bool,
   onClick: PropTypes.func,
   onKeyDown: PropTypes.func,

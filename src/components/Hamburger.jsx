@@ -4,8 +4,6 @@ import styled from '@emotion/styled'
 import { respondTo } from '../helpers/responsive'
 
 const StyledHamburger = styled.button`
-  border: none;
-  background: none;
   transition: 0.5s ease-in-out;
   position: absolute;
   top: 5.25rem;
@@ -27,18 +25,18 @@ const StyledHamburger = styled.button`
     state === '' ||
     (state === 'open' &&
       `
-      span:nth-child(1) {
+      span:nth-of-type(1) {
         top: 1rem;
         width: 0%;
         left: 50%;
       }
-      span:nth-child(2) {
+      span:nth-of-type(2) {
         transform: rotate(45deg);
       }
-      span:nth-child(3) {
+      span:nth-of-type(3) {
         transform: rotate(-45deg);
       }
-      span:nth-child(4) {
+      span:nth-of-type(4) {
         top: 1rem;
         width: 0%;
         left: 50%;
@@ -62,28 +60,23 @@ const StyledHamburgerSlice = styled.span`
   position: absolute;
   height: 0.25rem;
   width: 100%;
-  background: #000;
   opacity: 1;
   left: 0;
   transform: rotate(0deg);
   transition: 0.25s ease-in-out;
 
-  &:nth-child(1) {
+  &:nth-of-type(1) {
     top: 0;
   }
 
-  &:nth-child(2),
-  &:nth-child(3) {
+  &:nth-of-type(2),
+  &:nth-of-type(3) {
     top: 0.5rem;
   }
 
-  &:nth-child(4) {
+  &:nth-of-type(4) {
     top: 1rem;
   }
-`
-
-const StyledHamburgerLabelContainer = styled.div`
-  margin-left: 1rem;
 `
 
 const StyledHamburgerLabel = styled.span`
@@ -91,23 +84,24 @@ const StyledHamburgerLabel = styled.span`
   font-weight: 700;
 `
 
-const Hamburger = ({ label, state, onClick, ...props }) => (
+const Hamburger = ({ label = null, state = 'closed', onClick, ...props }) => (
   <StyledHamburger state={state} onClick={onClick} {...props}>
-    <StyledHamburgerSliceContainer>
-      <StyledHamburgerSlice />
-      <StyledHamburgerSlice />
-      <StyledHamburgerSlice />
-      <StyledHamburgerSlice />
+    <StyledHamburgerSliceContainer id="rmm__hamburger-slices">
+      <StyledHamburgerSlice className="rmm__hamburger--slice" />
+      <StyledHamburgerSlice className="rmm__hamburger--slice" />
+      <StyledHamburgerSlice className="rmm__hamburger--slice" />
+      <StyledHamburgerSlice className="rmm__hamburger--slice" />
     </StyledHamburgerSliceContainer>
     {label && (
-      <StyledHamburgerLabelContainer>
-        <StyledHamburgerLabel>{label}</StyledHamburgerLabel>
-      </StyledHamburgerLabelContainer>
+      <div id="rmm__hamburger--label--container">
+        <StyledHamburgerLabel id="rmm__hamburger--label">
+          {label}
+        </StyledHamburgerLabel>
+      </div>
     )}
   </StyledHamburger>
 )
 
-Hamburger.defaultProps = { label: null, state: 'closed' }
 Hamburger.propTypes = {
   /**
    * The text label to display next to the hamburger icon

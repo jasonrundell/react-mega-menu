@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { respondTo } from '../helpers/responsive'
+import { getAnimationStyles } from '../helpers/animationStyles'
 
 const StyledNav = styled.nav`
   position: absolute;
@@ -11,106 +12,34 @@ const StyledNav = styled.nav`
   height: calc(100vh - 4rem);
   display: flex;
   flex-direction: column;
-  background-color: #fff;
-  border-top: 0.0625rem solid grey;
-  padding-top: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
-  border-right: 0.25rem solid #000;
+  margin: 0;
+  padding: 0;
   overflow-y: scroll;
 
   ${respondTo('large')} {
     top: 4rem;
     left: 0;
-    border-top: none;
     height: 4rem;
     flex-direction: row;
-    border-right: none;
-    border-bottom: 0.0625rem solid #000;
     overflow-y: initial;
   }
 
-  ${({ activeState }) =>
-    activeState === 'open' &&
-    `
-    animation-duration: 0.75s;
-    animation-fill-mode: both;
-    animation-name: slideOpen;
-    animation-iteration-count: 1;
-    @media (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
+  ${({ activeState }) => getAnimationStyles(activeState)}
 
-    @keyframes slideOpen {
-      from {
-        transform: translate3d(-100%, 0, 0);
-      }
-    
-      to {
-        transform: translate3d(100%, 0, 0);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transform: translate3d(100%, 0, 0);
-    }
-
-    ${respondTo('large')} {
-      animation: none;
-      display: flex;
-      opacity: 1;
-
-      @media (prefers-reduced-motion: reduce) {
-        transform: none;
-      }
-    }
-  `}
-
-  ${({ activeState }) =>
-    activeState === 'closed' &&
-    `
-    animation-duration: 0.75s;
-    animation-fill-mode: both;
-    animation-name: slideClosed;
-    animation-iteration-count: 1;
-    @media (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
-
-    @keyframes slideClosed {
-      from {
-        transform: translate3d(100%, 0, 0);
-      }
-    
-      to {
-        transform: translate3d(-100%, 0, 0);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transform: translate3d(-100%, 0, 0);
-    }
-
-    ${respondTo('large')} {
-      animation: none;
-      display: none;
-      opacity: 0;
-
-      @media (prefers-reduced-motion: reduce) {
-        transform: none;
-      }
-    }
-  `}
-
-  li:first-child {
+  li:first-of-type {
     ${respondTo('large')} {
       margin-left: 0;
     }
   }
 `
 
-const Nav = ({ id, ariaLabel, activeState, children, ...props }) => (
+const Nav = ({
+  id,
+  ariaLabel = 'Main Navigation',
+  activeState = 'closed',
+  children,
+  ...props
+}) => (
   <StyledNav
     id={id}
     activeState={activeState}
@@ -120,11 +49,6 @@ const Nav = ({ id, ariaLabel, activeState, children, ...props }) => (
     {children}
   </StyledNav>
 )
-
-Nav.defaultProps = {
-  ariaLabel: 'Main Navigation',
-  activeState: 'closed'
-}
 
 Nav.propTypes = {
   /**

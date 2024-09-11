@@ -10,49 +10,6 @@ const StylesNavItemLink = styled.a`
   position: relative;
   margin-bottom: 1rem;
 
-  ${({ isHeading }) =>
-    isHeading &&
-    `
-    ${respondTo('large')} {
-      height: 1rem;
-    }
-  `}
-
-  ${({ isBack }) =>
-    isBack &&
-    `
-    padding-left: 2rem;
-    &::before {
-      content: url('../../images/icons/angle-left.svg');
-      position: absolute;
-      left: 0;
-      bottom: -30%;
-      width: 1rem;
-      height: 2rem;
-    }
-    `}
-
-  ${({ isForward }) =>
-    isForward &&
-    `
-    ${respondTo('large')} {
-      margin-right: 1rem;
-    }
-
-    &::after {
-      content: url('../../images/icons/angle-right.svg');
-      position: absolute;
-      right: 2rem;
-      bottom: -30%;
-      width: 1rem;
-      height: 2rem;
-    
-        ${respondTo('large')} {
-          content: '';
-        }
-      }
-    `}
-
   ${({ isActive }) =>
     isActive &&
     `
@@ -67,12 +24,9 @@ const StylesNavItemLink = styled.a`
 
 const NavItemLink = ({
   id,
-  role,
+  role = 'menuitem',
   href,
-  isBack,
-  isHeading,
-  isForward,
-  isActive,
+  isActive = false,
   onClick,
   onKeyDown,
   ariaHaspopup,
@@ -84,9 +38,6 @@ const NavItemLink = ({
     id={id}
     role={role}
     href={href}
-    isBack={isBack}
-    isHeading={isHeading}
-    isForward={isForward}
     isActive={isActive}
     onClick={onClick}
     onKeyDown={onKeyDown}
@@ -98,21 +49,10 @@ const NavItemLink = ({
   </StylesNavItemLink>
 )
 
-NavItemLink.defaultProps = {
-  role: 'menuitem',
-  isBack: false,
-  isHeading: false,
-  isForward: false,
-  isActive: false
-}
-
 NavItemLink.propTypes = {
   id: PropTypes.string.isRequired,
   role: PropTypes.string,
   href: PropTypes.string.isRequired,
-  isBack: PropTypes.bool,
-  isHeading: PropTypes.bool,
-  isForward: PropTypes.bool,
   isActive: PropTypes.bool,
   onClick: PropTypes.func,
   onKeyDown: PropTypes.func,
