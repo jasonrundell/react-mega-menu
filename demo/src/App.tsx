@@ -1,13 +1,37 @@
 import { useState, useEffect } from 'react'
-import { Menu } from '../../src/index'
+// import { Menu } from '../../src/index' // local development mode
+import { Menu } from '@jasonrundell/react-mega-menu'
 import './App.css'
+
+export interface MenuItem {
+  label: string
+  type: string
+  url: string
+  description?: string
+  items?: MenuItem[]
+}
+
+export interface MenuConfig {
+  topbar: {
+    id: string
+    logo: {
+      src: string
+      alt: string
+      rel: string
+    }
+    title: string
+  }
+  menu: {
+    items: any
+  }
+}
 
 /**
  * Here's a static configuration example of a menu configuration object.
  * If menuConfig doesn't depend on any state or props of App, hoisting it can help improve performance
  * and code clarity. Otherwise move it to App's state.
  */
-const menuConfig = {
+const menuConfig: MenuConfig = {
   topbar: {
     id: 'topbar',
     logo: {
@@ -252,32 +276,15 @@ function App() {
 
   // states for toggling head styling and changing themes
   const [headEnabled, setHeadEnabled] = useState(true)
-  const [headElement, setHeadElement] = useState<HTMLElement | null>(
-    document.head
-  )
+  const [headElement] = useState<HTMLElement | null>(document.head)
   const [currentTheme, setCurrentTheme] = useState(themes[0])
 
   // Apply the theme class to the menu when the component mounts
   useEffect(() => {
-    // change theme when href contains ?theme= and use the param value for the theme to change to
-    if (typeof window !== 'undefined') {
-      const urlParams = new URLSearchParams(window.location.search)
-      const theme = urlParams.get('theme')
-      const rmmNav = document.getElementById('rmm__menu')
-      if (rmmNav) {
-        if (theme) {
-          rmmNav.classList.add(`rmm__theme--${theme}`)
-        } else {
-          rmmNav.classList.add('rmm__theme--light')
-        }
-      }
-
-      if (rmmNav) {
-        themes.forEach((theme) =>
-          rmmNav.classList.remove(`rmm__theme--${theme}`)
-        )
-        rmmNav.classList.add(`rmm__theme--${currentTheme}`)
-      }
+    const rmmNav = document.getElementById('rmm__menu')
+    if (rmmNav) {
+      themes.forEach((theme) => rmmNav.classList.remove(`rmm__theme--${theme}`))
+      rmmNav.classList.add(`rmm__theme--${currentTheme}`)
     }
   }, [currentTheme, themes])
 
@@ -314,11 +321,13 @@ function App() {
       }
 
       // Dynamically import the theme CSS file
-      await import(`./themes/${theme}.css`)
+      if (theme) {
+        await import(`./themes/${theme}.css`)
 
-      // Apply the selected theme class
-      if (rmmNav) {
-        rmmNav.classList.add(`rmm__theme--${theme}`)
+        // Apply the selected theme class
+        if (rmmNav) {
+          rmmNav.classList.add(`rmm__theme--${theme}`)
+        }
       }
     } catch (err) {
       console.error(`Failed to load the ${theme} theme`, err)

@@ -226,7 +226,7 @@ const defaultMenuConfig = {
   }
 }
 
-export const Menu = ({ config = defaultMenuConfig, className, ...props }) => {
+export const Menu = ({ config = defaultMenuConfig, ...props }) => {
   const [megaMenuState, setMegaMenuState] = useState('')
   const [subMenuState, setSubMenuState] = useState('')
   const [subSubMenuState, setSubSubMenuState] = useState('')
@@ -435,9 +435,7 @@ Menu.propTypes = {
         })
       )
     })
-  }),
-  id: PropTypes.string,
-  className: PropTypes.string
+  })
 }
 
 export default Menu

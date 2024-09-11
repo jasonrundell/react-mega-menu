@@ -12,8 +12,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: 'src/index.jsx',
-      name: 'ReactMainNavigation',
-      fileName: (format) => `react-main-navigation.${format}.js`
+      name: 'ReactMegaMenu',
+      fileName: (format) => `index.${format}.js`
     },
     rollupOptions: {
       external: ['react', 'react-dom', '@emotion/react', '@emotion/styled'],

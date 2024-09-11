@@ -1,0 +1,8 @@
+demo/
+src/
+.babelrc.json
+.eslintrc.cjs
+.prettierrc
+.gitignore
+tsconfig*.json
+vite.config.ts
