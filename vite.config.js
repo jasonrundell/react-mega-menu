@@ -13,6 +13,7 @@ export default defineConfig({
     lib: {
       entry: 'src/index.jsx',
       name: 'ReactMegaMenu',
+      formats: ['es', 'cjs'], // Output both ES module and CommonJS formats
       fileName: (format) => `index.${format}.js`
     },
     rollupOptions: {

@@ -1,15 +1,15 @@
 {
   "name": "@jasonrundell/react-mega-menu",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "author": "jasonrundell <jason.rundell@gmail.com>",
-  "source": "./src/index.js",
-  "main": "dist/index.es.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && vite build",
     "format": "prettier --write src/**/*.{js,jsx}"
   },
   "dependencies": {
