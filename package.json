@@ -1,6 +1,6 @@
 {
   "name": "@jasonrundell/react-mega-menu",
-  "version": "2.0.7",
+  "version": "2.0.9",
   "author": "jasonrundell <jason.rundell@gmail.com>",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
@@ -33,8 +33,11 @@
     "vite": "^5.2.0"
   },
   "peerDependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "uuid": "^9.0.1"
   },
   "repository": {
     "type": "git",
