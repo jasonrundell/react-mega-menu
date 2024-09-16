@@ -1,2 +1,4 @@
-// src/index.jsx
-export { Menu } from './Menu'
+import { Menu } from './Menu'
+
+export { Menu }
+export default Menu
