@@ -1,6 +1,6 @@
 {
   "name": "@jasonrundell/react-mega-menu",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "author": "jasonrundell <jason.rundell@gmail.com>",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
@@ -13,6 +13,10 @@
     "format": "prettier --write src/**/*.{js,jsx}"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
@@ -32,7 +36,8 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "uuid": "^9.0.1"
   },
   "repository": {
     "type": "git",
