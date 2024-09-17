@@ -1,0 +1,22 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore build output directories
+dist/
+build/
+
+# Ignore Next.js specific directories
+.next/
+out/
+
+# Ignore configuration files
+*.config.js
+
+# Ignore specific files
+*.min.js
+
+# Ignore all JavaScript files in a specific directory
+public/**/*.js
+
+# Ignore all files in a specific directory
+coverage/
