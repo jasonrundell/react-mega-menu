@@ -13,9 +13,10 @@ export default defineConfig({
     lib: {
       entry: 'src/index.jsx',
       name: 'ReactMegaMenu',
-      formats: ['es', 'cjs'], // Output both ES module and CommonJS formats
+      formats: ['es', 'cjs'],
       fileName: (format) => `index.${format}.js`
     },
+    sourcemap: true,
     rollupOptions: {
       external: ['react', 'react-dom', '@emotion/react', '@emotion/styled'],
       output: {
@@ -24,7 +25,8 @@ export default defineConfig({
           'react-dom': 'ReactDOM',
           '@emotion/react': 'emotionReact',
           '@emotion/styled': 'emotionStyled'
-        }
+        },
+        exports: 'named'
       }
     }
   }
