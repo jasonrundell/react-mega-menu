@@ -1,8 +1,8 @@
 'use client'
 
 import Image from 'next/image'
-// import { Menu } from '../../src/index' // local development mode
-import { Menu } from '@jasonrundell/react-mega-menu'
+import { Menu } from '../../src/index' // local development mode
+//import { Menu } from '@jasonrundell/react-mega-menu'
 
 /**
  * Here's a static configuration example of a menu configuration object.
