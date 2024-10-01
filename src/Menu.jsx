@@ -229,15 +229,7 @@ const defaultMenuConfig = {
 }
 
 export const Menu = ({ config = defaultMenuConfig, ...props }) => {
-  const {
-    resetMenus,
-    activeMenus,
-    megaMenuState,
-    toggleMegaMenu,
-    toggleSubMenu,
-    toggleSubSubMenu,
-    setIsMobile
-  } = useMenu()
+  const { resetMenus, megaMenuState, toggleMegaMenu, setIsMobile } = useMenu()
 
   const wrapperRef = useRef(null) // used to detect clicks outside of component
 
