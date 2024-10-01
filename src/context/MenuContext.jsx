@@ -56,7 +56,6 @@ export const MenuProvider = ({ children }) => {
     if (e && e.preventDefault) {
       e.preventDefault()
     }
-    console.log('menuId', menuId)
 
     const nextState = stateMachine(subMenuState)
 
