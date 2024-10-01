@@ -1,7 +1,6 @@
 'use client'
 
 import Image from 'next/image'
-// import { Menu } from '../../src/index' // local development mode
 import { Menu } from '@jasonrundell/react-mega-menu'
 
 /**
@@ -29,56 +28,56 @@ const menuConfig = {
       {
         label: 'About',
         type: 'main',
-        url: '/?about'
+        url: '/about/'
       },
       {
         label: 'Store',
         type: 'mega',
-        url: '/?store',
+        url: '/store/',
         items: [
           {
             label: 'Deals',
             type: 'link',
-            url: '/?deals',
+            url: '/store/deals/',
             description:
               "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide."
           },
           {
             label: 'Kitchen',
             type: 'link',
-            url: '/?kitchen',
+            url: '/store/kitchen/',
             description:
               "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide."
           },
           {
             label: 'Outdoors',
             type: 'sub',
-            url: '/?outdoors',
+            url: '/store/outdoors/',
             description:
               "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide.",
             items: [
               {
                 label: 'Tools',
                 type: 'link',
-                url: '/?tools',
+                url: '/store/outdoors/tools/',
                 description: 'Single line description that accompanies link'
               },
               {
                 label: 'Plants',
                 type: 'link',
-                url: '/?plants',
+                url: '/store/outdoors/plants/',
                 description: 'Single line description that accompanies link'
               },
               {
                 label: 'Patio',
                 type: 'link',
-                url: '/?patio',
+                url: '/store/outdoors/patio/',
                 description: 'Single line description that accompanies link'
               },
               {
                 label: 'Decking',
                 type: 'link',
-                url: '/?decking',
+                url: '/store/outdoors/decking/',
                 description: 'Single line description that accompanies link'
               }
             ]
@@ -86,34 +85,34 @@ const menuConfig = {
           {
             label: 'Bedroom',
             type: 'sub',
-            url: '/?bedroom',
+            url: '/store/bedroom/',
             description:
               "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide.",
             items: [
               {
                 label: 'Beds',
                 type: 'link',
-                url: '/?beds',
+                url: '/store/bedroom/beds/',
                 description: 'Single line description that accompanies link'
               },
               {
                 label: 'Dressers',
                 type: 'link',
-                url: '/?dressers',
+                url: '/store/bedroom/dressers/',
                 description:
                   'Double lined small description that accompanies link in the React Mega Menu project'
               },
               {
                 label: 'Nightstands',
                 type: 'link',
-                url: '/?nightstands',
+                url: '/store/bedroom/nightstands/',
                 description:
                   'Double lined small description that accompanies link in the React Mega Menu project'
               },
               {
                 label: 'Benches',
                 type: 'link',
-                url: '/?benches',
+                url: '/store/bedroom/benches/',
                 description:
                   'Double lined small description that accompanies link in the React Mega Menu project'
               }
@@ -124,39 +123,39 @@ const menuConfig = {
       {
         label: 'Blog',
         type: 'mega',
-        url: '/?blog',
+        url: '/blog/',
         items: [
           {
             label: 'Latest Post Title',
             type: 'link',
-            url: '/?latest-post-title',
+            url: '/blog/posts/latest-post-title/',
             description:
               'Double lined small description that accompanies link in the React Mega Menu project'
           },
           {
             label: 'Categories',
             type: 'sub',
-            url: '/?categories',
+            url: '/blog/categories/',
             items: [
               {
                 label: 'News',
                 type: 'link',
-                url: '/?news'
+                url: '/blog/news/'
               },
               {
                 label: 'Recipes',
                 type: 'link',
-                url: '/?recipes'
+                url: '/blog/recipes/'
               },
               {
                 label: 'Health',
                 type: 'link',
-                url: '/?health'
+                url: '/blog/health/'
               },
               {
                 label: 'Diet',
                 type: 'link',
-                url: '/?diet'
+                url: '/blog/diet/'
               }
             ]
           }
@@ -165,18 +164,18 @@ const menuConfig = {
       {
         label: 'Help',
         type: 'mega',
-        url: '/?help',
+        url: '/help/',
         items: [
           {
             label: 'FAQ',
             type: 'link',
-            url: '/?faq',
+            url: '/help/faq/',
             description: 'Single line description that accompanies link'
           },
           {
             label: 'Knowledge Base',
             type: 'link',
-            url: '/?knowledge-base',
+            url: '/help/knowledge-base/',
             description:
               'Double lined small description that accompanies link in the React Mega Menu project'
           }
@@ -185,24 +184,24 @@ const menuConfig = {
       {
         label: 'Settings',
         type: 'mega',
-        url: '/?settings',
+        url: '/settings/',
         items: [
           {
             label: 'Profile',
             type: 'link',
-            url: '/?profile',
+            url: '/settings/profile/',
             description: 'Single line description that accompanies link'
           },
           {
             label: 'Billing',
             type: 'link',
-            url: '/?billing',
+            url: '/settings/billing/',
             description: 'Single line description that accompanies link'
           },
           {
             label: 'Theme',
             type: 'sub',
-            url: '/?theme',
+            url: '#',
             description: 'Change the React Mega Menu theme',
             items: [
               {
@@ -235,7 +234,7 @@ const menuConfig = {
           {
             label: 'Logout',
             type: 'link',
-            url: '/?logout',
+            url: '/settings/logout/',
             description: 'Single line description that accompanies link'
           }
         ]
@@ -243,7 +242,7 @@ const menuConfig = {
       {
         label: 'Contact',
         type: 'main',
-        url: '/?contact'
+        url: '#contact'
       }
     ]
   }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 // import { Menu } from '../../src/index' // local development mode
 import { Menu } from '@jasonrundell/react-mega-menu'
 import './App.css'
@@ -22,14 +22,14 @@ export interface MenuConfig {
     title: string
   }
   menu: {
-    items: any
+    items: MenuItem[]
   }
 }
 
 /**
  * Here's a static configuration example of a menu configuration object.
  * If menuConfig doesn't depend on any state or props of App, hoisting it can help improve performance
- * and code clarity. Otherwise move it to App's state.
+ * and code clarity. Otherwise, move it to App's state.
  */
 const menuConfig: MenuConfig = {
   topbar: {
@@ -51,56 +51,56 @@ const menuConfig: MenuConfig = {
       {
         label: 'About',
         type: 'main',
-        url: '/?about'
+        url: '/about/'
       },
       {
         label: 'Store',
         type: 'mega',
-        url: '/?store',
+        url: '/store/',
         items: [
           {
             label: 'Deals',
             type: 'link',
-            url: '/?deals',
+            url: '/store/deals/',
             description:
               "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide."
           },
           {
             label: 'Kitchen',
             type: 'link',
-            url: '/?kitchen',
+            url: '/store/kitchen/',
             description:
               "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide."
           },
           {
             label: 'Outdoors',
             type: 'sub',
-            url: '/?outdoors',
+            url: '/store/outdoors/',
             description:
               "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide.",
             items: [
               {
                 label: 'Tools',
                 type: 'link',
-                url: '/?tools',
+                url: '/store/outdoors/tools/',
                 description: 'Single line description that accompanies link'
               },
               {
                 label: 'Plants',
                 type: 'link',
-                url: '/?plants',
+                url: '/store/outdoors/plants/',
                 description: 'Single line description that accompanies link'
               },
               {
                 label: 'Patio',
                 type: 'link',
-                url: '/?patio',
+                url: '/store/outdoors/patio/',
                 description: 'Single line description that accompanies link'
               },
               {
                 label: 'Decking',
                 type: 'link',
-                url: '/?decking',
+                url: '/store/outdoors/decking/',
                 description: 'Single line description that accompanies link'
               }
             ]
@@ -108,34 +108,34 @@ const menuConfig: MenuConfig = {
           {
             label: 'Bedroom',
             type: 'sub',
-            url: '/?bedroom',
+            url: '/store/bedroom/',
             description:
               "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide.",
             items: [
               {
                 label: 'Beds',
                 type: 'link',
-                url: '/?beds',
+                url: '/store/bedroom/beds/',
                 description: 'Single line description that accompanies link'
               },
               {
                 label: 'Dressers',
                 type: 'link',
-                url: '/?dressers',
+                url: '/store/bedroom/dressers/',
                 description:
                   'Double lined small description that accompanies link in the React Mega Menu project'
               },
               {
                 label: 'Nightstands',
                 type: 'link',
-                url: '/?nightstands',
+                url: '/store/bedroom/nightstands/',
                 description:
                   'Double lined small description that accompanies link in the React Mega Menu project'
               },
               {
                 label: 'Benches',
                 type: 'link',
-                url: '/?benches',
+                url: '/store/bedroom/benches/',
                 description:
                   'Double lined small description that accompanies link in the React Mega Menu project'
               }
@@ -146,39 +146,39 @@ const menuConfig: MenuConfig = {
       {
         label: 'Blog',
         type: 'mega',
-        url: '/?blog',
+        url: '/blog/',
         items: [
           {
             label: 'Latest Post Title',
             type: 'link',
-            url: '/?latest-post-title',
+            url: '/blog/posts/latest-post-title/',
             description:
               'Double lined small description that accompanies link in the React Mega Menu project'
           },
           {
             label: 'Categories',
             type: 'sub',
-            url: '/?categories',
+            url: '/blog/categories/',
             items: [
               {
                 label: 'News',
                 type: 'link',
-                url: '/?news'
+                url: '/blog/news/'
               },
               {
                 label: 'Recipes',
                 type: 'link',
-                url: '/?recipes'
+                url: '/blog/recipes/'
               },
               {
                 label: 'Health',
                 type: 'link',
-                url: '/?health'
+                url: '/blog/health/'
               },
               {
                 label: 'Diet',
                 type: 'link',
-                url: '/?diet'
+                url: '/blog/diet/'
               }
             ]
           }
@@ -187,18 +187,18 @@ const menuConfig: MenuConfig = {
       {
         label: 'Help',
         type: 'mega',
-        url: '/?help',
+        url: '/help/',
         items: [
           {
             label: 'FAQ',
             type: 'link',
-            url: '/?faq',
+            url: '/help/faq/',
             description: 'Single line description that accompanies link'
           },
           {
             label: 'Knowledge Base',
             type: 'link',
-            url: '/?knowledge-base',
+            url: '/help/knowledge-base/',
             description:
               'Double lined small description that accompanies link in the React Mega Menu project'
           }
@@ -207,18 +207,18 @@ const menuConfig: MenuConfig = {
       {
         label: 'Settings',
         type: 'mega',
-        url: '/?settings',
+        url: '/settings/',
         items: [
           {
             label: 'Profile',
             type: 'link',
-            url: '/?profile',
+            url: '/settings/profile/',
             description: 'Single line description that accompanies link'
           },
           {
             label: 'Billing',
             type: 'link',
-            url: '/?billing',
+            url: '/settings/billing/',
             description: 'Single line description that accompanies link'
           },
           {
@@ -265,7 +265,7 @@ const menuConfig: MenuConfig = {
       {
         label: 'Contact',
         type: 'main',
-        url: '/?contact'
+        url: '#contact'
       }
     ]
   }
@@ -301,6 +301,21 @@ function App() {
     }
   }, [headEnabled, headElement])
 
+  /**
+   * This useEffect hook will check the URL query string for a theme parameter
+   * and apply the theme if it exists.
+   * This is useful for sharing a specific theme with others. For example:
+   * https://example.com?theme=dark will load the dark theme.
+   * https://example.com?theme=light will load the light theme.
+   */
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const themeParam = params.get('theme')
+    if (themeParam) {
+      setCurrentTheme(themeParam)
+    }
+  }, [])
+
   const toggleHead = () => {
     setHeadEnabled(!headEnabled)
   }
@@ -310,33 +325,36 @@ function App() {
   }
 
   // Function to dynamically import the theme CSS
-  const loadTheme = async (theme: string) => {
-    try {
-      // Remove the previous theme classes if necessary
-      const rmmNav = document.getElementById('rmm__menu')
-      if (rmmNav) {
-        themes.forEach((theme) =>
-          rmmNav.classList.remove(`rmm__theme--${theme}`)
-        )
-      }
-
-      // Dynamically import the theme CSS file
-      if (theme) {
-        await import(`./themes/${theme}.css`)
-
-        // Apply the selected theme class
+  const loadTheme = useCallback(
+    async (theme: string) => {
+      try {
+        // Remove the previous theme classes if necessary
+        const rmmNav = document.getElementById('rmm__menu')
         if (rmmNav) {
-          rmmNav.classList.add(`rmm__theme--${theme}`)
+          themes.forEach((theme) =>
+            rmmNav.classList.remove(`rmm__theme--${theme}`)
+          )
         }
+
+        // Dynamically import the theme CSS file
+        if (theme) {
+          await import(`./themes/${theme}.css`)
+
+          // Apply the selected theme class
+          if (rmmNav) {
+            rmmNav.classList.add(`rmm__theme--${theme}`)
+          }
+        }
+      } catch (err) {
+        console.error(`Failed to load the ${theme} theme`, err)
       }
-    } catch (err) {
-      console.error(`Failed to load the ${theme} theme`, err)
-    }
-  }
+    },
+    [themes]
+  )
 
   useEffect(() => {
     loadTheme(currentTheme)
-  }, [currentTheme])
+  }, [currentTheme, loadTheme])
 
   return (
     <div>
@@ -345,7 +363,7 @@ function App() {
         <h1>React Mega Menu Demo</h1>
         <hr />
         <p>
-          A React project which aims to be an accessible, responsive,
+          A React library project which aims to be an accessible, responsive,
           boilerplate top navigation menu with a "Mega Menu"!
         </p>
         <h2>Features</h2>
@@ -353,26 +371,66 @@ function App() {
           <li>WCAG 2.1 AA compliant</li>
           <li>W3C valid markup</li>
           <li>Fly-out menus</li>
-          <li>Menus are accessible through key inputs</li>
-          <li>Unified menu for all screen ratios</li>
+          <li>Supports keyboard navigation and screen readers</li>
+          <li>
+            Responsively designed to adapt to modern mobile and desktop screen
+            sizes
+          </li>
           <li>
             Styled (lightly) with <a href="https://emotion.sh">Emotion</a>
           </li>
-          <li>Theme support with vanilla CSS (examples included)</li>
+          <li>
+            The project supports theme customization with vanilla CSS, as
+            demonstrated in the synthwave.css theme.
+          </li>
           <li>Supports and tested against Edge, Safari, FireFox, and Chrome</li>
           <li>
-            CSS animations with{' '}
+            Includes CSS animations that respect the{' '}
             <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion">
               prefers-reduced-motion
             </a>{' '}
-            media query
+            media query for users who prefer reduced motion
+          </li>
+          <li>
+            Includes a demo project using Next.js, showcasing how to integrate
+            the menu with a Next.js application
           </li>
         </ul>
         <hr />
+        <h3>Semantically designed structure</h3>
+        <p>
+          The menu is designed to be as semantically correct as possible. The
+          top-level menu items are <code>nav</code> elements, and the submenus
+          are <code>ul</code> elements. The menu items are <code>li</code>{' '}
+          elements, and the links are <code>a</code> elements. The menu is
+          accessible through keyboard navigation and screen readers.
+        </p>
         <button onClick={toggleHead}>
-          {headEnabled ? 'Disable Styling' : 'Enable Styling'}
+          {headEnabled ? 'Disable styling to view' : 'Re-enable styling'}
         </button>
-        <h2>Menu Themes</h2>
+        <hr />
+        <h3>Styling the menu</h3>
+        <p>
+          This menu component is designed to be highly customizable. You can
+          apply your own CSS styles to the menu by targeting the appropriate
+          classes. The menu structure is built using semantic HTML elements,
+          which makes it easy to style using CSS.
+        </p>
+        <p>
+          The top-level menu items are wrapped in <code>nav</code> elements, and
+          the submenus are wrapped in <code>ul</code> elements. Each menu item
+          is an <code>li</code> element, and the links are <code>a</code>{' '}
+          elements. This structure allows you to use standard CSS selectors to
+          apply styles to different parts of the menu.
+        </p>
+        <p>
+          Additionally, the menu supports themes, which are applied by adding a
+          theme-specific class to the menu container. You can create your own
+          themes by defining CSS classes that follow the naming convention{' '}
+          <code>.rmm__theme--your-theme-name</code> and applying them to the
+          menu container.
+        </p>
+        <h4>Try out a theme:</h4>
         <ul>
           {themes.map((theme) => (
             <li key={theme}>
@@ -385,6 +443,23 @@ function App() {
             <button onClick={() => handleThemeChange('')}>None</button>
           </li>
         </ul>
+        <p>
+          <em>
+            Note how changing the theme only affects the mega menu and not the
+            rest of the page/application.
+          </em>
+        </p>
+        <h3 id="contact">Showcase your theme</h3>
+        <p>
+          Submit a{' '}
+          <a
+            href="https://github.com/jasonrundell/react-mega-menu/compare"
+            target="_blank"
+          >
+            pull request
+          </a>{' '}
+          to add your theme to the demo!
+        </p>
       </main>
     </div>
   )

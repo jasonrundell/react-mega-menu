@@ -1,16 +1,19 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
+
+// Context
+import { useMenu } from './context/MenuContext' // Adjust the path as necessary
 
 // Helpers
 import { click as a11yClick, escape as a11yEscape } from './helpers/a11y'
 import { respondTo, viewportLarge } from './helpers/responsive'
 import {
+  config,
   renderMainMenuItem,
   renderLinkMenuItem,
   renderMegaMenuItem,
   renderSubMenuItem,
-  stateMachine,
   generateMenuIds
 } from './helpers/menu'
 import {
@@ -44,280 +47,28 @@ const StyledMenu = styled.div`
     height: 4rem;
   }
 `
-const defaultMenuConfig = {
-  topbar: {
-    id: 'topbar',
-    logo: {
-      src: 'https://via.placeholder.com/150x50',
-      alt: 'Placeholder Logo',
-      rel: 'home'
-    },
-    title: 'Your Site Title'
-  },
-  menu: {
-    items: [
-      {
-        label: 'Home',
-        type: 'main',
-        url: '/'
-      },
-      {
-        label: 'About',
-        type: 'main',
-        url: '/?about'
-      },
-      {
-        label: 'Store',
-        type: 'mega',
-        url: '/?store',
-        items: [
-          {
-            label: 'Deals',
-            type: 'link',
-            url: '/?deals',
-            description:
-              "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide."
-          },
-          {
-            label: 'Kitchen',
-            type: 'link',
-            url: '/?kitchen',
-            description:
-              "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide."
-          },
-          {
-            label: 'Outdoors',
-            type: 'sub',
-            url: '/?outdoors',
-            description:
-              "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide.",
-            items: [
-              {
-                label: 'Tools',
-                type: 'link',
-                url: '/?tools',
-                description: 'Single line description that accompanies link'
-              },
-              {
-                label: 'Plants',
-                type: 'link',
-                url: '/?plants',
-                description: 'Single line description that accompanies link'
-              },
-              {
-                label: 'Patio',
-                type: 'link',
-                url: '/?patio',
-                description: 'Single line description that accompanies link'
-              },
-              {
-                label: 'Decking',
-                type: 'link',
-                url: '/?decking',
-                description: 'Single line description that accompanies link'
-              }
-            ]
-          },
-          {
-            label: 'Bedroom',
-            type: 'sub',
-            url: '/?bedroom',
-            description:
-              "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide.",
-            items: [
-              {
-                label: 'Beds',
-                type: 'link',
-                url: '/?beds',
-                description: 'Single line description that accompanies link'
-              },
-              {
-                label: 'Dressers',
-                type: 'link',
-                url: '/?dressers',
-                description:
-                  'Double lined small description that accompanies link in the React Mega Menu project'
-              },
-              {
-                label: 'Nightstands',
-                type: 'link',
-                url: '/?nightstands',
-                description:
-                  'Double lined small description that accompanies link in the React Mega Menu project'
-              },
-              {
-                label: 'Benches',
-                type: 'link',
-                url: '/?benches',
-                description:
-                  'Double lined small description that accompanies link in the React Mega Menu project'
-              }
-            ]
-          }
-        ]
-      },
-      {
-        label: 'Blog',
-        type: 'mega',
-        url: '/?blog',
-        items: [
-          {
-            label: 'Latest Post Title',
-            type: 'link',
-            url: '/?latest-post-title',
-            description:
-              'Double lined small description that accompanies link in the React Mega Menu project'
-          },
-          {
-            label: 'Categories',
-            type: 'sub',
-            url: '/?categories',
-            items: [
-              {
-                label: 'News',
-                type: 'link',
-                url: '/?news'
-              },
-              {
-                label: 'Recipes',
-                type: 'link',
-                url: '/?recipes'
-              },
-              {
-                label: 'Health',
-                type: 'link',
-                url: '/?health'
-              },
-              {
-                label: 'Diet',
-                type: 'link',
-                url: '/?diet'
-              }
-            ]
-          }
-        ]
-      },
-      {
-        label: 'Help',
-        type: 'mega',
-        url: '/?help',
-        items: [
-          {
-            label: 'FAQ',
-            type: 'link',
-            url: '/?faq',
-            description: 'Single line description that accompanies link'
-          },
-          {
-            label: 'Knowledge Base',
-            type: 'link',
-            url: '/?knowledge-base',
-            description:
-              'Double lined small description that accompanies link in the React Mega Menu project'
-          }
-        ]
-      },
-      {
-        label: 'Contact',
-        type: 'main',
-        url: '/?contact'
-      }
-    ]
-  }
-}
+const defaultMenuConfig = config
 
 export const Menu = ({ config = defaultMenuConfig, ...props }) => {
-  const [megaMenuState, setMegaMenuState] = useState('')
-  const [subMenuState, setSubMenuState] = useState('')
-  const [subSubMenuState, setSubSubMenuState] = useState('')
-  const [activeMenus, setActiveMenus] = useState([]) // array that captures the ids of active menus
-  const [isMobile, setIsMobile] = useState(true) // array that captures the ids of active menus
-  const wrapperRef = useRef(null) // used to detect clicks outside of component
+  const { resetMenus, megaMenuState, toggleMegaMenu, setIsMobile } = useMenu()
 
-  const resetMenus = () => {
-    // close all menus and empty activeMenus array
-    setActiveMenus([])
-    setSubMenuState('closed')
-    setSubSubMenuState('closed')
-  }
+  const wrapperRef = useRef(null) // used to detect clicks outside of component
 
   const useOutsideAlerter = (ref) => {
     useEffect(() => {
-      // Reset menu if clicked on outside of element
       const handleClickOutside = (e) => {
         if (ref.current && !ref.current.contains(e.target)) {
           resetMenus()
         }
       }
 
-      // Bind the event listener to both mouse and key events
       document.addEventListener('mousedown', handleClickOutside)
       document.addEventListener('keydown', handleClickOutside)
       return () => {
-        // Unbind the event listener to clean up
         document.removeEventListener('mousedown', handleClickOutside)
         document.removeEventListener('keydown', handleClickOutside)
       }
-    }, [ref])
-  }
-
-  const updateActiveMenus = (state, menuId) => {
-    if (state === 'open') {
-      // add menuId from activeMenus
-      setActiveMenus([...activeMenus, menuId])
-    } else if (state === 'closed') {
-      // remove menuId from activeMenus
-      setActiveMenus(activeMenus.filter((item) => item !== menuId))
-    }
-  }
-
-  const toggleMegaMenu = (e, menuId) => {
-    e.preventDefault()
-
-    const nextState = stateMachine(megaMenuState)
-
-    setMegaMenuState(nextState)
-
-    updateActiveMenus(nextState, menuId)
-
-    if (megaMenuState === 'open') {
-      resetMenus()
-    }
-  }
-
-  const toggleSubMenu = (e, menuId) => {
-    e.preventDefault()
-
-    const nextState = stateMachine(subMenuState)
-
-    setSubMenuState(stateMachine(subMenuState))
-    /*
-      I haven't come up with single solution (yet) that takes care of
-      opening and closing menus for both small and large screens, so for
-      now I fork the logic based on viewport size.
-      */
-    if (!isMobile) {
-      if (activeMenus.includes(menuId)) {
-        // menu is already open, remove it from activeMenus to close it
-        setActiveMenus([])
-      } else {
-        // menu is not yet active, add it to activeMenus to open it
-        setActiveMenus([menuId])
-      }
-    } else {
-      // remove menuId from activeMenus
-      updateActiveMenus(nextState, menuId)
-    }
-  }
-
-  const toggleSubSubMenu = (e, menuId) => {
-    e.preventDefault()
-
-    const nextState = stateMachine(subSubMenuState)
-
-    setSubSubMenuState(stateMachine(subSubMenuState))
-
-    updateActiveMenus(nextState, menuId)
+    }, [ref, resetMenus])
   }
 
   useEffect(() => {
@@ -334,12 +85,21 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
   }, [resetMenus])
 
   useEffect(() => {
-    if (window.innerWidth >= viewportLarge) {
-      setIsMobile(false)
-    } else {
-      setIsMobile(true)
+    const updateIsMobile = () => {
+      if (window.innerWidth >= viewportLarge) {
+        setIsMobile(false)
+      } else {
+        setIsMobile(true)
+      }
     }
-  }, [activeMenus, isMobile])
+
+    updateIsMobile()
+    window.addEventListener('resize', updateIsMobile)
+
+    return () => {
+      window.removeEventListener('resize', updateIsMobile)
+    }
+  }, [])
 
   useOutsideAlerter(wrapperRef) // create bindings for closing menu from outside events
 
@@ -363,7 +123,7 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
       <Hamburger
         label="Menu"
         state={megaMenuState}
-        onClick={(e) => toggleMegaMenu(e, 'nav-main')}
+        onClick={(e) => toggleMegaMenu(e)}
         id="rmm__hamburger"
       />
       <Nav
@@ -382,29 +142,25 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
           {config.menu.items.map((item, index) => {
             switch (item.type) {
               case MENU_ITEM_TYPE_MAIN:
-                return renderMainMenuItem(item, index)
+                return renderMainMenuItem(item, index, toggleMegaMenu)
               case MENU_ITEM_TYPE_LINK:
-                return renderLinkMenuItem(item, index)
+                return renderLinkMenuItem(item, index, toggleMegaMenu)
               case MENU_ITEM_TYPE_MEGA:
                 return renderMegaMenuItem(
                   item,
                   index,
-                  activeMenus,
-                  toggleSubMenu,
-                  toggleSubSubMenu,
                   a11yClick,
                   renderLinkMenuItem,
-                  renderSubMenuItem
+                  renderSubMenuItem,
+                  toggleMegaMenu
                 )
               case MENU_ITEM_TYPE_SUB:
                 return renderSubMenuItem(
                   item,
                   index,
-                  activeMenus,
-                  toggleSubMenu,
-                  toggleSubSubMenu,
                   a11yClick,
-                  renderLinkMenuItem
+                  renderLinkMenuItem,
+                  toggleMegaMenu
                 )
               default:
                 return null
@@ -437,7 +193,9 @@ Menu.propTypes = {
         })
       )
     })
-  })
+  }),
+  className: PropTypes.string,
+  id: PropTypes.string
 }
 
 export default Menu
