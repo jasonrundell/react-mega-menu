@@ -345,7 +345,7 @@ function App() {
         <h1>React Mega Menu Demo</h1>
         <hr />
         <p>
-          A React project which aims to be an accessible, responsive,
+          A React library project which aims to be an accessible, responsive,
           boilerplate top navigation menu with a "Mega Menu"!
         </p>
         <h2>Features</h2>
@@ -353,26 +353,66 @@ function App() {
           <li>WCAG 2.1 AA compliant</li>
           <li>W3C valid markup</li>
           <li>Fly-out menus</li>
-          <li>Menus are accessible through key inputs</li>
-          <li>Unified menu for all screen ratios</li>
+          <li>Supports keyboard navigation and screen readers</li>
+          <li>
+            Responsively designed to adapt to modern mobile and desktop screen
+            sizes
+          </li>
           <li>
             Styled (lightly) with <a href="https://emotion.sh">Emotion</a>
           </li>
-          <li>Theme support with vanilla CSS (examples included)</li>
+          <li>
+            The project supports theme customization with vanilla CSS, as
+            demonstrated in the synthwave.css theme.
+          </li>
           <li>Supports and tested against Edge, Safari, FireFox, and Chrome</li>
           <li>
-            CSS animations with{' '}
+            Includes CSS animations that respect the{' '}
             <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion">
               prefers-reduced-motion
             </a>{' '}
-            media query
+            media query for users who prefer reduced motion
+          </li>
+          <li>
+            Includes a demo project using Next.js, showcasing how to integrate
+            the menu with a Next.js application
           </li>
         </ul>
         <hr />
+        <h3>Semantically designed structure</h3>
+        <p>
+          The menu is designed to be as semantically correct as possible. The
+          top-level menu items are <code>nav</code> elements, and the submenus
+          are <code>ul</code> elements. The menu items are <code>li</code>{' '}
+          elements, and the links are <code>a</code> elements. The menu is
+          accessible through keyboard navigation and screen readers.
+        </p>
         <button onClick={toggleHead}>
-          {headEnabled ? 'Disable Styling' : 'Enable Styling'}
+          {headEnabled ? 'Disable styling to view' : 'Re-enable styling'}
         </button>
-        <h2>Menu Themes</h2>
+        <hr />
+        <h3>Styling the menu</h3>
+        <p>
+          This menu component is designed to be highly customizable. You can
+          apply your own CSS styles to the menu by targeting the appropriate
+          classes. The menu structure is built using semantic HTML elements,
+          which makes it easy to style using CSS.
+        </p>
+        <p>
+          The top-level menu items are wrapped in <code>nav</code> elements, and
+          the submenus are wrapped in <code>ul</code> elements. Each menu item
+          is an <code>li</code> element, and the links are <code>a</code>{' '}
+          elements. This structure allows you to use standard CSS selectors to
+          apply styles to different parts of the menu.
+        </p>
+        <p>
+          Additionally, the menu supports themes, which are applied by adding a
+          theme-specific class to the menu container. You can create your own
+          themes by defining CSS classes that follow the naming convention{' '}
+          <code>.rmm__theme--your-theme-name</code> and applying them to the
+          menu container.
+        </p>
+        <h4>Try out a theme:</h4>
         <ul>
           {themes.map((theme) => (
             <li key={theme}>
@@ -385,6 +425,23 @@ function App() {
             <button onClick={() => handleThemeChange('')}>None</button>
           </li>
         </ul>
+        <p>
+          <em>
+            Note how changing the theme only affects the mega menu and not the
+            rest of the page/application.
+          </em>
+        </p>
+        <h3>Showcase your theme</h3>
+        <p>
+          Submit a{' '}
+          <a
+            href="https://github.com/jasonrundell/react-mega-menu/compare"
+            target="_blank"
+          >
+            pull request
+          </a>{' '}
+          to add your theme to the demo!
+        </p>
       </main>
     </div>
   )
