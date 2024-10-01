@@ -20,12 +20,10 @@ import {
 } from '../config/menuItemTypes'
 
 const handleUrl = (e, url, toggleMegaMenu) => {
-  console.log('url', url)
   if (!url.includes('http')) {
     toggleMegaMenu(e)
   }
-
-  return null
+  window.location.href = url
 }
 
 export const renderMainMenuItem = (item, index) => {
@@ -283,4 +281,244 @@ export const generateMenuIds = (menuConfig) => {
     }
   })
   return newMenuConfig
+}
+
+export const config = {
+  topbar: {
+    id: 'topbar',
+    logo: {
+      src: 'https://via.placeholder.com/150x50',
+      alt: 'Placeholder Logo',
+      rel: 'home'
+    },
+    title: 'React Mega Menu'
+  },
+  menu: {
+    items: [
+      {
+        label: 'Home',
+        type: 'main',
+        url: '/'
+      },
+      {
+        label: 'About',
+        type: 'main',
+        url: '/about/'
+      },
+      {
+        label: 'Store',
+        type: 'mega',
+        url: '/store/',
+        items: [
+          {
+            label: 'Deals',
+            type: 'link',
+            url: '/store/deals/',
+            description:
+              "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide."
+          },
+          {
+            label: 'Kitchen',
+            type: 'link',
+            url: '/store/kitchen/',
+            description:
+              "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide."
+          },
+          {
+            label: 'Outdoors',
+            type: 'sub',
+            url: '/store/outdoors/',
+            description:
+              "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide.",
+            items: [
+              {
+                label: 'Tools',
+                type: 'link',
+                url: '/store/outdoors/tools/',
+                description: 'Single line description that accompanies link'
+              },
+              {
+                label: 'Plants',
+                type: 'link',
+                url: '/store/outdoors/plants/',
+                description: 'Single line description that accompanies link'
+              },
+              {
+                label: 'Patio',
+                type: 'link',
+                url: '/store/outdoors/patio/',
+                description: 'Single line description that accompanies link'
+              },
+              {
+                label: 'Decking',
+                type: 'link',
+                url: '/store/outdoors/decking/',
+                description: 'Single line description that accompanies link'
+              }
+            ]
+          },
+          {
+            label: 'Bedroom',
+            type: 'sub',
+            url: '/store/bedroom/',
+            description:
+              "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide.",
+            items: [
+              {
+                label: 'Beds',
+                type: 'link',
+                url: '/store/bedroom/beds/',
+                description: 'Single line description that accompanies link'
+              },
+              {
+                label: 'Dressers',
+                type: 'link',
+                url: '/store/bedroom/dressers/',
+                description:
+                  'Double lined small description that accompanies link in the React Mega Menu project'
+              },
+              {
+                label: 'Nightstands',
+                type: 'link',
+                url: '/store/bedroom/nightstands/',
+                description:
+                  'Double lined small description that accompanies link in the React Mega Menu project'
+              },
+              {
+                label: 'Benches',
+                type: 'link',
+                url: '/store/bedroom/benches/',
+                description:
+                  'Double lined small description that accompanies link in the React Mega Menu project'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        label: 'Blog',
+        type: 'mega',
+        url: '/blog/',
+        items: [
+          {
+            label: 'Latest Post Title',
+            type: 'link',
+            url: '/blog/posts/latest-post-title/',
+            description:
+              'Double lined small description that accompanies link in the React Mega Menu project'
+          },
+          {
+            label: 'Categories',
+            type: 'sub',
+            url: '/blog/categories/',
+            items: [
+              {
+                label: 'News',
+                type: 'link',
+                url: '/blog/news/'
+              },
+              {
+                label: 'Recipes',
+                type: 'link',
+                url: '/blog/recipes/'
+              },
+              {
+                label: 'Health',
+                type: 'link',
+                url: '/blog/health/'
+              },
+              {
+                label: 'Diet',
+                type: 'link',
+                url: '/blog/diet/'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        label: 'Help',
+        type: 'mega',
+        url: '/help/',
+        items: [
+          {
+            label: 'FAQ',
+            type: 'link',
+            url: '/help/faq/',
+            description: 'Single line description that accompanies link'
+          },
+          {
+            label: 'Knowledge Base',
+            type: 'link',
+            url: '/help/knowledge-base/',
+            description:
+              'Double lined small description that accompanies link in the React Mega Menu project'
+          }
+        ]
+      },
+      {
+        label: 'Settings',
+        type: 'mega',
+        url: '/settings/',
+        items: [
+          {
+            label: 'Profile',
+            type: 'link',
+            url: '/settings/profile/',
+            description: 'Single line description that accompanies link'
+          },
+          {
+            label: 'Billing',
+            type: 'link',
+            url: '/settings/billing/',
+            description: 'Single line description that accompanies link'
+          },
+          {
+            label: 'Theme',
+            type: 'sub',
+            url: '#',
+            description: 'Change the React Mega Menu theme',
+            items: [
+              {
+                label: 'Light',
+                type: 'link',
+                url: '/?theme=light'
+              },
+              {
+                label: 'Dark',
+                type: 'link',
+                url: '/?theme=dark'
+              },
+              {
+                label: 'Monokai',
+                type: 'link',
+                url: '/?theme=monokai'
+              },
+              {
+                label: 'Retro',
+                type: 'link',
+                url: '/?theme=retro'
+              },
+              {
+                label: 'Synthwave',
+                type: 'link',
+                url: '/?theme=synthwave'
+              }
+            ]
+          },
+          {
+            label: 'Logout',
+            type: 'link',
+            url: '/settings/logout/',
+            description: 'Single line description that accompanies link'
+          }
+        ]
+      },
+      {
+        label: 'Contact',
+        type: 'main',
+        url: '#contact'
+      }
+    ]
+  }
 }
