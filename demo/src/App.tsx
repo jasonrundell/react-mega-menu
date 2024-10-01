@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
-import { Menu } from '../../src/index' // local development mode
-// import { Menu } from '@jasonrundell/react-mega-menu'
+import { useState, useEffect, useCallback } from 'react'
+// import { Menu } from '../../src/index' // local development mode
+import { Menu } from '@jasonrundell/react-mega-menu'
 import './App.css'
 
 export interface MenuItem {
@@ -22,7 +22,7 @@ export interface MenuConfig {
     title: string
   }
   menu: {
-    items: any
+    items: MenuItem[]
   }
 }
 
@@ -51,56 +51,56 @@ const menuConfig: MenuConfig = {
       {
         label: 'About',
         type: 'main',
-        url: '/?about'
+        url: '/about/'
       },
       {
         label: 'Store',
         type: 'mega',
-        url: '/?store',
+        url: '/store/',
         items: [
           {
             label: 'Deals',
             type: 'link',
-            url: '/?deals',
+            url: '/store/deals/',
             description:
               "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide."
           },
           {
             label: 'Kitchen',
             type: 'link',
-            url: '/#kitchen',
+            url: '/store/kitchen/',
             description:
               "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide."
           },
           {
             label: 'Outdoors',
             type: 'sub',
-            url: '/?outdoors',
+            url: '/store/outdoors/',
             description:
               "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide.",
             items: [
               {
                 label: 'Tools',
                 type: 'link',
-                url: '/?tools',
+                url: '/store/outdoors/tools/',
                 description: 'Single line description that accompanies link'
               },
               {
                 label: 'Plants',
                 type: 'link',
-                url: '/?plants',
+                url: '/store/outdoors/plants/',
                 description: 'Single line description that accompanies link'
               },
               {
                 label: 'Patio',
                 type: 'link',
-                url: '/?patio',
+                url: '/store/outdoors/patio/',
                 description: 'Single line description that accompanies link'
               },
               {
                 label: 'Decking',
                 type: 'link',
-                url: '/?decking',
+                url: '/store/outdoors/decking/',
                 description: 'Single line description that accompanies link'
               }
             ]
@@ -108,34 +108,34 @@ const menuConfig: MenuConfig = {
           {
             label: 'Bedroom',
             type: 'sub',
-            url: '/?bedroom',
+            url: '/store/bedroom/',
             description:
               "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide.",
             items: [
               {
                 label: 'Beds',
                 type: 'link',
-                url: '/?beds',
+                url: '/store/bedroom/beds/',
                 description: 'Single line description that accompanies link'
               },
               {
                 label: 'Dressers',
                 type: 'link',
-                url: '/?dressers',
+                url: '/store/bedroom/dressers/',
                 description:
                   'Double lined small description that accompanies link in the React Mega Menu project'
               },
               {
                 label: 'Nightstands',
                 type: 'link',
-                url: '/?nightstands',
+                url: '/store/bedroom/nightstands/',
                 description:
                   'Double lined small description that accompanies link in the React Mega Menu project'
               },
               {
                 label: 'Benches',
                 type: 'link',
-                url: '/?benches',
+                url: '/store/bedroom/benches/',
                 description:
                   'Double lined small description that accompanies link in the React Mega Menu project'
               }
@@ -146,39 +146,39 @@ const menuConfig: MenuConfig = {
       {
         label: 'Blog',
         type: 'mega',
-        url: '/?blog',
+        url: '/blog/',
         items: [
           {
             label: 'Latest Post Title',
             type: 'link',
-            url: '/?latest-post-title',
+            url: '/blog/posts/latest-post-title/',
             description:
               'Double lined small description that accompanies link in the React Mega Menu project'
           },
           {
             label: 'Categories',
             type: 'sub',
-            url: '/?categories',
+            url: '/blog/categories/',
             items: [
               {
                 label: 'News',
                 type: 'link',
-                url: '/?news'
+                url: '/blog/news/'
               },
               {
                 label: 'Recipes',
                 type: 'link',
-                url: '/?recipes'
+                url: '/blog/recipes/'
               },
               {
                 label: 'Health',
                 type: 'link',
-                url: '/?health'
+                url: '/blog/health/'
               },
               {
                 label: 'Diet',
                 type: 'link',
-                url: '/?diet'
+                url: '/blog/diet/'
               }
             ]
           }
@@ -187,18 +187,18 @@ const menuConfig: MenuConfig = {
       {
         label: 'Help',
         type: 'mega',
-        url: '/?help',
+        url: '/help/',
         items: [
           {
             label: 'FAQ',
             type: 'link',
-            url: '/?faq',
+            url: '/help/faq/',
             description: 'Single line description that accompanies link'
           },
           {
             label: 'Knowledge Base',
             type: 'link',
-            url: '/?knowledge-base',
+            url: '/help/knowledge-base/',
             description:
               'Double lined small description that accompanies link in the React Mega Menu project'
           }
@@ -207,18 +207,18 @@ const menuConfig: MenuConfig = {
       {
         label: 'Settings',
         type: 'mega',
-        url: '/?settings',
+        url: '/settings/',
         items: [
           {
             label: 'Profile',
             type: 'link',
-            url: '/?profile',
+            url: '/settings/profile/',
             description: 'Single line description that accompanies link'
           },
           {
             label: 'Billing',
             type: 'link',
-            url: '/?billing',
+            url: '/settings/billing/',
             description: 'Single line description that accompanies link'
           },
           {
@@ -265,7 +265,7 @@ const menuConfig: MenuConfig = {
       {
         label: 'Contact',
         type: 'main',
-        url: '/#contact'
+        url: '#contact'
       }
     ]
   }
@@ -301,6 +301,21 @@ function App() {
     }
   }, [headEnabled, headElement])
 
+  /**
+   * This useEffect hook will check the URL query string for a theme parameter
+   * and apply the theme if it exists.
+   * This is useful for sharing a specific theme with others. For example:
+   * https://example.com?theme=dark will load the dark theme.
+   * https://example.com?theme=light will load the light theme.
+   */
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const themeParam = params.get('theme')
+    if (themeParam) {
+      setCurrentTheme(themeParam)
+    }
+  }, [])
+
   const toggleHead = () => {
     setHeadEnabled(!headEnabled)
   }
@@ -310,33 +325,36 @@ function App() {
   }
 
   // Function to dynamically import the theme CSS
-  const loadTheme = async (theme: string) => {
-    try {
-      // Remove the previous theme classes if necessary
-      const rmmNav = document.getElementById('rmm__menu')
-      if (rmmNav) {
-        themes.forEach((theme) =>
-          rmmNav.classList.remove(`rmm__theme--${theme}`)
-        )
-      }
-
-      // Dynamically import the theme CSS file
-      if (theme) {
-        await import(`./themes/${theme}.css`)
-
-        // Apply the selected theme class
+  const loadTheme = useCallback(
+    async (theme: string) => {
+      try {
+        // Remove the previous theme classes if necessary
+        const rmmNav = document.getElementById('rmm__menu')
         if (rmmNav) {
-          rmmNav.classList.add(`rmm__theme--${theme}`)
+          themes.forEach((theme) =>
+            rmmNav.classList.remove(`rmm__theme--${theme}`)
+          )
         }
+
+        // Dynamically import the theme CSS file
+        if (theme) {
+          await import(`./themes/${theme}.css`)
+
+          // Apply the selected theme class
+          if (rmmNav) {
+            rmmNav.classList.add(`rmm__theme--${theme}`)
+          }
+        }
+      } catch (err) {
+        console.error(`Failed to load the ${theme} theme`, err)
       }
-    } catch (err) {
-      console.error(`Failed to load the ${theme} theme`, err)
-    }
-  }
+    },
+    [themes]
+  )
 
   useEffect(() => {
     loadTheme(currentTheme)
-  }, [currentTheme])
+  }, [currentTheme, loadTheme])
 
   return (
     <div>
@@ -431,7 +449,7 @@ function App() {
             rest of the page/application.
           </em>
         </p>
-        <h3>Showcase your theme</h3>
+        <h3 id="contact">Showcase your theme</h3>
         <p>
           Submit a{' '}
           <a
