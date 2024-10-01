@@ -29,7 +29,7 @@ export interface MenuConfig {
 /**
  * Here's a static configuration example of a menu configuration object.
  * If menuConfig doesn't depend on any state or props of App, hoisting it can help improve performance
- * and code clarity. Otherwise move it to App's state.
+ * and code clarity. Otherwise, move it to App's state.
  */
 const menuConfig: MenuConfig = {
   topbar: {
