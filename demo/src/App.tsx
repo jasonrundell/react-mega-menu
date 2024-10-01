@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-// import { Menu } from '../../src/index' // local development mode
-import { Menu } from '@jasonrundell/react-mega-menu'
+import { Menu } from '../../src/index' // local development mode
+// import { Menu } from '@jasonrundell/react-mega-menu'
 import './App.css'
 
 export interface MenuItem {
@@ -68,7 +68,7 @@ const menuConfig: MenuConfig = {
           {
             label: 'Kitchen',
             type: 'link',
-            url: '/?kitchen',
+            url: '/#kitchen',
             description:
               "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide."
           },
@@ -265,7 +265,7 @@ const menuConfig: MenuConfig = {
       {
         label: 'Contact',
         type: 'main',
-        url: '/?contact'
+        url: '/#contact'
       }
     ]
   }

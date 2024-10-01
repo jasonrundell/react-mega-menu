@@ -1,6 +1,9 @@
 import React from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
+// Context
+import { useMenu } from '../context/MenuContext'
+
 // Components
 import MegaList from '../components/MegaList'
 import MainNavItem from '../components/MainNavItem'
@@ -16,7 +19,18 @@ import {
   MENU_ITEM_TYPE_SUB
 } from '../config/menuItemTypes'
 
+const handleUrl = (e, url, toggleMegaMenu) => {
+  console.log('url', url)
+  if (!url.includes('http')) {
+    toggleMegaMenu(e)
+  }
+
+  return null
+}
+
 export const renderMainMenuItem = (item, index) => {
+  const { toggleMegaMenu } = useMenu()
+
   return (
     <MainNavItem
       role="none"
@@ -29,6 +43,7 @@ export const renderMainMenuItem = (item, index) => {
         role="menuitem"
         type={item.type}
         href={item.url}
+        onClick={(e) => handleUrl(e, item.url, toggleMegaMenu)}
         className="rmm__main-nav-item-link"
       >
         {item.label}
@@ -38,6 +53,8 @@ export const renderMainMenuItem = (item, index) => {
 }
 
 export const renderLinkMenuItem = (item, index) => {
+  const { toggleMegaMenu } = useMenu()
+
   return (
     <NavItem
       id={`rmm-nav-item-${item.id}`}
@@ -49,6 +66,7 @@ export const renderLinkMenuItem = (item, index) => {
         id={`rmm-nav-item-link-${item.id}`}
         role="menuitem"
         href={item.url}
+        onClick={(e) => handleUrl(e, item.url, toggleMegaMenu)}
         className="rmm__nav-item-link"
       >
         {item.label}
@@ -65,13 +83,12 @@ export const renderLinkMenuItem = (item, index) => {
 export const renderMegaMenuItem = (
   item,
   index,
-  activeMenus,
-  toggleSubMenu,
-  toggleSubSubMenu,
   a11yClick,
   renderLinkMenuItem,
   renderSubMenuItem
 ) => {
+  const { activeMenus, toggleSubMenu } = useMenu()
+
   return (
     <MainNavItem
       id={`rmm-main-nav-item-${item.id} `}
@@ -131,9 +148,6 @@ export const renderMegaMenuItem = (
               return renderMegaMenuItem(
                 item,
                 index,
-                activeMenus,
-                toggleSubMenu,
-                toggleSubSubMenu,
                 a11yClick,
                 renderLinkMenuItem,
                 renderSubMenuItem
@@ -142,9 +156,6 @@ export const renderMegaMenuItem = (
               return renderSubMenuItem(
                 item,
                 index,
-                activeMenus,
-                toggleSubMenu,
-                toggleSubSubMenu,
                 a11yClick,
                 renderLinkMenuItem
               )
@@ -160,12 +171,11 @@ export const renderMegaMenuItem = (
 export const renderSubMenuItem = (
   item,
   index,
-  activeMenus,
-  toggleSubMenu,
-  toggleSubSubMenu,
   a11yClick,
   renderLinkMenuItem
 ) => {
+  const { activeMenus, toggleSubMenu, toggleSubSubMenu } = useMenu()
+
   return (
     <NavItem
       id={`rmm-nav-tem-${item.id}`}
@@ -256,8 +266,8 @@ export const stateMachine = (state) => {
   return stateChangedTo
 }
 
-export // function that will use uuidv4 to generate unique ids for each menu item in menuConfig
-const generateMenuIds = (menuConfig) => {
+// function that will use uuidv4 to generate unique ids for each menu item in menuConfig
+export const generateMenuIds = (menuConfig) => {
   const newMenuConfig = { ...menuConfig }
   newMenuConfig.menu.items.forEach((item) => {
     item.id = uuidv4()
