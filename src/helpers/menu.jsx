@@ -26,18 +26,26 @@ export const handleUrl = (e, url, toggleMegaMenu) => {
   window.location.href = url
 }
 
-export const renderMainMenuItem = (item, index) => {
+export const formatIdString = (str) => {
+  return str
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+}
+
+export const renderMainMenuItem = (item) => {
   const { toggleMegaMenu } = useMenu()
 
   return (
     <MainNavItem
       role="none"
-      id={`rmm-main-nav-item-${item.id}`}
-      key={index}
+      id={`rmm-main-nav-item-${formatIdString(item.id)}`}
+      key={`rmm-main-nav-item-${formatIdString(item.id)}`}
       className="rmm__main-nav-item"
     >
       <MainNavItemLink
-        id={`rmm-main-nav-item-link-${item.id}`}
+        id={`rmm-main-nav-item-link-${formatIdString(item.id)}`}
         role="menuitem"
         type={item.type}
         href={item.url}
@@ -50,18 +58,18 @@ export const renderMainMenuItem = (item, index) => {
   )
 }
 
-export const renderLinkMenuItem = (item, index) => {
+export const renderLinkMenuItem = (item) => {
   const { toggleMegaMenu } = useMenu()
 
   return (
     <NavItem
-      id={`rmm-nav-item-${item.id}`}
+      id={`rmm-nav-item-${formatIdString(item.id)}`}
       role="none"
-      key={index}
+      key={`rmm-nav-item-${formatIdString(item.id)}`}
       className="rmm__nav-item"
     >
       <NavItemLink
-        id={`rmm-nav-item-link-${item.id}`}
+        id={`rmm-nav-item-link-${formatIdString(item.id)}`}
         role="menuitem"
         href={item.url}
         onClick={(e) => handleUrl(e, item.url, toggleMegaMenu)}
@@ -80,7 +88,6 @@ export const renderLinkMenuItem = (item, index) => {
 
 export const renderMegaMenuItem = (
   item,
-  index,
   a11yClick,
   renderLinkMenuItem,
   renderSubMenuItem
@@ -89,74 +96,76 @@ export const renderMegaMenuItem = (
 
   return (
     <MainNavItem
-      id={`rmm-main-nav-item-${item.id} `}
+      id={`rmm-main-nav-item-${formatIdString(item.id)}`}
       role="none"
       isChildren
-      key={index}
+      key={`rmm-main-nav-item-${formatIdString(item.id)}`}
       className="rmm__main-nav-item"
     >
       <MainNavItemLink
-        id={`rmm-main-nav-item-link-${item.id}`}
+        id={`rmm-main-nav-item-link-${formatIdString(item.id)}`}
         role="menuitem"
         type={item.type}
         href={item.url}
-        isActive={!!activeMenus.includes(`rmm-mega-list-id-${item.id}`)}
-        onClick={(e) => toggleSubMenu(e, `rmm-mega-list-id-${item.id}`)}
+        isActive={
+          !!activeMenus.includes(`rmm-mega-list-id-${formatIdString(item.id)}`)
+        }
+        onClick={(e) =>
+          toggleSubMenu(e, `rmm-mega-list-id-${formatIdString(item.id)}`)
+        }
         onKeyDown={(e) =>
-          a11yClick(e) && toggleSubMenu(e, `rmm-mega-list-id-${item.id}`)
+          a11yClick(e) &&
+          toggleSubMenu(e, `rmm-mega-list-id-${formatIdString(item.id)}`)
         }
         ariaHaspopup="true"
-        ariaControls={`rmm-mega-list-id-${item.id}`}
+        ariaControls={`rmm-mega-list-id-${formatIdString(item.id)}`}
         className="rmm__main-nav-item-link rmm__main-nav-item-link--forward"
       >
         {item.label}
       </MainNavItemLink>
       <MegaList
-        id={`rmm-mega-list-id-${item.id}`}
+        id={`rmm-mega-list-id-${formatIdString(item.id)}`}
         activeState={
-          activeMenus.includes(`rmm-mega-list-id-${item.id}`)
+          activeMenus.includes(`rmm-mega-list-id-${formatIdString(item.id)}`)
             ? 'open'
             : 'closed'
         }
         className="rmm__mega-list"
       >
         <NavItem
-          id={`rmm-nav-item-${item.id}`}
+          id={`rmm-nav-item-${formatIdString(item.id)}`}
           className="rmm__nav-item rmm__nav-item--heading"
         >
           <NavItemLink
-            id={`rmm-nav-item-link-${item.id}`}
+            id={`rmm-nav-item-link-${formatIdString(item.id)}`}
             href={item.url}
-            onClick={(e) => toggleSubMenu(e, `rmm-mega-list-id-${item.id}`)}
+            onClick={(e) =>
+              toggleSubMenu(e, `rmm-mega-list-id-${formatIdString(item.id)}`)
+            }
             onKeyDown={(e) =>
-              a11yClick(e) && toggleSubMenu(e, `rmm-mega-list-id-${item.id}`)
+              a11yClick(e) &&
+              toggleSubMenu(e, `rmm-mega-list-id-${formatIdString(item.id)}`)
             }
             ariaHaspopup="true"
-            ariaControls={`rmm-mega-list-id-${item.id}`}
+            ariaControls={`rmm-mega-list-id-${formatIdString(item.id)}`}
             className="rmm__nav-item-link rmm__nav-item-link--back"
           >
             {item.label}
           </NavItemLink>
         </NavItem>
-        {item.items.map((item, index) => {
+        {item.items.map((item) => {
           switch (item.type) {
             case MENU_ITEM_TYPE_MEGA:
               return renderMegaMenuItem(
                 item,
-                index,
                 a11yClick,
                 renderLinkMenuItem,
                 renderSubMenuItem
               )
             case MENU_ITEM_TYPE_SUB:
-              return renderSubMenuItem(
-                item,
-                index,
-                a11yClick,
-                renderLinkMenuItem
-              )
+              return renderSubMenuItem(item, a11yClick, renderLinkMenuItem)
             default:
-              return renderLinkMenuItem(item, index)
+              return renderLinkMenuItem(item)
           }
         })}
       </MegaList>
@@ -164,30 +173,28 @@ export const renderMegaMenuItem = (
   )
 }
 
-export const renderSubMenuItem = (
-  item,
-  index,
-  a11yClick,
-  renderLinkMenuItem
-) => {
+export const renderSubMenuItem = (item, a11yClick, renderLinkMenuItem) => {
   const { activeMenus, toggleSubMenu, toggleSubSubMenu } = useMenu()
 
   return (
     <NavItem
-      id={`rmm-nav-tem-${item.id}`}
-      key={index}
+      id={`rmm-nav-item-${formatIdString(item.id)}`}
+      key={`rmm-nav-item-${formatIdString(item.id)}`}
       className="rmm__nav-item"
     >
       <NavItemLink
-        id={`rmm-nav-item-link-${item.id}`}
+        id={`rmm-nav-item-link-${formatIdString(item.id)}`}
         role="menuitem"
         href={item.url}
-        onClick={(e) => toggleSubSubMenu(e, `rmm-nav-list-id-${item.id}`)}
+        onClick={(e) =>
+          toggleSubSubMenu(e, `rmm-nav-list-id-${formatIdString(item.id)}`)
+        }
         onKeyDown={(e) =>
-          a11yClick(e) && toggleSubSubMenu(e, `rmm-nav-list-id-${item.id}`)
+          a11yClick(e) &&
+          toggleSubSubMenu(e, `rmm-nav-list-id-${formatIdString(item.id)}`)
         }
         ariaHaspopup="true"
-        ariaControls={`rmm-nav-list-id-${item.id}`}
+        ariaControls={`rmm-nav-list-id-${formatIdString(item.id)}`}
         className="rmm__nav-item-link rmm__nav-item-link--forward"
       >
         {item.label}
@@ -198,41 +205,46 @@ export const renderSubMenuItem = (
         </NavItemDescription>
       )}
       <NavList
-        id={`rmm-nav-list-id-${item.id}`}
+        id={`rmm-nav-list-id-${formatIdString(item.id)}`}
         role="menu"
         type={item.type}
         activeState={
-          activeMenus.includes(`rmm-nav-list-id-${item.id}`) ? 'open' : 'closed'
+          activeMenus.includes(`rmm-nav-list-id-${formatIdString(item.id)}`)
+            ? 'open'
+            : 'closed'
         }
-        ariaLabelledby={`rmm-nav-item-link-${item.id}`}
-        className={`rmm__nav-list rmm__nav-list--${item.type} ${
+        ariaLabelledby={`rmm-nav-item-link-${formatIdString(item.id)}`}
+        className={`rmm__nav-list rmm__nav-list--${formatIdString(item.type)} ${
           item.type === MENU_ITEM_TYPE_SUB ? 'rmm__nav-list--dropdown' : ''
         }`}
       >
         <NavItem
-          id={`rmm-nav-item-sub-${item.id}`}
+          id={`rmm-nav-item-sub-${formatIdString(item.id)}`}
           role="none"
           className="rmm__nav-item rmm__nav-item--heading"
         >
           <NavItemLink
-            id={`rmm-nav-item-link-sub-${item.id}`}
+            id={`rmm-nav-item-link-sub-${formatIdString(item.id)}`}
             role="menuitem"
             href={item.url}
-            onClick={(e) => toggleSubMenu(e, `rmm-nav-list-id-${item.id}`)}
+            onClick={(e) =>
+              toggleSubMenu(e, `rmm-nav-list-id-${formatIdString(item.id)}`)
+            }
             onKeyDown={(e) =>
-              a11yClick(e) && toggleSubMenu(e, `rmm-nav-list-id-${item.id}`)
+              a11yClick(e) &&
+              toggleSubMenu(e, `rmm-nav-list-id-${formatIdString(item.id)}`)
             }
             ariaHaspopup="true"
-            ariaControls={`rmm-nav-list-id-${item.id}`}
+            ariaControls={`rmm-nav-list-id-${formatIdString(item.id)}`}
             className="rmm__nav-item-link rmm__nav-item-link--back"
           >
             {item.label}
           </NavItemLink>
         </NavItem>
-        {item.items.map((item, index) => {
+        {item.items.map((item) => {
           switch (item.type) {
             case MENU_ITEM_TYPE_LINK:
-              return renderLinkMenuItem(item, index)
+              return renderLinkMenuItem(item)
             default:
               return null
           }
@@ -262,25 +274,6 @@ export const stateMachine = (state) => {
   return stateChangedTo
 }
 
-// function that will use uuidv4 to generate unique ids for each menu item in menuConfig
-export const generateMenuIds = (menuConfig) => {
-  const newMenuConfig = { ...menuConfig }
-  newMenuConfig.menu.items.forEach((item) => {
-    item.id = uuidv4()
-    if (item.items) {
-      item.items.forEach((subItem) => {
-        subItem.id = uuidv4()
-        if (subItem.items) {
-          subItem.items.forEach((subSubItem) => {
-            subSubItem.id = uuidv4()
-          })
-        }
-      })
-    }
-  })
-  return newMenuConfig
-}
-
 export const config = {
   topbar: {
     id: 'topbar',
@@ -294,21 +287,25 @@ export const config = {
   menu: {
     items: [
       {
+        id: 'home',
         label: 'Home',
         type: 'main',
         url: '/'
       },
       {
+        id: 'about',
         label: 'About',
         type: 'main',
         url: '/about/'
       },
       {
+        id: 'store',
         label: 'Store',
         type: 'mega',
         url: '/store/',
         items: [
           {
+            id: 'store-deals',
             label: 'Deals',
             type: 'link',
             url: '/store/deals/',
@@ -316,6 +313,7 @@ export const config = {
               "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide."
           },
           {
+            id: 'store-kitchen',
             label: 'Kitchen',
             type: 'link',
             url: '/store/kitchen/',
@@ -323,6 +321,7 @@ export const config = {
               "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide."
           },
           {
+            id: 'store-outdoors',
             label: 'Outdoors',
             type: 'sub',
             url: '/store/outdoors/',
@@ -330,24 +329,28 @@ export const config = {
               "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide.",
             items: [
               {
+                id: 'store-outdoors-tools',
                 label: 'Tools',
                 type: 'link',
                 url: '/store/outdoors/tools/',
                 description: 'Single line description that accompanies link'
               },
               {
+                id: 'store-outdoors-plants',
                 label: 'Plants',
                 type: 'link',
                 url: '/store/outdoors/plants/',
                 description: 'Single line description that accompanies link'
               },
               {
+                id: 'store-outdoors-patio',
                 label: 'Patio',
                 type: 'link',
                 url: '/store/outdoors/patio/',
                 description: 'Single line description that accompanies link'
               },
               {
+                id: 'store-outdoors-decking',
                 label: 'Decking',
                 type: 'link',
                 url: '/store/outdoors/decking/',
@@ -356,6 +359,7 @@ export const config = {
             ]
           },
           {
+            id: 'store-bedroom',
             label: 'Bedroom',
             type: 'sub',
             url: '/store/bedroom/',
@@ -363,12 +367,14 @@ export const config = {
               "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide.",
             items: [
               {
+                id: 'store-bedroom-beds',
                 label: 'Beds',
                 type: 'link',
                 url: '/store/bedroom/beds/',
                 description: 'Single line description that accompanies link'
               },
               {
+                id: 'store-bedroom-dressers',
                 label: 'Dressers',
                 type: 'link',
                 url: '/store/bedroom/dressers/',
@@ -376,6 +382,7 @@ export const config = {
                   'Double lined small description that accompanies link in the React Mega Menu project'
               },
               {
+                id: 'store-bedroom-nightstands',
                 label: 'Nightstands',
                 type: 'link',
                 url: '/store/bedroom/nightstands/',
@@ -383,6 +390,7 @@ export const config = {
                   'Double lined small description that accompanies link in the React Mega Menu project'
               },
               {
+                id: 'store-bedroom-benches',
                 label: 'Benches',
                 type: 'link',
                 url: '/store/bedroom/benches/',
@@ -394,11 +402,13 @@ export const config = {
         ]
       },
       {
+        id: 'blog',
         label: 'Blog',
         type: 'mega',
         url: '/blog/',
         items: [
           {
+            id: 'blog-latest-post-title',
             label: 'Latest Post Title',
             type: 'link',
             url: '/blog/posts/latest-post-title/',
@@ -406,26 +416,31 @@ export const config = {
               'Double lined small description that accompanies link in the React Mega Menu project'
           },
           {
+            id: 'blog-categories',
             label: 'Categories',
             type: 'sub',
             url: '/blog/categories/',
             items: [
               {
+                id: 'blog-news',
                 label: 'News',
                 type: 'link',
                 url: '/blog/news/'
               },
               {
+                id: 'blog-recipes',
                 label: 'Recipes',
                 type: 'link',
                 url: '/blog/recipes/'
               },
               {
+                id: 'blog-health',
                 label: 'Health',
                 type: 'link',
                 url: '/blog/health/'
               },
               {
+                id: 'blog-diet',
                 label: 'Diet',
                 type: 'link',
                 url: '/blog/diet/'
@@ -435,17 +450,20 @@ export const config = {
         ]
       },
       {
+        id: 'help',
         label: 'Help',
         type: 'mega',
         url: '/help/',
         items: [
           {
+            id: 'help-faq',
             label: 'FAQ',
             type: 'link',
             url: '/help/faq/',
             description: 'Single line description that accompanies link'
           },
           {
+            id: 'help-knowledge-base',
             label: 'Knowledge Base',
             type: 'link',
             url: '/help/knowledge-base/',
@@ -455,49 +473,58 @@ export const config = {
         ]
       },
       {
+        id: 'settings',
         label: 'Settings',
         type: 'mega',
         url: '/settings/',
         items: [
           {
+            id: 'settings-profile',
             label: 'Profile',
             type: 'link',
             url: '/settings/profile/',
             description: 'Single line description that accompanies link'
           },
           {
+            id: 'settings-billing',
             label: 'Billing',
             type: 'link',
             url: '/settings/billing/',
             description: 'Single line description that accompanies link'
           },
           {
+            id: 'settings-theme',
             label: 'Theme',
             type: 'sub',
             url: '#',
             description: 'Change the React Mega Menu theme',
             items: [
               {
+                id: 'settings-theme-light',
                 label: 'Light',
                 type: 'link',
                 url: '/?theme=light'
               },
               {
+                id: 'settings-theme-dark',
                 label: 'Dark',
                 type: 'link',
                 url: '/?theme=dark'
               },
               {
+                id: 'settings-theme-monokai',
                 label: 'Monokai',
                 type: 'link',
                 url: '/?theme=monokai'
               },
               {
+                id: 'settings-theme-retro',
                 label: 'Retro',
                 type: 'link',
                 url: '/?theme=retro'
               },
               {
+                id: 'settings-theme-synthwave',
                 label: 'Synthwave',
                 type: 'link',
                 url: '/?theme=synthwave'
@@ -505,6 +532,7 @@ export const config = {
             ]
           },
           {
+            id: 'settings-logout',
             label: 'Logout',
             type: 'link',
             url: '/settings/logout/',
@@ -513,6 +541,7 @@ export const config = {
         ]
       },
       {
+        id: 'contact',
         label: 'Contact',
         type: 'main',
         url: '#contact'

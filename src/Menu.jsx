@@ -13,8 +13,7 @@ import {
   renderMainMenuItem,
   renderLinkMenuItem,
   renderMegaMenuItem,
-  renderSubMenuItem,
-  generateMenuIds
+  renderSubMenuItem
 } from './helpers/menu'
 import {
   MENU_ITEM_TYPE_LINK,
@@ -69,11 +68,6 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
       }
     }, [ref, resetMenus])
   }
-
-  useEffect(() => {
-    // generate unique ids for each menu item in config
-    config = generateMenuIds(config)
-  }, [])
 
   useEffect(() => {
     const handleEscape = (e) => a11yEscape(e, resetMenus)
@@ -138,14 +132,13 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
           ariaLabel="Main Menu"
           className="rmm__nav-list"
         >
-          {config.menu.items.map((item, index) => {
+          {config.menu.items.map((item) => {
             switch (item.type) {
               case MENU_ITEM_TYPE_LINK:
-                return renderLinkMenuItem(item, index, toggleMegaMenu)
+                return renderLinkMenuItem(item, toggleMegaMenu)
               case MENU_ITEM_TYPE_MEGA:
                 return renderMegaMenuItem(
                   item,
-                  index,
                   a11yClick,
                   renderLinkMenuItem,
                   renderSubMenuItem,
@@ -154,13 +147,12 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
               case MENU_ITEM_TYPE_SUB:
                 return renderSubMenuItem(
                   item,
-                  index,
                   a11yClick,
                   renderLinkMenuItem,
                   toggleMegaMenu
                 )
               default:
-                return renderMainMenuItem(item, index, toggleMegaMenu)
+                return renderMainMenuItem(item, toggleMegaMenu)
             }
           })}
         </MainList>
@@ -183,6 +175,7 @@ Menu.propTypes = {
     menu: PropTypes.shape({
       items: PropTypes.arrayOf(
         PropTypes.shape({
+          id: PropTypes.string.isRequired,
           label: PropTypes.string.isRequired,
           type: PropTypes.string.isRequired,
           url: PropTypes.string.isRequired,

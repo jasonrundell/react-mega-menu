@@ -21,21 +21,25 @@ const menuConfig = {
   menu: {
     items: [
       {
+        id: 'home',
         label: 'Home',
         type: 'main',
         url: '/'
       },
       {
+        id: 'about',
         label: 'About',
         type: 'main',
         url: '/about/'
       },
       {
+        id: 'store',
         label: 'Store',
         type: 'mega',
         url: '/store/',
         items: [
           {
+            id: 'store-deals',
             label: 'Deals',
             type: 'link',
             url: '/store/deals/',
@@ -43,6 +47,7 @@ const menuConfig = {
               "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide."
           },
           {
+            id: 'store-kitchen',
             label: 'Kitchen',
             type: 'link',
             url: '/store/kitchen/',
@@ -50,6 +55,7 @@ const menuConfig = {
               "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide."
           },
           {
+            id: 'store-outdoors',
             label: 'Outdoors',
             type: 'sub',
             url: '/store/outdoors/',
@@ -57,24 +63,28 @@ const menuConfig = {
               "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide.",
             items: [
               {
+                id: 'store-outdoors-tools',
                 label: 'Tools',
                 type: 'link',
                 url: '/store/outdoors/tools/',
                 description: 'Single line description that accompanies link'
               },
               {
+                id: 'store-outdoors-plants',
                 label: 'Plants',
                 type: 'link',
                 url: '/store/outdoors/plants/',
                 description: 'Single line description that accompanies link'
               },
               {
+                id: 'store-outdoors-patio',
                 label: 'Patio',
                 type: 'link',
                 url: '/store/outdoors/patio/',
                 description: 'Single line description that accompanies link'
               },
               {
+                id: 'store-outdoors-decking',
                 label: 'Decking',
                 type: 'link',
                 url: '/store/outdoors/decking/',
@@ -83,6 +93,7 @@ const menuConfig = {
             ]
           },
           {
+            id: 'store-bedroom',
             label: 'Bedroom',
             type: 'sub',
             url: '/store/bedroom/',
@@ -90,12 +101,14 @@ const menuConfig = {
               "Three lined small description that accompanies link in the React Mega Menu project. This maybe too much text? Who's to say, really. We'll leave it to fate to decide.",
             items: [
               {
+                id: 'store-bedroom-beds',
                 label: 'Beds',
                 type: 'link',
                 url: '/store/bedroom/beds/',
                 description: 'Single line description that accompanies link'
               },
               {
+                id: 'store-bedroom-dressers',
                 label: 'Dressers',
                 type: 'link',
                 url: '/store/bedroom/dressers/',
@@ -103,6 +116,7 @@ const menuConfig = {
                   'Double lined small description that accompanies link in the React Mega Menu project'
               },
               {
+                id: 'store-bedroom-nightstands',
                 label: 'Nightstands',
                 type: 'link',
                 url: '/store/bedroom/nightstands/',
@@ -110,6 +124,7 @@ const menuConfig = {
                   'Double lined small description that accompanies link in the React Mega Menu project'
               },
               {
+                id: 'store-bedroom-benches',
                 label: 'Benches',
                 type: 'link',
                 url: '/store/bedroom/benches/',
@@ -121,11 +136,13 @@ const menuConfig = {
         ]
       },
       {
+        id: 'blog',
         label: 'Blog',
         type: 'mega',
         url: '/blog/',
         items: [
           {
+            id: 'blog-latest-post-title',
             label: 'Latest Post Title',
             type: 'link',
             url: '/blog/posts/latest-post-title/',
@@ -133,26 +150,31 @@ const menuConfig = {
               'Double lined small description that accompanies link in the React Mega Menu project'
           },
           {
+            id: 'blog-categories',
             label: 'Categories',
             type: 'sub',
             url: '/blog/categories/',
             items: [
               {
+                id: 'blog-news',
                 label: 'News',
                 type: 'link',
                 url: '/blog/news/'
               },
               {
+                id: 'blog-recipes',
                 label: 'Recipes',
                 type: 'link',
                 url: '/blog/recipes/'
               },
               {
+                id: 'blog-health',
                 label: 'Health',
                 type: 'link',
                 url: '/blog/health/'
               },
               {
+                id: 'blog-diet',
                 label: 'Diet',
                 type: 'link',
                 url: '/blog/diet/'
@@ -162,17 +184,20 @@ const menuConfig = {
         ]
       },
       {
+        id: 'help',
         label: 'Help',
         type: 'mega',
         url: '/help/',
         items: [
           {
+            id: 'help-faq',
             label: 'FAQ',
             type: 'link',
             url: '/help/faq/',
             description: 'Single line description that accompanies link'
           },
           {
+            id: 'help-knowledge-base',
             label: 'Knowledge Base',
             type: 'link',
             url: '/help/knowledge-base/',
@@ -182,49 +207,58 @@ const menuConfig = {
         ]
       },
       {
+        id: 'settings',
         label: 'Settings',
         type: 'mega',
         url: '/settings/',
         items: [
           {
+            id: 'settings-profile',
             label: 'Profile',
             type: 'link',
             url: '/settings/profile/',
             description: 'Single line description that accompanies link'
           },
           {
+            id: 'settings-billing',
             label: 'Billing',
             type: 'link',
             url: '/settings/billing/',
             description: 'Single line description that accompanies link'
           },
           {
+            id: 'settings-theme',
             label: 'Theme',
             type: 'sub',
             url: '#',
             description: 'Change the React Mega Menu theme',
             items: [
               {
+                id: 'settings-theme-light',
                 label: 'Light',
                 type: 'link',
                 url: '/?theme=light'
               },
               {
+                id: 'settings-theme-dark',
                 label: 'Dark',
                 type: 'link',
                 url: '/?theme=dark'
               },
               {
+                id: 'settings-theme-monokai',
                 label: 'Monokai',
                 type: 'link',
                 url: '/?theme=monokai'
               },
               {
+                id: 'settings-theme-retro',
                 label: 'Retro',
                 type: 'link',
                 url: '/?theme=retro'
               },
               {
+                id: 'settings-theme-synthwave',
                 label: 'Synthwave',
                 type: 'link',
                 url: '/?theme=synthwave'
@@ -232,6 +266,7 @@ const menuConfig = {
             ]
           },
           {
+            id: 'settings-logout',
             label: 'Logout',
             type: 'link',
             url: '/settings/logout/',
@@ -240,6 +275,7 @@ const menuConfig = {
         ]
       },
       {
+        id: 'contact',
         label: 'Contact',
         type: 'main',
         url: '#contact'

@@ -36,6 +36,8 @@ describe('Menu component', () => {
       <Menu config={defaultConfig} />
     )
 
+    // console.log(container.innerHTML)
+
     // Check if the TopBar component is rendered
     const menuComponent = container.querySelector('#rmm__menu')
     expect(menuComponent).toBeInTheDocument()
@@ -61,6 +63,10 @@ describe('Menu component', () => {
     // Check if the Nav component is rendered
     const navComponent = container.querySelector('#rmm__nav')
     expect(navComponent).toBeInTheDocument()
+
+    // Check if the export const renderSubMenuItem component is rendered
+    const renderSubMenuItemComponent = container.querySelector('#rmm__nav')
+    expect(renderSubMenuItemComponent).toBeInTheDocument()
   })
 
   test('handles outside clicks to reset menus', () => {

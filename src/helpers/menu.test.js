@@ -7,7 +7,6 @@ import {
   renderMegaMenuItem,
   renderSubMenuItem,
   stateMachine,
-  generateMenuIds,
   handleUrl
 } from './menu'
 import { useMenu } from '../context/MenuContext'
@@ -35,12 +34,12 @@ describe('Menu Functions', () => {
 
   test('renders MainNavItem correctly', () => {
     const item = {
-      id: '1',
+      id: 'home',
       type: 'link',
       url: '/home',
       label: 'Home'
     }
-    const { getByRole } = render(renderMainMenuItem(item, 0))
+    const { getByRole } = render(renderMainMenuItem(item))
     const mainNavItem = getByRole('none')
     expect(mainNavItem).toBeInTheDocument()
     expect(mainNavItem).toHaveClass('rmm__main-nav-item')
@@ -48,23 +47,23 @@ describe('Menu Functions', () => {
 
   test('renders NavItem correctly', () => {
     const item = {
-      id: '1',
+      id: 'home',
       type: 'link',
       url: '/home',
       label: 'Home',
-      items: [{ id: '2', type: 'link', url: '/about', label: 'About' }]
+      items: [{ id: 'about', type: 'link', url: '/about', label: 'About' }]
     }
     const { container } = render(
       renderMegaMenuItem(
         item,
-        0,
         a11yClickMock,
         renderLinkMenuItem,
         renderSubMenuItem
       )
     )
-    const navItem = container.querySelector('#rmm-nav-item-1')
-    const navItemLink = container.querySelector('#rmm-main-nav-item-link-1')
+
+    const navItem = container.querySelector('#rmm-nav-item-home')
+    const navItemLink = container.querySelector('#rmm-main-nav-item-link-home')
 
     // Simulate click event
     fireEvent.click(navItemLink) // covers line 104
@@ -72,28 +71,28 @@ describe('Menu Functions', () => {
     // Assertions for the first item
     expect(navItem).toBeInTheDocument()
     expect(navItem).toHaveClass('rmm__nav-item rmm__nav-item--heading')
-    expect(navItem).toHaveAttribute('id', 'rmm-nav-item-1')
+    expect(navItem).toHaveAttribute('id', 'rmm-nav-item-home')
 
     // Assertions for the nested item
     expect(navItemLink).toBeInTheDocument()
     expect(navItemLink).toHaveClass('rmm__main-nav-item-link')
-    expect(navItemLink).toHaveAttribute('id', 'rmm-main-nav-item-link-1')
+    expect(navItemLink).toHaveAttribute('id', 'rmm-main-nav-item-link-home')
 
     // Verify that toggleSubMenu is called with the correct arguments
     expect(toggleSubMenuMock).toHaveBeenCalledWith(
       expect.any(Object),
-      'rmm-mega-list-id-1'
+      'rmm-mega-list-id-home'
     )
   })
 
   test('renders NavItemLink correctly', () => {
     const item = {
-      id: '2',
+      id: 'about',
       type: 'link',
       url: '/about',
       label: 'About'
     }
-    const { getByRole } = render(renderLinkMenuItem(item, 0))
+    const { getByRole } = render(renderLinkMenuItem(item))
     const navItemLink = getByRole('menuitem')
     expect(navItemLink).toBeInTheDocument()
     expect(navItemLink).toHaveAttribute('href', '/about')
@@ -118,95 +117,89 @@ describe('Menu Functions', () => {
   })
 
   test('renderMainMenuItem renders correctly', () => {
-    const item = { id: '1', label: 'Home', url: '/', type: 'main' }
-    const { getByRole } = render(renderMainMenuItem(item, 0))
+    const item = { id: 'home', label: 'Home', url: '/', type: 'main' }
+    const { getByRole } = render(renderMainMenuItem(item))
     expect(getByRole('menuitem')).toHaveTextContent('Home')
   })
 
   test('renderLinkMenuItem renders correctly', () => {
     const item = {
-      id: '2',
+      id: 'deals',
       label: 'Deals',
       url: '/deals',
       type: 'link',
       description: 'Deals description'
     }
-    const { getByRole, getByText } = render(renderLinkMenuItem(item, 0))
+    const { getByRole, getByText } = render(renderLinkMenuItem(item))
     expect(getByRole('menuitem')).toHaveTextContent('Deals')
     expect(getByText('Deals description')).toBeInTheDocument()
   })
 
   test('renderMegaMenuItem renders correctly', () => {
     const item = {
-      id: '3',
+      id: 'store',
       label: 'Store',
       url: '/store',
       type: 'mega',
-      items: [{ id: '4', label: 'SubItem', url: '/subitem', type: 'link' }]
+      items: [
+        { id: 'subitem', label: 'SubItem', url: '/subitem', type: 'link' }
+      ]
     }
     const { container } = render(
-      renderMegaMenuItem(
-        item,
-        0,
-        jest.fn(),
-        renderLinkMenuItem,
-        renderSubMenuItem
-      )
+      renderMegaMenuItem(item, jest.fn(), renderLinkMenuItem, renderSubMenuItem)
     )
-    const menuItem = container.querySelector('#rmm-main-nav-item-link-3')
+    const menuItem = container.querySelector('#rmm-main-nav-item-link-store')
     expect(menuItem).toHaveTextContent('Store')
   })
 
   test('calls toggleSubMenu onClick event for renderMegaMenuItem', () => {
     const item = {
-      id: '1',
+      id: 'home',
       type: 'link',
       url: '/home',
       label: 'Home',
-      items: [{ id: '2', type: 'link', url: '/about', label: 'About' }]
+      items: [{ id: 'about', type: 'link', url: '/about', label: 'About' }]
     }
 
     const { container } = render(
       renderMegaMenuItem(
         item,
-        0,
         a11yClickMock,
         renderLinkMenuItem,
         renderSubMenuItem
       )
     )
 
-    const navItemLink = container.querySelector('#rmm-nav-item-link-1')
+    const navItemLink = container.querySelector('#rmm-nav-item-link-home')
 
     fireEvent.click(navItemLink) // covers line 130
 
     // Verify that toggleSubMenu is called with the correct arguments
     expect(toggleSubMenuMock).toHaveBeenCalledWith(
       expect.any(Object),
-      'rmm-mega-list-id-1'
+      'rmm-mega-list-id-home'
     )
   })
 
   test('calls toggleSubMenu on keydown event for renderMegaMenuItem', () => {
     const item = {
-      id: '1',
+      id: 'home',
       type: 'link',
       url: '/home',
       label: 'Home',
-      items: [{ id: '2', type: 'link', url: '/about', label: 'About' }]
+      items: [{ id: 'about', type: 'link', url: '/about', label: 'About' }]
     }
 
     const { container } = render(
       renderMegaMenuItem(
         item,
-        0,
         a11yClickMock,
         renderLinkMenuItem,
         renderSubMenuItem
       )
     )
 
-    const navItemLink = container.querySelector('#rmm-nav-item-link-1')
+    const navItemLink = container.querySelector('#rmm-nav-item-link-home')
 
     // Simulate keydown event
     fireEvent.keyDown(navItemLink, {
@@ -219,27 +212,29 @@ describe('Menu Functions', () => {
     // Verify that toggleSubMenu is called with the correct arguments
     expect(toggleSubMenuMock).toHaveBeenCalledWith(
       expect.any(Object),
-      'rmm-mega-list-id-1'
+      'rmm-mega-list-id-home'
     )
   })
 
   test('renderSubMenuItem renders correctly', () => {
     const item = {
-      id: '5',
+      id: 'outdoors',
       label: 'Outdoors',
       url: '/outdoors',
       type: 'sub',
-      items: [{ id: '6', label: 'Tools', url: '/tools', type: 'link' }]
+      items: [{ id: 'tools', label: 'Tools', url: '/tools', type: 'link' }]
     }
     const { container } = render(
-      renderSubMenuItem(item, 0, jest.fn(), renderLinkMenuItem)
+      renderSubMenuItem(item, jest.fn(), renderLinkMenuItem)
     )
 
-    const navItemLink = container.querySelector('#rmm-nav-item-link-sub-5')
+    const navItemLink = container.querySelector(
+      '#rmm-nav-item-link-sub-outdoors'
+    )
 
     fireEvent.click(navItemLink) // covers line 221
 
-    const menuItem = container.querySelector('#rmm-nav-item-link-5')
+    const menuItem = container.querySelector('#rmm-nav-item-link-outdoors')
     expect(menuItem).toHaveTextContent('Outdoors')
   })
 
@@ -247,25 +242,6 @@ describe('Menu Functions', () => {
     expect(stateMachine('closed')).toBe('open')
     expect(stateMachine('open')).toBe('closed')
     expect(stateMachine('invalid')).toBe('open')
-  })
-
-  test('generateMenuIds generates unique ids', () => {
-    const menuConfig = {
-      menu: {
-        items: [
-          {
-            label: 'Item1',
-            items: [{ label: 'SubItem1', items: [{ label: 'SubSubItem1' }] }]
-          },
-          { label: 'Item2' }
-        ]
-      }
-    }
-    const newMenuConfig = generateMenuIds(menuConfig)
-    expect(newMenuConfig.menu.items[0].id).toBeDefined()
-    expect(newMenuConfig.menu.items[0].items[0].id).toBeDefined()
-    expect(newMenuConfig.menu.items[0].items[0].items[0].id).toBeDefined()
-    expect(newMenuConfig.menu.items[1].id).toBeDefined()
   })
 })
 
