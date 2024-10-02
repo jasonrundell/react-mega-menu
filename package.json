@@ -18,7 +18,8 @@
   },
   "scripts": {
     "build": "vite build",
-    "format": "prettier --write src/**/*.{js,jsx}"
+    "format": "prettier --write src/**/*.{js,jsx}",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "uuid": "^9.0.1"
