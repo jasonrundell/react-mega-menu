@@ -19,7 +19,7 @@ import {
   MENU_ITEM_TYPE_SUB
 } from '../config/menuItemTypes'
 
-const handleUrl = (e, url, toggleMegaMenu) => {
+export const handleUrl = (e, url, toggleMegaMenu) => {
   if (!url.includes('http')) {
     toggleMegaMenu(e)
   }
@@ -140,8 +140,6 @@ export const renderMegaMenuItem = (
         </NavItem>
         {item.items.map((item, index) => {
           switch (item.type) {
-            case MENU_ITEM_TYPE_LINK:
-              return renderLinkMenuItem(item, index)
             case MENU_ITEM_TYPE_MEGA:
               return renderMegaMenuItem(
                 item,
@@ -158,7 +156,7 @@ export const renderMegaMenuItem = (
                 renderLinkMenuItem
               )
             default:
-              return null
+              return renderLinkMenuItem(item, index)
           }
         })}
       </MegaList>

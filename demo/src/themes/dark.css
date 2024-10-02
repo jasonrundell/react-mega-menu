@@ -13,7 +13,7 @@
 }
 
 .rmm__theme--dark[class*='css-'],
-.rmm__theme--dark[class*='css-'] .rmm__topbar,
+.rmm__theme--dark[class*='css-'] #rmm__topbar,
 .rmm__theme--dark[class*='css-'] .rmm__nav,
 .rmm__theme--dark[class*='css-'] .rmm__mega-list,
 .rmm__theme--dark[class*='css-'] .rmm__nav-list,
@@ -24,7 +24,7 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.rmm__theme--dark[class*='css-'] .rmm__topbar {
+.rmm__theme--dark[class*='css-'] #rmm__topbar {
   height: 2rem;
   padding: var(--menu-padding-left);
 }
@@ -103,7 +103,7 @@
 }
 
 .rmm__theme--dark[class*='css-'] h1,
-.rmm__theme--dark[class*='css-'] .rmm__title,
+.rmm__theme--dark[class*='css-'] #rmm__title,
 .rmm__theme--dark[class*='css-'] .rmm__main-nav-item-link,
 .rmm__theme--dark[class*='css-'] .rmm__nav-item-description {
   color: var(--dark-text-color);
@@ -127,7 +127,7 @@
 }
 
 @media (min-width: 64rem) {
-  .rmm__theme--dark[class*='css-'] .rmm__topbar {
+  .rmm__theme--dark[class*='css-'] #rmm__topbar {
     border-top: none;
     border-right: none;
   }

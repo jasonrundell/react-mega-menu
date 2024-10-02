@@ -18,7 +18,7 @@
 }
 
 .rmm__theme--monokai[class*='css-'],
-.rmm__theme--monokai[class*='css-'] .rmm__topbar,
+.rmm__theme--monokai[class*='css-'] #rmm__topbar,
 .rmm__theme--monokai[class*='css-'] .rmm__nav,
 .rmm__theme--monokai[class*='css-'] .rmm__mega-list,
 .rmm__theme--monokai[class*='css-'] .rmm__nav-list,
@@ -29,7 +29,7 @@
   color: var(--monokai-text-color);
 }
 
-.rmm__theme--monokai[class*='css-'] .rmm__topbar {
+.rmm__theme--monokai[class*='css-'] #rmm__topbar {
   height: var(--topbar-height);
   padding: var(--topbar-padding);
 }
@@ -109,7 +109,7 @@
 }
 
 .rmm__theme--monokai[class*='css-'] h1,
-.rmm__theme--monokai[class*='css-'] .rmm__title,
+.rmm__theme--monokai[class*='css-'] #rmm__title,
 .rmm__theme--monokai[class*='css-'] .rmm__main-nav-item-link,
 .rmm__theme--monokai[class*='css-'] .rmm__nav-item-description {
   color: var(--monokai-text-color);
@@ -133,7 +133,7 @@
 }
 
 @media (min-width: 64rem) {
-  .rmm__theme--monokai[class*='css-'] .rmm__topbar {
+  .rmm__theme--monokai[class*='css-'] #rmm__topbar {
     border-top: none;
     border-right: none;
   }

@@ -44,6 +44,7 @@ const Nav = ({
     id={id}
     activeState={activeState}
     aria-label={ariaLabel}
+    role="navigation"
     {...props}
   >
     {children}

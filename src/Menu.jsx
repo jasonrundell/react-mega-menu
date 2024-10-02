@@ -17,7 +17,6 @@ import {
   generateMenuIds
 } from './helpers/menu'
 import {
-  MENU_ITEM_TYPE_MAIN,
   MENU_ITEM_TYPE_LINK,
   MENU_ITEM_TYPE_MEGA,
   MENU_ITEM_TYPE_SUB
@@ -111,24 +110,24 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
       className={props.className ? 'rmm__menu ' + props.className : 'rmm__menu'}
       {...props}
     >
-      <TopBar className="rmm__topbar">
+      <TopBar id="rmm__topbar">
         <Logo
           id={config.topbar.id}
           src={config.topbar.logo.src}
           alt={config.topbar.logo.alt}
           rel={config.topbar.logo.rel}
         />
-        <TopBarTitle className="rmm__title">{config.topbar.title}</TopBarTitle>
+        <TopBarTitle id="rmm__title">{config.topbar.title}</TopBarTitle>
       </TopBar>
       <Hamburger
         label="Menu"
-        state={megaMenuState}
+        state={megaMenuState || 'closed'}
         onClick={(e) => toggleMegaMenu(e)}
         id="rmm__hamburger"
       />
       <Nav
         id={props.id || 'rmm__nav'}
-        activeState={megaMenuState}
+        activeState={megaMenuState || 'closed'}
         ariaLabel="Main Navigation"
         className={
           props.className ? 'rmm__nav ' + props.className : 'rmm__menu'
@@ -141,8 +140,6 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
         >
           {config.menu.items.map((item, index) => {
             switch (item.type) {
-              case MENU_ITEM_TYPE_MAIN:
-                return renderMainMenuItem(item, index, toggleMegaMenu)
               case MENU_ITEM_TYPE_LINK:
                 return renderLinkMenuItem(item, index, toggleMegaMenu)
               case MENU_ITEM_TYPE_MEGA:
@@ -163,7 +160,7 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
                   toggleMegaMenu
                 )
               default:
-                return null
+                return renderMainMenuItem(item, index, toggleMegaMenu)
             }
           })}
         </MainList>
