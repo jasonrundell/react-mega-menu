@@ -1,4 +1,5 @@
-import { render } from '@testing-library/react'
+import React from 'react'
+import { render, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import {
   renderMainMenuItem,
@@ -9,6 +10,8 @@ import {
   generateMenuIds
 } from './menu'
 import { useMenu } from '../context/MenuContext'
+import MegaList from '../components/MegaList'
+import NavItemDescription from '../components/NavItemDescription'
 
 // Mock the useMenu hook
 jest.mock('../context/MenuContext', () => ({
@@ -16,13 +19,61 @@ jest.mock('../context/MenuContext', () => ({
 }))
 
 describe('Menu Functions', () => {
+  const toggleMegaMenuMock = jest.fn()
+
   beforeEach(() => {
     useMenu.mockReturnValue({
-      toggleMegaMenu: jest.fn(),
+      toggleMegaMenu: toggleMegaMenuMock,
       activeMenus: [],
       toggleSubMenu: jest.fn(),
       toggleSubSubMenu: jest.fn()
     })
+  })
+
+  test('renders MainNavItem correctly', () => {
+    const item = { id: '1', type: 'link', url: '/home', label: 'Home' }
+    const { getByRole } = render(renderMainMenuItem(item, 0))
+    const mainNavItem = getByRole('none')
+    expect(mainNavItem).toBeInTheDocument()
+    expect(mainNavItem).toHaveClass('rmm__main-nav-item')
+  })
+
+  test('renders NavItem correctly', () => {
+    const item = { id: '2', type: 'link', url: '/about', label: 'About' }
+    const { getByRole } = render(renderLinkMenuItem(item, 0))
+    const navItem = getByRole('none')
+    expect(navItem).toBeInTheDocument()
+    expect(navItem).toHaveClass('rmm__nav-item')
+  })
+
+  test('renders NavItemLink correctly', () => {
+    const item = { id: '2', type: 'link', url: '/about', label: 'About' }
+    const { getByRole } = render(renderLinkMenuItem(item, 0))
+    const navItemLink = getByRole('menuitem')
+    expect(navItemLink).toBeInTheDocument()
+    expect(navItemLink).toHaveAttribute('href', '/about')
+  })
+
+  test('renders MegaList correctly', () => {
+    const { getByTestId } = render(<MegaList data-testid="mega-list" />)
+    const megaList = getByTestId('mega-list')
+    expect(megaList).toBeInTheDocument()
+  })
+
+  test('renders NavItemDescription correctly', () => {
+    const { getByText } = render(
+      <NavItemDescription>Description</NavItemDescription>
+    )
+    const description = getByText('Description')
+    expect(description).toBeInTheDocument()
+  })
+
+  test('handleUrl function works correctly', () => {
+    const item = { id: '1', type: 'link', url: '/home', label: 'Home' }
+    const { getByRole } = render(renderMainMenuItem(item, 0))
+    const mainNavItemLink = getByRole('menuitem')
+    fireEvent.click(mainNavItemLink)
+    expect(toggleMegaMenuMock).toHaveBeenCalled()
   })
 
   test('renderMainMenuItem renders correctly', () => {
