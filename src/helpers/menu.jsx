@@ -1,5 +1,4 @@
 import React from 'react'
-import { v4 as uuidv4 } from 'uuid'
 
 // Context
 import { useMenu } from '../context/MenuContext'
@@ -455,6 +454,14 @@ export const config = {
         type: 'mega',
         url: '/help/',
         items: [
+          {
+            id: 'help-react-mega-menu',
+            label: 'React Mega Menu',
+            type: 'link',
+            url: 'https://github.com/jasonrundell/react-mega-menu',
+            description:
+              'A React project which aims to be an accessible, responsive, boilerplate top navigation menu with a "Mega Menu"!'
+          },
           {
             id: 'help-faq',
             label: 'FAQ',
