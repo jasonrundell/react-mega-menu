@@ -53,7 +53,7 @@
   background-color: var(--synthwave-neon-pink);
 }
 
-.rmm__theme--synthwave[class*='css-'] .rmm__menu {
+.rmm__theme--synthwave[class*='css-'] #rmm__nav {
   border-top: 0.0625rem solid var(--synthwave-neon-pink);
   border-bottom: 0.0625rem solid var(--synthwave-neon-cyan);
   top: 8rem;
@@ -125,7 +125,7 @@
 }
 
 .rmm__theme--synthwave[class*='css-'] .rmm__main-nav-item,
-.rmm__theme--synthwave[class*='css-'] .rmm__menu {
+.rmm__theme--synthwave[class*='css-'] #rmm__nav {
   background-color: var(--synthwave-bg-color-dark);
 }
 
@@ -149,7 +149,7 @@
     );
   }
 
-  .rmm__theme--synthwave[class*='css-'] .rmm__menu {
+  .rmm__theme--synthwave[class*='css-'] #rmm__nav {
     top: 4rem;
     height: auto;
     border-top: 0.0625rem solid var(--synthwave-neon-pink);

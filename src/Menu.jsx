@@ -100,7 +100,7 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
       id={props.id || 'rmm__menu'}
       role="navigation"
       ref={wrapperRef}
-      className={props.className ? 'rmm__menu ' + props.className : 'rmm__menu'}
+      className={props.className}
       {...props}
     >
       <TopBar id="rmm__topbar">
@@ -122,9 +122,7 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
         id={props.id || 'rmm__nav'}
         activeState={megaMenuState || 'closed'}
         ariaLabel="Main Navigation"
-        className={
-          props.className ? 'rmm__nav ' + props.className : 'rmm__menu'
-        }
+        className={props.className}
       >
         <MainList
           id={props.id || 'rmm__main'}

@@ -32,13 +32,9 @@ describe('Menu component', () => {
   const defaultConfig = config
 
   test('renders different components of Menu', () => {
-    const { container, getByRole, getByText } = render(
-      <Menu config={defaultConfig} />
-    )
+    const { container, getByRole } = render(<Menu config={defaultConfig} />)
 
-    // console.log(container.innerHTML)
-
-    // Check if the TopBar component is rendered
+    // Check if the Menu component is rendered
     const menuComponent = container.querySelector('#rmm__menu')
     expect(menuComponent).toBeInTheDocument()
 

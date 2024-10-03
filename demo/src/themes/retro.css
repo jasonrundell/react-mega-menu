@@ -50,7 +50,7 @@
   background-color: var(--retro-text-color);
 }
 
-.rmm__theme--retro[class*='css-'] .rmm__menu {
+.rmm__theme--retro[class*='css-'] #rmm__nav {
   border-top: var(--menu-border-width) solid var(--retro-border-color);
   border-bottom: var(--menu-border-width) solid var(--retro-border-color);
   top: var(--menu-top);
@@ -122,7 +122,7 @@
 }
 
 .rmm__theme--retro[class*='css-'] .rmm__main-nav-item,
-.rmm__theme--retro[class*='css-'] .rmm__menu {
+.rmm__theme--retro[class*='css-'] #rmm__nav {
   background-color: var(--retro-bg-color);
 }
 
@@ -141,7 +141,7 @@
     background-color: var(--retro-accent-color);
   }
 
-  .rmm__theme--retro[class*='css-'] .rmm__menu {
+  .rmm__theme--retro[class*='css-'] #rmm__nav {
     top: 4rem;
     height: auto;
     border-top: var(--menu-border-width) solid var(--retro-border-color);
