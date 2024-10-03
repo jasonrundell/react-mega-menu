@@ -12,13 +12,15 @@ describe('MenuContext', () => {
 
   test('resetMenus closes all menus and empties activeMenus array', () => {
     act(() => {
-      result.current.setActiveMenus(['menu1', 'menu2'])
+      result.current.setActiveMenus(['nav-main', 'rmm-mega-list-id-blog'])
+      result.current.setMegaMenuState('open')
       result.current.setSubMenuState('open')
       result.current.setSubSubMenuState('open')
       result.current.resetMenus()
     })
 
     expect(result.current.activeMenus).toEqual([])
+    expect(result.current.megaMenuState).toBe('closed')
     expect(result.current.subMenuState).toBe('closed')
     expect(result.current.subSubMenuState).toBe('closed')
   })

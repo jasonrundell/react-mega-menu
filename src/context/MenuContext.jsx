@@ -6,22 +6,24 @@ import { stateMachine } from '../helpers/menu'
 const MenuContext = createContext()
 
 export const MenuProvider = ({ children }) => {
-  const [megaMenuState, setMegaMenuState] = useState('')
-  const [subMenuState, setSubMenuState] = useState('')
-  const [subSubMenuState, setSubSubMenuState] = useState('')
+  const [megaMenuState, setMegaMenuState] = useState('closed')
+  const [subMenuState, setSubMenuState] = useState('closed')
+  const [subSubMenuState, setSubSubMenuState] = useState('closed')
   const [activeMenus, setActiveMenus] = useState([]) // array that captures the ids of active menus
   const [isMobile, setIsMobile] = useState(true) // array that captures the ids of active menus
 
   // Debugger
-  //   useEffect(() => {
-  //     console.log('activeMenus', activeMenus)
-  //     console.log('subMenuState', subMenuState)
-  //     console.log('subSubMenuState', subSubMenuState)
-  //   }, [activeMenus, subMenuState, subSubMenuState])
+  useEffect(() => {
+    console.log('activeMenus', activeMenus)
+    console.log('megaMenuState', megaMenuState)
+    console.log('subMenuState', subMenuState)
+    console.log('subSubMenuState', subSubMenuState)
+  }, [activeMenus, subMenuState, subSubMenuState])
 
   const resetMenus = () => {
     // close all menus and empty activeMenus array
     setActiveMenus([])
+    setMegaMenuState('closed')
     setSubMenuState('closed')
     setSubSubMenuState('closed')
   }
