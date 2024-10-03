@@ -118,7 +118,11 @@ export const MenuProvider = ({ children }) => {
         isMobile,
         setIsMobile,
         megaMenuState,
-        activeMenus
+        activeMenus,
+        setActiveMenus,
+        setSubMenuState,
+        setSubSubMenuState,
+        updateActiveMenus
       }}
     >
       {children}
