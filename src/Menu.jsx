@@ -132,19 +132,16 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
           className="rmm__nav-list"
         >
           {config.menu.items.map((item) => {
-            switch (item.type) {
-              case MENU_ITEM_TYPE_LINK:
-                return renderLinkMenuItem(item, toggleMegaMenu)
-              case MENU_ITEM_TYPE_MEGA:
-                return renderMegaMenuItem(
-                  item,
-                  a11yClick,
-                  renderLinkMenuItem,
-                  renderSubMenuItem,
-                  toggleMegaMenu
-                )
-              default:
-                return renderMainMenuItem(item, toggleMegaMenu)
+            if (item.type === MENU_ITEM_TYPE_MEGA) {
+              return renderMegaMenuItem(
+                item,
+                a11yClick,
+                renderLinkMenuItem,
+                renderSubMenuItem,
+                toggleMegaMenu
+              )
+            } else {
+              return renderMainMenuItem(item, toggleMegaMenu)
             }
           })}
         </MainList>
