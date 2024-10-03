@@ -17,8 +17,7 @@ import {
 } from './helpers/menu'
 import {
   MENU_ITEM_TYPE_LINK,
-  MENU_ITEM_TYPE_MEGA,
-  MENU_ITEM_TYPE_SUB
+  MENU_ITEM_TYPE_MEGA
 } from './config/menuItemTypes'
 
 // Components
@@ -142,13 +141,6 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
                   a11yClick,
                   renderLinkMenuItem,
                   renderSubMenuItem,
-                  toggleMegaMenu
-                )
-              case MENU_ITEM_TYPE_SUB:
-                return renderSubMenuItem(
-                  item,
-                  a11yClick,
-                  renderLinkMenuItem,
                   toggleMegaMenu
                 )
               default:

@@ -45,7 +45,7 @@ describe('Menu component', () => {
     // Check if the TopBar component is rendered
     const topBarComponent = container.querySelector('#rmm__topbar')
     expect(topBarComponent).toBeInTheDocument()
-    expect(getByText('React Mega Menu')).toBeInTheDocument()
+    expect(topBarComponent).toHaveTextContent('React Mega Menu')
     expect(getByRole('img', { name: 'Placeholder Logo' })).toBeInTheDocument()
 
     // Check if the TopBarTitle component is rendered
@@ -65,7 +65,9 @@ describe('Menu component', () => {
     expect(navComponent).toBeInTheDocument()
 
     // Check if the export const renderSubMenuItem component is rendered
-    const renderSubMenuItemComponent = container.querySelector('#rmm__nav')
+    const renderSubMenuItemComponent = container.querySelector(
+      '#rmm-nav-item-store-outdoors'
+    )
     expect(renderSubMenuItemComponent).toBeInTheDocument()
   })
 
