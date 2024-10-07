@@ -254,23 +254,16 @@ export const renderSubMenuItem = (item, a11yClick, renderLinkMenuItem) => {
 }
 
 export const stateMachine = (state) => {
-  const validStates = ['closed', 'open']
-  const defaultState = 'open'
-  let stateChangedTo = defaultState
+  const defaultState = 'closed'
 
-  if (validStates.includes(state)) {
-    switch (state) {
-      case validStates[0]:
-        stateChangedTo = validStates[1]
-        break
-      case validStates[1]:
-        stateChangedTo = validStates[0]
-        break
-      default:
-        stateChangedTo = validStates[0]
-    }
+  switch (state) {
+    case 'closed':
+      return 'open'
+    case 'open':
+      return 'closed'
+    default:
+      return defaultState
   }
-  return stateChangedTo
 }
 
 export const config = {

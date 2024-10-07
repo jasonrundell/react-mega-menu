@@ -237,11 +237,32 @@ describe('Menu Functions', () => {
     const menuItem = container.querySelector('#rmm-nav-item-link-outdoors')
     expect(menuItem).toHaveTextContent('Outdoors')
   })
+})
 
-  test('stateMachine toggles state correctly', () => {
-    expect(stateMachine('closed')).toBe('open')
-    expect(stateMachine('open')).toBe('closed')
-    expect(stateMachine('invalid')).toBe('open')
+describe('stateMachine', () => {
+  test('should toggle state from closed to open', () => {
+    const result = stateMachine('closed')
+    expect(result).toBe('open')
+  })
+
+  test('should toggle state from open to closed', () => {
+    const result = stateMachine('open')
+    expect(result).toBe('closed')
+  })
+
+  test('should return default state for invalid state', () => {
+    const result = stateMachine('invalid')
+    expect(result).toBe('closed')
+  })
+
+  test('should return default state for undefined state', () => {
+    const result = stateMachine(undefined)
+    expect(result).toBe('closed')
+  })
+
+  test('should return default state for null state', () => {
+    const result = stateMachine(null)
+    expect(result).toBe('closed')
   })
 })
 
