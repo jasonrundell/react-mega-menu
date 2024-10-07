@@ -13,12 +13,12 @@ export const MenuProvider = ({ children }) => {
   const [isMobile, setIsMobile] = useState(true) // array that captures the ids of active menus
 
   // Debugger
-  useEffect(() => {
-    console.log('activeMenus', activeMenus)
-    console.log('megaMenuState', megaMenuState)
-    console.log('subMenuState', subMenuState)
-    console.log('subSubMenuState', subSubMenuState)
-  }, [activeMenus, subMenuState, subSubMenuState])
+  // useEffect(() => {
+  //   console.log('activeMenus', activeMenus)
+  //   console.log('megaMenuState', megaMenuState)
+  //   console.log('subMenuState', subMenuState)
+  //   console.log('subSubMenuState', subSubMenuState)
+  // }, [activeMenus, subMenuState, subSubMenuState])
 
   const resetMenus = () => {
     // close all menus and empty activeMenus array
@@ -117,14 +117,17 @@ export const MenuProvider = ({ children }) => {
         toggleMegaMenu,
         toggleSubMenu,
         toggleSubSubMenu,
+        updateActiveMenus,
         isMobile,
         setIsMobile,
-        megaMenuState,
         activeMenus,
         setActiveMenus,
+        setMegaMenuState,
         setSubMenuState,
         setSubSubMenuState,
-        updateActiveMenus
+        megaMenuState,
+        subMenuState,
+        subSubMenuState
       }}
     >
       {children}

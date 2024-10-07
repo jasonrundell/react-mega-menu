@@ -12,7 +12,11 @@ describe('MenuContext', () => {
 
   test('resetMenus closes all menus and empties activeMenus array', () => {
     act(() => {
-      result.current.setActiveMenus(['nav-main', 'rmm-mega-list-id-blog'])
+      result.current.setActiveMenus([
+        'nav-main',
+        'rmm-mega-list-id-store',
+        'rmm-nav-list-id-store-outdoors'
+      ])
       result.current.setMegaMenuState('open')
       result.current.setSubMenuState('open')
       result.current.setSubSubMenuState('open')
