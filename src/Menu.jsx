@@ -15,10 +15,7 @@ import {
   renderMegaMenuItem,
   renderSubMenuItem
 } from './helpers/menu'
-import {
-  MENU_ITEM_TYPE_LINK,
-  MENU_ITEM_TYPE_MEGA
-} from './config/menuItemTypes'
+import { MENU_ITEM_TYPE_MEGA } from './config/menuItemTypes'
 
 // Components
 import TopBar from './components/TopBar'
