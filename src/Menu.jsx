@@ -13,14 +13,11 @@ import {
   renderMainMenuItem,
   renderLinkMenuItem,
   renderMegaMenuItem,
-  renderSubMenuItem,
-  generateMenuIds
+  renderSubMenuItem
 } from './helpers/menu'
 import {
-  MENU_ITEM_TYPE_MAIN,
   MENU_ITEM_TYPE_LINK,
-  MENU_ITEM_TYPE_MEGA,
-  MENU_ITEM_TYPE_SUB
+  MENU_ITEM_TYPE_MEGA
 } from './config/menuItemTypes'
 
 // Components
@@ -72,11 +69,6 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
   }
 
   useEffect(() => {
-    // generate unique ids for each menu item in config
-    config = generateMenuIds(config)
-  }, [])
-
-  useEffect(() => {
     const handleEscape = (e) => a11yEscape(e, resetMenus)
     window.addEventListener('keydown', handleEscape)
     return () => {
@@ -108,62 +100,46 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
       id={props.id || 'rmm__menu'}
       role="navigation"
       ref={wrapperRef}
-      className={props.className ? 'rmm__menu ' + props.className : 'rmm__menu'}
+      className={props.className}
       {...props}
     >
-      <TopBar className="rmm__topbar">
+      <TopBar id="rmm__topbar">
         <Logo
           id={config.topbar.id}
           src={config.topbar.logo.src}
           alt={config.topbar.logo.alt}
           rel={config.topbar.logo.rel}
         />
-        <TopBarTitle className="rmm__title">{config.topbar.title}</TopBarTitle>
+        <TopBarTitle id="rmm__title">{config.topbar.title}</TopBarTitle>
       </TopBar>
       <Hamburger
         label="Menu"
-        state={megaMenuState}
+        state={megaMenuState || 'closed'}
         onClick={(e) => toggleMegaMenu(e)}
         id="rmm__hamburger"
       />
       <Nav
         id={props.id || 'rmm__nav'}
-        activeState={megaMenuState}
+        activeState={megaMenuState || 'closed'}
         ariaLabel="Main Navigation"
-        className={
-          props.className ? 'rmm__nav ' + props.className : 'rmm__menu'
-        }
+        className={props.className}
       >
         <MainList
           id={props.id || 'rmm__main'}
           ariaLabel="Main Menu"
           className="rmm__nav-list"
         >
-          {config.menu.items.map((item, index) => {
-            switch (item.type) {
-              case MENU_ITEM_TYPE_MAIN:
-                return renderMainMenuItem(item, index, toggleMegaMenu)
-              case MENU_ITEM_TYPE_LINK:
-                return renderLinkMenuItem(item, index, toggleMegaMenu)
-              case MENU_ITEM_TYPE_MEGA:
-                return renderMegaMenuItem(
-                  item,
-                  index,
-                  a11yClick,
-                  renderLinkMenuItem,
-                  renderSubMenuItem,
-                  toggleMegaMenu
-                )
-              case MENU_ITEM_TYPE_SUB:
-                return renderSubMenuItem(
-                  item,
-                  index,
-                  a11yClick,
-                  renderLinkMenuItem,
-                  toggleMegaMenu
-                )
-              default:
-                return null
+          {config.menu.items.map((item) => {
+            if (item.type === MENU_ITEM_TYPE_MEGA) {
+              return renderMegaMenuItem(
+                item,
+                a11yClick,
+                renderLinkMenuItem,
+                renderSubMenuItem,
+                toggleMegaMenu
+              )
+            } else {
+              return renderMainMenuItem(item, toggleMegaMenu)
             }
           })}
         </MainList>
@@ -186,6 +162,7 @@ Menu.propTypes = {
     menu: PropTypes.shape({
       items: PropTypes.arrayOf(
         PropTypes.shape({
+          id: PropTypes.string.isRequired,
           label: PropTypes.string.isRequired,
           type: PropTypes.string.isRequired,
           url: PropTypes.string.isRequired,

@@ -44,6 +44,7 @@ const Nav = ({
     id={id}
     activeState={activeState}
     aria-label={ariaLabel}
+    role="navigation"
     {...props}
   >
     {children}
@@ -58,11 +59,11 @@ Nav.propTypes = {
   /**
    * The aria-label of the element.
    */
-  ariaLabel: PropTypes.string.isRequired,
+  ariaLabel: PropTypes.string,
   /**
    * The state of the mega list.
    */
-  activeState: PropTypes.oneOf(['', 'open', 'closed']).isRequired,
+  activeState: PropTypes.oneOf(['', 'open', 'closed']),
   /**
    * The content of the mega list.
    */
