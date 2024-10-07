@@ -23,5 +23,5 @@ jobs:
         working-directory: next-demo
 
       - name: Run build
-        run: npm run build
+        run: cd next-demo && npm run build
         working-directory: next-demo
