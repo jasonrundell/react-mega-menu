@@ -79,6 +79,35 @@ describe('Menu component', () => {
     expect(resetMenusMock).toHaveBeenCalled()
   })
 
+  test('escape returns focus to the top-level trigger link when focus was inside its panel', () => {
+    const { container } = render(<Menu config={defaultConfig} />)
+    const deepLink = container.querySelector(
+      '#rmm-nav-item-link-store-deals'
+    )
+    const trigger = container.querySelector(
+      '#rmm-main-nav-item-link-store'
+    )
+    deepLink.focus()
+    expect(document.activeElement).toBe(deepLink)
+
+    fireEvent.keyDown(window, { key: 'Escape', code: 'Escape', keyCode: 27 })
+
+    expect(resetMenusMock).toHaveBeenCalled()
+    expect(document.activeElement).toBe(trigger)
+  })
+
+  test('escape does not move focus when it was already outside the menu', () => {
+    render(<Menu config={defaultConfig} />)
+    const outside = document.createElement('button')
+    document.body.appendChild(outside)
+    outside.focus()
+
+    fireEvent.keyDown(window, { key: 'Escape', code: 'Escape', keyCode: 27 })
+
+    expect(document.activeElement).toBe(outside)
+    document.body.removeChild(outside)
+  })
+
   test('updates mobile state based on window resize', () => {
     render(<Menu config={defaultConfig} />)
     global.innerWidth = 500

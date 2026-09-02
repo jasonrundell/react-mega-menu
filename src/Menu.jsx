@@ -56,7 +56,33 @@ export const Menu = ({
   }
 
   useEffect(() => {
-    const handleEscape = (e) => a11yEscape(e, resetMenus)
+    const handleEscape = (e) => {
+      // a11yEscape's resetMenus() collapses every open level at once (mega,
+      // sub, and sub-sub state all reset together), so the one
+      // always-present, always-focusable "triggering item" to return focus
+      // to is the top-level MainNavItem link that owns whichever panel
+      // currently contains focus — found by walking up from
+      // document.activeElement rather than threading a trigger ref through
+      // MenuContext and every render helper.
+      const activeElement = document.activeElement
+      const focusIsInMenu =
+        e.keyCode === 27 &&
+        wrapperRef.current &&
+        activeElement &&
+        wrapperRef.current.contains(activeElement)
+      const trigger =
+        focusIsInMenu &&
+        activeElement.closest &&
+        activeElement
+          .closest('.rmm__main-nav-item')
+          ?.querySelector(':scope > .rmm__main-nav-item-link')
+
+      a11yEscape(e, resetMenus)
+
+      if (trigger) {
+        trigger.focus()
+      }
+    }
     window.addEventListener('keydown', handleEscape)
     return () => {
       window.removeEventListener('keydown', handleEscape)
