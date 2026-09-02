@@ -6,7 +6,7 @@ import { useMenu } from './context/MenuContext' // Adjust the path as necessary
 
 // Helpers
 import { click as a11yClick, escape as a11yEscape } from './helpers/a11y'
-import { viewportLarge } from './helpers/responsive'
+import { isLargeViewport, largeBreakpointQuery } from './helpers/responsive'
 import {
   config,
   renderMainMenuItem,
@@ -64,18 +64,34 @@ export const Menu = ({
 
   useEffect(() => {
     const updateIsMobile = () => {
-      if (window.innerWidth >= viewportLarge) {
-        setIsMobile(false)
-      } else {
-        setIsMobile(true)
-      }
+      setIsMobile(!isLargeViewport())
     }
 
     updateIsMobile()
     window.addEventListener('resize', updateIsMobile)
 
+    // Prefer the media query's own 'change' event where available — it
+    // fires precisely on breakpoint crossings rather than on every resize.
+    let mediaQueryList
+    if (typeof window.matchMedia === 'function') {
+      mediaQueryList = window.matchMedia(largeBreakpointQuery)
+      if (mediaQueryList.addEventListener) {
+        mediaQueryList.addEventListener('change', updateIsMobile)
+      } else if (mediaQueryList.addListener) {
+        // Safari < 14
+        mediaQueryList.addListener(updateIsMobile)
+      }
+    }
+
     return () => {
       window.removeEventListener('resize', updateIsMobile)
+      if (mediaQueryList) {
+        if (mediaQueryList.removeEventListener) {
+          mediaQueryList.removeEventListener('change', updateIsMobile)
+        } else if (mediaQueryList.removeListener) {
+          mediaQueryList.removeListener(updateIsMobile)
+        }
+      }
     }
   }, [])
 

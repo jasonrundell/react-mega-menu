@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { rmmTokens } from './styles/rmmTokens'
+import { breakpoints } from './config/breakpoints'
 import packageJson from '../package.json'
 
 // Resolve the shipped stylesheet path FROM package.json's exports field,
@@ -28,6 +29,26 @@ describe('shipped stylesheet contract', () => {
         `${token.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}\\s*:`
       )
       expect(css).toMatch(declared)
+    })
+  })
+
+  it('has no unreplaced __RMM_BP_LARGE__ breakpoint placeholder', () => {
+    const resolvedPath = path.resolve(__dirname, '..', styleExport)
+    const css = fs.readFileSync(resolvedPath, 'utf8')
+
+    expect(css).not.toMatch('__RMM_BP_LARGE__')
+  })
+
+  it('large-breakpoint @media rules match src/config/breakpoints.js (single source of truth)', () => {
+    const resolvedPath = path.resolve(__dirname, '..', styleExport)
+    const css = fs.readFileSync(resolvedPath, 'utf8')
+    const expectedMinWidth = breakpoints.large['min-width']
+
+    const mediaRules = css.match(/@media \(min-width:[^)]*\)/g) || []
+    expect(mediaRules.length).toBeGreaterThan(0)
+
+    mediaRules.forEach((rule) => {
+      expect(rule).toBe(`@media (min-width: ${expectedMinWidth})`)
     })
   })
 })
