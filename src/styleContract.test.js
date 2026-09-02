@@ -32,6 +32,31 @@ describe('shipped stylesheet contract', () => {
     })
   })
 
+  it('has no dead --rmm-* tokens: every declaration is consumed by a var(--rmm-*) use', () => {
+    const resolvedPath = path.resolve(__dirname, '..', styleExport)
+    const css = fs.readFileSync(resolvedPath, 'utf8')
+
+    // A declaration is "--rmm-foo:" (a custom property being *set*); a use
+    // is "var(--rmm-foo)" or "var(--rmm-foo, <fallback>)" (a custom
+    // property being *read*). These are textually distinct — a declaration
+    // is never itself preceded by "var(" — so a plain regex distinguishes
+    // them without needing a real CSS parser.
+    const declaredTokens = [
+      ...new Set(
+        [...css.matchAll(/--rmm-[a-zA-Z0-9-]+(?=\s*:)/g)].map((m) => m[0])
+      )
+    ]
+    expect(declaredTokens.length).toBeGreaterThan(0)
+
+    const deadTokens = declaredTokens.filter((token) => {
+      const escaped = token.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')
+      const usePattern = new RegExp(`var\\(${escaped}[,)]`)
+      return !usePattern.test(css)
+    })
+
+    expect(deadTokens).toEqual([])
+  })
+
   it('has no unreplaced __RMM_BP_LARGE__ breakpoint placeholder', () => {
     const resolvedPath = path.resolve(__dirname, '..', styleExport)
     const css = fs.readFileSync(resolvedPath, 'utf8')

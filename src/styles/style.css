@@ -13,6 +13,13 @@
  *     docs/refactor/topiary-migration.md (Phase 2/3) and
  *     docs/refactor/topiary-gap-report.md for the real Topiary 4.1.0 token
  *     names this file relies on.
+ *   - Every declared token must be consumed by at least one rule in this
+ *     file (enforced by src/styleContract.test.js) — no token exists purely
+ *     for documentation. Panel chrome (a background, border, shadow, or
+ *     radius on the mega/sub-menu panel) is deliberately NOT painted: the
+ *     pre-migration Emotion styles never set one either, so this preserves
+ *     the original appearance rather than adding new decoration. Giving the
+ *     panel real chrome is an open design question left to a later ticket.
  *   - The large-breakpoint media queries below use the literal placeholder
  *     __RMM_BP_LARGE__ in place of a length (e.g. "(min-width: __RMM_BP_LARGE__)").
  *     Custom properties cannot drive @media conditions, so this placeholder
@@ -26,19 +33,11 @@
   /* Color */
   --rmm-menu-bg: var(--topiary-color-surface, #fefefe);
   --rmm-menu-text: var(--topiary-color-text, #1a1a1a);
-  --rmm-menu-border: var(--topiary-color-border, #e0e0e0);
-  --rmm-panel-bg: var(--topiary-color-surface, #fefefe);
   --rmm-link-color: var(--topiary-color-primary, #0066cc);
   --rmm-link-hover-bg: var(--topiary-color-surfaceAlt, #f0f0f0);
   --rmm-text-muted: var(--topiary-color-textMuted, #666666);
   --rmm-focus-ring: var(--topiary-borderWidth-thick, 2px) solid
     var(--topiary-color-focus, currentColor);
-
-  /* Panel chrome */
-  --rmm-panel-border: var(--topiary-borderWidth-hairline, 1px)
-    var(--topiary-borderStyle-default, solid) var(--topiary-color-border, #ccc);
-  --rmm-panel-shadow: var(--topiary-shadow-md, 0 4px 12px rgb(0 0 0 / 0.15));
-  --rmm-panel-radius: var(--topiary-radius-none, 0);
 
   /* Stacking order */
   --rmm-menu-z: var(--topiary-zIndex-nav, 9000);
@@ -68,7 +67,6 @@
   --rmm-space-xs: var(--topiary-space-2xs, 0.25rem);
   --rmm-space-sm: var(--topiary-space-xs, 0.5rem);
   --rmm-space-md: var(--topiary-space-md, 1rem);
-  --rmm-space-lg: var(--topiary-space-lg, 1.5rem);
   --rmm-space-xl: var(--topiary-space-xl, 2rem);
 
   /* Typography */
@@ -78,7 +76,6 @@
   --rmm-description-font-size: var(--topiary-fontSize-xs, 0.75rem);
   --rmm-hamburger-label-font-size: var(--topiary-fontSize-md, 1rem);
   --rmm-font-weight-bold: var(--topiary-fontWeight-bold, 700);
-  --rmm-font-weight-regular: var(--topiary-fontWeight-regular, 400);
 
   /* Motion */
   --rmm-motion-duration: var(--topiary-duration-slow, 0.75s);

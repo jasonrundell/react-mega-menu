@@ -4,6 +4,9 @@
  * "what tokens are documented" — src/styleContract.test.js reads it so the
  * contract between this list and the actual stylesheet can't drift silently
  * (add/rename a token in one place without the other and the test fails).
+ * That same test also asserts every token here is actually consumed by a
+ * `var(--rmm-*)` reference in the stylesheet, so a token can't be declared
+ * and then quietly go dead.
  *
  * Values are intentionally not included here: the stylesheet is the only
  * source of truth for a token's fallback value. This module only names the
@@ -12,19 +15,12 @@
 
 export const rmmTokens = [
   // Color
-  '--rmm-menu-bg', // menu shell + panel background
+  '--rmm-menu-bg', // menu shell background
   '--rmm-menu-text', // primary text color
-  '--rmm-menu-border', // hairline divider
-  '--rmm-panel-bg', // mega/sub panel background
   '--rmm-link-color', // nav item link color
   '--rmm-link-hover-bg', // nav item link :hover/:focus-visible background
   '--rmm-text-muted', // item description text color
   '--rmm-focus-ring', // composed :focus-visible outline (width + style + color)
-
-  // Panel chrome
-  '--rmm-panel-border', // composed mega/sub panel border (width + style + color)
-  '--rmm-panel-shadow', // mega/sub panel elevation
-  '--rmm-panel-radius', // mega/sub panel corner radius
 
   // Stacking order
   '--rmm-menu-z', // fixed menu shell
@@ -47,7 +43,6 @@ export const rmmTokens = [
   '--rmm-space-xs',
   '--rmm-space-sm',
   '--rmm-space-md',
-  '--rmm-space-lg',
   '--rmm-space-xl',
 
   // Typography
@@ -57,7 +52,6 @@ export const rmmTokens = [
   '--rmm-description-font-size', // NavItemDescription
   '--rmm-hamburger-label-font-size', // Hamburger visible label
   '--rmm-font-weight-bold', // Hamburger label weight
-  '--rmm-font-weight-regular', // default body weight
 
   // Motion
   '--rmm-motion-duration', // slide open/close animation duration
