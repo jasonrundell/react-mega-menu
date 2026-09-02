@@ -1,5 +1,5 @@
 import React from 'react'
-import { MenuProvider, useMenu } from './context/MenuContext'
+import { MenuProvider } from './context/MenuContext'
 import { Menu } from './Menu'
 
 const MenuWithProvider = (props) => (
@@ -8,5 +8,5 @@ const MenuWithProvider = (props) => (
   </MenuProvider>
 )
 
-export { MenuWithProvider as Menu, MenuProvider, useMenu }
+export { MenuWithProvider as Menu }
 export default MenuWithProvider
