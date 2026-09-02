@@ -96,4 +96,34 @@ describe('Menu component', () => {
     fireEvent.click(hamburger)
     expect(toggleMegaMenuMock).toHaveBeenCalled()
   })
+
+  test('Nav defaults to the slide-left direction when slideDirection is omitted', () => {
+    const { container } = render(<Menu config={defaultConfig} />)
+    const nav = container.querySelector('#rmm__nav')
+    expect(nav).toHaveClass('rmm__nav--slide-left')
+    expect(nav).not.toHaveClass('rmm__nav--slide-right')
+  })
+
+  test('Nav applies the slide-right direction when slideDirection="right"', () => {
+    const { container } = render(
+      <Menu config={defaultConfig} slideDirection="right" />
+    )
+    const nav = container.querySelector('#rmm__nav')
+    expect(nav).toHaveClass('rmm__nav--slide-right')
+    expect(nav).not.toHaveClass('rmm__nav--slide-left')
+  })
+
+  test('Nav toggles the open/closed state class when the hamburger is clicked', () => {
+    useMenu.mockReturnValue({
+      resetMenus: resetMenusMock,
+      megaMenuState: 'open',
+      toggleMegaMenu: toggleMegaMenuMock,
+      setIsMobile: setIsMobileMock,
+      activeMenus: []
+    })
+    const { container } = render(<Menu config={defaultConfig} />)
+    const nav = container.querySelector('#rmm__nav')
+    expect(nav).toHaveClass('rmm__nav--open')
+    expect(nav).not.toHaveClass('rmm__nav--closed')
+  })
 })

@@ -1,54 +1,33 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from '@emotion/styled'
-import { respondTo } from '../helpers/responsive'
-import { getAnimationStyles } from '../helpers/animationStyles'
-
-const StyledNav = styled.nav`
-  position: absolute;
-  top: 8rem;
-  left: -100%;
-  width: 100%;
-  height: calc(100vh - 4rem);
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-  overflow-y: scroll;
-
-  ${respondTo('large')} {
-    top: 4rem;
-    left: 0;
-    height: 4rem;
-    flex-direction: row;
-    overflow-y: initial;
-  }
-
-  ${({ activeState }) => getAnimationStyles(activeState)}
-
-  li:first-of-type {
-    ${respondTo('large')} {
-      margin-left: 0;
-    }
-  }
-`
 
 const Nav = ({
   id,
   ariaLabel = 'Main Navigation',
   activeState = 'closed',
+  slideDirection = 'left',
+  className,
   children,
   ...props
 }) => (
-  <StyledNav
+  <nav
     id={id}
-    activeState={activeState}
     aria-label={ariaLabel}
     role="navigation"
+    className={[
+      'rmm__nav',
+      activeState === 'open' ? 'rmm__nav--open' : 'rmm__nav--closed',
+      slideDirection === 'right'
+        ? 'rmm__nav--slide-right'
+        : 'rmm__nav--slide-left',
+      className
+    ]
+      .filter(Boolean)
+      .join(' ')}
     {...props}
   >
     {children}
-  </StyledNav>
+  </nav>
 )
 
 Nav.propTypes = {
@@ -64,6 +43,14 @@ Nav.propTypes = {
    * The state of the mega list.
    */
   activeState: PropTypes.oneOf(['', 'open', 'closed']),
+  /**
+   * Which side the off-canvas nav slides in from on mobile widths.
+   */
+  slideDirection: PropTypes.oneOf(['left', 'right']),
+  /**
+   * Additional class name(s) to append.
+   */
+  className: PropTypes.string,
   /**
    * The content of the mega list.
    */

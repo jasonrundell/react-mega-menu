@@ -313,8 +313,8 @@
   }
 }
 
-/* Shared slide keyframes. Nav (the top-level off-canvas panel) reuses these
-   names with direction modifier classes — see the "Nav" section below. */
+/* Shared slide keyframes (slide-in-from-the-left direction). Nav's
+   rmm__nav--slide-left modifier reuses these same two keyframes. */
 @keyframes rmm-slide-open {
   from {
     transform: translate3d(-100%, 0, 0);
@@ -330,6 +330,131 @@
   }
   to {
     transform: translate3d(-100%, 0, 0);
+  }
+}
+
+/* Mirror-image keyframes for Nav's rmm__nav--slide-right modifier
+   (issue #64 — configurable slide direction). Only Nav supports a
+   direction choice; the mega/sub panels above always use the left-slide
+   keyframes, matching their pre-migration behavior. */
+@keyframes rmm-slide-open-right {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes rmm-slide-closed-right {
+  from {
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+/* Nav — the off-canvas panel holding the top-level MainList */
+.rmm__nav {
+  position: absolute;
+  top: var(--rmm-menu-height);
+  left: -100%;
+  width: 100%;
+  height: calc(100vh - var(--rmm-topbar-height));
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__nav {
+    top: var(--rmm-menu-height-large);
+    left: 0;
+    height: var(--rmm-menu-height-large);
+    flex-direction: row;
+    overflow-y: initial;
+  }
+}
+
+.rmm__nav--slide-right {
+  left: auto;
+  right: -100%;
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__nav--slide-right {
+    left: 0;
+    right: auto;
+  }
+}
+
+.rmm__nav--slide-left.rmm__nav--open {
+  animation-duration: var(--rmm-motion-duration);
+  animation-fill-mode: both;
+  animation-name: rmm-slide-open;
+  animation-iteration-count: 1;
+}
+
+.rmm__nav--slide-left.rmm__nav--closed {
+  animation-duration: var(--rmm-motion-duration);
+  animation-fill-mode: both;
+  animation-name: rmm-slide-closed;
+  animation-iteration-count: 1;
+}
+
+.rmm__nav--slide-right.rmm__nav--open {
+  animation-duration: var(--rmm-motion-duration);
+  animation-fill-mode: both;
+  animation-name: rmm-slide-open-right;
+  animation-iteration-count: 1;
+}
+
+.rmm__nav--slide-right.rmm__nav--closed {
+  animation-duration: var(--rmm-motion-duration);
+  animation-fill-mode: both;
+  animation-name: rmm-slide-closed-right;
+  animation-iteration-count: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rmm__nav--open,
+  .rmm__nav--closed {
+    animation: none;
+  }
+
+  .rmm__nav--slide-left.rmm__nav--open {
+    transform: translate3d(100%, 0, 0);
+  }
+
+  .rmm__nav--slide-left.rmm__nav--closed {
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  .rmm__nav--slide-right.rmm__nav--open {
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  .rmm__nav--slide-right.rmm__nav--closed {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__nav--open,
+  .rmm__nav--closed {
+    animation: none;
+    display: flex;
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rmm__nav--open,
+    .rmm__nav--closed {
+      transform: none;
+    }
   }
 }
 

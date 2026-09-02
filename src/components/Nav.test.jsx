@@ -16,9 +16,10 @@ describe('Nav Component', () => {
     const navElement = getByLabelText('Main Navigation')
     expect(navElement).toBeInTheDocument()
     expect(navElement).toHaveAttribute('id', 'main-nav')
+    expect(navElement).toHaveClass('rmm__nav')
   })
 
-  test('applies correct styles for open state', () => {
+  test('applies the open state class when activeState is open', () => {
     const { getByLabelText } = render(
       <Nav id="main-nav" activeState="open">
         <ul>
@@ -28,15 +29,11 @@ describe('Nav Component', () => {
       </Nav>
     )
     const navElement = getByLabelText('Main Navigation')
-    expect(navElement).toHaveStyle(`
-      animation-duration: 0.75s;
-      animation-fill-mode: both;
-      animation-name: slideOpen;
-      animation-iteration-count: 1;
-    `)
+    expect(navElement).toHaveClass('rmm__nav--open')
+    expect(navElement).not.toHaveClass('rmm__nav--closed')
   })
 
-  test('applies correct styles for closed state', () => {
+  test('applies the closed state class when activeState is closed', () => {
     const { getByLabelText } = render(
       <Nav id="main-nav" activeState="closed">
         <ul>
@@ -46,12 +43,34 @@ describe('Nav Component', () => {
       </Nav>
     )
     const navElement = getByLabelText('Main Navigation')
-    expect(navElement).toHaveStyle(`
-      animation-duration: 0.75s;
-      animation-fill-mode: both;
-      animation-name: slideClosed;
-      animation-iteration-count: 1;
-    `)
+    expect(navElement).toHaveClass('rmm__nav--closed')
+    expect(navElement).not.toHaveClass('rmm__nav--open')
+  })
+
+  test('defaults to the slide-left direction class when slideDirection is not set', () => {
+    const { getByLabelText } = render(
+      <Nav id="main-nav">
+        <ul>
+          <li>Home</li>
+        </ul>
+      </Nav>
+    )
+    const navElement = getByLabelText('Main Navigation')
+    expect(navElement).toHaveClass('rmm__nav--slide-left')
+    expect(navElement).not.toHaveClass('rmm__nav--slide-right')
+  })
+
+  test('applies the slide-right direction class when slideDirection="right"', () => {
+    const { getByLabelText } = render(
+      <Nav id="main-nav" slideDirection="right">
+        <ul>
+          <li>Home</li>
+        </ul>
+      </Nav>
+    )
+    const navElement = getByLabelText('Main Navigation')
+    expect(navElement).toHaveClass('rmm__nav--slide-right')
+    expect(navElement).not.toHaveClass('rmm__nav--slide-left')
   })
 
   test('renders children correctly', () => {

@@ -30,6 +30,7 @@ export const Menu = ({
   config = defaultMenuConfig,
   className,
   id,
+  slideDirection = 'left',
   ...rest
 }) => {
   const { resetMenus, megaMenuState, toggleMegaMenu, setIsMobile } = useMenu()
@@ -107,6 +108,7 @@ export const Menu = ({
         id={id || 'rmm__nav'}
         activeState={megaMenuState || 'closed'}
         ariaLabel="Main Navigation"
+        slideDirection={slideDirection}
         className={className}
       >
         <MainList
@@ -157,7 +159,12 @@ Menu.propTypes = {
     })
   }),
   className: PropTypes.string,
-  id: PropTypes.string
+  id: PropTypes.string,
+  /**
+   * Which side the off-canvas nav slides in from on mobile widths.
+   * Defaults to 'left', matching the pre-v3 behavior.
+   */
+  slideDirection: PropTypes.oneOf(['left', 'right'])
 }
 
 export default Menu
