@@ -126,4 +126,30 @@ describe('Menu component', () => {
     expect(nav).toHaveClass('rmm__nav--open')
     expect(nav).not.toHaveClass('rmm__nav--closed')
   })
+
+  test('Hamburger exposes aria-controls pointing at the Nav id', () => {
+    const { container } = render(<Menu config={defaultConfig} />)
+    const hamburger = container.querySelector('#rmm__hamburger')
+    const nav = container.querySelector('#rmm__nav')
+    expect(hamburger).toHaveAttribute('aria-controls', nav.id)
+  })
+
+  test('Hamburger aria-expanded reflects the closed megaMenuState', () => {
+    const { container } = render(<Menu config={defaultConfig} />)
+    const hamburger = container.querySelector('#rmm__hamburger')
+    expect(hamburger).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  test('Hamburger aria-expanded reflects the open megaMenuState', () => {
+    useMenu.mockReturnValue({
+      resetMenus: resetMenusMock,
+      megaMenuState: 'open',
+      toggleMegaMenu: toggleMegaMenuMock,
+      setIsMobile: setIsMobileMock,
+      activeMenus: []
+    })
+    const { container } = render(<Menu config={defaultConfig} />)
+    const hamburger = container.querySelector('#rmm__hamburger')
+    expect(hamburger).toHaveAttribute('aria-expanded', 'true')
+  })
 })

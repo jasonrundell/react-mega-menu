@@ -8,12 +8,20 @@ const Hamburger = ({
   state = 'closed',
   onClick,
   className,
+  ariaControls,
   ...props
 }) => (
   <Button
     primary={false}
     label=""
     onClick={onClick}
+    aria-expanded={state === 'open'}
+    aria-controls={ariaControls}
+    // Falls back to a non-visual "Menu" name only when no visible label is
+    // rendered (the default when a consumer omits `label`) — when a label
+    // is rendered, the button's own text content already supplies its
+    // accessible name, so an aria-label here would just duplicate it.
+    aria-label={label ? undefined : 'Menu'}
     className={classNames(
       'rmm__hamburger',
       stateClass('rmm__hamburger', state),
@@ -51,7 +59,13 @@ Hamburger.propTypes = {
   /**
    * Additional class name(s) to append.
    */
-  className: PropTypes.string
+  className: PropTypes.string,
+  /**
+   * The id of the element this button expands/collapses (typically the
+   * Nav), exposed as aria-controls so assistive tech can relate the toggle
+   * to the region it operates.
+   */
+  ariaControls: PropTypes.string
 }
 
 export default Hamburger

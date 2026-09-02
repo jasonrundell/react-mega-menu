@@ -98,6 +98,10 @@ export const Menu = ({
 
   useOutsideAlerter(wrapperRef) // create bindings for closing menu from outside events
 
+  // Shared between Nav and the Hamburger's aria-controls so the toggle is
+  // always wired to the region it actually expands/collapses.
+  const navId = id || 'rmm__nav'
+
   return (
     <div
       role="navigation"
@@ -120,9 +124,10 @@ export const Menu = ({
         state={megaMenuState || 'closed'}
         onClick={(e) => toggleMegaMenu(e)}
         id="rmm__hamburger"
+        ariaControls={navId}
       />
       <Nav
-        id={id || 'rmm__nav'}
+        id={navId}
         activeState={megaMenuState || 'closed'}
         ariaLabel="Main Navigation"
         slideDirection={slideDirection}
