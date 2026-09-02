@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import { Menu } from './index' // Adjust the import path as needed
+import { Menu, MenuProvider, useMenu } from './index' // Adjust the import path as needed
 
 // Mock the Menu component
 jest.mock('./Menu', () => ({
@@ -30,5 +30,10 @@ describe('MenuWithProvider', () => {
       expect.objectContaining({ someProp: testProp }),
       undefined
     )
+  })
+
+  it('also exports MenuProvider and useMenu for consumers building a custom tree', () => {
+    expect(typeof MenuProvider).toBe('function')
+    expect(typeof useMenu).toBe('function')
   })
 })
