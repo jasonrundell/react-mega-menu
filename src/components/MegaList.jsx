@@ -1,115 +1,27 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from '@emotion/styled'
-import { respondTo } from '../helpers/responsive'
 
-const StyledMegaList = styled.ul`
-  position: absolute;
-  z-index: 2;
-  top: 0;
-  left: -100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-content: center;
-  width: 100%;
-  height: calc(100vh - 4rem);
-  margin: 0;
-  padding: 0;
-
-  ${respondTo('large')} {
-    position: absolute;
-    left: 0;
-    top: 4rem;
-    display: flex;
-    flex-direction: row;
-    flex-direction: row;
-    width: 100%;
-    height: auto;
-    opacity: 0;
-  }
-
-  ${({ activeState }) =>
-    activeState === 'open' &&
-    `
-    animation-duration: 0.75s;
-    animation-fill-mode: both;
-    animation-name: slideOpen;
-    animation-iteration-count: 1;
-    @media (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
-
-    @keyframes slideOpen {
-      from {
-        transform: translate3d(-100%, 0, 0);
-      }
-    
-      to {
-        transform: translate3d(100%, 0, 0);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transform: translate3d(100%, 0, 0);
-    }
-
-    ${respondTo('large')} {
-      animation: none;
-      display: flex;
-      opacity: 1;
-      @media (prefers-reduced-motion: reduce) {
-        transform: none;
-      }
-    }
-  `}
-
-  ${({ activeState }) =>
-    activeState === 'closed' &&
-    `
-    animation-duration: 0.75s;
-    animation-fill-mode: both;
-    animation-name: slideClosed;
-    animation-iteration-count: 1;
-    @media (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
-
-    @keyframes slideClosed {
-      from {
-        transform: translate3d(100%, 0, 0);
-      }
-    
-      to {
-        transform: translate3d(-100%, 0, 0);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transform: translate3d(-100%, 0, 0);
-    }
-
-    ${respondTo('large')} {
-      animation: none;
-      display: none;
-      opacity: 0;
-      @media (prefers-reduced-motion: reduce) {
-        transform: none;
-      }
-    }
-  `}
-`
-
-const MegaList = ({ id, activeState = 'closed', children, ...props }) => (
-  <StyledMegaList
-    activeState={activeState}
+const MegaList = ({
+  id,
+  activeState = 'closed',
+  className,
+  children,
+  ...props
+}) => (
+  <ul
     role="menu"
     id={id}
     aria-labelledby={id}
+    className={[
+      className,
+      activeState === 'open' ? 'rmm__mega-list--open' : 'rmm__mega-list--closed'
+    ]
+      .filter(Boolean)
+      .join(' ')}
     {...props}
   >
     {children}
-  </StyledMegaList>
+  </ul>
 )
 
 MegaList.propTypes = {
@@ -121,6 +33,10 @@ MegaList.propTypes = {
    * The state of the mega list.
    */
   activeState: PropTypes.oneOf(['open', 'closed']).isRequired,
+  /**
+   * Additional class name(s) to append.
+   */
+  className: PropTypes.string,
   /**
    * The content of the mega list.
    */

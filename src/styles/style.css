@@ -133,3 +133,252 @@
   height: var(--rmm-logo-height);
   margin-right: var(--rmm-space-md);
 }
+
+/* MainList (top-level item bar) and NavList's default/non-dropdown shape
+   share identical geometry today, so both are driven by the single
+   .rmm__nav-list class the caller already applies to each (see
+   src/helpers/menu.jsx and Menu.jsx). */
+.rmm__nav-list {
+  z-index: var(--rmm-list-z);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: calc(100vh - var(--rmm-topbar-height));
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__nav-list {
+    flex-direction: row;
+    height: var(--rmm-topbar-height);
+  }
+
+  .rmm__nav-list li:first-of-type {
+    margin-left: 0;
+  }
+}
+
+/* NavList rendered as a nested sub-menu dropdown (type="sub") — full-screen
+   overlay on mobile, static inline list on large screens. */
+.rmm__nav-list--sub {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: calc(100vh - var(--rmm-topbar-height));
+  display: flex;
+  flex-direction: column;
+  z-index: var(--rmm-panel-z);
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__nav-list--sub {
+    animation: none;
+    display: flex;
+    position: static;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    height: auto;
+  }
+}
+
+.rmm__nav-list--sub.rmm__nav-list--open {
+  animation-duration: var(--rmm-motion-duration);
+  animation-fill-mode: both;
+  animation-name: rmm-slide-open;
+  animation-iteration-count: 1;
+}
+
+.rmm__nav-list--sub.rmm__nav-list--closed {
+  animation-duration: var(--rmm-motion-duration);
+  animation-fill-mode: both;
+  animation-name: rmm-slide-closed;
+  animation-iteration-count: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rmm__nav-list--sub.rmm__nav-list--open,
+  .rmm__nav-list--sub.rmm__nav-list--closed {
+    animation: none;
+  }
+
+  .rmm__nav-list--sub.rmm__nav-list--open {
+    transform: translate3d(100%, 0, 0);
+  }
+
+  .rmm__nav-list--sub.rmm__nav-list--closed {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__nav-list--sub.rmm__nav-list--open,
+  .rmm__nav-list--sub.rmm__nav-list--closed {
+    animation: none;
+    display: flex;
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rmm__nav-list--sub.rmm__nav-list--open,
+    .rmm__nav-list--sub.rmm__nav-list--closed {
+      transform: none;
+    }
+  }
+}
+
+/* MegaList — the top-level mega panel, one per top-nav "mega" item */
+.rmm__mega-list {
+  position: absolute;
+  z-index: var(--rmm-panel-z);
+  top: 0;
+  left: -100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+  width: 100%;
+  height: calc(100vh - var(--rmm-topbar-height));
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__mega-list {
+    position: absolute;
+    left: 0;
+    top: var(--rmm-topbar-height);
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    opacity: 0;
+  }
+}
+
+.rmm__mega-list--open {
+  animation-duration: var(--rmm-motion-duration);
+  animation-fill-mode: both;
+  animation-name: rmm-slide-open;
+  animation-iteration-count: 1;
+}
+
+.rmm__mega-list--closed {
+  animation-duration: var(--rmm-motion-duration);
+  animation-fill-mode: both;
+  animation-name: rmm-slide-closed;
+  animation-iteration-count: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rmm__mega-list--open,
+  .rmm__mega-list--closed {
+    animation: none;
+  }
+
+  .rmm__mega-list--open {
+    transform: translate3d(100%, 0, 0);
+  }
+
+  .rmm__mega-list--closed {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__mega-list--open {
+    animation: none;
+    display: flex;
+    opacity: 1;
+  }
+
+  .rmm__mega-list--closed {
+    animation: none;
+    display: none;
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rmm__mega-list--open,
+    .rmm__mega-list--closed {
+      transform: none;
+    }
+  }
+}
+
+/* Shared slide keyframes. Nav (the top-level off-canvas panel) reuses these
+   names with direction modifier classes — see the "Nav" section below. */
+@keyframes rmm-slide-open {
+  from {
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@keyframes rmm-slide-closed {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+/* MainNavItem — top-level <li> */
+.rmm__main-nav-item {
+  list-style: none;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: var(--rmm-space-md);
+  margin-left: 0;
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__main-nav-item {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: var(--rmm-space-xl);
+    align-items: center;
+  }
+}
+
+/* NavItem — nested <li>, inside a mega/sub panel */
+.rmm__nav-item {
+  list-style: none;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: var(--rmm-space-md);
+  margin-left: 0;
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+/* NavItemDescription */
+.rmm__nav-item-description {
+  font-size: var(--rmm-description-font-size);
+  color: var(--rmm-text-muted);
+  margin-bottom: var(--rmm-space-md);
+}

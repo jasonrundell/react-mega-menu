@@ -97,7 +97,6 @@ export const renderMegaMenuItem = (
     <MainNavItem
       id={`rmm-main-nav-item-${formatIdString(item.id)}`}
       role="none"
-      isChildren
       key={`rmm-main-nav-item-${formatIdString(item.id)}`}
       className="rmm__main-nav-item"
     >
