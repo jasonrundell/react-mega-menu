@@ -77,3 +77,88 @@ describe('shipped stylesheet contract', () => {
     })
   })
 })
+
+/**
+ * Extracts the body of a single `@keyframes <name> { ... }` block from raw
+ * CSS text, using brace-depth counting rather than a non-greedy regex, since
+ * the block itself contains nested `{ }` pairs (one per keyframe selector)
+ * that a naive `[\s\S]*?\}` match would stop at prematurely.
+ */
+function extractKeyframesBlock(css, name) {
+  const marker = `@keyframes ${name}`
+  const start = css.indexOf(marker)
+  if (start === -1) {
+    throw new Error(`@keyframes ${name} not found in stylesheet`)
+  }
+  const openBrace = css.indexOf('{', start)
+  let depth = 0
+  let i = openBrace
+  for (; i < css.length; i++) {
+    if (css[i] === '{') depth++
+    else if (css[i] === '}') {
+      depth--
+      if (depth === 0) break
+    }
+  }
+  return css.slice(openBrace + 1, i)
+}
+
+/**
+ * Reads the translate3d X percentage out of a keyframe block's terminal
+ * selector — `to { ... }` in this stylesheet's authored source, which is
+ * equivalent to a `100%` selector once parsed. Written against the raw
+ * source text (not the CSSOM) so it exercises exactly what ships in
+ * dist/style.css, independent of any browser's keyframe normalization.
+ */
+function endTranslateXPercent(keyframesBody) {
+  const match = keyframesBody.match(
+    /to\s*\{\s*transform:\s*translate3d\(\s*(-?[\d.]+)%/
+  )
+  if (!match) {
+    throw new Error(
+      `Could not find a "to { transform: translate3d(N%, ...) }" rule in: ${keyframesBody}`
+    )
+  }
+  return Number(match[1])
+}
+
+describe('Nav slide-direction keyframes (issue #64)', () => {
+  // Regression guard for a bug class that's invisible to jsdom (no real CSS
+  // animation timeline) and easy to mismeasure even in a real browser (a
+  // backgrounded/hidden tab freezes the Web Animations API's currentTime at
+  // 0, which reads back as the *start* keyframe rather than the end one —
+  // exactly the shape of a "the direction is inverted" false positive).
+  // Asserting the authored end (`to`) keyframe values directly against the
+  // stylesheet source sidesteps needing a live, foregrounded animation
+  // timeline at all.
+  const resolvedPath = path.resolve(
+    __dirname,
+    '..',
+    packageJson.exports['./style.css']
+  )
+  const css = fs.readFileSync(resolvedPath, 'utf8')
+
+  it('rmm-slide-open (left, open) ends at +100% — on-screen from the left', () => {
+    expect(
+      endTranslateXPercent(extractKeyframesBlock(css, 'rmm-slide-open'))
+    ).toBe(100)
+  })
+
+  it('rmm-slide-closed (left, closed) ends at -100% — off-screen to the left', () => {
+    expect(
+      endTranslateXPercent(extractKeyframesBlock(css, 'rmm-slide-closed'))
+    ).toBe(-100)
+  })
+
+  it('rmm-slide-open-right (right, open) ends at -100% — on-screen from the right', () => {
+    expect(
+      endTranslateXPercent(extractKeyframesBlock(css, 'rmm-slide-open-right'))
+    ).toBe(-100)
+  })
+
+  it('rmm-slide-closed-right (right, closed) ends at +100% — off-screen to the right', () => {
+    expect(
+      endTranslateXPercent(extractKeyframesBlock(css, 'rmm-slide-closed-right'))
+    ).toBe(100)
+  })
+})
