@@ -36,6 +36,7 @@ policy below).
 | 8 | Demos | Both demos upgrade (Vite → React 19; next-demo → Next 15 + React 19), drop Emotion, add a four-theme switcher |
 | 9 | Verification bar | Test parity **plus** `jest-axe` on open/closed states and a manual keyboard-walkthrough checklist |
 | 10 | Plan artifact | This document; Topiary issues are filed from audit evidence, not speculation |
+| 11 | Slide direction ([#64](https://github.com/jasonrundell/react-mega-menu/issues/64)) | New `slideDirection` prop (`'left' \| 'right'`, default `'left'` = current behavior) — the one additive API change in v3 |
 
 ## Current state (audited 2026-09-02)
 
@@ -155,7 +156,7 @@ Topiary atom where the audit passed:
 | `components/TopBar.jsx`, `TopBarTitle.jsx` | styled divs | audit: Topiary layout atom / `Heading`; else plain + stylesheet |
 | `components/Logo.jsx` | styled img/link | plain, stylesheet |
 | `components/Hamburger.jsx` | styled button, state styles | Topiary `Button` if audit passes (ARIA + state classes); else plain `<button>` |
-| `components/Nav.jsx` | styled nav + animation | plain `<nav>`; animation via `.rmm__nav--open/--closed` state classes |
+| `components/Nav.jsx` | styled nav + animation | plain `<nav>`; animation via `.rmm__nav--open/--closed` state classes, plus `.rmm__nav--slide-left/--slide-right` direction modifiers (issue #64) |
 | `components/MainList.jsx`, `MegaList.jsx`, `NavList.jsx` | styled `ul` | plain `<ul>`, stylesheet |
 | `components/MainNavItem.jsx`, `NavItem.jsx` | styled `li` | plain `<li>`, stylesheet |
 | `components/MainNavItemLink.jsx`, `NavItemLink.jsx` | styled `a` | Topiary `Link` if audit passes; else plain `<a>` |
@@ -169,9 +170,17 @@ Also in this phase:
   React peer deps → `^19.0.0`; version → `3.0.0-alpha`.
 - Vite config: emit `style.css` alongside the JS bundle; add
   `"./style.css"` to `exports`.
+- **Configurable slide direction
+  ([#64](https://github.com/jasonrundell/react-mega-menu/issues/64)):** new
+  `Menu` prop `slideDirection: 'left' | 'right'`, default `'left'` (current
+  behavior). Implemented as a `.rmm__nav--slide-left` / `--slide-right`
+  modifier class selecting between two keyframe pairs in the stylesheet —
+  possible now precisely because animation moves out of Emotion into state
+  classes. Both directions honor `prefers-reduced-motion`.
 - Public API held stable: `Menu` props, config shape, `rmm__*` class names.
-  Breaking changes limited to: React 19, Emotion peer deps removed, Topiary
-  peer dep added, stylesheet import required.
+  One additive prop: `slideDirection` (above). Breaking changes limited to:
+  React 19, Emotion peer deps removed, Topiary peer dep added, stylesheet
+  import required.
 
 ### Phase 4 — Demos
 
@@ -184,13 +193,16 @@ Also in this phase:
 - Refresh the checked-in tarball workflow for the v3 package (or replace
   `file:` tarball installs with `npm pack` in a script — decide during
   implementation; not a plan-level decision).
+- At least one demo exposes a `slideDirection` toggle so the #64 feature is
+  visible and manually verifiable on mobile widths.
 - Demo screenshots across the four themes are the "tokens drive form"
   evidence for Topiary.
 
 ### Phase 5 — Verification (release gate for v3.0.0)
 
 - [ ] All existing Jest suites pass; `animationStyles.test.js` rewritten as
-      state-class assertions.
+      state-class assertions covering both `slideDirection` values (default
+      unchanged when the prop is omitted).
 - [ ] `jest-axe` added: no violations on the rendered menu, open and closed,
       mobile and desktop widths.
 - [ ] Manual keyboard walkthrough (documented as a checklist in the PR): Tab
