@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from '@jasonrundell/topiary'
+import { classNames, stateClass } from '../helpers/classNames'
 
 const Hamburger = ({
   label = null,
@@ -13,13 +14,11 @@ const Hamburger = ({
     primary={false}
     label=""
     onClick={onClick}
-    className={[
+    className={classNames(
       'rmm__hamburger',
-      state === 'open' ? 'rmm__hamburger--open' : 'rmm__hamburger--closed',
+      stateClass('rmm__hamburger', state),
       className
-    ]
-      .filter(Boolean)
-      .join(' ')}
+    )}
     {...props}
   >
     <div id="rmm__hamburger-slices">

@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { MENU_ITEM_TYPE_LINK, MENU_ITEM_TYPES } from '../config/menuItemTypes'
+import { classNames, stateClass } from '../helpers/classNames'
 
 const NavList = ({
   id,
@@ -17,12 +18,7 @@ const NavList = ({
     id={id}
     role={role}
     aria-labelledby={ariaLabelledby}
-    className={[
-      className,
-      activeState === 'open' ? 'rmm__nav-list--open' : 'rmm__nav-list--closed'
-    ]
-      .filter(Boolean)
-      .join(' ')}
+    className={classNames(className, stateClass('rmm__nav-list', activeState))}
     {...props}
   >
     {children}

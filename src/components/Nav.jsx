@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { classNames, stateClass } from '../helpers/classNames'
 
 const Nav = ({
   id,
@@ -14,16 +15,14 @@ const Nav = ({
     id={id}
     aria-label={ariaLabel}
     role="navigation"
-    className={[
+    className={classNames(
       'rmm__nav',
-      activeState === 'open' ? 'rmm__nav--open' : 'rmm__nav--closed',
+      stateClass('rmm__nav', activeState),
       slideDirection === 'right'
         ? 'rmm__nav--slide-right'
         : 'rmm__nav--slide-left',
       className
-    ]
-      .filter(Boolean)
-      .join(' ')}
+    )}
     {...props}
   >
     {children}

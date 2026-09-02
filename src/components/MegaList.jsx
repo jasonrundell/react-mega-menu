@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { classNames, stateClass } from '../helpers/classNames'
 
 const MegaList = ({
   id,
@@ -12,12 +13,7 @@ const MegaList = ({
     role="menu"
     id={id}
     aria-labelledby={id}
-    className={[
-      className,
-      activeState === 'open' ? 'rmm__mega-list--open' : 'rmm__mega-list--closed'
-    ]
-      .filter(Boolean)
-      .join(' ')}
+    className={classNames(className, stateClass('rmm__mega-list', activeState))}
     {...props}
   >
     {children}

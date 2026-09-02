@@ -7,6 +7,7 @@ import { useMenu } from './context/MenuContext' // Adjust the path as necessary
 // Helpers
 import { click as a11yClick, escape as a11yEscape } from './helpers/a11y'
 import { isLargeViewport, largeBreakpointQuery } from './helpers/responsive'
+import { classNames } from './helpers/classNames'
 import {
   config,
   renderMainMenuItem,
@@ -103,7 +104,7 @@ export const Menu = ({
       ref={wrapperRef}
       {...rest}
       id={id || 'rmm__menu'}
-      className={['rmm__menu', className].filter(Boolean).join(' ')}
+      className={classNames('rmm__menu', className)}
     >
       <TopBar id="rmm__topbar">
         <Logo

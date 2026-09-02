@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from '@jasonrundell/topiary'
+import { classNames } from '../helpers/classNames'
 
 const NavItemLink = ({
   id,
@@ -24,9 +25,10 @@ const NavItemLink = ({
     onKeyDown={onKeyDown}
     aria-haspopup={ariaHaspopup}
     aria-controls={ariaControls}
-    className={[className, isActive ? 'rmm__nav-item-link--active' : '']
-      .filter(Boolean)
-      .join(' ')}
+    className={classNames(
+      className,
+      isActive ? 'rmm__nav-item-link--active' : ''
+    )}
     {...props}
   />
 )

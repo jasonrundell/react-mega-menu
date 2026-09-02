@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { classNames } from '../helpers/classNames'
 
 const Logo = ({ id, src, rel = '', alt = '', className, ...props }) => (
   <img
@@ -7,7 +8,7 @@ const Logo = ({ id, src, rel = '', alt = '', className, ...props }) => (
     src={src}
     rel={rel}
     alt={alt}
-    className={['rmm__logo', className].filter(Boolean).join(' ')}
+    className={classNames('rmm__logo', className)}
     {...props}
   />
 )
