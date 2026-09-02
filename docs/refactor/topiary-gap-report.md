@@ -1,5 +1,13 @@
 # Topiary gap report (Phase 0 audit)
 
+> **Resolution (2026-09-02):** all seven gaps below were fixed in
+> [topiary#158](https://github.com/jasonrundell/topiary/pull/158) and released
+> as **`@jasonrundell/topiary@4.1.0`**. The migration ticket (#94) should
+> target that version or later. Two values changed during review of the fixes
+> beyond what the issues proposed: `arcade`'s `color.surfaceAlt` was lightened
+> to `#fff9e3` so `Link`'s hover text clears AA, and a plain `breakpoints`
+> literal export was added alongside `media`.
+
 **Audited:** 2026-09-02
 **Audited against:** `jasonrundell/topiary` `main`, commit resolved by `git clone --depth 1` on
 2026-09-02, package version `4.0.1` (from `package.json`). Cloned read-only to a
