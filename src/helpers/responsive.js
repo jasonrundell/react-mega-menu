@@ -1,12 +1,5 @@
 import { breakpoints as BreakPoints } from '../config/breakpoints'
 
-export const respondTo = (breakpoint) => {
-  const breakpoints = {
-    large: `@media (min-width: ${BreakPoints.large['min-width']})`
-  }
-  return breakpoints[breakpoint] || null
-}
-
 // Root font-size assumption for converting the "large" breakpoint's rem
 // value into a raw pixel number, for environments that don't implement
 // window.matchMedia (e.g. jsdom in tests). 16px is the universal browser
