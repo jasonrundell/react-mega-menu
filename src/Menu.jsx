@@ -5,7 +5,11 @@ import PropTypes from 'prop-types'
 import { useMenu } from './context/MenuContext' // Adjust the path as necessary
 
 // Helpers
-import { click as a11yClick, escape as a11yEscape } from './helpers/a11y'
+import {
+  click as a11yClick,
+  escape as a11yEscape,
+  isEscape
+} from './helpers/a11y'
 import { isLargeViewport, largeBreakpointQuery } from './helpers/responsive'
 import { classNames } from './helpers/classNames'
 import {
@@ -66,7 +70,7 @@ export const Menu = ({
       // MenuContext and every render helper.
       const activeElement = document.activeElement
       const focusIsInMenu =
-        e.keyCode === 27 &&
+        isEscape(e) &&
         wrapperRef.current &&
         activeElement &&
         wrapperRef.current.contains(activeElement)
