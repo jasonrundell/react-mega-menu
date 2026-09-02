@@ -36,13 +36,20 @@ export default defineConfig({
     },
     sourcemap: true,
     rollupOptions: {
-      external: ['react', 'react-dom', '@emotion/react', '@emotion/styled'],
+      external: [
+        'react',
+        'react-dom',
+        '@emotion/react',
+        '@emotion/styled',
+        '@jasonrundell/topiary'
+      ],
       output: {
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
           '@emotion/react': 'emotionReact',
-          '@emotion/styled': 'emotionStyled'
+          '@emotion/styled': 'emotionStyled',
+          '@jasonrundell/topiary': 'Topiary'
         },
         exports: 'named'
       }
