@@ -1,0 +1,104 @@
+# Manual keyboard walkthrough
+
+A repeatable checklist for exercising react-mega-menu with a keyboard only,
+complementing the automated jest-axe gate at `src/accessibility.test.js`
+(which runs in jsdom and cannot see real layout, CSS transforms, or focus
+rings). Run this against the final Topiary-styled build before each release
+and record results below — do not overwrite prior runs, append a new dated
+run instead.
+
+## How to run it
+
+1. Build the package and pack it: `npm run build && npm pack
+   --pack-destination <scratchpad>` from the repo root.
+2. In a throwaway harness app with `@jasonrundell/react-mega-menu` and
+   `@jasonrundell/topiary` installed (`npm install` after removing the old
+   `node_modules/@jasonrundell/react-mega-menu` and `package-lock.json`, so
+   the fresh tarball is actually picked up), render `<Menu />` with the
+   default config, both `slideDirection` values, and a theme switcher for
+   `hangar` / `broadsheet` / `arcade` / `cascade` (`data-theme="<name>"`).
+3. Drive it with a keyboard (or, for scripted verification, real
+   `KeyboardEvent`s dispatched with explicit `keyCode`/`which` — see the
+   Tooling notes below) at both a mobile width (< the `large` breakpoint,
+   e.g. 375px) and a desktop width (e.g. 1280px).
+4. Record Result / Notes / Date / Build for every row, every run. Mark a row
+   **NOT RUN** with a reason rather than guessing at a result.
+
+## Checklist
+
+| # | Check | Steps | Expected result | Result | Notes | Date | Build/commit |
+|---|-------|-------|------------------|--------|-------|------|---------------|
+| 1 | Tab order forward | At desktop width, focus before the menu; press Tab repeatedly. | Focus visits the top-level items in order (Home, About, Store, Blog, Help, Settings, Contact) and does not enter closed mega/sub panels. | PASS | Verified via `document.activeElement` reads after each Tab; closed panels are `display:none` at the `large` breakpoint (`src/styles/style.css`), so Tab skips their contents entirely. | 2026-09-02 | 3eec3e2 |
+| 2 | Shift+Tab reverse | From the last top-level item, press Shift+Tab repeatedly. | Focus visits the same items in reverse order. | PASS | Contact → Settings → Help → Blog verified. | 2026-09-02 | 3eec3e2 |
+| 3 | Enter opens a mega item's panel | Focus a top-level mega item (e.g. Store); press Enter. | The item's mega panel opens (`rmm__mega-list--open`). | PASS | Verified via a real OS-level trusted Enter keypress — the top-level link is a native `<a href>`, so the browser's own default action (activating the link, which the app's `onClick` intercepts with `preventDefault` + `toggleSubMenu`) fires the toggle; a `click` event was observed in an attached listener and the panel's class flipped to `--open`. | 2026-09-02 | 3eec3e2 |
+| 4 | Space opens a mega item's panel | Focus a top-level mega item; press Space. | The item's mega panel opens. | **NOT RUN** | Tooling limitation, not an app defect — see "Tooling notes" below. The app's `helpers/a11y.js` `click()` gate (`e.charCode \|\| e.keyCode === 32`) is unit-tested directly (`src/helpers/a11y.test.js`: `charCode:32` → `true`), but this session's browser-automation "computer key" action never populates legacy `keyCode`/`which` on synthetic key presses, so the live end-to-end path could not be exercised. A human should confirm this with a physical keyboard before release. | 2026-09-02 | 3eec3e2 |
+| 5 | Escape closes and returns focus to the triggering item | Open a mega item, move focus to a link inside its panel, press Escape. | The panel (and any nested open panels) closes, and focus returns to the top-level item that opened it — not to `<body>`. | PASS (after a fix) | Initial run found a real defect: `resetMenus()` closed the panel correctly but left focus on the now-hidden descendant, which fell back to `<body>`. Fixed in commit `3eec3e2` (`src/Menu.jsx`'s Escape handler now walks up from `document.activeElement` to the enclosing `.rmm__main-nav-item` and refocuses its `.rmm__main-nav-item-link`). Re-verified live in the harness after rebuilding: focus correctly lands back on the "Store" link. Driven via `window.dispatchEvent(new KeyboardEvent('keydown', {keyCode:27, which:27, bubbles:true}))` rather than the `computer` tool's key action, for the same keyCode-population reason as row 4 — this still exercises the app's real listener on the real DOM, just not a physical key. | 2026-09-02 | 3eec3e2 |
+| 6 | Outside click closes | With a panel open, click (mousedown) outside the menu. | All open panels close. | PASS | Verified at both desktop and mobile widths via `mousedown` dispatched on `document.body`. Related finding (not a regression — already flagged as an open design question in #94): the mega panel paints no background, so a click that visually looks like it lands on page content *behind* an open panel can actually land on the (invisible) panel element itself and will not count as "outside." | 2026-09-02 | 3eec3e2 |
+| 7 | Focus visible — hangar theme | Tab to a top-level link (desktop) and to the Hamburger (mobile) with `data-theme="hangar"`. | A visible focus ring/outline appears. | PASS | Nav link: `outline: rgb(3,105,161) solid 2px`. Hamburger (mobile): `outline: rgb(15,22,40) solid 3px`. Both matched `:focus-visible`. | 2026-09-02 | 3eec3e2 |
+| 8 | Focus visible — broadsheet theme | Same, with `data-theme="broadsheet"`. | A visible focus ring/outline appears. | PASS | Nav link: `outline: rgb(124,45,18) solid 3px`. Hamburger (mobile): `outline: rgb(53,27,25) solid 3px`. | 2026-09-02 | 3eec3e2 |
+| 9 | Focus visible — arcade theme | Same, with `data-theme="arcade"`. | A visible focus ring/outline appears. | PASS | Nav link: `outline: rgb(109,40,217) solid 5px`. Hamburger (mobile): `outline: rgb(89,36,92) solid 3px`. | 2026-09-02 | 3eec3e2 |
+| 10 | Focus visible — cascade theme | Same, with `data-theme="cascade"`. | A visible focus ring/outline appears. | PASS | Nav link: `outline: rgb(79,70,229) solid 2px`. Hamburger (mobile): `outline: rgb(90,53,191) solid 3px`. | 2026-09-02 | 3eec3e2 |
+| 11 | Hamburger reachable by keyboard at mobile width | At a mobile width (< the `large` breakpoint), Tab toward the Hamburger. | The Hamburger receives focus and is visible (not `display:none`). | PASS | At 375px, the Hamburger is `display:flex` and receives focus via Tab. | 2026-09-02 | 3eec3e2 |
+| 12 | Hamburger operable by keyboard at mobile width | With the Hamburger focused, press Enter or Space. | The off-canvas Nav opens (`rmm__nav--open`) and `aria-expanded` flips to `true`. | **NOT RUN** (live keypress) / indirectly confirmed | Same tooling limitation as row 4 — synthetic Enter/Space on the Hamburger's native `<button type="button">` did not produce a `click` in this automation (no `keyCode`, and script-dispatched `KeyboardEvent`s are untrusted so the browser won't run the button's native default action from them either). The toggle itself was confirmed correct via a direct `.click()`: `aria-expanded` flips `false` → `true` and `rmm__nav` gains `--open`. Native `<button>` elements activate on both Enter and Space per the HTML spec, independent of any app JS — a human should still confirm with a physical keyboard before release. | 2026-09-02 | 3eec3e2 |
+| 13 | No keyboard trap | From the Hamburger, Tab forward through the entire menu (both mobile-closed and mobile/desktop-open states) and back with Shift+Tab. | Focus always keeps moving; it's never impossible to Tab or Shift+Tab away from the menu. | PASS, with an important related finding | Tabbing never got stuck — forward and reverse traversal both worked in every state tested. However: **at mobile width, when the Nav is closed, its entire content tree (all top-level items, every mega panel, every sub-panel) is still in the Tab order** — only the outer `.rmm__nav` is transformed off-screen (`transform: translate3d(-100%,0,0)`, confirmed via `getBoundingClientRect()`), not `display:none` or `inert`, unlike the desktop closed state (which *is* `display:none` past the `large` breakpoint). So a keyboard user tabbing past a closed Hamburger at mobile width lands on, and must tab through, many invisible off-screen links before reaching real content again — a "no visible focus" failure spanning most of row 7–10's concern, even though it is not a hard trap. See "Escalation" below; not fixed here (needs `isMobile` plumbed into `Nav`, e.g. via a conditional `inert` attribute — more than a handler-level tweak). | 2026-09-02 | 3eec3e2 |
+
+## Tooling notes (this run)
+
+The keyboard-driven checks above were executed against a live harness
+(`npm run dev` on port 5183, package rebuilt and repacked from this branch)
+using this session's browser-automation tooling rather than a physical
+keyboard. Two limitations surfaced and are recorded here so a future run
+knows what to expect and doesn't mistake tooling noise for app defects:
+
+- The automation's OS-level "press key" action does not populate the
+  legacy `KeyboardEvent.keyCode`/`.which` properties (and inconsistently
+  populates `.key`) on the events it dispatches in this environment. Native
+  browser default actions that don't inspect `keyCode` (e.g. an `<a href>`
+  activating on a trusted Enter keypress) still worked; anything gated on
+  `keyCode`/`which` — this app's own `helpers/a11y.js` `click()`/`escape()`
+  checks, and the browser's own "activate a focused `<button>` on
+  Enter/Space" default action for untrusted events — did not fire from that
+  action alone.
+- Where that mattered (Escape), the app's logic was instead verified by
+  dispatching a real `KeyboardEvent` from the page's own JS context with
+  `keyCode`/`which` explicitly set. This is a legitimate check of the app's
+  actual event listener on the actual live DOM (not jsdom) — it just isn't
+  a physical keystroke, so it can't validate the browser's *native* default
+  actions (like a `<button>` self-activating). Rows 4 and 12 could not be
+  substituted this way, because what's in question there is precisely
+  whether the *browser's own* default action fires — that requires a
+  trusted event, which only a real keypress produces.
+
+Recording this honestly rather than marking rows 4/12 as PASS on the
+strength of the unit tests and the click-path confirmation alone — a human
+should do a final Space/Enter pass with a physical keyboard before relying
+on this checklist as the last word on those two rows.
+
+## Escalations
+
+Findings from this run that are real (reproducible, confirmed live) but
+outside what a minimal, attribute/handler-level change can safely fix —
+recorded here for a human to triage into a follow-up ticket rather than
+fixed unilaterally:
+
+1. **Off-canvas nav content stays in the Tab order while closed at mobile
+   width** (row 13). Only `.rmm__nav` itself is moved off-screen via
+   `transform` when closed at a mobile width; none of its descendants (nor
+   the mega/sub panels nested inside, which have no closed-state
+   `display:none` below the `large` breakpoint at all — see
+   `src/styles/style.css` `.rmm__mega-list` / `.rmm__nav-list--sub`) are
+   removed from the accessibility tree or tab order. A keyboard user at
+   mobile width must tab through the entire hidden menu tree before reaching
+   subsequent page content, with no visible focus indicator the whole time.
+   Suggested direction: conditionally set the HTML `inert` attribute on
+   `Nav`'s root element when `isMobile && activeState === 'closed'` (removed
+   on open) — attribute-level, but requires threading `isMobile` from
+   `MenuContext` into `Nav`, which today only `Menu.jsx` consumes, so it's a
+   small interface change rather than a pure attribute tweak on an existing
+   prop. Worth checking whether this is pre-existing (v2) behavior or new to
+   the v3 off-canvas implementation before scoping the fix.
+2. **Mega panel has no background chrome, so it can silently absorb clicks
+   aimed at page content behind it** (row 6 notes). Already flagged as an
+   open design question in #94 ("Mega panel paints no background/border/
+   shadow, exactly like v2"), not a new #95 finding — noted here only
+   because this walkthrough reproduced it concretely.
