@@ -14,7 +14,7 @@ export const rmmTokens = [
   // Color
   '--rmm-menu-bg', // menu shell + panel background
   '--rmm-menu-text', // primary text color
-  '--rmm-menu-border', // hairline divider / hamburger slice color
+  '--rmm-menu-border', // hairline divider
   '--rmm-panel-bg', // mega/sub panel background
   '--rmm-link-color', // nav item link color
   '--rmm-link-hover-bg', // nav item link :hover/:focus-visible background

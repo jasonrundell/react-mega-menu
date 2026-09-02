@@ -382,3 +382,147 @@
   color: var(--rmm-text-muted);
   margin-bottom: var(--rmm-space-md);
 }
+
+/* NavItemLink / MainNavItemLink (Topiary Link atom). Layout doesn't fight
+   Link's own compiled class (it carries no layout rules), so a single class
+   is enough there; color/hover/focus DO fight it, so those use the
+   .rmm__menu .rmm__<x> two-class pattern to win regardless of import order. */
+.rmm__nav-item-link {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  margin-bottom: var(--rmm-space-md);
+}
+
+.rmm__main-nav-item-link {
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__main-nav-item-link {
+    align-items: center;
+    height: var(--rmm-topbar-height);
+  }
+}
+
+.rmm__menu .rmm__nav-item-link,
+.rmm__menu .rmm__main-nav-item-link {
+  color: var(--rmm-link-color);
+  font-size: var(--rmm-nav-item-font-size);
+}
+
+.rmm__menu .rmm__nav-item-link:hover,
+.rmm__menu .rmm__nav-item-link:focus-visible,
+.rmm__menu .rmm__main-nav-item-link:hover,
+.rmm__menu .rmm__main-nav-item-link:focus-visible {
+  background-color: var(--rmm-link-hover-bg);
+}
+
+.rmm__menu .rmm__nav-item-link:focus-visible,
+.rmm__menu .rmm__main-nav-item-link:focus-visible {
+  outline: var(--rmm-focus-ring);
+}
+
+/* isActive rotate — carried over verbatim from the pre-migration Emotion
+   rule. It has no visible effect (no `content` is set on ::after, so no
+   pseudo-element box is generated) and no current caller ever sets
+   isActive on NavItemLink; preserved as-is rather than "fixed" as part of
+   a styling-parity migration. */
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__nav-item-link--active::after {
+    transform: rotate(180deg);
+    top: 0;
+  }
+}
+
+/* Hamburger (Topiary Button atom). Button's own compiled class carries
+   padding/border/box-shadow/gap/border-radius/display chrome that fights
+   this icon-button's layout, so the reset below uses the two-class pattern
+   to win regardless of stylesheet import order. Button's own :focus-visible
+   outline is left intact — it's a real accessibility feature, not chrome
+   to strip. */
+.rmm__menu .rmm__hamburger {
+  transition: var(--rmm-hamburger-transition-duration) var(--rmm-motion-easing);
+  position: absolute;
+  top: var(--rmm-hamburger-top);
+  left: var(--rmm-hamburger-left);
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.rmm__menu .rmm__hamburger:hover,
+.rmm__menu .rmm__hamburger:active {
+  box-shadow: none;
+  background: transparent;
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__menu .rmm__hamburger {
+    display: none;
+  }
+}
+
+#rmm__hamburger-slices {
+  width: var(--rmm-hamburger-width);
+  position: relative;
+  display: block;
+  height: var(--rmm-hamburger-height);
+}
+
+.rmm__hamburger--slice {
+  display: block;
+  position: absolute;
+  height: var(--rmm-space-xs);
+  width: 100%;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: var(--rmm-hamburger-slice-transition-duration)
+    var(--rmm-motion-easing);
+  background-color: var(--rmm-menu-text);
+}
+
+.rmm__hamburger--slice:nth-of-type(1) {
+  top: 0;
+}
+
+.rmm__hamburger--slice:nth-of-type(2),
+.rmm__hamburger--slice:nth-of-type(3) {
+  top: var(--rmm-space-sm);
+}
+
+.rmm__hamburger--slice:nth-of-type(4) {
+  top: var(--rmm-space-md);
+}
+
+.rmm__hamburger--open .rmm__hamburger--slice:nth-of-type(1),
+.rmm__hamburger--open .rmm__hamburger--slice:nth-of-type(4) {
+  top: var(--rmm-space-md);
+  width: 0%;
+  left: 50%;
+}
+
+.rmm__hamburger--open .rmm__hamburger--slice:nth-of-type(2) {
+  transform: rotate(45deg);
+}
+
+.rmm__hamburger--open .rmm__hamburger--slice:nth-of-type(3) {
+  transform: rotate(-45deg);
+}
+
+#rmm__hamburger--label {
+  font-size: var(--rmm-hamburger-label-font-size);
+  font-weight: var(--rmm-font-weight-bold);
+}
