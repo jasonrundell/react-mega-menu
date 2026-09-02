@@ -1,13 +1,12 @@
 import React, { useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import styled from '@emotion/styled'
 
 // Context
 import { useMenu } from './context/MenuContext' // Adjust the path as necessary
 
 // Helpers
 import { click as a11yClick, escape as a11yEscape } from './helpers/a11y'
-import { respondTo, viewportLarge } from './helpers/responsive'
+import { viewportLarge } from './helpers/responsive'
 import {
   config,
   renderMainMenuItem,
@@ -25,25 +24,14 @@ import Hamburger from './components/Hamburger'
 import Nav from './components/Nav'
 import MainList from './components/MainList'
 
-const StyledMenu = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 8rem;
-  display: flex;
-  justify-content: flex-start;
-  align-content: center;
-  flex-direction: row;
-  width: 100%;
-  z-index: 9000;
-
-  ${respondTo('large')} {
-    height: 4rem;
-  }
-`
 const defaultMenuConfig = config
 
-export const Menu = ({ config = defaultMenuConfig, ...props }) => {
+export const Menu = ({
+  config = defaultMenuConfig,
+  className,
+  id,
+  ...rest
+}) => {
   const { resetMenus, megaMenuState, toggleMegaMenu, setIsMobile } = useMenu()
 
   const wrapperRef = useRef(null) // used to detect clicks outside of component
@@ -93,12 +81,12 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
   useOutsideAlerter(wrapperRef) // create bindings for closing menu from outside events
 
   return (
-    <StyledMenu
-      id={props.id || 'rmm__menu'}
+    <div
       role="navigation"
       ref={wrapperRef}
-      className={props.className}
-      {...props}
+      {...rest}
+      id={id || 'rmm__menu'}
+      className={['rmm__menu', className].filter(Boolean).join(' ')}
     >
       <TopBar id="rmm__topbar">
         <Logo
@@ -116,13 +104,13 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
         id="rmm__hamburger"
       />
       <Nav
-        id={props.id || 'rmm__nav'}
+        id={id || 'rmm__nav'}
         activeState={megaMenuState || 'closed'}
         ariaLabel="Main Navigation"
-        className={props.className}
+        className={className}
       >
         <MainList
-          id={props.id || 'rmm__main'}
+          id={id || 'rmm__main'}
           ariaLabel="Main Menu"
           className="rmm__nav-list"
         >
@@ -141,7 +129,7 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
           })}
         </MainList>
       </Nav>
-    </StyledMenu>
+    </div>
   )
 }
 

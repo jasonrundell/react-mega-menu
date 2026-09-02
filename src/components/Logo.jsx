@@ -1,21 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from '@emotion/styled'
-import { respondTo } from '../helpers/responsive'
 
-const StyledLogo = styled.img`
-  display: flex;
-  position: relative;
-  height: 2rem;
-  margin-right: 1rem;
-
-  ${respondTo('large')} {
-    align-items: center;
-  }
-`
-
-const Logo = ({ id, src, rel = '', alt = '', ...props }) => (
-  <StyledLogo id={id} src={src} rel={rel} alt={alt} {...props} />
+const Logo = ({ id, src, rel = '', alt = '', className, ...props }) => (
+  <img
+    id={id}
+    src={src}
+    rel={rel}
+    alt={alt}
+    className={['rmm__logo', className].filter(Boolean).join(' ')}
+    {...props}
+  />
 )
 
 Logo.propTypes = {
@@ -34,7 +28,11 @@ Logo.propTypes = {
   /**
    * The alt of the logo.
    */
-  alt: PropTypes.string
+  alt: PropTypes.string,
+  /**
+   * Additional class name(s) to append.
+   */
+  className: PropTypes.string
 }
 
 export default Logo

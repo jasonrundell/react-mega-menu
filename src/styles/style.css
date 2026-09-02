@@ -82,3 +82,54 @@
     0.25s
   );
 }
+
+/* Menu shell — fixed top bar + off-canvas nav container */
+.rmm__menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: var(--rmm-menu-height);
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  flex-direction: row;
+  width: 100%;
+  z-index: var(--rmm-menu-z);
+  background: var(--rmm-menu-bg);
+  color: var(--rmm-menu-text);
+  font-family: var(--rmm-font-family);
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__menu {
+    height: var(--rmm-menu-height-large);
+  }
+}
+
+/* TopBar — logo + title strip, fixed to the top of the menu shell */
+.rmm__topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--rmm-topbar-height);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* TopBarTitle (Topiary Heading atom). Two-class specificity so this wins
+   over Heading's own font-size variant class regardless of import order. */
+.rmm__menu .rmm__title {
+  font-size: var(--rmm-title-font-size);
+}
+
+/* Logo */
+.rmm__logo {
+  display: flex;
+  position: relative;
+  height: var(--rmm-logo-height);
+  margin-right: var(--rmm-space-md);
+}
