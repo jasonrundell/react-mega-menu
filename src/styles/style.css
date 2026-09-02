@@ -54,7 +54,14 @@
   --rmm-logo-height: var(--topiary-space-xl, 2rem);
   --rmm-hamburger-width: var(--topiary-space-xl, 2rem);
   --rmm-hamburger-height: var(--topiary-space-lg, 1.25rem);
-  --rmm-hamburger-top: var(--topiary-space-2xl, 5.25rem);
+  /* Derived from --rmm-topbar-height (not an independent space-scale guess):
+     positioning the hamburger by an unrelated token risked it landing
+     *above* the topbar's bottom edge in a theme whose space scale runs
+     small relative to its own topbar height — confirmed visually in the
+     harness (Step 8) with real Topiary tokens loaded. Deriving it from the
+     same height token the topbar itself uses guarantees clearance in every
+     theme by construction. */
+  --rmm-hamburger-top: calc(var(--rmm-topbar-height) + var(--rmm-space-md));
   --rmm-hamburger-left: var(--topiary-space-md, 1rem);
 
   /* Generic spacing scale */
@@ -420,8 +427,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .rmm__nav--open,
-  .rmm__nav--closed {
+  /* 2-class specificity to match (and disable) the slide-direction + state
+     animation-name rules above — see the large-breakpoint override further
+     down for the same reasoning. */
+  .rmm__nav--slide-left.rmm__nav--open,
+  .rmm__nav--slide-left.rmm__nav--closed,
+  .rmm__nav--slide-right.rmm__nav--open,
+  .rmm__nav--slide-right.rmm__nav--closed {
     animation: none;
   }
 
@@ -443,16 +455,26 @@
 }
 
 @media (min-width: __RMM_BP_LARGE__) {
-  .rmm__nav--open,
-  .rmm__nav--closed {
+  /* Matches the 2-class specificity of the slide-direction + state
+     selectors above (e.g. .rmm__nav--slide-left.rmm__nav--closed) — a
+     bare 1-class override here would lose that specificity fight despite
+     coming later in the file, leaving the mobile slide animation (and its
+     off-screen resting transform) still applied at the large breakpoint. */
+  .rmm__nav--slide-left.rmm__nav--open,
+  .rmm__nav--slide-left.rmm__nav--closed,
+  .rmm__nav--slide-right.rmm__nav--open,
+  .rmm__nav--slide-right.rmm__nav--closed {
     animation: none;
     display: flex;
     opacity: 1;
+    transform: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .rmm__nav--open,
-    .rmm__nav--closed {
+    .rmm__nav--slide-left.rmm__nav--open,
+    .rmm__nav--slide-left.rmm__nav--closed,
+    .rmm__nav--slide-right.rmm__nav--open,
+    .rmm__nav--slide-right.rmm__nav--closed {
       transform: none;
     }
   }
