@@ -1,0 +1,31 @@
+/**
+ * @jasonrundell/react-mega-menu — component token stylesheet
+ *
+ * Contract:
+ *   - Every rule in this file (and every rule added to it later) must
+ *     consume ONLY --rmm-* custom properties, never a hardcoded value and
+ *     never a Topiary custom property directly.
+ *   - Today, each --rmm-* token below is defined as a hardcoded fallback
+ *     value only (v3.0.0-alpha.0). Emotion still styles every component;
+ *     nothing in the DOM reads these tokens yet.
+ *   - A later migration ticket redefines each token's default to read the
+ *     matching Topiary custom property, keeping the hardcoded value as its
+ *     fallback, and moves component styling off Emotion and onto these
+ *     rules. See docs/refactor/topiary-migration.md (Phase 2/3) and
+ *     docs/refactor/topiary-gap-report.md for why Topiary references are
+ *     deliberately not wired yet.
+ */
+
+.rmm__menu {
+  --rmm-menu-bg: #fefefe;
+  --rmm-menu-text: #1a1a1a;
+  --rmm-menu-z: 9000;
+  --rmm-menu-height: 8rem;
+  --rmm-menu-height-large: 4rem;
+  --rmm-link-color: #0066cc;
+  --rmm-link-hover-bg: #f0f0f0;
+  --rmm-focus-ring: 2px solid currentColor;
+  --rmm-panel-border: 1px solid #ccc;
+  --rmm-panel-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+  --rmm-motion-duration: 0.75s;
+}

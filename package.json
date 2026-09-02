@@ -1,6 +1,6 @@
 {
   "name": "@jasonrundell/react-mega-menu",
-  "version": "2.2.2",
+  "version": "3.0.0-alpha.0",
   "author": "jasonrundell <jason.rundell@gmail.com>",
   "main": "dist/index.es.js",
   "module": "dist/index.es.js",
@@ -14,10 +14,12 @@
       "import": "./dist/index.es.js",
       "require": "./dist/index.cjs.js",
       "types": "./dist/index.d.ts"
-    }
+    },
+    "./style.css": "./dist/style.css"
   },
   "scripts": {
     "build": "vite build",
+    "pretest": "npm run build",
     "format": "prettier --write src/**/*.{js,jsx}",
     "test": "jest --coverage"
   },
@@ -48,8 +50,8 @@
   "peerDependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "repository": {
     "type": "git",
