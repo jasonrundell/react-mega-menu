@@ -81,12 +81,8 @@ describe('Menu component', () => {
 
   test('escape returns focus to the top-level trigger link when focus was inside its panel', () => {
     const { container } = render(<Menu config={defaultConfig} />)
-    const deepLink = container.querySelector(
-      '#rmm-nav-item-link-store-deals'
-    )
-    const trigger = container.querySelector(
-      '#rmm-main-nav-item-link-store'
-    )
+    const deepLink = container.querySelector('#rmm-nav-item-link-store-deals')
+    const trigger = container.querySelector('#rmm-main-nav-item-link-store')
     deepLink.focus()
     expect(document.activeElement).toBe(deepLink)
 
