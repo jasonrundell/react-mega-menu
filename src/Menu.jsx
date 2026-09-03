@@ -44,7 +44,8 @@ const StyledMenu = styled.div`
 const defaultMenuConfig = config
 
 export const Menu = ({ config = defaultMenuConfig, ...props }) => {
-  const { resetMenus, megaMenuState, toggleMegaMenu, setIsMobile } = useMenu()
+  const { resetMenus, megaMenuState, toggleMegaMenu, isMobile, setIsMobile } =
+    useMenu()
 
   const wrapperRef = useRef(null) // used to detect clicks outside of component
 
@@ -118,6 +119,7 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
       <Nav
         id={props.id || 'rmm__nav'}
         activeState={megaMenuState || 'closed'}
+        isMobile={isMobile}
         ariaLabel="Main Navigation"
         className={props.className}
       >
