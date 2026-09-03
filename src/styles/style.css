@@ -154,6 +154,7 @@
    over Heading's own font-size variant class regardless of import order. */
 .rmm__menu .rmm__title {
   font-size: var(--rmm-title-font-size);
+  color: var(--rmm-menu-text);
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
@@ -710,7 +711,7 @@
   align-items: center;
   gap: var(--rmm-space-sm);
   padding: 0;
-  margin: 0 0 0 var(--rmm-space-md);
+  margin: 0 0 0 var(--rmm-space-sm);
   border: none;
   border-radius: 0;
   box-shadow: none;

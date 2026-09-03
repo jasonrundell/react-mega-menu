@@ -13,9 +13,11 @@
  * Dropped from the original: the light/dark/monokai/retro icon sets in
  * demo/public/images/icons/<theme>/angle-{left,right,up}.svg and the
  * `content: url(...)` rules that swapped them in, plus per-theme topbar
- * height/padding and border-width tweaks — none of those have a --rmm-*
- * token to route through (chrome geometry and iconography are Topiary's
- * job now, not a per-theme concern).
+ * height/padding tweaks — those have no --rmm-* token to route through
+ * (chrome geometry and iconography are Topiary's job now, not a per-theme
+ * concern). The panel background, border and shadow the old theme painted
+ * by selector are back as --rmm-panel-bg / --rmm-panel-border /
+ * --rmm-panel-shadow overrides.
  */
 .rmm__menu.rmm__theme--light {
   --rmm-menu-bg: #ffffff;
@@ -25,4 +27,7 @@
   --rmm-text-muted: #555555;
   --rmm-font-family: Arial, Helvetica, sans-serif;
   --rmm-focus-ring: 2px solid #000000;
+  --rmm-panel-bg: #ffffff;
+  --rmm-panel-border: 1px solid #dddddd;
+  --rmm-panel-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }

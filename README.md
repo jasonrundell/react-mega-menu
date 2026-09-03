@@ -318,6 +318,12 @@ changes is what you install and import.
   main list, point those selectors at `<id>__nav` and `<id>__main` instead.
 - At mobile width the closed off-canvas nav is `inert`, so keyboard users no
   longer tab through hidden links.
+- The stylesheet paints the panels itself. In v2 the off-canvas nav, mega and
+  sub panels were transparent until your own CSS gave them a background; v3
+  paints them from `--rmm-panel-bg` and friends (see [Theming](#theming)), lays
+  mega panels out as a grid of columns, hides the mobile-only "back" rows on
+  large screens and draws the chevrons in CSS. Restyle through the tokens rather
+  than re-adding selector overrides.
 
 **Staying on v2**
 
