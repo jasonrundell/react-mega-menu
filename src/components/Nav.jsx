@@ -1,37 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from '@emotion/styled'
-import { respondTo } from '../helpers/responsive'
-import { getAnimationStyles } from '../helpers/animationStyles'
-
-const StyledNav = styled.nav`
-  position: absolute;
-  top: 8rem;
-  left: -100%;
-  width: 100%;
-  height: calc(100vh - 4rem);
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-  overflow-y: scroll;
-
-  ${respondTo('large')} {
-    top: 4rem;
-    left: 0;
-    height: 4rem;
-    flex-direction: row;
-    overflow-y: initial;
-  }
-
-  ${({ activeState }) => getAnimationStyles(activeState)}
-
-  li:first-of-type {
-    ${respondTo('large')} {
-      margin-left: 0;
-    }
-  }
-`
+import { classNames, stateClass } from '../helpers/classNames'
 
 /**
  * At mobile width the closed nav is only moved off-screen with a transform,
@@ -47,21 +16,30 @@ const Nav = ({
   id,
   ariaLabel = 'Main Navigation',
   activeState = 'closed',
+  slideDirection = 'left',
   isMobile = false,
+  className,
   children,
   ...props
 }) => (
-  <StyledNav
+  <nav
     id={id}
-    activeState={activeState}
     aria-label={ariaLabel}
     role="navigation"
-    // React 18 drops boolean `inert`; an empty string renders the bare attribute.
-    inert={isNavInert(isMobile, activeState) ? '' : undefined}
+    // React 19 treats `inert` as a boolean attribute: true renders `inert=""`.
+    inert={isNavInert(isMobile, activeState) || undefined}
+    className={classNames(
+      'rmm__nav',
+      stateClass('rmm__nav', activeState),
+      slideDirection === 'right'
+        ? 'rmm__nav--slide-right'
+        : 'rmm__nav--slide-left',
+      className
+    )}
     {...props}
   >
     {children}
-  </StyledNav>
+  </nav>
 )
 
 Nav.propTypes = {
@@ -78,11 +56,19 @@ Nav.propTypes = {
    */
   activeState: PropTypes.oneOf(['', 'open', 'closed']),
   /**
+   * Which side the off-canvas nav slides in from on mobile widths.
+   */
+  slideDirection: PropTypes.oneOf(['left', 'right']),
+  /**
    * Whether the viewport is below the `large` breakpoint. When true and the
    * nav is closed, the nav is rendered `inert` so its off-screen content is
    * removed from the tab order.
    */
   isMobile: PropTypes.bool,
+  /**
+   * Additional class name(s) to append.
+   */
+  className: PropTypes.string,
   /**
    * The content of the mega list.
    */

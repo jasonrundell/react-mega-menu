@@ -79,6 +79,31 @@ describe('Menu component', () => {
     expect(resetMenusMock).toHaveBeenCalled()
   })
 
+  test('escape returns focus to the top-level trigger link when focus was inside its panel', () => {
+    const { container } = render(<Menu config={defaultConfig} />)
+    const deepLink = container.querySelector('#rmm-nav-item-link-store-deals')
+    const trigger = container.querySelector('#rmm-main-nav-item-link-store')
+    deepLink.focus()
+    expect(document.activeElement).toBe(deepLink)
+
+    fireEvent.keyDown(window, { key: 'Escape', code: 'Escape', keyCode: 27 })
+
+    expect(resetMenusMock).toHaveBeenCalled()
+    expect(document.activeElement).toBe(trigger)
+  })
+
+  test('escape does not move focus when it was already outside the menu', () => {
+    render(<Menu config={defaultConfig} />)
+    const outside = document.createElement('button')
+    document.body.appendChild(outside)
+    outside.focus()
+
+    fireEvent.keyDown(window, { key: 'Escape', code: 'Escape', keyCode: 27 })
+
+    expect(document.activeElement).toBe(outside)
+    document.body.removeChild(outside)
+  })
+
   test('updates mobile state based on window resize', () => {
     render(<Menu config={defaultConfig} />)
     global.innerWidth = 500
@@ -95,5 +120,108 @@ describe('Menu component', () => {
     const hamburger = container.querySelector('#rmm__hamburger')
     fireEvent.click(hamburger)
     expect(toggleMegaMenuMock).toHaveBeenCalled()
+  })
+
+  test('Nav defaults to the slide-left direction when slideDirection is omitted', () => {
+    const { container } = render(<Menu config={defaultConfig} />)
+    const nav = container.querySelector('#rmm__nav')
+    expect(nav).toHaveClass('rmm__nav--slide-left')
+    expect(nav).not.toHaveClass('rmm__nav--slide-right')
+  })
+
+  test('Nav applies the slide-right direction when slideDirection="right"', () => {
+    const { container } = render(
+      <Menu config={defaultConfig} slideDirection="right" />
+    )
+    const nav = container.querySelector('#rmm__nav')
+    expect(nav).toHaveClass('rmm__nav--slide-right')
+    expect(nav).not.toHaveClass('rmm__nav--slide-left')
+  })
+
+  test('Nav toggles the open/closed state class when the hamburger is clicked', () => {
+    useMenu.mockReturnValue({
+      resetMenus: resetMenusMock,
+      megaMenuState: 'open',
+      toggleMegaMenu: toggleMegaMenuMock,
+      setIsMobile: setIsMobileMock,
+      activeMenus: []
+    })
+    const { container } = render(<Menu config={defaultConfig} />)
+    const nav = container.querySelector('#rmm__nav')
+    expect(nav).toHaveClass('rmm__nav--open')
+    expect(nav).not.toHaveClass('rmm__nav--closed')
+  })
+
+  describe('id derivation (#101)', () => {
+    test('with no id prop the default ids are unchanged', () => {
+      const { container } = render(<Menu config={defaultConfig} />)
+      expect(container.querySelector('#rmm__menu')).toBeInTheDocument()
+      expect(container.querySelector('#rmm__nav')).toBeInTheDocument()
+      expect(container.querySelector('#rmm__main')).toBeInTheDocument()
+      expect(container.querySelector('#rmm__hamburger')).toBeInTheDocument()
+    })
+
+    test('with a custom id the shell gets it and the inner regions get derived ids', () => {
+      const { container } = render(
+        <Menu config={defaultConfig} id="site-menu" />
+      )
+      const shell = container.querySelector('#site-menu')
+      const nav = container.querySelector('#site-menu__nav')
+      const main = container.querySelector('#site-menu__main')
+
+      expect(shell).toBeInTheDocument()
+      expect(shell).toHaveClass('rmm__menu')
+      expect(nav).toBeInTheDocument()
+      expect(nav.tagName).toBe('NAV')
+      expect(main).toBeInTheDocument()
+      expect(main.tagName).toBe('UL')
+    })
+
+    test('with a custom id no two elements share an id', () => {
+      const { container } = render(
+        <Menu config={defaultConfig} id="site-menu" />
+      )
+      const ids = Array.from(container.querySelectorAll('[id]')).map(
+        (el) => el.id
+      )
+      const duplicates = ids.filter((id, i) => ids.indexOf(id) !== i)
+      expect(duplicates).toEqual([])
+    })
+
+    test('Hamburger aria-controls follows the derived Nav id', () => {
+      const { container } = render(
+        <Menu config={defaultConfig} id="site-menu" />
+      )
+      const hamburger = container.querySelector('#rmm__hamburger')
+      const nav = container.querySelector('nav')
+      expect(nav.id).toBe('site-menu__nav')
+      expect(hamburger).toHaveAttribute('aria-controls', 'site-menu__nav')
+    })
+  })
+
+  test('Hamburger exposes aria-controls pointing at the Nav id', () => {
+    const { container } = render(<Menu config={defaultConfig} />)
+    const hamburger = container.querySelector('#rmm__hamburger')
+    const nav = container.querySelector('#rmm__nav')
+    expect(hamburger).toHaveAttribute('aria-controls', nav.id)
+  })
+
+  test('Hamburger aria-expanded reflects the closed megaMenuState', () => {
+    const { container } = render(<Menu config={defaultConfig} />)
+    const hamburger = container.querySelector('#rmm__hamburger')
+    expect(hamburger).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  test('Hamburger aria-expanded reflects the open megaMenuState', () => {
+    useMenu.mockReturnValue({
+      resetMenus: resetMenusMock,
+      megaMenuState: 'open',
+      toggleMegaMenu: toggleMegaMenuMock,
+      setIsMobile: setIsMobileMock,
+      activeMenus: []
+    })
+    const { container } = render(<Menu config={defaultConfig} />)
+    const hamburger = container.querySelector('#rmm__hamburger')
+    expect(hamburger).toHaveAttribute('aria-expanded', 'true')
   })
 })

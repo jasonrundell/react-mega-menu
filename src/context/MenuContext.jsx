@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import { stateMachine } from '../helpers/menu'
+import { isLargeViewport } from '../helpers/responsive'
 
 const MenuContext = createContext()
 
@@ -95,11 +96,7 @@ export const MenuProvider = ({ children }) => {
 
   useEffect(() => {
     const updateIsMobile = () => {
-      if (window.innerWidth >= 1024) {
-        setIsMobile(false)
-      } else {
-        setIsMobile(true)
-      }
+      setIsMobile(!isLargeViewport())
     }
 
     updateIsMobile()

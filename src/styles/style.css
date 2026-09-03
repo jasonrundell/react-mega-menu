@@ -1,0 +1,672 @@
+/**
+ * @jasonrundell/react-mega-menu — component token stylesheet
+ *
+ * Contract:
+ *   - Every rule in this file consumes ONLY --rmm-* custom properties, never
+ *     a hardcoded value and never a Topiary custom property directly.
+ *   - Every --rmm-* token below is defined as
+ *     var(--topiary-<real-name>, <hardcoded fallback>) (or, where a rule
+ *     composes several Topiary primitives — e.g. a focus ring or a border
+ *     shorthand — as an expression built entirely from such var() calls).
+ *     The fallback is today's pre-migration value, so the menu renders
+ *     identically with Topiary's stylesheet absent. See
+ *     docs/refactor/topiary-migration.md (Phase 2/3) and
+ *     docs/refactor/topiary-gap-report.md for the real Topiary 4.1.0 token
+ *     names this file relies on.
+ *   - Every declared token must be consumed by at least one rule in this
+ *     file (enforced by src/styleContract.test.js) — no token exists purely
+ *     for documentation. Panel chrome (a background, border, shadow, or
+ *     radius on the mega/sub-menu panel) is deliberately NOT painted: the
+ *     pre-migration Emotion styles never set one either, so this preserves
+ *     the original appearance rather than adding new decoration. Giving the
+ *     panel real chrome is an open design question left to a later ticket.
+ *   - The large-breakpoint media queries below use the literal placeholder
+ *     __RMM_BP_LARGE__ in place of a length (e.g. "(min-width: __RMM_BP_LARGE__)").
+ *     Custom properties cannot drive @media conditions, so this placeholder
+ *     is substituted at build time (Vite plugin, see vite.config.js) with
+ *     the value from src/config/breakpoints.js — the single source of truth
+ *     shared with the JS mobile-detection check in Menu.jsx. See Step 5 of
+ *     the migration ticket (#94) for the full mechanism.
+ */
+
+.rmm__menu {
+  /* Color */
+  --rmm-menu-bg: var(--topiary-color-surface, #fefefe);
+  --rmm-menu-text: var(--topiary-color-text, #1a1a1a);
+  --rmm-link-color: var(--topiary-color-primary, #0066cc);
+  --rmm-link-hover-bg: var(--topiary-color-surfaceAlt, #f0f0f0);
+  --rmm-text-muted: var(--topiary-color-textMuted, #666666);
+  --rmm-focus-ring: var(--topiary-borderWidth-thick, 2px) solid
+    var(--topiary-color-focus, currentColor);
+
+  /* Stacking order */
+  --rmm-menu-z: var(--topiary-zIndex-nav, 9000);
+  --rmm-panel-z: var(--topiary-zIndex-overlay, 2);
+  --rmm-list-z: var(--topiary-zIndex-base, 1);
+
+  /* Structural sizing — no 1:1 Topiary analog, so these route through the
+     space scale via calc() to stay token-driven while the fallback keeps
+     today's exact pixel geometry. */
+  --rmm-menu-height: calc(var(--topiary-space-3xl, 4rem) * 2);
+  --rmm-menu-height-large: var(--topiary-space-3xl, 4rem);
+  --rmm-topbar-height: var(--topiary-space-3xl, 4rem);
+  --rmm-logo-height: var(--topiary-space-xl, 2rem);
+  --rmm-hamburger-width: var(--topiary-space-xl, 2rem);
+  --rmm-hamburger-height: var(--topiary-space-lg, 1.25rem);
+  /* Derived from --rmm-topbar-height (not an independent space-scale guess):
+     positioning the hamburger by an unrelated token risked it landing
+     *above* the topbar's bottom edge in a theme whose space scale runs
+     small relative to its own topbar height — confirmed visually in the
+     harness (Step 8) with real Topiary tokens loaded. Deriving it from the
+     same height token the topbar itself uses guarantees clearance in every
+     theme by construction. */
+  --rmm-hamburger-top: calc(var(--rmm-topbar-height) + var(--rmm-space-md));
+  --rmm-hamburger-left: var(--topiary-space-md, 1rem);
+
+  /* Generic spacing scale */
+  --rmm-space-xs: var(--topiary-space-2xs, 0.25rem);
+  --rmm-space-sm: var(--topiary-space-xs, 0.5rem);
+  --rmm-space-md: var(--topiary-space-md, 1rem);
+  --rmm-space-xl: var(--topiary-space-xl, 2rem);
+
+  /* Typography */
+  --rmm-font-family: var(--topiary-font-body, inherit);
+  --rmm-title-font-size: var(--topiary-fontSize-xl, 1.5rem);
+  --rmm-nav-item-font-size: var(--topiary-fontSize-md, 1rem);
+  --rmm-description-font-size: var(--topiary-fontSize-xs, 0.75rem);
+  --rmm-hamburger-label-font-size: var(--topiary-fontSize-md, 1rem);
+  --rmm-font-weight-bold: var(--topiary-fontWeight-bold, 700);
+
+  /* Motion */
+  --rmm-motion-duration: var(--topiary-duration-slow, 0.75s);
+  --rmm-motion-easing: var(--topiary-easing-standard, ease-in-out);
+  --rmm-hamburger-transition-duration: var(--topiary-duration-normal, 0.5s);
+  --rmm-hamburger-slice-transition-duration: var(
+    --topiary-duration-fast,
+    0.25s
+  );
+}
+
+/* Menu shell — fixed top bar + off-canvas nav container */
+.rmm__menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: var(--rmm-menu-height);
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  flex-direction: row;
+  width: 100%;
+  z-index: var(--rmm-menu-z);
+  background: var(--rmm-menu-bg);
+  color: var(--rmm-menu-text);
+  font-family: var(--rmm-font-family);
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__menu {
+    height: var(--rmm-menu-height-large);
+  }
+}
+
+/* TopBar — logo + title strip, fixed to the top of the menu shell */
+.rmm__topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--rmm-topbar-height);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* TopBarTitle (Topiary Heading atom). Two-class specificity so this wins
+   over Heading's own font-size variant class regardless of import order. */
+.rmm__menu .rmm__title {
+  font-size: var(--rmm-title-font-size);
+}
+
+/* Logo */
+.rmm__logo {
+  display: flex;
+  position: relative;
+  height: var(--rmm-logo-height);
+  margin-right: var(--rmm-space-md);
+}
+
+/* MainList (top-level item bar) and NavList's default/non-dropdown shape
+   share identical geometry today, so both are driven by the single
+   .rmm__nav-list class the caller already applies to each (see
+   src/helpers/menu.jsx and Menu.jsx). */
+.rmm__nav-list {
+  z-index: var(--rmm-list-z);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: calc(100vh - var(--rmm-topbar-height));
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__nav-list {
+    flex-direction: row;
+    height: var(--rmm-topbar-height);
+  }
+
+  .rmm__nav-list li:first-of-type {
+    margin-left: 0;
+  }
+}
+
+/* NavList rendered as a nested sub-menu dropdown (type="sub") — full-screen
+   overlay on mobile, static inline list on large screens. */
+.rmm__nav-list--sub {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: calc(100vh - var(--rmm-topbar-height));
+  display: flex;
+  flex-direction: column;
+  z-index: var(--rmm-panel-z);
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__nav-list--sub {
+    animation: none;
+    display: flex;
+    position: static;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    height: auto;
+  }
+}
+
+.rmm__nav-list--sub.rmm__nav-list--open {
+  animation-duration: var(--rmm-motion-duration);
+  animation-fill-mode: both;
+  animation-name: rmm-slide-open;
+  animation-iteration-count: 1;
+}
+
+.rmm__nav-list--sub.rmm__nav-list--closed {
+  animation-duration: var(--rmm-motion-duration);
+  animation-fill-mode: both;
+  animation-name: rmm-slide-closed;
+  animation-iteration-count: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rmm__nav-list--sub.rmm__nav-list--open,
+  .rmm__nav-list--sub.rmm__nav-list--closed {
+    animation: none;
+  }
+
+  .rmm__nav-list--sub.rmm__nav-list--open {
+    transform: translate3d(100%, 0, 0);
+  }
+
+  .rmm__nav-list--sub.rmm__nav-list--closed {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__nav-list--sub.rmm__nav-list--open,
+  .rmm__nav-list--sub.rmm__nav-list--closed {
+    animation: none;
+    display: flex;
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rmm__nav-list--sub.rmm__nav-list--open,
+    .rmm__nav-list--sub.rmm__nav-list--closed {
+      transform: none;
+    }
+  }
+}
+
+/* MegaList — the top-level mega panel, one per top-nav "mega" item */
+.rmm__mega-list {
+  position: absolute;
+  z-index: var(--rmm-panel-z);
+  top: 0;
+  left: -100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+  width: 100%;
+  height: calc(100vh - var(--rmm-topbar-height));
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__mega-list {
+    position: absolute;
+    left: 0;
+    top: var(--rmm-topbar-height);
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    opacity: 0;
+  }
+}
+
+.rmm__mega-list--open {
+  animation-duration: var(--rmm-motion-duration);
+  animation-fill-mode: both;
+  animation-name: rmm-slide-open;
+  animation-iteration-count: 1;
+}
+
+.rmm__mega-list--closed {
+  animation-duration: var(--rmm-motion-duration);
+  animation-fill-mode: both;
+  animation-name: rmm-slide-closed;
+  animation-iteration-count: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rmm__mega-list--open,
+  .rmm__mega-list--closed {
+    animation: none;
+  }
+
+  .rmm__mega-list--open {
+    transform: translate3d(100%, 0, 0);
+  }
+
+  .rmm__mega-list--closed {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__mega-list--open {
+    animation: none;
+    display: flex;
+    opacity: 1;
+  }
+
+  .rmm__mega-list--closed {
+    animation: none;
+    display: none;
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rmm__mega-list--open,
+    .rmm__mega-list--closed {
+      transform: none;
+    }
+  }
+}
+
+/* Shared slide keyframes (slide-in-from-the-left direction). Nav's
+   rmm__nav--slide-left modifier reuses these same two keyframes. */
+@keyframes rmm-slide-open {
+  from {
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@keyframes rmm-slide-closed {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+/* Mirror-image keyframes for Nav's rmm__nav--slide-right modifier
+   (issue #64 — configurable slide direction). Only Nav supports a
+   direction choice; the mega/sub panels above always use the left-slide
+   keyframes, matching their pre-migration behavior. */
+@keyframes rmm-slide-open-right {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes rmm-slide-closed-right {
+  from {
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+/* Nav — the off-canvas panel holding the top-level MainList */
+.rmm__nav {
+  position: absolute;
+  top: var(--rmm-menu-height);
+  left: -100%;
+  width: 100%;
+  height: calc(100vh - var(--rmm-topbar-height));
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__nav {
+    top: var(--rmm-menu-height-large);
+    left: 0;
+    height: var(--rmm-menu-height-large);
+    flex-direction: row;
+    overflow-y: initial;
+  }
+}
+
+.rmm__nav--slide-right {
+  left: auto;
+  right: -100%;
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__nav--slide-right {
+    left: 0;
+    right: auto;
+  }
+}
+
+.rmm__nav--slide-left.rmm__nav--open {
+  animation-duration: var(--rmm-motion-duration);
+  animation-fill-mode: both;
+  animation-name: rmm-slide-open;
+  animation-iteration-count: 1;
+}
+
+.rmm__nav--slide-left.rmm__nav--closed {
+  animation-duration: var(--rmm-motion-duration);
+  animation-fill-mode: both;
+  animation-name: rmm-slide-closed;
+  animation-iteration-count: 1;
+}
+
+.rmm__nav--slide-right.rmm__nav--open {
+  animation-duration: var(--rmm-motion-duration);
+  animation-fill-mode: both;
+  animation-name: rmm-slide-open-right;
+  animation-iteration-count: 1;
+}
+
+.rmm__nav--slide-right.rmm__nav--closed {
+  animation-duration: var(--rmm-motion-duration);
+  animation-fill-mode: both;
+  animation-name: rmm-slide-closed-right;
+  animation-iteration-count: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* 2-class specificity to match (and disable) the slide-direction + state
+     animation-name rules above — see the large-breakpoint override further
+     down for the same reasoning. */
+  .rmm__nav--slide-left.rmm__nav--open,
+  .rmm__nav--slide-left.rmm__nav--closed,
+  .rmm__nav--slide-right.rmm__nav--open,
+  .rmm__nav--slide-right.rmm__nav--closed {
+    animation: none;
+  }
+
+  .rmm__nav--slide-left.rmm__nav--open {
+    transform: translate3d(100%, 0, 0);
+  }
+
+  .rmm__nav--slide-left.rmm__nav--closed {
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  .rmm__nav--slide-right.rmm__nav--open {
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  .rmm__nav--slide-right.rmm__nav--closed {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  /* Matches the 2-class specificity of the slide-direction + state
+     selectors above (e.g. .rmm__nav--slide-left.rmm__nav--closed) — a
+     bare 1-class override here would lose that specificity fight despite
+     coming later in the file, leaving the mobile slide animation (and its
+     off-screen resting transform) still applied at the large breakpoint. */
+  .rmm__nav--slide-left.rmm__nav--open,
+  .rmm__nav--slide-left.rmm__nav--closed,
+  .rmm__nav--slide-right.rmm__nav--open,
+  .rmm__nav--slide-right.rmm__nav--closed {
+    animation: none;
+    display: flex;
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rmm__nav--slide-left.rmm__nav--open,
+    .rmm__nav--slide-left.rmm__nav--closed,
+    .rmm__nav--slide-right.rmm__nav--open,
+    .rmm__nav--slide-right.rmm__nav--closed {
+      transform: none;
+    }
+  }
+}
+
+/* MainNavItem — top-level <li> */
+.rmm__main-nav-item {
+  list-style: none;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: var(--rmm-space-md);
+  margin-left: 0;
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__main-nav-item {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: var(--rmm-space-xl);
+    align-items: center;
+  }
+}
+
+/* NavItem — nested <li>, inside a mega/sub panel */
+.rmm__nav-item {
+  list-style: none;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: var(--rmm-space-md);
+  margin-left: 0;
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+/* NavItemDescription */
+.rmm__nav-item-description {
+  font-size: var(--rmm-description-font-size);
+  color: var(--rmm-text-muted);
+  margin-bottom: var(--rmm-space-md);
+}
+
+/* NavItemLink / MainNavItemLink (Topiary Link atom). Layout doesn't fight
+   Link's own compiled class (it carries no layout rules), so a single class
+   is enough there; color/hover/focus DO fight it, so those use the
+   .rmm__menu .rmm__<x> two-class pattern to win regardless of import order. */
+.rmm__nav-item-link {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  margin-bottom: var(--rmm-space-md);
+}
+
+.rmm__main-nav-item-link {
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__main-nav-item-link {
+    align-items: center;
+    height: var(--rmm-topbar-height);
+  }
+}
+
+.rmm__menu .rmm__nav-item-link,
+.rmm__menu .rmm__main-nav-item-link {
+  color: var(--rmm-link-color);
+  font-size: var(--rmm-nav-item-font-size);
+}
+
+.rmm__menu .rmm__nav-item-link:hover,
+.rmm__menu .rmm__nav-item-link:focus-visible,
+.rmm__menu .rmm__main-nav-item-link:hover,
+.rmm__menu .rmm__main-nav-item-link:focus-visible {
+  background-color: var(--rmm-link-hover-bg);
+}
+
+.rmm__menu .rmm__nav-item-link:focus-visible,
+.rmm__menu .rmm__main-nav-item-link:focus-visible {
+  outline: var(--rmm-focus-ring);
+}
+
+/* isActive rotate — carried over verbatim from the pre-migration Emotion
+   rule. It has no visible effect (no `content` is set on ::after, so no
+   pseudo-element box is generated) and no current caller ever sets
+   isActive on NavItemLink; preserved as-is rather than "fixed" as part of
+   a styling-parity migration. */
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__nav-item-link--active::after {
+    transform: rotate(180deg);
+    top: 0;
+  }
+}
+
+/* Hamburger (Topiary Button atom). Button's own compiled class carries
+   padding/border/box-shadow/gap/border-radius/display chrome that fights
+   this icon-button's layout, so the reset below uses the two-class pattern
+   to win regardless of stylesheet import order. Button's own :focus-visible
+   outline is left intact — it's a real accessibility feature, not chrome
+   to strip. */
+.rmm__menu .rmm__hamburger {
+  transition: var(--rmm-hamburger-transition-duration) var(--rmm-motion-easing);
+  position: absolute;
+  top: var(--rmm-hamburger-top);
+  left: var(--rmm-hamburger-left);
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.rmm__menu .rmm__hamburger:hover,
+.rmm__menu .rmm__hamburger:active {
+  box-shadow: none;
+  background: transparent;
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__menu .rmm__hamburger {
+    display: none;
+  }
+}
+
+#rmm__hamburger-slices {
+  width: var(--rmm-hamburger-width);
+  position: relative;
+  display: block;
+  height: var(--rmm-hamburger-height);
+}
+
+.rmm__hamburger--slice {
+  display: block;
+  position: absolute;
+  height: var(--rmm-space-xs);
+  width: 100%;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: var(--rmm-hamburger-slice-transition-duration)
+    var(--rmm-motion-easing);
+  background-color: var(--rmm-menu-text);
+}
+
+.rmm__hamburger--slice:nth-of-type(1) {
+  top: 0;
+}
+
+.rmm__hamburger--slice:nth-of-type(2),
+.rmm__hamburger--slice:nth-of-type(3) {
+  top: var(--rmm-space-sm);
+}
+
+.rmm__hamburger--slice:nth-of-type(4) {
+  top: var(--rmm-space-md);
+}
+
+.rmm__hamburger--open .rmm__hamburger--slice:nth-of-type(1),
+.rmm__hamburger--open .rmm__hamburger--slice:nth-of-type(4) {
+  top: var(--rmm-space-md);
+  width: 0%;
+  left: 50%;
+}
+
+.rmm__hamburger--open .rmm__hamburger--slice:nth-of-type(2) {
+  transform: rotate(45deg);
+}
+
+.rmm__hamburger--open .rmm__hamburger--slice:nth-of-type(3) {
+  transform: rotate(-45deg);
+}
+
+#rmm__hamburger--label {
+  font-size: var(--rmm-hamburger-label-font-size);
+  font-weight: var(--rmm-font-weight-bold);
+}

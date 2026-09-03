@@ -6,21 +6,20 @@
   "scripts": {
     "start": "vite",
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/react": "^11.13.3",
-    "@emotion/styled": "^11.13.0",
-    "@jasonrundell/react-mega-menu": "file:../jasonrundell-react-mega-menu-2.2.2.tgz",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "@jasonrundell/react-mega-menu": "file:../jasonrundell-react-mega-menu-3.0.0-beta.0.tgz",
+    "@jasonrundell/topiary": "^4.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.1",
     "eslint": "^9.9.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",

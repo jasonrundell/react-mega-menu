@@ -1,8 +1,86 @@
-/* App.css */
-body {
-  background-color: #bebebe;
+/*
+ * The demo page itself is styled directly from Topiary's --topiary-*
+ * tokens (not the menu's --rmm-* contract, which is scoped to .rmm__menu
+ * only). .demo-page wraps both the <Menu /> and the page content and
+ * carries the `data-theme` attribute, so switching the Topiary theme
+ * re-skins the menu *and* the surrounding page from the same four token
+ * sets — "same markup, four designs".
+ */
+.demo-page {
+  min-height: 100vh;
+  background: var(--topiary-color-background, #fafaf9);
+  color: var(--topiary-color-text, #0a0a0b);
+  font-family: var(--topiary-font-body, system-ui, sans-serif);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-main {
+.demo-content {
+  /* Clears the menu's fixed shell (--rmm-menu-height / -large in
+     src/styles/style.css) with room to spare across every theme's
+     topbar height. */
   margin-top: 10rem;
+  padding: 0 2rem 4rem;
+  max-width: 60rem;
+}
+
+.demo-content a {
+  color: var(--topiary-color-primary, #c2410c);
+}
+
+.demo-content code {
+  font-family: var(--topiary-font-mono, monospace);
+  background: var(--topiary-color-surfaceAlt, #f5f5f4);
+  padding: 0.1rem 0.3rem;
+  border-radius: var(--topiary-radius-sm, 2px);
+}
+
+.demo-status {
+  display: inline-block;
+  font-family: var(--topiary-font-mono, monospace);
+  font-size: var(--topiary-fontSize-sm, 0.875rem);
+  padding: 0.75rem 1rem;
+  border: var(--topiary-borderWidth-thin, 1px) solid
+    var(--topiary-color-border, #969492);
+  border-radius: var(--topiary-radius-md, 3px);
+  background: var(--topiary-color-surface, #fff);
+}
+
+.demo-section {
+  margin: 2rem 0;
+}
+
+.demo-button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0.75rem 0;
+  list-style: none;
+}
+
+.demo-button-group button {
+  font: inherit;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border: var(--topiary-borderWidth-thin, 1px) solid
+    var(--topiary-color-border, #969492);
+  border-radius: var(--topiary-radius-md, 3px);
+  background: var(--topiary-color-surface, #fff);
+  color: var(--topiary-color-text, #0a0a0b);
+}
+
+.demo-button-group button:hover {
+  background: var(--topiary-color-surfaceAlt, #f5f5f4);
+}
+
+.demo-button-group button[aria-pressed='true'] {
+  background: var(--topiary-color-primary, #c2410c);
+  color: var(--topiary-color-onPrimary, #fff);
+  border-color: var(--topiary-color-primary, #c2410c);
+}
+
+.demo-button-group button:focus-visible {
+  outline: var(--topiary-borderWidth-thick, 2px) solid
+    var(--topiary-color-focus, #0369a1);
+  outline-offset: 2px;
 }

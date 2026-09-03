@@ -1,6 +1,16 @@
-import { click, escape } from './a11y'
+import { click, escape, isEscape } from './a11y'
 
 describe('a11y utility functions', () => {
+  describe('isEscape function', () => {
+    it('should return true for the escape key (keyCode 27)', () => {
+      expect(isEscape({ keyCode: 27 })).toBe(true)
+    })
+
+    it('should return false for other keys', () => {
+      expect(isEscape({ keyCode: 65 })).toBe(false) // 'A' key
+    })
+  })
+
   describe('click function', () => {
     it('should return true for space key (charCode 32)', () => {
       const event = { charCode: 32 }

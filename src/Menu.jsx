@@ -1,13 +1,17 @@
 import React, { useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import styled from '@emotion/styled'
 
 // Context
 import { useMenu } from './context/MenuContext' // Adjust the path as necessary
 
 // Helpers
-import { click as a11yClick, escape as a11yEscape } from './helpers/a11y'
-import { respondTo, viewportLarge } from './helpers/responsive'
+import {
+  click as a11yClick,
+  escape as a11yEscape,
+  isEscape
+} from './helpers/a11y'
+import { isLargeViewport, largeBreakpointQuery } from './helpers/responsive'
+import { classNames } from './helpers/classNames'
 import {
   config,
   renderMainMenuItem,
@@ -25,25 +29,29 @@ import Hamburger from './components/Hamburger'
 import Nav from './components/Nav'
 import MainList from './components/MainList'
 
-const StyledMenu = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 8rem;
-  display: flex;
-  justify-content: flex-start;
-  align-content: center;
-  flex-direction: row;
-  width: 100%;
-  z-index: 9000;
-
-  ${respondTo('large')} {
-    height: 4rem;
-  }
-`
 const defaultMenuConfig = config
 
-export const Menu = ({ config = defaultMenuConfig, ...props }) => {
+/**
+ * Element ids for one rendered Menu.
+ *
+ * With no `id` the defaults are the stable `rmm__*` ids consumers and
+ * stylesheets already target. With a custom `id` the shell takes it verbatim
+ * and the inner regions derive unique, predictable ids from it
+ * (`<id>__nav`, `<id>__main`), so one `id` prop never lands on more than one
+ * element (#101).
+ */
+export const deriveMenuIds = (id) =>
+  id
+    ? { menu: id, nav: `${id}__nav`, main: `${id}__main` }
+    : { menu: 'rmm__menu', nav: 'rmm__nav', main: 'rmm__main' }
+
+export const Menu = ({
+  config = defaultMenuConfig,
+  className,
+  id,
+  slideDirection = 'left',
+  ...rest
+}) => {
   const { resetMenus, megaMenuState, toggleMegaMenu, isMobile, setIsMobile } =
     useMenu()
 
@@ -67,7 +75,33 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
   }
 
   useEffect(() => {
-    const handleEscape = (e) => a11yEscape(e, resetMenus)
+    const handleEscape = (e) => {
+      // a11yEscape's resetMenus() collapses every open level at once (mega,
+      // sub, and sub-sub state all reset together), so the one
+      // always-present, always-focusable "triggering item" to return focus
+      // to is the top-level MainNavItem link that owns whichever panel
+      // currently contains focus — found by walking up from
+      // document.activeElement rather than threading a trigger ref through
+      // MenuContext and every render helper.
+      const activeElement = document.activeElement
+      const focusIsInMenu =
+        isEscape(e) &&
+        wrapperRef.current &&
+        activeElement &&
+        wrapperRef.current.contains(activeElement)
+      const trigger =
+        focusIsInMenu &&
+        activeElement.closest &&
+        activeElement
+          .closest('.rmm__main-nav-item')
+          ?.querySelector(':scope > .rmm__main-nav-item-link')
+
+      a11yEscape(e, resetMenus)
+
+      if (trigger) {
+        trigger.focus()
+      }
+    }
     window.addEventListener('keydown', handleEscape)
     return () => {
       window.removeEventListener('keydown', handleEscape)
@@ -76,30 +110,50 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
 
   useEffect(() => {
     const updateIsMobile = () => {
-      if (window.innerWidth >= viewportLarge) {
-        setIsMobile(false)
-      } else {
-        setIsMobile(true)
-      }
+      setIsMobile(!isLargeViewport())
     }
 
     updateIsMobile()
     window.addEventListener('resize', updateIsMobile)
 
+    // Prefer the media query's own 'change' event where available — it
+    // fires precisely on breakpoint crossings rather than on every resize.
+    let mediaQueryList
+    if (typeof window.matchMedia === 'function') {
+      mediaQueryList = window.matchMedia(largeBreakpointQuery)
+      if (mediaQueryList.addEventListener) {
+        mediaQueryList.addEventListener('change', updateIsMobile)
+      } else if (mediaQueryList.addListener) {
+        // Safari < 14
+        mediaQueryList.addListener(updateIsMobile)
+      }
+    }
+
     return () => {
       window.removeEventListener('resize', updateIsMobile)
+      if (mediaQueryList) {
+        if (mediaQueryList.removeEventListener) {
+          mediaQueryList.removeEventListener('change', updateIsMobile)
+        } else if (mediaQueryList.removeListener) {
+          mediaQueryList.removeListener(updateIsMobile)
+        }
+      }
     }
   }, [])
 
   useOutsideAlerter(wrapperRef) // create bindings for closing menu from outside events
 
+  // `ids.nav` is shared between Nav and the Hamburger's aria-controls so the
+  // toggle is always wired to the region it actually expands/collapses.
+  const ids = deriveMenuIds(id)
+
   return (
-    <StyledMenu
-      id={props.id || 'rmm__menu'}
+    <div
       role="navigation"
       ref={wrapperRef}
-      className={props.className}
-      {...props}
+      {...rest}
+      id={ids.menu}
+      className={classNames('rmm__menu', className)}
     >
       <TopBar id="rmm__topbar">
         <Logo
@@ -115,19 +169,17 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
         state={megaMenuState || 'closed'}
         onClick={(e) => toggleMegaMenu(e)}
         id="rmm__hamburger"
+        ariaControls={ids.nav}
       />
       <Nav
-        id={props.id || 'rmm__nav'}
+        id={ids.nav}
         activeState={megaMenuState || 'closed'}
         isMobile={isMobile}
         ariaLabel="Main Navigation"
-        className={props.className}
+        slideDirection={slideDirection}
+        className={className}
       >
-        <MainList
-          id={props.id || 'rmm__main'}
-          ariaLabel="Main Menu"
-          className="rmm__nav-list"
-        >
+        <MainList id={ids.main} ariaLabel="Main Menu" className="rmm__nav-list">
           {config.menu.items.map((item) => {
             if (item.type === MENU_ITEM_TYPE_MEGA) {
               return renderMegaMenuItem(
@@ -143,7 +195,7 @@ export const Menu = ({ config = defaultMenuConfig, ...props }) => {
           })}
         </MainList>
       </Nav>
-    </StyledMenu>
+    </div>
   )
 }
 
@@ -151,11 +203,13 @@ Menu.propTypes = {
   config: PropTypes.shape({
     topbar: PropTypes.shape({
       id: PropTypes.string.isRequired,
+      // `logo` and `menu.items` are dereferenced unconditionally in render,
+      // so they are required here to match src/index.d.ts (#102).
       logo: PropTypes.shape({
         src: PropTypes.string.isRequired,
         alt: PropTypes.string,
         rel: PropTypes.string
-      }),
+      }).isRequired,
       title: PropTypes.string.isRequired
     }),
     menu: PropTypes.shape({
@@ -167,11 +221,22 @@ Menu.propTypes = {
           url: PropTypes.string.isRequired,
           description: PropTypes.string
         })
-      )
+      ).isRequired
     })
   }),
   className: PropTypes.string,
-  id: PropTypes.string
+  /**
+   * Id of the menu shell. Defaults to `rmm__menu`, with the Nav and main list
+   * defaulting to `rmm__nav` and `rmm__main`. A custom id is applied to the
+   * shell only; the inner regions derive theirs from it as `<id>__nav` and
+   * `<id>__main`, so the Hamburger's aria-controls always resolves to the Nav.
+   */
+  id: PropTypes.string,
+  /**
+   * Which side the off-canvas nav slides in from on mobile widths.
+   * Defaults to 'left', matching the pre-v3 behavior.
+   */
+  slideDirection: PropTypes.oneOf(['left', 'right'])
 }
 
 export default Menu

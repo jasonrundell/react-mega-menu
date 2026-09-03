@@ -1,24 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from '@emotion/styled'
+import { Link } from '@jasonrundell/topiary'
 
-import { respondTo } from '../helpers/responsive'
 import {
   MENU_ITEM_TYPE_LINK,
   MENU_ITEM_TYPE_MEGA,
   MENU_ITEM_TYPES
 } from '../config/menuItemTypes'
-
-const StyledMainNavItemLink = styled.a`
-  width: 100%;
-  display: flex;
-  position: relative;
-
-  ${respondTo('large')} {
-    align-items: center;
-    height: 4rem;
-  }
-`
 
 const MainNavItemLink = ({
   id,
@@ -30,27 +18,28 @@ const MainNavItemLink = ({
   onKeyDown,
   ariaHaspopup,
   ariaControls,
+  className,
   children,
   ...props
 }) => (
-  <StyledMainNavItemLink
+  <Link
     id={id}
     role={role}
     href={href}
+    label={children}
     onClick={onClick}
     onKeyDown={onKeyDown}
     aria-haspopup={ariaHaspopup}
     aria-controls={ariaControls}
-    isActive={isActive}
+    className={className}
     {...props}
   >
-    {children}
     {type === MENU_ITEM_TYPE_MEGA && (
       <span
         className={`rmm__main-nav-item-link--icon ${isActive ? 'active' : ''}`}
       />
     )}
-  </StyledMainNavItemLink>
+  </Link>
 )
 
 MainNavItemLink.propTypes = {
@@ -63,6 +52,7 @@ MainNavItemLink.propTypes = {
   onKeyDown: PropTypes.func,
   ariaHaspopup: PropTypes.string,
   ariaControls: PropTypes.string,
+  className: PropTypes.string,
   children: PropTypes.node.isRequired
 }
 

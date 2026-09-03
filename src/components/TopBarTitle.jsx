@@ -1,19 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from '@emotion/styled'
+import { Heading } from '@jasonrundell/topiary'
+import { classNames } from '../helpers/classNames'
 
-const StyledTopBarTitle = styled.h1`
-  font-size: 1.5rem;
-`
-
-const TopBarTitle = ({ id, children, ...props }) => (
-  <StyledTopBarTitle id={id} {...props}>
+const TopBarTitle = ({ id, className, children, ...props }) => (
+  <Heading
+    level={1}
+    id={id}
+    className={classNames('rmm__title', className)}
+    {...props}
+  >
     {children}
-  </StyledTopBarTitle>
+  </Heading>
 )
 
 TopBarTitle.propTypes = {
   id: PropTypes.string,
+  className: PropTypes.string,
   children: PropTypes.node.isRequired
 }
 

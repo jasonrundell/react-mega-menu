@@ -1,9 +1,65 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import fs from 'fs'
+import { breakpoints } from './src/config/breakpoints.js'
+
+const LARGE_BREAKPOINT_PLACEHOLDER = '__RMM_BP_LARGE__'
+
+// Copies the source stylesheet (src/styles/style.css) to dist/style.css on
+// every build, so it ships alongside the JS bundles at the path referenced
+// by package.json's "./style.css" export. The only processing applied:
+// substituting the __RMM_BP_LARGE__ placeholder used by the stylesheet's
+// large-breakpoint @media rules with the real value from
+// src/config/breakpoints.js — the single source of truth this shares with
+// the JS mobile-detection check in src/helpers/responsive.js. Custom
+// properties can't drive @media conditions, so the value has to be
+// substituted as a literal at build time rather than read from a --rmm-*
+// token like everything else in the stylesheet.
+const distDir = path.resolve(__dirname, 'dist')
+
+// Returns the dist path for `fileName`, creating dist/ if a plugin runs
+// before Rollup has written anything there.
+const distPath = (fileName) => {
+  if (!fs.existsSync(distDir)) {
+    fs.mkdirSync(distDir, { recursive: true })
+  }
+  return path.join(distDir, fileName)
+}
+
+const copyStylesheet = () => ({
+  name: 'copy-rmm-stylesheet',
+  closeBundle() {
+    const src = path.resolve(__dirname, 'src/styles/style.css')
+    const dest = distPath('style.css')
+    const css = fs.readFileSync(src, 'utf8')
+    const large = breakpoints.large['min-width']
+    const substituted = css.split(LARGE_BREAKPOINT_PLACEHOLDER).join(large)
+    if (substituted.includes(LARGE_BREAKPOINT_PLACEHOLDER)) {
+      throw new Error(
+        `dist/style.css still contains an unreplaced ${LARGE_BREAKPOINT_PLACEHOLDER} placeholder`
+      )
+    }
+    fs.writeFileSync(dest, substituted)
+  }
+})
+
+// Copies the hand-written declaration (src/index.d.ts) to dist/index.d.ts
+// for the ESM entry and dist/index.d.cts for the CommonJS entry — the paths
+// package.json's "types" field and the "." export's "types" conditions point
+// at. The source is JSX + PropTypes, so there is nothing for tsc to emit;
+// src/typesContract.test.js keeps the declaration honest.
+const copyDeclaration = () => ({
+  name: 'copy-rmm-declaration',
+  closeBundle() {
+    const src = path.resolve(__dirname, 'src/index.d.ts')
+    fs.copyFileSync(src, distPath('index.d.ts'))
+    fs.copyFileSync(src, distPath('index.d.cts'))
+  }
+})
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), copyStylesheet(), copyDeclaration()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src')
@@ -14,17 +70,18 @@ export default defineConfig({
       entry: 'src/index.jsx',
       name: 'ReactMegaMenu',
       formats: ['es', 'cjs'],
-      fileName: (format) => `index.${format}.js`
+      // CommonJS must be .cjs: the package is "type": "module", so a .js
+      // file would be read as ESM by Node (and flagged by publint / attw).
+      fileName: (format) => (format === 'cjs' ? 'index.cjs' : 'index.es.js')
     },
     sourcemap: true,
     rollupOptions: {
-      external: ['react', 'react-dom', '@emotion/react', '@emotion/styled'],
+      external: ['react', 'react-dom', '@jasonrundell/topiary'],
       output: {
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
-          '@emotion/react': 'emotionReact',
-          '@emotion/styled': 'emotionStyled'
+          '@jasonrundell/topiary': 'Topiary'
         },
         exports: 'named'
       }

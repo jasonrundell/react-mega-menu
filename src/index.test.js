@@ -24,9 +24,11 @@ describe('MenuWithProvider', () => {
     render(<Menu someProp={testProp} />)
 
     // Assert: Check if the props are passed correctly
+    // React 19 invokes function components with (props, undefined) rather
+    // than (props, {}) in React 18.
     expect(require('./Menu').Menu).toHaveBeenCalledWith(
       expect.objectContaining({ someProp: testProp }),
-      {}
+      undefined
     )
   })
 })
