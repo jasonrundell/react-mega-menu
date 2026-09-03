@@ -77,7 +77,8 @@ describe('README contract (#98)', () => {
     ;[
       /^## .*Install/m,
       /^## .*Theming/m,
-      /^## .*`slideDirection`|slideDirection/m,
+      /^## .*Usage/m,
+      /^\|\s*`slideDirection`\s*\|/m,
       /^## .*Migrating from v2/m,
       /^## .*TypeScript/m
     ].forEach((heading) => expect(readme).toMatch(heading))
