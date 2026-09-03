@@ -302,7 +302,8 @@ changes is what you install and import.
 - `slideDirection` (`'left'` by default, matching v2's behavior).
 - Shipped TypeScript declarations.
 - A custom `id` no longer lands on three elements; inner regions derive unique
-  ids from it.
+  ids from it. If you passed a custom `id` in v2 and targeted it on the nav or
+  main list, point those selectors at `<id>__nav` and `<id>__main` instead.
 - At mobile width the closed off-canvas nav is `inert`, so keyboard users no
   longer tab through hidden links.
 
