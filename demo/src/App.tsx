@@ -330,9 +330,22 @@ const menuConfig: MenuConfigShape = {
   }
 }
 
-function App() {
+type SlideDirection = 'left' | 'right'
+
+type AppProps = {
+  /**
+   * The slideDirection the page starts on. `/` starts on 'left' (the prop's
+   * default) and `/slide-right/` starts on 'right' — two entries of the same
+   * app (see vite.config.ts) so each side has a sharable page.
+   */
+  defaultSlideDirection?: SlideDirection
+}
+
+function App({ defaultSlideDirection = 'left' }: AppProps) {
   const [topiaryTheme, setTopiaryTheme] = useState<TopiaryTheme>('hangar')
-  const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('left')
+  const [slideDirection, setSlideDirection] = useState<SlideDirection>(
+    defaultSlideDirection
+  )
   const [overrideTheme, setOverrideTheme] = useState<OverrideTheme | ''>('')
 
   // states for toggling head styling, preserved from the pre-v3 demo: it
@@ -494,6 +507,23 @@ function App() {
             off-canvas nav slides in from at mobile widths (below the{' '}
             <code>large</code> breakpoint). Resize the window below ~64rem and
             open the hamburger menu to see it.
+          </p>
+          <p>
+            This page starts on{' '}
+            <code>slideDirection=&quot;{defaultSlideDirection}&quot;</code>.{' '}
+            {defaultSlideDirection === 'left' ? (
+              <>
+                For a page that mounts the menu with{' '}
+                <code>slideDirection=&quot;right&quot;</code> from the first
+                render, open <a href="/slide-right/">/slide-right/</a>.
+              </>
+            ) : (
+              <>
+                The default page, which mounts the menu with{' '}
+                <code>slideDirection=&quot;left&quot;</code>, is at{' '}
+                <a href="/">/</a>.
+              </>
+            )}
           </p>
           <ul className="demo-button-group">
             <li>
