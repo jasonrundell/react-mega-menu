@@ -37,8 +37,24 @@ const copyStylesheet = () => ({
   }
 })
 
+// Copies the hand-written declaration (src/index.d.ts) to dist/index.d.ts,
+// the path package.json's "types" field and the "." export's "types"
+// condition point at. The source is JSX + PropTypes, so there is nothing for
+// tsc to emit; src/typesContract.test.js keeps the declaration honest.
+const copyDeclaration = () => ({
+  name: 'copy-rmm-declaration',
+  closeBundle() {
+    const src = path.resolve(__dirname, 'src/index.d.ts')
+    const outDir = path.resolve(__dirname, 'dist')
+    if (!fs.existsSync(outDir)) {
+      fs.mkdirSync(outDir, { recursive: true })
+    }
+    fs.copyFileSync(src, path.join(outDir, 'index.d.ts'))
+  }
+})
+
 export default defineConfig({
-  plugins: [react(), copyStylesheet()],
+  plugins: [react(), copyStylesheet(), copyDeclaration()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src')

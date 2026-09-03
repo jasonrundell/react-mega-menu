@@ -34,6 +34,28 @@ The Hamburger's `aria-controls` always points at the nav's rendered id, custom
 or default. The top bar, title, Hamburger and menu items keep their fixed
 `rmm__*` ids, so do not reuse one of those as the custom `id`.
 
+## TypeScript
+
+The package ships its own declaration file (`dist/index.d.ts`), so
+`import { Menu } from '@jasonrundell/react-mega-menu'` typechecks with no
+extra `@types` package or local shim. `Menu`'s props are typed, and the config
+shape is exported so you can annotate your own config object:
+
+```tsx
+import { Menu } from '@jasonrundell/react-mega-menu'
+import type { MenuConfigShape } from '@jasonrundell/react-mega-menu'
+
+const config: MenuConfigShape = {
+  topbar: { id: 'topbar', logo: { src: '/logo.svg', alt: 'Logo' }, title: 'Site' },
+  menu: { items: [{ id: 'home', label: 'Home', type: 'main', url: '/' }] }
+}
+
+export const Header = () => <Menu config={config} slideDirection="right" />
+```
+
+Also exported: `MenuProps`, `MenuConfigItem`, `MenuConfigTopbar` and the
+`MenuItemType` union (`'main' | 'link' | 'mega' | 'sub'`).
+
 ## FAQ
 
 - **What is a "Mega Menu"?** A Mega Menu is a large dropdown navigation menu that displays multiple links and categories at once. It often organizes content into columns or sections, allowing users to see a broader range of options at a glance. It is typically used for websites with a lot of content or categories, like e-commerce or large informational sites.

@@ -2,6 +2,7 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
+    '!src/**/*.d.ts',
     '!src/demo/**',
     '!src/next-demo/**',
     '!.github/**',

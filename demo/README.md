@@ -73,9 +73,6 @@ Other scripts: `npm run build` (typecheck + production build via Vite),
 - `src/App.css` / `src/index.css` — the page's own chrome, styled directly
   from `--topiary-*` tokens so it re-skins alongside the menu.
 - `src/themes/*.css` — the five legacy `--rmm-*` token-override examples.
-- `src/rmm.d.ts` — a minimal local type declaration for
-  `@jasonrundell/react-mega-menu`. The package's `package.json` points
-  `types` at `dist/index.d.ts`, but its build has no `.d.ts` generation step
-  yet, so nothing actually ships there; this shim covers just the props this
-  demo uses (`config`, `id`, `className`, `slideDirection`) until that's
-  fixed upstream in the package itself.
+- Types come from the package itself (`dist/index.d.ts`, shipped in the
+  tarball), so there is no local declaration shim; `npm run build` typechecks
+  `src/App.tsx` against them.
