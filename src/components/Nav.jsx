@@ -37,8 +37,8 @@ const StyledNav = styled.nav`
  * At mobile width the closed nav is only moved off-screen with a transform,
  * so its links would otherwise stay in the tab order. Marking it `inert`
  * removes the whole subtree from keyboard focus and the accessibility tree.
- * At desktop width the closed nav is already `display: none`, so `inert` is
- * never applied there.
+ * At desktop width the nav is the always-visible horizontal bar (only the
+ * closed mega panels are `display: none`), so `inert` must never apply there.
  */
 export const isNavInert = (isMobile, activeState) =>
   Boolean(isMobile) && activeState === 'closed'

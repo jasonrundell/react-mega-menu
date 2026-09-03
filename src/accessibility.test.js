@@ -1,6 +1,7 @@
 import React from 'react'
 import { render, fireEvent, act } from '@testing-library/react'
 import '@testing-library/jest-dom'
+import { axe, toHaveNoViolations } from 'jest-axe'
 import Menu from './index'
 import { viewportLarge } from './helpers/responsive'
 
@@ -11,8 +12,9 @@ import { viewportLarge } from './helpers/responsive'
  * this emulates what a browser does when the user presses Tab: every
  * keyboard-focusable element in DOM order, minus anything inside an `inert`
  * subtree. Note `display: none` from the emotion stylesheet is not evaluated
- * by jsdom, so at desktop width closed panels still show up here; that path
- * is covered by asserting `inert` is never applied on desktop.
+ * by jsdom, so at desktop width links inside closed mega panels still show
+ * up here; that path is covered by asserting `inert` is never applied on
+ * desktop, where the nav bar itself is always visible.
  */
 const TABBABLE = 'a[href], button, input, select, textarea, [tabindex]'
 const focusWalk = (root) =>
@@ -37,6 +39,26 @@ const renderMenu = (width) => {
 
 const MOBILE_WIDTH = viewportLarge - 1
 const DESKTOP_WIDTH = viewportLarge
+
+expect.extend(toHaveNoViolations)
+
+describe('jest-axe gate: the rendered Menu has no axe violations', () => {
+  afterEach(() => {
+    global.innerWidth = 1024
+  })
+
+  test.each([
+    ['mobile', MOBILE_WIDTH, 'closed'],
+    ['mobile', MOBILE_WIDTH, 'open'],
+    ['desktop', DESKTOP_WIDTH, 'closed'],
+    ['desktop', DESKTOP_WIDTH, 'open']
+  ])('%s width (%ipx), nav %s', async (_, width, state) => {
+    const { container, hamburger } = renderMenu(width)
+    if (state === 'open') fireEvent.click(hamburger)
+
+    expect(await axe(container)).toHaveNoViolations()
+  })
+})
 
 describe('closed off-canvas nav leaves the tab order at mobile width (#100)', () => {
   afterEach(() => {
