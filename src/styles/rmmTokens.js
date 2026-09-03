@@ -22,6 +22,14 @@ export const rmmTokens = [
   '--rmm-text-muted', // item description text color
   '--rmm-focus-ring', // composed :focus-visible outline (width + style + color)
 
+  // Panel chrome (off-canvas nav, mega and sub panels)
+  '--rmm-panel-bg', // nav / mega / sub panel background
+  '--rmm-panel-border', // composed panel border (shell bottom, panel edges, heading rows)
+  '--rmm-panel-shadow', // mega panel drop shadow at the large breakpoint
+  '--rmm-panel-padding', // mega panel inner padding at the large breakpoint
+  '--rmm-link-radius', // link hover pill / hamburger slice corner radius
+  '--rmm-icon-stroke', // chevron stroke width
+
   // Stacking order
   '--rmm-menu-z', // fixed menu shell
   '--rmm-panel-z', // mega/sub panel, above sibling lists
@@ -33,11 +41,11 @@ export const rmmTokens = [
   '--rmm-menu-height', // mobile menu shell height
   '--rmm-menu-height-large', // large-breakpoint menu shell height
   '--rmm-topbar-height', // TopBar height
+  '--rmm-gutter', // horizontal padding of the shell and every panel
+  '--rmm-column-min-width', // minimum mega panel column width at the large breakpoint
   '--rmm-logo-height', // Logo image height
   '--rmm-hamburger-width', // hamburger slice container width
   '--rmm-hamburger-height', // hamburger slice container height
-  '--rmm-hamburger-top', // hamburger fixed top offset
-  '--rmm-hamburger-left', // hamburger fixed left offset
 
   // Generic spacing scale (margins/gaps/padding across components)
   '--rmm-space-xs',
@@ -47,6 +55,7 @@ export const rmmTokens = [
 
   // Typography
   '--rmm-font-family', // body font stack
+  '--rmm-line-height', // link and description line height
   '--rmm-title-font-size', // TopBarTitle
   '--rmm-nav-item-font-size', // nav/mega/sub item link text
   '--rmm-description-font-size', // NavItemDescription

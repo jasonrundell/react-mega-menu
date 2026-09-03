@@ -173,6 +173,17 @@ selector-level overrides keep working across releases.
 | `--rmm-text-muted`    | Item description text color                             | `var(--topiary-color-textMuted, #666666)`                                              |
 | `--rmm-focus-ring`    | Composed `:focus-visible` outline (width, style, color) | `var(--topiary-borderWidth-thick, 2px) solid var(--topiary-color-focus, currentColor)` |
 
+**Panel chrome**
+
+| Token                 | Purpose                                                       | Default                                                                               |
+| --------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `--rmm-panel-bg`      | Off-canvas nav, mega and sub panel background                 | `var(--topiary-color-surface, #fefefe)`                                               |
+| `--rmm-panel-border`  | Composed border on the shell bottom, panel edges and headings | `var(--topiary-borderWidth-hairline, 1px) solid var(--topiary-color-border, #d9d9d9)` |
+| `--rmm-panel-shadow`  | Mega panel drop shadow at the `large` breakpoint              | `var(--topiary-shadow-lg, 0 8px 24px rgba(0, 0, 0, 0.12))`                            |
+| `--rmm-panel-padding` | Mega panel inner padding at the `large` breakpoint            | `var(--topiary-space-lg, 1.5rem)`                                                     |
+| `--rmm-link-radius`   | Link hover pill and hamburger slice corner radius             | `var(--topiary-radius-md, 3px)`                                                       |
+| `--rmm-icon-stroke`   | Chevron stroke width                                          | `var(--topiary-borderWidth-thin, 2px)`                                                |
+
 **Stacking order**
 
 | Token           | Purpose                               | Default                            |
@@ -183,16 +194,16 @@ selector-level overrides keep working across releases.
 
 **Structural sizing**
 
-| Token                     | Purpose                                                      | Default                                                |
-| ------------------------- | ------------------------------------------------------------ | ------------------------------------------------------ |
-| `--rmm-menu-height`       | Mobile menu shell height                                     | `calc(var(--topiary-space-3xl, 4rem) * 2)`             |
-| `--rmm-menu-height-large` | Menu shell height at the `large` breakpoint                  | `var(--topiary-space-3xl, 4rem)`                       |
-| `--rmm-topbar-height`     | Top bar height                                               | `var(--topiary-space-3xl, 4rem)`                       |
-| `--rmm-logo-height`       | Logo image height                                            | `var(--topiary-space-xl, 2rem)`                        |
-| `--rmm-hamburger-width`   | Hamburger slice container width                              | `var(--topiary-space-xl, 2rem)`                        |
-| `--rmm-hamburger-height`  | Hamburger slice container height                             | `var(--topiary-space-lg, 1.25rem)`                     |
-| `--rmm-hamburger-top`     | Hamburger fixed top offset (derived from the top bar height) | `calc(var(--rmm-topbar-height) + var(--rmm-space-md))` |
-| `--rmm-hamburger-left`    | Hamburger fixed left offset                                  | `var(--topiary-space-md, 1rem)`                        |
+| Token                     | Purpose                                                   | Default                                    |
+| ------------------------- | --------------------------------------------------------- | ------------------------------------------ |
+| `--rmm-menu-height`       | Mobile menu shell height                                  | `var(--rmm-topbar-height)`                 |
+| `--rmm-menu-height-large` | Menu shell height at the `large` breakpoint               | `var(--topiary-space-3xl, 4rem)`           |
+| `--rmm-topbar-height`     | Top bar height                                            | `var(--topiary-space-3xl, 4rem)`           |
+| `--rmm-gutter`            | Horizontal padding of the shell and every panel           | `var(--topiary-space-lg, 1.5rem)`          |
+| `--rmm-column-min-width`  | Minimum mega panel column width at the `large` breakpoint | `calc(var(--topiary-space-3xl, 4rem) * 3)` |
+| `--rmm-logo-height`       | Logo image height                                         | `var(--topiary-space-xl, 2rem)`            |
+| `--rmm-hamburger-width`   | Hamburger slice container width                           | `var(--topiary-space-xl, 2rem)`            |
+| `--rmm-hamburger-height`  | Hamburger slice container height                          | `var(--topiary-space-lg, 1.25rem)`         |
 
 **Spacing scale**
 
@@ -205,14 +216,15 @@ selector-level overrides keep working across releases.
 
 **Typography**
 
-| Token                             | Purpose                          | Default                               |
-| --------------------------------- | -------------------------------- | ------------------------------------- |
-| `--rmm-font-family`               | Body font stack                  | `var(--topiary-font-body, inherit)`   |
-| `--rmm-title-font-size`           | Top bar title                    | `var(--topiary-fontSize-xl, 1.5rem)`  |
-| `--rmm-nav-item-font-size`        | Nav, mega and sub item link text | `var(--topiary-fontSize-md, 1rem)`    |
-| `--rmm-description-font-size`     | Item description                 | `var(--topiary-fontSize-xs, 0.75rem)` |
-| `--rmm-hamburger-label-font-size` | Hamburger visible label          | `var(--topiary-fontSize-md, 1rem)`    |
-| `--rmm-font-weight-bold`          | Hamburger label weight           | `var(--topiary-fontWeight-bold, 700)` |
+| Token                             | Purpose                          | Default                                 |
+| --------------------------------- | -------------------------------- | --------------------------------------- |
+| `--rmm-font-family`               | Body font stack                  | `var(--topiary-font-body, inherit)`     |
+| `--rmm-line-height`               | Link and description line height | `var(--topiary-lineHeight-normal, 1.5)` |
+| `--rmm-title-font-size`           | Top bar title                    | `var(--topiary-fontSize-xl, 1.5rem)`    |
+| `--rmm-nav-item-font-size`        | Nav, mega and sub item link text | `var(--topiary-fontSize-md, 1rem)`      |
+| `--rmm-description-font-size`     | Item description                 | `var(--topiary-fontSize-xs, 0.75rem)`   |
+| `--rmm-hamburger-label-font-size` | Hamburger visible label          | `var(--topiary-fontSize-md, 1rem)`      |
+| `--rmm-font-weight-bold`          | Hamburger label weight           | `var(--topiary-fontWeight-bold, 700)`   |
 
 **Motion**
 
