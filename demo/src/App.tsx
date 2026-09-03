@@ -23,9 +23,7 @@ const TOPIARY_THEMES = ['hangar', 'broadsheet', 'arcade', 'cascade'] as const
 type TopiaryTheme = (typeof TOPIARY_THEMES)[number]
 
 function isTopiaryTheme(value: string | null): value is TopiaryTheme {
-  return (
-    value !== null && (TOPIARY_THEMES as readonly string[]).includes(value)
-  )
+  return value !== null && (TOPIARY_THEMES as readonly string[]).includes(value)
 }
 
 /**
@@ -34,8 +32,19 @@ function isTopiaryTheme(value: string | null): value is TopiaryTheme {
  * Topiary theme is current, the same way the pre-v3 demo layered a custom
  * theme class over the base Emotion styles.
  */
-const OVERRIDE_THEMES = ['light', 'dark', 'monokai', 'retro', 'synthwave'] as const
+const OVERRIDE_THEMES = [
+  'light',
+  'dark',
+  'monokai',
+  'retro',
+  'synthwave'
+] as const
 type OverrideTheme = (typeof OVERRIDE_THEMES)[number]
+
+/** "arcade" -> "Arcade", for the theme button labels below. */
+function capitalize(value: string): string {
+  return value.charAt(0).toUpperCase() + value.slice(1)
+}
 
 /**
  * Static configuration example of a menu configuration object. If
@@ -323,9 +332,7 @@ const menuConfig: MenuConfigShape = {
 
 function App() {
   const [topiaryTheme, setTopiaryTheme] = useState<TopiaryTheme>('hangar')
-  const [slideDirection, setSlideDirection] = useState<'left' | 'right'>(
-    'left'
-  )
+  const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('left')
   const [overrideTheme, setOverrideTheme] = useState<OverrideTheme | ''>('')
 
   // states for toggling head styling, preserved from the pre-v3 demo: it
@@ -368,7 +375,9 @@ function App() {
     setSlideDirection((direction) => (direction === 'left' ? 'right' : 'left'))
   }
 
-  const menuClassName = overrideTheme ? `rmm__theme--${overrideTheme}` : undefined
+  const menuClassName = overrideTheme
+    ? `rmm__theme--${overrideTheme}`
+    : undefined
 
   return (
     <div data-theme={topiaryTheme} className="demo-page">
@@ -383,9 +392,7 @@ function App() {
           data-theme=&quot;{topiaryTheme}&quot;, slideDirection=&quot;
           {slideDirection}&quot;
           {overrideTheme && (
-            <>
-              , className=&quot;rmm__theme--{overrideTheme}&quot;
-            </>
+            <>, className=&quot;rmm__theme--{overrideTheme}&quot;</>
           )}
         </p>
         <hr />
@@ -417,8 +424,8 @@ function App() {
           </li>
           <li>
             Off-canvas nav on mobile widths supports a configurable{' '}
-            <code>slideDirection</code> (&apos;left&apos; or
-            &apos;right&apos;, see below).
+            <code>slideDirection</code> (&apos;left&apos; or &apos;right&apos;,
+            see below).
           </li>
           <li>Supports and tested against Edge, Safari, FireFox, and Chrome</li>
           <li>
@@ -449,14 +456,13 @@ function App() {
         <div className="demo-section">
           <h3>Topiary theme</h3>
           <p>
-            Four Topiary themes — <code>hangar</code>, <code>broadsheet</code>
-            , <code>arcade</code>, <code>cascade</code> — are toggled by
-            setting <code>data-theme</code> on the wrapper around the menu{' '}
-            <em>and</em> this page&apos;s own content. Both read the same{' '}
+            Four Topiary themes — <code>hangar</code>, <code>broadsheet</code>,{' '}
+            <code>arcade</code>, <code>cascade</code> — are toggled by setting{' '}
+            <code>data-theme</code> on the wrapper around the menu <em>and</em>{' '}
+            this page&apos;s own content. Both read the same{' '}
             <code>--topiary-*</code> tokens, so switching themes re-skins the
-            whole page from identical markup — &quot;tokens drive
-            form&quot;. Sharable via <code>?theme=</code>, e.g.{' '}
-            <code>?theme=arcade</code>.
+            whole page from identical markup — &quot;tokens drive form&quot;.
+            Sharable via <code>?theme=</code>, e.g. <code>?theme=arcade</code>.
           </p>
           <ul className="demo-button-group">
             {TOPIARY_THEMES.map((theme) => (
@@ -465,7 +471,7 @@ function App() {
                   onClick={() => setTopiaryTheme(theme)}
                   aria-pressed={topiaryTheme === theme}
                 >
-                  {theme.charAt(0).toUpperCase() + theme.slice(1)}
+                  {capitalize(theme)}
                 </button>
               </li>
             ))}
@@ -477,8 +483,8 @@ function App() {
           <p>
             The <code>slideDirection</code> prop controls which side the
             off-canvas nav slides in from at mobile widths (below the{' '}
-            <code>large</code> breakpoint). Resize the window below ~64rem
-            and open the hamburger menu to see it.
+            <code>large</code> breakpoint). Resize the window below ~64rem and
+            open the hamburger menu to see it.
           </p>
           <ul className="demo-button-group">
             <li>
@@ -506,14 +512,16 @@ function App() {
         <hr />
         <h3>Custom token overrides — layered on top of the Topiary theme</h3>
         <p>
-          Beyond a Topiary theme, the menu can be restyled further by
-          overriding its own <code>--rmm-*</code> tokens on a class layered
-          onto <code>&lt;Menu className=&quot;rmm__theme--your-theme&quot;
-          /&gt;</code>. The five examples below are the pre-v3 demo themes,
-          rewritten to go through that documented token contract instead of
-          reaching into the menu&apos;s internal selectors (see{' '}
-          <code>demo/src/themes/*.css</code> for the full conversion note —
-          each theme file explains what it kept and what it dropped).
+          Beyond a Topiary theme, the menu can be restyled further by overriding
+          its own <code>--rmm-*</code> tokens on a class layered onto{' '}
+          <code>
+            &lt;Menu className=&quot;rmm__theme--your-theme&quot; /&gt;
+          </code>
+          . The five examples below are the pre-v3 demo themes, rewritten to go
+          through that documented token contract instead of reaching into the
+          menu&apos;s internal selectors (see <code>demo/src/themes/*.css</code>{' '}
+          for the full conversion note — each theme file explains what it kept
+          and what it dropped).
         </p>
         <ul className="demo-button-group">
           {OVERRIDE_THEMES.map((theme) => (
@@ -522,7 +530,7 @@ function App() {
                 onClick={() => setOverrideTheme(theme)}
                 aria-pressed={overrideTheme === theme}
               >
-                {theme.charAt(0).toUpperCase() + theme.slice(1)}
+                {capitalize(theme)}
               </button>
             </li>
           ))}
@@ -537,8 +545,8 @@ function App() {
         </ul>
         <p>
           <em>
-            Note how the token overrides only affect the mega menu, not the
-            rest of the page — unlike the Topiary theme switcher above, which
+            Note how the token overrides only affect the mega menu, not the rest
+            of the page — unlike the Topiary theme switcher above, which
             re-skins both from the same tokens.
           </em>
         </p>
