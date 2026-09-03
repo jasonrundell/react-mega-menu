@@ -1,43 +1,54 @@
-import { useState, useEffect, useCallback } from 'react'
-// import { Menu } from '../../src/index' // local development mode
+import { useEffect, useState } from 'react'
 import { Menu } from '@jasonrundell/react-mega-menu'
+import type { MenuConfigShape } from '@jasonrundell/react-mega-menu'
 import './App.css'
+// The five legacy (pre-v3) demo themes, rewritten as --rmm-* token-override
+// examples — see demo/src/themes/light.css for the conversion note that
+// applies to all five.
+import './themes/light.css'
+import './themes/dark.css'
+import './themes/monokai.css'
+import './themes/retro.css'
+import './themes/synthwave.css'
 
-export interface MenuItem {
-  id: string
-  label: string
-  type: string
-  url: string
-  description?: string
-  items?: MenuItem[]
-}
+/**
+ * The four Topiary themes this package's stylesheet is built against (see
+ * src/styles/style.css in the package root — every --rmm-* token there
+ * falls back to var(--topiary-*, ...)). Applying one via `data-theme` on an
+ * ancestor re-skins both the menu and this page's own chrome (App.css
+ * reads the same --topiary-* tokens directly), since custom properties
+ * inherit down the DOM tree from wherever `data-theme` is set.
+ */
+const TOPIARY_THEMES = ['hangar', 'broadsheet', 'arcade', 'cascade'] as const
+type TopiaryTheme = (typeof TOPIARY_THEMES)[number]
 
-export interface MenuConfig {
-  topbar: {
-    id: string
-    logo: {
-      src: string
-      alt: string
-      rel: string
-    }
-    title: string
-  }
-  menu: {
-    items: MenuItem[]
-  }
+function isTopiaryTheme(value: string | null): value is TopiaryTheme {
+  return (
+    value !== null && (TOPIARY_THEMES as readonly string[]).includes(value)
+  )
 }
 
 /**
- * Here's a static configuration example of a menu configuration object.
- * If menuConfig doesn't depend on any state or props of App, hoisting it can help improve performance
- * and code clarity. Otherwise, move it to App's state.
+ * The five legacy demo themes (now --rmm-* token overrides — see
+ * themes/light.css), applied as `.rmm__theme--<name>` on top of whichever
+ * Topiary theme is current, the same way the pre-v3 demo layered a custom
+ * theme class over the base Emotion styles.
  */
-const menuConfig: MenuConfig = {
+const OVERRIDE_THEMES = ['light', 'dark', 'monokai', 'retro', 'synthwave'] as const
+type OverrideTheme = (typeof OVERRIDE_THEMES)[number]
+
+/**
+ * Static configuration example of a menu configuration object. If
+ * menuConfig doesn't depend on any state or props of App, hoisting it can
+ * help improve performance and code clarity. Otherwise, move it to App's
+ * state.
+ */
+const menuConfig: MenuConfigShape = {
   topbar: {
     id: 'topbar',
     logo: {
-      src: 'https://via.placeholder.com/150x50',
-      alt: 'Placeholder Logo',
+      src: '/images/logos/logo.svg',
+      alt: 'React Mega Menu logo',
       rel: 'home'
     },
     title: 'React Mega Menu'
@@ -263,37 +274,31 @@ const menuConfig: MenuConfig = {
             label: 'Theme',
             type: 'sub',
             url: '#',
-            description: 'Change the React Mega Menu theme',
+            description: 'Change the Topiary theme via the ?theme= param',
             items: [
               {
-                id: 'settings-theme-light',
-                label: 'Light',
+                id: 'settings-theme-hangar',
+                label: 'Hangar',
                 type: 'link',
-                url: '/?theme=light'
+                url: '/?theme=hangar'
               },
               {
-                id: 'settings-theme-dark',
-                label: 'Dark',
+                id: 'settings-theme-broadsheet',
+                label: 'Broadsheet',
                 type: 'link',
-                url: '/?theme=dark'
+                url: '/?theme=broadsheet'
               },
               {
-                id: 'settings-theme-monokai',
-                label: 'Monokai',
+                id: 'settings-theme-arcade',
+                label: 'Arcade',
                 type: 'link',
-                url: '/?theme=monokai'
+                url: '/?theme=arcade'
               },
               {
-                id: 'settings-theme-retro',
-                label: 'Retro',
+                id: 'settings-theme-cascade',
+                label: 'Cascade',
                 type: 'link',
-                url: '/?theme=retro'
-              },
-              {
-                id: 'settings-theme-synthwave',
-                label: 'Synthwave',
-                type: 'link',
-                url: '/?theme=synthwave'
+                url: '/?theme=cascade'
               }
             ]
           },
@@ -317,23 +322,19 @@ const menuConfig: MenuConfig = {
 }
 
 function App() {
-  const themes = ['light', 'dark', 'monokai', 'retro', 'synthwave']
+  const [topiaryTheme, setTopiaryTheme] = useState<TopiaryTheme>('hangar')
+  const [slideDirection, setSlideDirection] = useState<'left' | 'right'>(
+    'left'
+  )
+  const [overrideTheme, setOverrideTheme] = useState<OverrideTheme | ''>('')
 
-  // states for toggling head styling and changing themes
+  // states for toggling head styling, preserved from the pre-v3 demo: it
+  // removes/restores <head> (and everything Vite injected into it,
+  // stylesheets included) to demonstrate the menu's semantic HTML holds up
+  // with no styling applied at all.
   const [headEnabled, setHeadEnabled] = useState(true)
   const [headElement] = useState<HTMLElement | null>(document.head)
-  const [currentTheme, setCurrentTheme] = useState(themes[0])
 
-  // Apply the theme class to the menu when the component mounts
-  useEffect(() => {
-    const rmmNav = document.getElementById('rmm__menu')
-    if (rmmNav) {
-      themes.forEach((theme) => rmmNav.classList.remove(`rmm__theme--${theme}`))
-      rmmNav.classList.add(`rmm__theme--${currentTheme}`)
-    }
-  }, [currentTheme, themes])
-
-  // Insert or remove the head element based on the headEnabled state
   useEffect(() => {
     if (headEnabled) {
       if (headElement && !document.documentElement.contains(headElement)) {
@@ -347,17 +348,15 @@ function App() {
   }, [headEnabled, headElement])
 
   /**
-   * This useEffect hook will check the URL query string for a theme parameter
-   * and apply the theme if it exists.
-   * This is useful for sharing a specific theme with others. For example:
-   * https://example.com?theme=dark will load the dark theme.
-   * https://example.com?theme=light will load the light theme.
+   * Check the URL query string for a `theme` parameter and apply it if it
+   * names one of the four Topiary themes. Useful for sharing a specific
+   * theme with others, e.g. https://example.com?theme=arcade.
    */
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const themeParam = params.get('theme')
-    if (themeParam) {
-      setCurrentTheme(themeParam)
+    if (isTopiaryTheme(themeParam)) {
+      setTopiaryTheme(themeParam)
     }
   }, [])
 
@@ -365,51 +364,34 @@ function App() {
     setHeadEnabled(!headEnabled)
   }
 
-  const handleThemeChange = (theme: string) => {
-    setCurrentTheme(theme)
+  const toggleSlideDirection = () => {
+    setSlideDirection((direction) => (direction === 'left' ? 'right' : 'left'))
   }
 
-  // Function to dynamically import the theme CSS
-  const loadTheme = useCallback(
-    async (theme: string) => {
-      try {
-        // Remove the previous theme classes if necessary
-        const rmmNav = document.getElementById('rmm__menu')
-        if (rmmNav) {
-          themes.forEach((theme) =>
-            rmmNav.classList.remove(`rmm__theme--${theme}`)
-          )
-        }
-
-        // Dynamically import the theme CSS file
-        if (theme) {
-          await import(`./themes/${theme}.css`)
-
-          // Apply the selected theme class
-          if (rmmNav) {
-            rmmNav.classList.add(`rmm__theme--${theme}`)
-          }
-        }
-      } catch (err) {
-        console.error(`Failed to load the ${theme} theme`, err)
-      }
-    },
-    [themes]
-  )
-
-  useEffect(() => {
-    loadTheme(currentTheme)
-  }, [currentTheme, loadTheme])
+  const menuClassName = overrideTheme ? `rmm__theme--${overrideTheme}` : undefined
 
   return (
-    <div>
-      <Menu config={menuConfig} />
-      <main>
+    <div data-theme={topiaryTheme} className="demo-page">
+      <Menu
+        config={menuConfig}
+        slideDirection={slideDirection}
+        className={menuClassName}
+      />
+      <main className="demo-content">
         <h1>React Mega Menu Demo</h1>
+        <p className="demo-status">
+          data-theme=&quot;{topiaryTheme}&quot;, slideDirection=&quot;
+          {slideDirection}&quot;
+          {overrideTheme && (
+            <>
+              , className=&quot;rmm__theme--{overrideTheme}&quot;
+            </>
+          )}
+        </p>
         <hr />
         <p>
           A React library project which aims to be an accessible, responsive,
-          boilerplate top navigation menu with a "Mega Menu"!
+          boilerplate top navigation menu with a &quot;Mega Menu&quot;!
         </p>
         <h2>Features</h2>
         <ul>
@@ -422,11 +404,21 @@ function App() {
             sizes
           </li>
           <li>
-            Styled (lightly) with <a href="https://emotion.sh">Emotion</a>
+            Styled entirely through CSS custom properties: the menu ships a
+            documented <code>--rmm-*</code> token contract (
+            <a href="https://github.com/jasonrundell/react-mega-menu">
+              see rmmTokens.js
+            </a>
+            ), and every token resolves from{' '}
+            <a href="https://github.com/jasonrundell/topiary">
+              Topiary&apos;s <code>--topiary-*</code> tokens
+            </a>{' '}
+            with a hardcoded fallback — no Emotion, no runtime CSS-in-JS.
           </li>
           <li>
-            The project supports theme customization with vanilla CSS, as
-            demonstrated in the synthwave.css theme.
+            Off-canvas nav on mobile widths supports a configurable{' '}
+            <code>slideDirection</code> (&apos;left&apos; or
+            &apos;right&apos;, see below).
           </li>
           <li>Supports and tested against Edge, Safari, FireFox, and Chrome</li>
           <li>
@@ -453,45 +445,101 @@ function App() {
         <button onClick={toggleHead}>
           {headEnabled ? 'Disable styling to view' : 'Re-enable styling'}
         </button>
+
+        <div className="demo-section">
+          <h3>Topiary theme</h3>
+          <p>
+            Four Topiary themes — <code>hangar</code>, <code>broadsheet</code>
+            , <code>arcade</code>, <code>cascade</code> — are toggled by
+            setting <code>data-theme</code> on the wrapper around the menu{' '}
+            <em>and</em> this page&apos;s own content. Both read the same{' '}
+            <code>--topiary-*</code> tokens, so switching themes re-skins the
+            whole page from identical markup — &quot;tokens drive
+            form&quot;. Sharable via <code>?theme=</code>, e.g.{' '}
+            <code>?theme=arcade</code>.
+          </p>
+          <ul className="demo-button-group">
+            {TOPIARY_THEMES.map((theme) => (
+              <li key={theme}>
+                <button
+                  onClick={() => setTopiaryTheme(theme)}
+                  aria-pressed={topiaryTheme === theme}
+                >
+                  {theme.charAt(0).toUpperCase() + theme.slice(1)}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="demo-section">
+          <h3>Slide direction (issue #64)</h3>
+          <p>
+            The <code>slideDirection</code> prop controls which side the
+            off-canvas nav slides in from at mobile widths (below the{' '}
+            <code>large</code> breakpoint). Resize the window below ~64rem
+            and open the hamburger menu to see it.
+          </p>
+          <ul className="demo-button-group">
+            <li>
+              <button
+                onClick={() => setSlideDirection('left')}
+                aria-pressed={slideDirection === 'left'}
+              >
+                Left (default)
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => setSlideDirection('right')}
+                aria-pressed={slideDirection === 'right'}
+              >
+                Right
+              </button>
+            </li>
+            <li>
+              <button onClick={toggleSlideDirection}>Toggle</button>
+            </li>
+          </ul>
+        </div>
+
         <hr />
-        <h3>Styling the menu</h3>
+        <h3>Custom token overrides — layered on top of the Topiary theme</h3>
         <p>
-          This menu component is designed to be highly customizable. You can
-          apply your own CSS styles to the menu by targeting the appropriate
-          classes. The menu structure is built using semantic HTML elements,
-          which makes it easy to style using CSS.
+          Beyond a Topiary theme, the menu can be restyled further by
+          overriding its own <code>--rmm-*</code> tokens on a class layered
+          onto <code>&lt;Menu className=&quot;rmm__theme--your-theme&quot;
+          /&gt;</code>. The five examples below are the pre-v3 demo themes,
+          rewritten to go through that documented token contract instead of
+          reaching into the menu&apos;s internal selectors (see{' '}
+          <code>demo/src/themes/*.css</code> for the full conversion note —
+          each theme file explains what it kept and what it dropped).
         </p>
-        <p>
-          The top-level menu items are wrapped in <code>nav</code> elements, and
-          the submenus are wrapped in <code>ul</code> elements. Each menu item
-          is an <code>li</code> element, and the links are <code>a</code>{' '}
-          elements. This structure allows you to use standard CSS selectors to
-          apply styles to different parts of the menu.
-        </p>
-        <p>
-          Additionally, the menu supports themes, which are applied by adding a
-          theme-specific class to the menu container. You can create your own
-          themes by defining CSS classes that follow the naming convention{' '}
-          <code>.rmm__theme--your-theme-name</code> and applying them to the
-          menu container.
-        </p>
-        <h4>Try out a theme:</h4>
-        <ul>
-          {themes.map((theme) => (
+        <ul className="demo-button-group">
+          {OVERRIDE_THEMES.map((theme) => (
             <li key={theme}>
-              <button onClick={() => handleThemeChange(theme)}>
+              <button
+                onClick={() => setOverrideTheme(theme)}
+                aria-pressed={overrideTheme === theme}
+              >
                 {theme.charAt(0).toUpperCase() + theme.slice(1)}
               </button>
             </li>
           ))}
           <li>
-            <button onClick={() => handleThemeChange('')}>None</button>
+            <button
+              onClick={() => setOverrideTheme('')}
+              aria-pressed={overrideTheme === ''}
+            >
+              None
+            </button>
           </li>
         </ul>
         <p>
           <em>
-            Note how changing the theme only affects the mega menu and not the
-            rest of the page/application.
+            Note how the token overrides only affect the mega menu, not the
+            rest of the page — unlike the Topiary theme switcher above, which
+            re-skins both from the same tokens.
           </em>
         </p>
         <h3 id="contact">Showcase your theme</h3>
@@ -500,6 +548,7 @@ function App() {
           <a
             href="https://github.com/jasonrundell/react-mega-menu/compare"
             target="_blank"
+            rel="noreferrer"
           >
             pull request
           </a>{' '}
