@@ -1,0 +1,16 @@
+---
+description: Personal agent operating defaults for commits, verification, secrets, required data, and safe test commands.
+alwaysApply: false
+---
+
+# Agent Operating Defaults
+
+Use this rule when the user wants these personal defaults in a project.
+
+- Make changes, but do not create commits unless the user explicitly asks.
+- When generating commit messages, use short Conventional Commit subjects in imperative mood.
+- Before finishing implementation work, run the project’s relevant verification commands when practical: build, lint, tests, and `ReadLints` for edited files.
+- Discover verification commands from project files before assuming `npm` scripts.
+- Avoid test watch mode in agent-run commands; use non-watch flags such as Vitest `--run` when supported.
+- Do not read, write, or print `.env` files. Describe required environment variable changes for the user to apply.
+- Do not use fallback data when required information is missing. Log and throw, or surface a clear user-facing error.

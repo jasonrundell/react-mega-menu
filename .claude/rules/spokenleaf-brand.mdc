@@ -1,0 +1,37 @@
+---
+description: All UI must follow docs/brand-system.html; new patterns must be added there in the same change.
+globs:
+  - "app/**/*.{tsx,ts,css}"
+  - "components/**/*.{tsx,ts}"
+  - "marketing/**/*.{tsx,ts}"
+  - "styles/**/*.{css,ts}"
+  - "lib/brand-styles.ts"
+  - "tailwind.config.ts"
+alwaysApply: true
+---
+
+# Brand System Compliance
+
+`docs/brand-system.html` is the **canonical visual reference** for SpokenLeaf UI — color/typography tokens, component demos, spacing & shape, recording flows, marketing accents, and voice/tone examples.
+
+## Before shipping UI
+
+1. **Find the pattern** — Read the matching section in `docs/brand-system.html` (foundation: Logo, Color, Typography, Spacing & Shape; product UI: **Components** — e.g. Recording setup, Recording controls, Note editor recording, Audio playback, Buttons, Status indicators).
+2. **Implement from tokens** — Map demo styles to Tailwind/theme tokens (Moss, Slate-blue, Bone, semantic). Reuse `@/lib/brand-styles.ts` (`brandRecordingDot`, `brandTouchTarget`, `brandStatusPill`, `brandCard`, etc.) before inventing new class strings. No orphan hex values.
+3. **Match semantics** — Moss = tasks/growth; slate-blue = conversation/info; destructive = active recording/stop. Copy follows **Voice & Tone** (sentence case, no emoji, no exclamation marks).
+4. **Dark mode** — Verify against the `.dark` tokens in brand-system (“Moonlit Greenhouse”).
+
+## New or materially changed patterns
+
+If no demo covers what you are building:
+
+1. Design within existing tokens and spacing/shape rules first.
+2. **Add a demo card** to the appropriate section in `docs/brand-system.html` in the **same change** (Components for app UI; Marketing Accents for `marketing/`). Include title, short description, and key states/variants.
+3. Hoist repeated Tailwind into `lib/brand-styles.ts` when reused (see `css-style-reuse.mdc`).
+
+`docs/BRAND_GUIDELINES.md` is supplementary narrative/positioning; **brand-system wins** for visual specs and component structure.
+
+## Do not
+
+- Ship UI that diverges from an existing brand-system demo without updating the doc.
+- Introduce one-off colors, radii, or shadows outside the token system.

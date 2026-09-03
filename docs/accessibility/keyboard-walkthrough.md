@@ -42,7 +42,34 @@ results below — do not overwrite prior runs, append a new dated run instead.
 | 12  | Hamburger operable by keyboard at mobile width         | With the Hamburger focused, press Enter or Space.                                                                                    | The off-canvas Nav opens (`rmm__nav--open`) and `aria-expanded` flips to `true`.                                                         | **NOT RUN** (live keypress) / indirectly confirmed | Same tooling limitation as row 4 — synthetic Enter/Space on the Hamburger's native `<button type="button">` did not produce a `click` in this automation (no `keyCode`, and script-dispatched `KeyboardEvent`s are untrusted so the browser won't run the button's native default action from them either). The toggle itself was confirmed correct via a direct `.click()`: `aria-expanded` flips `false` → `true` and `rmm__nav` gains `--open`. Native `<button>` elements activate on both Enter and Space per the HTML spec, independent of any app JS — a human should still confirm with a physical keyboard before release.                                                                                                                                                                                                                                                                                                                               | 2026-09-02 | 3eec3e2      |
 | 13  | No keyboard trap                                       | From the Hamburger, Tab forward through the entire menu (both mobile-closed and mobile/desktop-open states) and back with Shift+Tab. | Focus always keeps moving; it's never impossible to Tab or Shift+Tab away from the menu.                                                 | PASS, with an important related finding            | Tabbing never got stuck — forward and reverse traversal both worked in every state tested. However: **at mobile width, when the Nav is closed, its entire content tree (all top-level items, every mega panel, every sub-panel) is still in the Tab order** — only the outer `.rmm__nav` is transformed off-screen (`transform: translate3d(-100%,0,0)`, confirmed via `getBoundingClientRect()`), not `display:none` or `inert`, unlike the desktop closed state (which _is_ `display:none` past the `large` breakpoint). So a keyboard user tabbing past a closed Hamburger at mobile width lands on, and must tab through, many invisible off-screen links before reaching real content again — a "no visible focus" failure spanning most of row 7–10's concern, even though it is not a hard trap. See "Escalation" below; not fixed here (needs `isMobile` plumbed into `Nav`, e.g. via a conditional `inert` attribute — more than a handler-level tweak). | 2026-09-02 | 3eec3e2      |
 
-## Tooling notes (this run)
+## Run 2026-09-03 — row 13 re-run after #100 (closed nav `inert` at mobile width)
+
+Executed in a real Chromium via the committed Playwright harness in
+`scripts/a11y-walkthrough/` (see "Re-running row 13 with the harness" below),
+against the built library rendered between two page links (`#before`, `#after`).
+Rows 1–12 were not re-run; only the row-13 finding changed.
+
+| #   | Check                                                                 | Width  | Result | Notes                                                                                                                                     | Date       | Build/commit  |
+| --- | --------------------------------------------------------------------- | ------ | ------ | ----------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------- |
+| 13  | Closed off-canvas nav is out of the tab order (#100)                  | 400px  | PASS   | `#rmm__nav` carries `inert` while closed. Tab from `#rmm__hamburger` lands on `#after`; Shift+Tab lands on `#before`.                     | 2026-09-03 | merge of #104 |
+| 13a | Opening the nav restores its links; closing removes them again (#100) | 400px  | PASS   | After a Hamburger click, Tab from `#rmm__hamburger` lands on `#rmm-main-nav-item-link-home`. After a second click, Tab lands on `#after`. | 2026-09-03 | merge of #104 |
+| 13b | Same behaviour under `prefers-reduced-motion: reduce` (#100)          | 400px  | PASS   | Identical results with `reducedMotion: 'reduce'` emulated.                                                                                | 2026-09-03 | merge of #104 |
+| 13c | Desktop width never applies `inert` (#100)                            | 1280px | PASS   | `#rmm__nav` has no `inert` attribute open or closed; Tab from `#before` reaches `#rmm-main-nav-item-link-home`.                           | 2026-09-03 | merge of #104 |
+
+### Re-running row 13 with the harness
+
+```sh
+npm run build
+npx vite build --config scripts/a11y-walkthrough/vite.config.js
+npm i --no-save playwright && npx playwright install chromium   # once
+node scripts/a11y-walkthrough/walk.cjs
+```
+
+Set `CHROMIUM_PATH` to point the script at an existing Chromium binary. The same
+commands work on Windows, macOS and Linux. The jsdom equivalent is the
+focus-walk suite in `src/accessibility.test.js`.
+
+## Tooling notes (2026-09-02 run)
 
 The keyboard-driven checks above were executed against a live harness
 (`npm run dev` on port 5183, package rebuilt and repacked from this branch)
@@ -79,11 +106,12 @@ Findings from this run that are real (reproducible, confirmed live) but outside
 what a minimal, attribute/handler-level change can safely fix — recorded here
 for a human to triage into a follow-up ticket rather than fixed unilaterally:
 
-1. **Off-canvas nav content stays in the Tab order while closed at mobile
-   width** (row 13). Only `.rmm__nav` itself is moved off-screen via `transform`
-   when closed at a mobile width; none of its descendants (nor the mega/sub
-   panels nested inside, which have no closed-state `display:none` below the
-   `large` breakpoint at all — see `src/styles/style.css` `.rmm__mega-list` /
+1. **Resolved by #100 (PR #104, merged 2026-09-03; re-run recorded above).**
+   Off-canvas nav content stays in the Tab order while closed at mobile width
+   (row 13). Only `.rmm__nav` itself is moved off-screen via `transform` when
+   closed at a mobile width; none of its descendants (nor the mega/sub panels
+   nested inside, which have no closed-state `display:none` below the `large`
+   breakpoint at all — see `src/styles/style.css` `.rmm__mega-list` /
    `.rmm__nav-list--sub`) are removed from the accessibility tree or tab order.
    A keyboard user at mobile width must tab through the entire hidden menu tree
    before reaching subsequent page content, with no visible focus indicator the

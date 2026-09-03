@@ -90,24 +90,18 @@ describe('accessibility (jest-axe)', () => {
     }
   )
 
-  // The "closed" and "open" cases above render byte-identical DOM at
-  // mobile vs desktop widths in jsdom today: isLargeViewport() does
-  // correctly flip with the width (verified via its innerWidth fallback,
-  // since jsdom has no window.matchMedia), but isMobile is consumed only
-  // by MenuContext's toggleSubMenu, and neither of those two states ever
-  // calls it. That makes those four scans width-blind re-validations of
-  // the same markup until #100 lands (which will add a width-dependent
-  // `inert` attribute to the closed off-canvas nav — see the Escalations
-  // section of docs/accessibility/keyboard-walkthrough.md), at which point
-  // they start being genuinely meaningful too. They're kept anyway: they're
-  // cheap, and "sub-open" below already proves the harness is capable of
-  // catching a real width-dependent regression when one exists.
+  // Since #100 the closed nav carries a width-dependent `inert` attribute,
+  // so the "closed" scans above differ between mobile and desktop (see the
+  // focus-walk suite below). The "open" cases are still byte-identical
+  // across widths in jsdom: isMobile is otherwise consumed only by
+  // MenuContext's toggleSubMenu, which the open state never calls. They're
+  // kept anyway: they're cheap, and "sub-open" below already proves the
+  // harness is capable of catching a real width-dependent regression.
   //
   // This test pins that "sub-open" is such a state, directly, so a future
   // change that accidentally makes the mobile/desktop branches of
   // toggleSubMenu equivalent gets caught here — rather than this test file
-  // silently degrading into four more width-blind scans without anyone
-  // noticing.
+  // silently degrading into width-blind scans without anyone noticing.
   test('sub-open state genuinely differs between mobile and desktop widths', () => {
     const mobile = renderMenuAt(MOBILE_WIDTH)
     STATE_SETUPS['sub-open'](mobile.container)
@@ -119,5 +113,112 @@ describe('accessibility (jest-axe)', () => {
     const desktopHtml = desktop.container.innerHTML
 
     expect(mobileHtml).not.toBe(desktopHtml)
+  })
+})
+
+/**
+ * Tab-order walk over a root element.
+ *
+ * jsdom does not implement the focus semantics of the `inert` attribute, so
+ * this emulates what a browser does when the user presses Tab: every
+ * keyboard-focusable element in DOM order, minus anything inside an `inert`
+ * subtree. `display: none` from the stylesheet is not evaluated by jsdom
+ * either, so at desktop width links inside closed mega panels still show up
+ * here; that path is covered by asserting `inert` is never applied on
+ * desktop, where the nav bar itself is always visible. The real-browser
+ * equivalent is scripts/a11y-walkthrough/walk.cjs (walkthrough row 13).
+ */
+const TABBABLE = 'a[href], button, input, select, textarea, [tabindex]'
+const focusWalk = (root) =>
+  Array.from(root.querySelectorAll(TABBABLE)).filter(
+    (el) => !el.closest('[inert]') && el.getAttribute('tabindex') !== '-1'
+  )
+
+const getNav = (container) => container.querySelector('#rmm__nav')
+const getHamburger = () => screen.getByRole('button', { name: 'Menu' })
+
+describe('closed off-canvas nav leaves the tab order at mobile width (#100)', () => {
+  afterEach(cleanup)
+
+  test('nothing inside .rmm__nav is tabbable while the nav is closed', () => {
+    const { container } = renderMenuAt(MOBILE_WIDTH)
+    const nav = getNav(container)
+
+    expect(nav).toHaveAttribute('inert')
+    expect(focusWalk(nav)).toHaveLength(0)
+  })
+
+  test('opening the nav restores its links to the tab order; closing removes them again', () => {
+    const { container } = renderMenuAt(MOBILE_WIDTH)
+    const nav = getNav(container)
+
+    openMenu()
+    expect(nav).not.toHaveAttribute('inert')
+    expect(focusWalk(nav).length).toBeGreaterThan(0)
+
+    openMenu() // the Hamburger toggles, so a second click closes
+    expect(nav).toHaveAttribute('inert')
+    expect(focusWalk(nav)).toHaveLength(0)
+  })
+
+  test('the hamburger itself stays tabbable while the nav is closed', () => {
+    const { container } = renderMenuAt(MOBILE_WIDTH)
+
+    expect(focusWalk(container)).toContain(getHamburger())
+  })
+
+  test('desktop width never applies inert, open or closed', () => {
+    const { container } = renderMenuAt(DESKTOP_WIDTH)
+    const nav = getNav(container)
+
+    expect(nav).not.toHaveAttribute('inert')
+    expect(focusWalk(nav).length).toBeGreaterThan(0)
+
+    openMenu()
+    expect(nav).not.toHaveAttribute('inert')
+  })
+
+  test('resizing across the breakpoint updates inert without reopening the nav', () => {
+    const { container } = renderMenuAt(DESKTOP_WIDTH)
+    const nav = getNav(container)
+    expect(nav).not.toHaveAttribute('inert')
+
+    setViewportWidth(MOBILE_WIDTH)
+    expect(nav).toHaveAttribute('inert')
+
+    setViewportWidth(DESKTOP_WIDTH)
+    expect(nav).not.toHaveAttribute('inert')
+  })
+
+  describe('prefers-reduced-motion', () => {
+    const originalMatchMedia = window.matchMedia
+
+    beforeEach(() => {
+      window.matchMedia = jest.fn().mockImplementation((query) => ({
+        matches: query === '(prefers-reduced-motion: reduce)',
+        media: query,
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn()
+      }))
+    })
+
+    afterEach(() => {
+      window.matchMedia = originalMatchMedia
+    })
+
+    test('behaves the same as the animated path', () => {
+      const { container } = renderMenuAt(MOBILE_WIDTH)
+      const nav = getNav(container)
+
+      expect(nav).toHaveAttribute('inert')
+      expect(focusWalk(nav)).toHaveLength(0)
+
+      openMenu()
+      expect(nav).not.toHaveAttribute('inert')
+      expect(focusWalk(nav).length).toBeGreaterThan(0)
+
+      openMenu()
+      expect(nav).toHaveAttribute('inert')
+    })
   })
 })

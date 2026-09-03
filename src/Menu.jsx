@@ -38,7 +38,8 @@ export const Menu = ({
   slideDirection = 'left',
   ...rest
 }) => {
-  const { resetMenus, megaMenuState, toggleMegaMenu, setIsMobile } = useMenu()
+  const { resetMenus, megaMenuState, toggleMegaMenu, isMobile, setIsMobile } =
+    useMenu()
 
   const wrapperRef = useRef(null) // used to detect clicks outside of component
 
@@ -159,6 +160,7 @@ export const Menu = ({
       <Nav
         id={navId}
         activeState={megaMenuState || 'closed'}
+        isMobile={isMobile}
         ariaLabel="Main Navigation"
         slideDirection={slideDirection}
         className={className}

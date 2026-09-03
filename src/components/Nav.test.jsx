@@ -86,3 +86,55 @@ describe('Nav Component', () => {
     expect(getByText('About')).toBeInTheDocument()
   })
 })
+
+describe('Nav inert behaviour (closed off-canvas nav leaves the tab order)', () => {
+  const children = (
+    <ul>
+      <li>
+        <a href="/home">Home</a>
+      </li>
+    </ul>
+  )
+
+  test('is inert when closed at mobile width', () => {
+    const { getByLabelText } = render(
+      <Nav id="main-nav" activeState="closed" isMobile>
+        {children}
+      </Nav>
+    )
+    expect(getByLabelText('Main Navigation')).toHaveAttribute('inert')
+  })
+
+  test('is not inert when open at mobile width', () => {
+    const { getByLabelText } = render(
+      <Nav id="main-nav" activeState="open" isMobile>
+        {children}
+      </Nav>
+    )
+    expect(getByLabelText('Main Navigation')).not.toHaveAttribute('inert')
+  })
+
+  test('is never inert at desktop width', () => {
+    const { getByLabelText, rerender } = render(
+      <Nav id="main-nav" activeState="closed" isMobile={false}>
+        {children}
+      </Nav>
+    )
+    expect(getByLabelText('Main Navigation')).not.toHaveAttribute('inert')
+    rerender(
+      <Nav id="main-nav" activeState="open" isMobile={false}>
+        {children}
+      </Nav>
+    )
+    expect(getByLabelText('Main Navigation')).not.toHaveAttribute('inert')
+  })
+
+  test('is not inert when isMobile is omitted (backwards compatible)', () => {
+    const { getByLabelText } = render(
+      <Nav id="main-nav" activeState="closed">
+        {children}
+      </Nav>
+    )
+    expect(getByLabelText('Main Navigation')).not.toHaveAttribute('inert')
+  })
+})

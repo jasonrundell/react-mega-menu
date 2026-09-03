@@ -1,0 +1,41 @@
+---
+description: Keep the marketing site aligned with the real app when features, flows, or behavior change.
+globs:
+  - "app/**/*.{ts,tsx}"
+  - "components/**/*.{ts,tsx}"
+  - "lib/**/*.{ts,tsx}"
+  - "hooks/**/*.{ts,tsx}"
+  - "features/**/*"
+  - "marketing/**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# Marketing ↔ App parity
+
+The public marketing site lives in `marketing/` (its own Next.js app). Any **user-visible** change to what SpokenLeaf does, how it works, or what is promised (features, limits, integrations, data handling, auth, pricing, URLs) must stay consistent with that implementation.
+
+## When to update marketing
+
+Review and, if needed, edit marketing content in the same change (or a tightly coupled follow-up) when you:
+
+- Add, remove, rename, or materially change a **feature** users see or read about.
+- Change **flows** (recording, transcription, notes, import/export, insights, permalinks, sidebar behavior, etc.).
+- Change **routes** or primary entry points that CTAs or links should target.
+- Change **copy-defining behavior** (for example what “sync” means, where data lives, what requires an API key, what works offline).
+- Change **pricing**, plans, or commercial claims.
+
+Marketing touchpoints to check (paths are under `marketing/`):
+
+- `components/hero.tsx`, `product-screenshots.tsx`, `features.tsx`, `how-it-works.tsx`, `comparison.tsx` (+ `comparison-table.tsx`, `lib/comparison-data.ts`, `app/compare/page.tsx`), `pricing.tsx`, `faq.tsx`, `cta.tsx`, `header.tsx`, `footer.tsx`, and `app/page.tsx` / `app/layout.tsx` metadata.
+
+## When marketing does *not* need a change
+
+Pure refactors, internal types, tests-only changes, or behavior-preserving fixes do **not** require marketing updates unless they alter what a reasonable visitor would infer from the site or from `AGENTS.md`.
+
+## How to verify
+
+- Treat **`AGENTS.md`** as the high-level contract for routes, storage, auth, and scripts; if you update `AGENTS.md` for a behavior change, mirror any visitor-facing wording on the marketing site if it described the old behavior.
+- Read the affected marketing components and ask whether a first-time visitor would get a **false or outdated** impression compared to the current app.
+- Ensure links and CTAs still point to the correct paths or external docs.
+
+If marketing updates are deferred, say so explicitly (for example in the PR description) and list what is still out of date — default is to **ship parity in the same change** when the feature is user-facing.
