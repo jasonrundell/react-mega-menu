@@ -401,7 +401,13 @@
 
 /* MegaList — the top-level mega panel, one per top-nav "mega" item. A
    full-width overlay on mobile; a full-width dropdown grid of columns
-   beneath the shell at the large breakpoint. */
+   beneath the shell at the large breakpoint.
+
+   At the large breakpoint its containing block must be the fixed shell
+   (.rmm__menu) so `top: 100%` / `left: 0` / `width: 100%` span the full
+   bar: .rmm__main-nav-item, .rmm__nav-list and .rmm__nav are all left (or
+   explicitly set) `position: static` there. A stray `position: relative`
+   on any of them would silently shrink the panel to that ancestor. */
 .rmm__mega-list {
   position: absolute;
   z-index: var(--rmm-panel-z);
@@ -636,6 +642,9 @@
     var(--rmm-motion-easing);
 }
 
+/* The :has() branch keeps a mega link highlighted while its panel is open.
+   It is an enhancement only: where :has() is unsupported the chevron still
+   flips and the panel still opens, the link just loses its resting tint. */
 .rmm__menu .rmm__nav-item-link:hover,
 .rmm__menu .rmm__nav-item-link:focus-visible,
 .rmm__menu .rmm__main-nav-item-link:hover,

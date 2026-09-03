@@ -16,8 +16,9 @@
 }
 
 .demo-content {
-  /* Clears the menu's fixed shell: one top bar tall at every width
-     (--rmm-topbar-height defaults to --topiary-space-3xl). */
+  /* Top padding clears the menu's fixed shell (one top bar tall at every
+     width; --rmm-topbar-height defaults to --topiary-space-3xl) and adds
+     --topiary-space-2xl of breathing room below it. */
   max-width: 64rem;
   margin: 0 auto;
   padding: calc(var(--topiary-space-3xl, 4rem) + var(--topiary-space-2xl, 3rem))
