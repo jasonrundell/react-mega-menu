@@ -1,0 +1,81 @@
+# Publishes @jasonrundell/react-mega-menu to npm.
+#
+# Two ways to run it:
+#   - Actions tab -> "Publish to npm" -> Run workflow (on main). The dist-tag
+#     defaults to "beta" for a pre-release version (one with a "-" in it, e.g.
+#     3.0.0-beta.0) and "latest" otherwise; override it via the input.
+#   - Publishing a GitHub Release, which uses the same version-derived tag.
+#
+# Requires the repository secret `npm_token` (an npm automation token with
+# publish rights on the package). See docs/release/v3.0.0.md.
+
+name: Publish to npm
+
+on:
+  workflow_dispatch:
+    inputs:
+      dist-tag:
+        description: 'npm dist-tag (leave empty to derive from the version)'
+        required: false
+        default: ''
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build and test
+        run: npm test
+
+      - name: Resolve version and dist-tag
+        id: meta
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          TAG="${{ github.event.inputs.dist-tag }}"
+          if [ -z "$TAG" ]; then
+            case "$VERSION" in
+              *-*) TAG=beta ;;
+              *) TAG=latest ;;
+            esac
+          fi
+          if [ "$TAG" = "latest" ] && [ "${VERSION#*-}" != "$VERSION" ]; then
+            echo "Refusing to publish pre-release $VERSION under the latest tag" >&2
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "Publishing $VERSION with dist-tag $TAG"
+
+      - name: Publish
+        run: npm publish --access public --tag "${{ steps.meta.outputs.tag }}"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+
+      - name: Verify on the registry
+        run: |
+          for i in 1 2 3 4 5 6; do
+            if npm view "@jasonrundell/react-mega-menu@${{ steps.meta.outputs.version }}" version >/dev/null 2>&1; then
+              echo "@jasonrundell/react-mega-menu@${{ steps.meta.outputs.version }} is on the registry"
+              npm view @jasonrundell/react-mega-menu dist-tags
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Version not visible on the registry after 60s" >&2
+          exit 1
