@@ -84,7 +84,7 @@ describe('shipped stylesheet contract', () => {
  * the block itself contains nested `{ }` pairs (one per keyframe selector)
  * that a naive `[\s\S]*?\}` match would stop at prematurely.
  */
-function extractKeyframesBlock(css, name) {
+const extractKeyframesBlock = (css, name) => {
   const marker = `@keyframes ${name}`
   const start = css.indexOf(marker)
   if (start === -1) {
@@ -110,7 +110,7 @@ function extractKeyframesBlock(css, name) {
  * source text (not the CSSOM) so it exercises exactly what ships in
  * dist/style.css, independent of any browser's keyframe normalization.
  */
-function endTranslateXPercent(keyframesBody) {
+const endTranslateXPercent = (keyframesBody) => {
   const match = keyframesBody.match(
     /to\s*\{\s*transform:\s*translate3d\(\s*(-?[\d.]+)%/
   )
