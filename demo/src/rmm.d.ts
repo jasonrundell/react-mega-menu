@@ -12,10 +12,17 @@
 declare module '@jasonrundell/react-mega-menu' {
   import type { ComponentType, HTMLAttributes } from 'react'
 
+  /**
+   * Mirrors src/config/menuItemTypes.js (MENU_ITEM_TYPES) in the package
+   * root — the four item `type` values the menu's rendering helpers
+   * (src/helpers/menu.jsx) actually switch on.
+   */
+  export type MenuItemType = 'main' | 'link' | 'mega' | 'sub'
+
   export interface MenuConfigItem {
     id: string
     label: string
-    type: string
+    type: MenuItemType
     url: string
     description?: string
     items?: MenuConfigItem[]
