@@ -1,0 +1,14 @@
+---
+description: Optional documentation standards for portable project docs, rules, skills, and Markdown links.
+globs: "**/*.{md,mdc,mdx}"
+alwaysApply: false
+---
+
+# Documentation Standards
+
+- Use forward slashes in docs, rules, skills, and Markdown links.
+- Keep setup and usage instructions practical and testable.
+- When creating installation or operating docs, include Windows, macOS, and Linux instructions.
+- Prefer concise path, purpose, and command examples over long prose.
+- Do not duplicate large source material; link to source files and summarize the role.
+- Update `PROJECT_INDEX.md` when docs change how agents should navigate the repo.

@@ -1,0 +1,14 @@
+---
+description: Optional web accessibility and SEO quality rules for frontend projects.
+globs: "**/*.{ts,tsx,jsx,html,mdx}"
+alwaysApply: false
+---
+
+# Web Accessibility And SEO
+
+- Use semantic HTML for interactive and landmark elements (`button`, `main`, `nav`, `form`, `label`).
+- Add ARIA only when semantic HTML is not enough.
+- Preserve keyboard access, focus order, and visible focus states.
+- Maintain WCAG AA contrast for text and important UI controls.
+- For routed web pages, keep page titles, descriptions, canonical links, and OpenGraph metadata current when the framework supports them.
+- Test accessibility-critical changes with the project’s available tooling or browser inspection workflow.

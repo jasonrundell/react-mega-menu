@@ -1,0 +1,14 @@
+---
+description: Optional CSS and class reuse rule for component styling, Tailwind, and shared design tokens.
+globs: "**/*.{ts,tsx,jsx,css,scss,mdx}"
+alwaysApply: false
+---
+
+# CSS And Style Reuse
+
+- Identify repeated class strings or style objects before adding more copies.
+- If a class combination is used three or more times in one component, extract a local constant near the top of the file.
+- If a class combination is reused across components, move it to a shared style module, design token, theme extension, or custom utility.
+- Name extracted styles by intent, not appearance alone, for example `primaryButton` or `formInput`.
+- Prefer the project’s established styling system over introducing a new one.
+- Update all affected usages when consolidating repeated styles.

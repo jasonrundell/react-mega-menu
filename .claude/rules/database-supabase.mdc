@@ -1,0 +1,16 @@
+---
+description: Optional Supabase and database safety rules for projects with SQL migrations, RLS, or setup.sql.
+globs: "**/*.{sql,ts,tsx,js,jsx}"
+alwaysApply: false
+---
+
+# Database And Supabase Safety
+
+Use this rule only in projects that use Supabase or managed SQL schemas.
+
+- Enable Row Level Security on all application tables.
+- Add policies needed for features to function correctly; do not rely on permissive defaults.
+- Do not connect to or mutate remote databases unless the user explicitly asks and approves the action.
+- Prefer migration files for database changes, and tell the user what to apply manually when that is their workflow.
+- If the project has `sql/setup.sql` or equivalent bootstrap SQL, keep it current with schema and policy changes.
+- Do not hide missing database data with fallback records; surface the error clearly.

@@ -1,0 +1,16 @@
+---
+description: Keep the project index current when project files or navigation context changes.
+globs: "**/*"
+alwaysApply: false
+---
+
+# Project Index Maintenance
+
+When adding, moving, deleting, or materially changing project files, update `PROJECT_INDEX.md` in the repo root if the change affects how an AI agent should navigate or understand the project.
+
+Keep updates lean:
+
+- Add path, purpose, and when to read.
+- Remove stale paths.
+- Update the structure tree for important directories and files.
+- Do not paste large file summaries; link by path and describe the role.

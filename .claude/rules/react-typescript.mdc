@@ -1,0 +1,15 @@
+---
+description: Optional React and TypeScript conventions for frontend projects.
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# React And TypeScript
+
+- Prefer TypeScript and avoid `any` unless the surrounding code already requires it.
+- Use functional React components and hooks; avoid class components.
+- Read nearby components, hooks, and utilities before adding new patterns.
+- Keep imports organized: external dependencies, internal modules, then styles.
+- Extract reusable logic into focused hooks or utilities when it reduces meaningful duplication.
+- Add TSDoc/JSDoc for complex public APIs, exported helpers, or non-obvious contracts.
+- Keep changes compatible with the project’s package manager, framework version, and existing test stack.

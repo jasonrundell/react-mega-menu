@@ -1,0 +1,15 @@
+---
+description: Always-on AI coding fundamentals for sustainable, token-efficient work across Cursor projects.
+alwaysApply: true
+---
+
+# AI Coding Fundamentals
+
+- Preserve design quality; bad code gets more expensive with AI because speed amplifies entropy.
+- Read before writing and follow the project’s existing patterns before inventing new ones.
+- Align on the design concept before creating large plans, PRDs, or code.
+- Use shared domain language and module names consistently.
+- Work in small verified steps; feedback frequency is the speed limit.
+- Prefer deep modules with simple interfaces over shallow webs of tiny pieces.
+- Design interfaces deliberately; delegate implementation only behind tests and clear boundaries.
+- Keep context lean: targeted reads, `@file` references, no pasted bulk files, concise outputs.

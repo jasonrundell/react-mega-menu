@@ -1,0 +1,71 @@
+---
+alwaysApply: false
+---
+
+## Preferred tech stack
+
+- Next.js (latest stable) using app router for ecom sites, platforms, full-blown
+  websites or Vite (latest stable) for utility apps
+- React (latest stable)
+- Playwright (latest stable) E2E tests
+- Jest (stable compatible version with React) for unit tests
+
+## Code, TypeScript & Typing
+
+- Always use TypeScript
+- Always apply code suggestions
+- Make changes but do not handle commits
+- Make commit messages short and concise and use the Conventional Commit message
+  convention
+- Import Ordering:
+  1. External dependencies
+  2. Internal dependencies (use absolute imports)
+  3. CSS / style imports
+- Functional methodology
+- Directory naming: lowercase‑with‑dashes (e.g. components/auth-wizard)
+- Atomic component design
+- React Hooks only (no class components)
+- Semantic versioning used for all projects
+- JSDoc / TSDoc comments on complex APIs
+- Storybook for interactive component demos
+
+## Database / Supabase
+
+- Row Level Security should always be enabled on all tables and policies should
+  be created when necessary to ensure all features function correctly
+- Do not try to automatically connect to Supabase and make changes. All Supabase
+  changes must be done manually by me.
+- All projects must have a sql/setup.sql file which contains all SQL needed to recreate the project's databse from scratch. This file needs to be kept up-to-date when database enhancements are made.
+- Database enhancements must be manually made by me via a migration sql file you provide.
+
+## Testing & Quality
+
+- Unit tests with Jest + React Testing Library
+- E2E tests with Playwright for critical flows
+- Type‑coverage checks and lint (ESLint, TSLint) on CI
+- Pre‑commit hooks: lint-staged, prettier --write
+- Lighthouse audits as part of CI
+
+## Accessibility & SEO
+
+- React Axe for accessibility auditing
+- Semantic HTML: <button>, <main>, <nav>
+- ARIA roles/labels where needed
+- Keyboard focus management and visible focus states
+- Minimum color contrast ≥ 4.5:1 (AA)
+- Next.js SEO: <Head> for title/meta (if project uses Next), canonical links,
+  OpenGraph tags
+
+## General process
+
+- Don't use fallback data aproaches, instead, log and throw an error when
+  something required is missing or has an error.
+- Run a build after every feature implementation or refactor to ensure there are no errors. If you run into build errors, be sure to clear those up before announcing that you are done.
+
+## Styling & Theming
+
+- CSS‑in‑JS or Pigment‑CSS variables; avoid inline styles
+- Do not use Tailwind
+- Design tokens for colors, spacing, typography
+- Theming: centralized theme file, typed theme interface
+- BEM or utility classes for overrides
