@@ -21,7 +21,8 @@
     "build": "vite build",
     "pretest": "npm run build",
     "format": "prettier --write src/**/*.{js,jsx}",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "pack:demo": "npm run build && npm pack --pack-destination ."
   },
   "dependencies": {
     "uuid": "^9.0.1"
