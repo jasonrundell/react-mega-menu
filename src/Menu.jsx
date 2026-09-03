@@ -203,11 +203,13 @@ Menu.propTypes = {
   config: PropTypes.shape({
     topbar: PropTypes.shape({
       id: PropTypes.string.isRequired,
+      // `logo` and `menu.items` are dereferenced unconditionally in render,
+      // so they are required here to match src/index.d.ts (#102).
       logo: PropTypes.shape({
         src: PropTypes.string.isRequired,
         alt: PropTypes.string,
         rel: PropTypes.string
-      }),
+      }).isRequired,
       title: PropTypes.string.isRequired
     }),
     menu: PropTypes.shape({
@@ -219,7 +221,7 @@ Menu.propTypes = {
           url: PropTypes.string.isRequired,
           description: PropTypes.string
         })
-      )
+      ).isRequired
     })
   }),
   className: PropTypes.string,

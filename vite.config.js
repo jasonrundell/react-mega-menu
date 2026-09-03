@@ -16,15 +16,22 @@ const LARGE_BREAKPOINT_PLACEHOLDER = '__RMM_BP_LARGE__'
 // properties can't drive @media conditions, so the value has to be
 // substituted as a literal at build time rather than read from a --rmm-*
 // token like everything else in the stylesheet.
+const distDir = path.resolve(__dirname, 'dist')
+
+// Returns the dist path for `fileName`, creating dist/ if a plugin runs
+// before Rollup has written anything there.
+const distPath = (fileName) => {
+  if (!fs.existsSync(distDir)) {
+    fs.mkdirSync(distDir, { recursive: true })
+  }
+  return path.join(distDir, fileName)
+}
+
 const copyStylesheet = () => ({
   name: 'copy-rmm-stylesheet',
   closeBundle() {
     const src = path.resolve(__dirname, 'src/styles/style.css')
-    const outDir = path.resolve(__dirname, 'dist')
-    const dest = path.join(outDir, 'style.css')
-    if (!fs.existsSync(outDir)) {
-      fs.mkdirSync(outDir, { recursive: true })
-    }
+    const dest = distPath('style.css')
     const css = fs.readFileSync(src, 'utf8')
     const large = breakpoints.large['min-width']
     const substituted = css.split(LARGE_BREAKPOINT_PLACEHOLDER).join(large)
@@ -45,11 +52,7 @@ const copyDeclaration = () => ({
   name: 'copy-rmm-declaration',
   closeBundle() {
     const src = path.resolve(__dirname, 'src/index.d.ts')
-    const outDir = path.resolve(__dirname, 'dist')
-    if (!fs.existsSync(outDir)) {
-      fs.mkdirSync(outDir, { recursive: true })
-    }
-    fs.copyFileSync(src, path.join(outDir, 'index.d.ts'))
+    fs.copyFileSync(src, distPath('index.d.ts'))
   }
 })
 
