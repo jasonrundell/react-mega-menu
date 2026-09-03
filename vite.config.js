@@ -44,15 +44,17 @@ const copyStylesheet = () => ({
   }
 })
 
-// Copies the hand-written declaration (src/index.d.ts) to dist/index.d.ts,
-// the path package.json's "types" field and the "." export's "types"
-// condition point at. The source is JSX + PropTypes, so there is nothing for
-// tsc to emit; src/typesContract.test.js keeps the declaration honest.
+// Copies the hand-written declaration (src/index.d.ts) to dist/index.d.ts
+// for the ESM entry and dist/index.d.cts for the CommonJS entry — the paths
+// package.json's "types" field and the "." export's "types" conditions point
+// at. The source is JSX + PropTypes, so there is nothing for tsc to emit;
+// src/typesContract.test.js keeps the declaration honest.
 const copyDeclaration = () => ({
   name: 'copy-rmm-declaration',
   closeBundle() {
     const src = path.resolve(__dirname, 'src/index.d.ts')
     fs.copyFileSync(src, distPath('index.d.ts'))
+    fs.copyFileSync(src, distPath('index.d.cts'))
   }
 })
 
@@ -68,7 +70,9 @@ export default defineConfig({
       entry: 'src/index.jsx',
       name: 'ReactMegaMenu',
       formats: ['es', 'cjs'],
-      fileName: (format) => `index.${format}.js`
+      // CommonJS must be .cjs: the package is "type": "module", so a .js
+      // file would be read as ESM by Node (and flagged by publint / attw).
+      fileName: (format) => (format === 'cjs' ? 'index.cjs' : 'index.es.js')
     },
     sourcemap: true,
     rollupOptions: {

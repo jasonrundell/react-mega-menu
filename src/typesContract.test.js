@@ -12,26 +12,63 @@ const typesField = packageJson.types
 const rootExport = packageJson.exports && packageJson.exports['.']
 
 describe('shipped type declarations contract (#102)', () => {
-  it('declares a "types" field and a "types" condition on the "." export', () => {
+  const conditions = ['import', 'require']
+
+  it('declares a "types" field and import / require conditions on the "." export', () => {
     expect(typesField).toEqual(expect.any(String))
     expect(rootExport).toEqual(expect.any(Object))
-    expect(rootExport.types).toEqual(expect.any(String))
+    conditions.forEach((condition) => {
+      expect(rootExport[condition]).toEqual(expect.any(Object))
+      expect(rootExport[condition].types).toEqual(expect.any(String))
+      expect(rootExport[condition].default).toEqual(expect.any(String))
+    })
   })
 
-  it('points the "types" field and the export condition at the same file', () => {
-    expect(path.resolve(rootDir, rootExport.types)).toBe(
+  it('points the "types" field at the ESM declaration', () => {
+    expect(path.resolve(rootDir, rootExport.import.types)).toBe(
       path.resolve(rootDir, typesField)
     )
   })
 
-  it('lists the "types" condition first, so resolvers that take the first match see it', () => {
+  it('lists "types" first inside each condition, so resolvers that take the first match see it', () => {
     // publint / arethetypeswrong both flag a "types" condition that is not
     // first: Node-style resolution stops at the first matching key.
-    expect(Object.keys(rootExport)[0]).toBe('types')
+    conditions.forEach((condition) => {
+      expect(Object.keys(rootExport[condition])[0]).toBe('types')
+    })
   })
 
-  it('emits the declaration file at that path on build', () => {
-    expect(fs.existsSync(path.resolve(rootDir, typesField))).toBe(true)
+  it('ships CommonJS as .cjs with a .d.cts declaration, so require() never resolves to ESM', () => {
+    // The package is "type": "module", so a .js CommonJS file would be read
+    // as ESM by Node and flagged by publint / arethetypeswrong.
+    expect(packageJson.type).toBe('module')
+    expect(rootExport.require.default).toMatch(/\.cjs$/)
+    expect(rootExport.require.types).toMatch(/\.d\.cts$/)
+    expect(rootExport.import.default).toMatch(/\.js$/)
+    expect(rootExport.import.types).toMatch(/\.d\.ts$/)
+  })
+
+  it('emits every declared entry and declaration file on build', () => {
+    const files = [
+      typesField,
+      ...conditions.flatMap((condition) => [
+        rootExport[condition].types,
+        rootExport[condition].default
+      ])
+    ]
+    files.forEach((file) => {
+      expect({ [file]: fs.existsSync(path.resolve(rootDir, file)) }).toEqual({
+        [file]: true
+      })
+    })
+  })
+
+  it('ships identical declarations for the ESM and CommonJS entries', () => {
+    expect(
+      fs.readFileSync(path.resolve(rootDir, rootExport.require.types), 'utf8')
+    ).toBe(
+      fs.readFileSync(path.resolve(rootDir, rootExport.import.types), 'utf8')
+    )
   })
 
   it('typechecks the consumer fixture against the shipped declaration', () => {

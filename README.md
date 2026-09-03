@@ -381,7 +381,7 @@ Both demos install the package from the tarball committed at the repo root
 ```sh
 npm install
 npm test            # builds, then runs the Jest suite (axe, contracts, fixtures)
-npm run build       # dist/index.es.js, dist/index.cjs.js, dist/style.css, dist/index.d.ts
+npm run build       # dist/index.es.js, dist/index.cjs, dist/style.css, dist/index.d.ts, dist/index.d.cts
 npm run pack:demo   # rebuilds the tarball both demos install from
 ```
 
