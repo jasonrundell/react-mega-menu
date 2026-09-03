@@ -211,8 +211,9 @@ Also in this phase:
       four themes.
 - [ ] Both demos build and run; next-demo verified with SSR (no hydration
       warnings, no flash of unstyled menu).
-- [ ] README rewritten: install (peer deps), stylesheet imports, `data-theme`,
-      the `--rmm-*` token table, v2 → v3 migration notes.
+- [x] README rewritten: install (peer deps), stylesheet imports, `data-theme`,
+      the `--rmm-*` token table, v2 → v3 migration notes (#98; the token
+      table is contract-tested in `src/readmeContract.test.js`).
 
 ### Phase 6 — Release
 
