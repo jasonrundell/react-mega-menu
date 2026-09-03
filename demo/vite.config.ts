@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { fileURLToPath, URL } from 'node:url'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,11 +8,12 @@ export default defineConfig({
     rollupOptions: {
       // Two pages of the same app: `/` mounts the menu with the default
       // slideDirection ("left"); `/slide-right/` mounts it with "right".
+      // Relative paths resolve against the Vite root (this directory), so
+      // no Node-only imports are needed — the Vercel build installs only
+      // this directory and has no @types/node to resolve them with.
       input: {
-        main: fileURLToPath(new URL('./index.html', import.meta.url)),
-        slideRight: fileURLToPath(
-          new URL('./slide-right/index.html', import.meta.url)
-        )
+        main: 'index.html',
+        slideRight: 'slide-right/index.html'
       }
     }
   }
