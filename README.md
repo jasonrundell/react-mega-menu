@@ -11,16 +11,50 @@ navigation menu with a "Mega Menu"!
 - Supports keyboard navigation and screen readers
 - Responsively designed to adapt to modern mobile and desktop screen sizes
 - Lightly styled with [Emotion](https://emotion.sh)
-- Supports theme customization with vanilla CSS, as demonstrated in the `synthwave.css` theme
+- Supports theme customization with vanilla CSS, as demonstrated in the
+  `synthwave.css` theme
 - Tested and supported on Edge, Safari, Firefox, and Chrome
-- Includes CSS animations that respect the [prefers-reduced-motion](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion) media query for users who prefer reduced motion
-- Includes a demo project using Next.js, showcasing how to integrate the menu with a Next.js application
+- Includes CSS animations that respect the
+  [prefers-reduced-motion](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion)
+  media query for users who prefer reduced motion
+- Includes a demo project using Next.js, showcasing how to integrate the menu
+  with a Next.js application
+
+## Element ids
+
+Every element the menu renders carries a stable `rmm__*` id and class name, so
+existing stylesheets and tests keep working. Passing your own `id` to `Menu`
+changes the ids of the shell and its two inner regions only, and never puts the
+same id on more than one element:
+
+| Element                         | Default id       | With `id="site-menu"` |
+| ------------------------------- | ---------------- | --------------------- |
+| Menu shell (`div.rmm__menu`)    | `rmm__menu`      | `site-menu`           |
+| Off-canvas nav (`nav.rmm__nav`) | `rmm__nav`       | `site-menu__nav`      |
+| Main list (`ul.rmm__nav-list`)  | `rmm__main`      | `site-menu__main`     |
+| Hamburger button                | `rmm__hamburger` | `rmm__hamburger`      |
+
+The Hamburger's `aria-controls` always points at the nav's rendered id, custom
+or default.
 
 ## FAQ
 
-- **What is a "Mega Menu"?** A Mega Menu is a large dropdown navigation menu that displays multiple links and categories at once. It often organizes content into columns or sections, allowing users to see a broader range of options at a glance. It is typically used for websites with a lot of content or categories, like e-commerce or large informational sites.
-- **Why would someone use a Mega Menu?** Mega menus are important for building an online e-commerce presence because they enhance navigation by allowing users to quickly browse and access a wide range of products or categories. They help improve the user experience by organizing complex inventories into clear, accessible sections, reducing the time it takes for customers to find what they're looking for, which can lead to higher engagement and conversion rates.
-- **Can I use this just for a simple website menu?** Yes! This project is designed to be flexible and can be used for any type of website navigation. You can customize the menu to fit your needs, whether you want a simple dropdown menu or a more complex Mega Menu.
+- **What is a "Mega Menu"?** A Mega Menu is a large dropdown navigation menu
+  that displays multiple links and categories at once. It often organizes
+  content into columns or sections, allowing users to see a broader range of
+  options at a glance. It is typically used for websites with a lot of content
+  or categories, like e-commerce or large informational sites.
+- **Why would someone use a Mega Menu?** Mega menus are important for building
+  an online e-commerce presence because they enhance navigation by allowing
+  users to quickly browse and access a wide range of products or categories.
+  They help improve the user experience by organizing complex inventories into
+  clear, accessible sections, reducing the time it takes for customers to find
+  what they're looking for, which can lead to higher engagement and conversion
+  rates.
+- **Can I use this just for a simple website menu?** Yes! This project is
+  designed to be flexible and can be used for any type of website navigation.
+  You can customize the menu to fit your needs, whether you want a simple
+  dropdown menu or a more complex Mega Menu.
 
 ## View Demo
 
@@ -80,17 +114,24 @@ Learn by reading these:
 
 ### How to Test prefers-reduced-motion on Windows 10
 
-1. Press the Win+R keys to open Run, type `SystemPropertiesPerformance.exe` into Run, and click/tap on OK to directly open to the Visual Effects tab in Performance Options.
-2. Check (enable - default) or uncheck (disable) `Animate controls and elements inside windows`.
-3. If you don't see an immediate change, then you can restart the explorer process or sign out and sign in to apply instead.
+1. Press the Win+R keys to open Run, type `SystemPropertiesPerformance.exe` into
+   Run, and click/tap on OK to directly open to the Visual Effects tab in
+   Performance Options.
+2. Check (enable - default) or uncheck (disable)
+   `Animate controls and elements inside windows`.
+3. If you don't see an immediate change, then you can restart the explorer
+   process or sign out and sign in to apply instead.
 
 ### How to Test prefers-reduced-motion on Android
 
 1. Search in your system settings for **Remove Animations** and toggle On/Off,
    or
-2. Go to your system settings > **Accessibility** and look for a toggle to reduce motion or turn off animations
-3. If you have a browser app already open, you'll have to force quit it to have the setting take effect
+2. Go to your system settings > **Accessibility** and look for a toggle to
+   reduce motion or turn off animations
+3. If you have a browser app already open, you'll have to force quit it to have
+   the setting take effect
 
 ## Icons
 
-Icons from the **Free for Web** download pack by [Font Awesome](https://fontawesome.com/download)
+Icons from the **Free for Web** download pack by
+[Font Awesome](https://fontawesome.com/download)

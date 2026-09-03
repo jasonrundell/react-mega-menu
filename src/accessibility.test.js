@@ -137,6 +137,58 @@ const focusWalk = (root) =>
 const getNav = (container) => container.querySelector('#rmm__nav')
 const getHamburger = () => screen.getByRole('button', { name: 'Menu' })
 
+describe('custom `id` prop (#101)', () => {
+  afterEach(cleanup)
+
+  // axe's duplicate-id rules are the regression guard here: before #101 a
+  // custom id was stamped on the shell, the Nav and the main list at once.
+  // Only duplicate-id-aria is on by default in axe-core 4.x; the other two
+  // are deprecated-but-present, so they're switched on explicitly for these
+  // scans to cover ids that nothing references via ARIA as well. Note that
+  // axe files duplicate-id-aria failures under `incomplete` ("needs
+  // review") rather than `violations`, which toHaveNoViolations ignores —
+  // so the gate below checks both buckets for these rules.
+  const duplicateIdRules = [
+    'duplicate-id',
+    'duplicate-id-active',
+    'duplicate-id-aria'
+  ]
+  const rules = {
+    ...axeRules,
+    ...Object.fromEntries(duplicateIdRules.map((id) => [id, { enabled: true }]))
+  }
+  const duplicateIdFindings = (results) =>
+    [...results.violations, ...results.incomplete]
+      .map((rule) => rule.id)
+      .filter((id) => duplicateIdRules.includes(id))
+
+  const renderWithCustomId = () => {
+    setViewportWidth(DESKTOP_WIDTH)
+    return render(<Menu id="site-menu" />)
+  }
+
+  test('a custom id produces no axe violations, including duplicate ids', async () => {
+    const { container } = renderWithCustomId()
+    const results = await axe(container, { rules })
+    expect(results).toHaveNoViolations()
+    expect(duplicateIdFindings(results)).toEqual([])
+    const checked = results.passes.map((rule) => rule.id)
+    duplicateIdRules.forEach((rule) => expect(checked).toContain(rule))
+  })
+
+  test('the scan catches the pre-#101 duplicate-id regression', async () => {
+    const { container } = renderWithCustomId()
+    // Reproduce the old bug: the custom id stamped on both the shell and the
+    // Nav, with the Hamburger's aria-controls pointing at that shared id.
+    container.querySelector('nav').id = 'site-menu'
+    screen
+      .getByRole('button', { name: 'Menu' })
+      .setAttribute('aria-controls', 'site-menu')
+    const results = await axe(container, { rules })
+    expect(duplicateIdFindings(results)).toContain('duplicate-id-aria')
+  })
+})
+
 describe('closed off-canvas nav leaves the tab order at mobile width (#100)', () => {
   afterEach(cleanup)
 

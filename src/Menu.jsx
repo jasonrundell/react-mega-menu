@@ -31,6 +31,20 @@ import MainList from './components/MainList'
 
 const defaultMenuConfig = config
 
+/**
+ * Element ids for one rendered Menu.
+ *
+ * With no `id` the defaults are the stable `rmm__*` ids consumers and
+ * stylesheets already target. With a custom `id` the shell takes it verbatim
+ * and the inner regions derive unique, predictable ids from it
+ * (`<id>__nav`, `<id>__main`), so one `id` prop never lands on more than one
+ * element (#101).
+ */
+export const deriveMenuIds = (id) =>
+  id
+    ? { menu: id, nav: `${id}__nav`, main: `${id}__main` }
+    : { menu: 'rmm__menu', nav: 'rmm__nav', main: 'rmm__main' }
+
 export const Menu = ({
   config = defaultMenuConfig,
   className,
@@ -129,16 +143,16 @@ export const Menu = ({
 
   useOutsideAlerter(wrapperRef) // create bindings for closing menu from outside events
 
-  // Shared between Nav and the Hamburger's aria-controls so the toggle is
-  // always wired to the region it actually expands/collapses.
-  const navId = id || 'rmm__nav'
+  // `ids.nav` is shared between Nav and the Hamburger's aria-controls so the
+  // toggle is always wired to the region it actually expands/collapses.
+  const ids = deriveMenuIds(id)
 
   return (
     <div
       role="navigation"
       ref={wrapperRef}
       {...rest}
-      id={id || 'rmm__menu'}
+      id={ids.menu}
       className={classNames('rmm__menu', className)}
     >
       <TopBar id="rmm__topbar">
@@ -155,21 +169,17 @@ export const Menu = ({
         state={megaMenuState || 'closed'}
         onClick={(e) => toggleMegaMenu(e)}
         id="rmm__hamburger"
-        ariaControls={navId}
+        ariaControls={ids.nav}
       />
       <Nav
-        id={navId}
+        id={ids.nav}
         activeState={megaMenuState || 'closed'}
         isMobile={isMobile}
         ariaLabel="Main Navigation"
         slideDirection={slideDirection}
         className={className}
       >
-        <MainList
-          id={id || 'rmm__main'}
-          ariaLabel="Main Menu"
-          className="rmm__nav-list"
-        >
+        <MainList id={ids.main} ariaLabel="Main Menu" className="rmm__nav-list">
           {config.menu.items.map((item) => {
             if (item.type === MENU_ITEM_TYPE_MEGA) {
               return renderMegaMenuItem(
@@ -213,6 +223,12 @@ Menu.propTypes = {
     })
   }),
   className: PropTypes.string,
+  /**
+   * Id of the menu shell. Defaults to `rmm__menu`, with the Nav and main list
+   * defaulting to `rmm__nav` and `rmm__main`. A custom id is applied to the
+   * shell only; the inner regions derive theirs from it as `<id>__nav` and
+   * `<id>__main`, so the Hamburger's aria-controls always resolves to the Nav.
+   */
   id: PropTypes.string,
   /**
    * Which side the off-canvas nav slides in from on mobile widths.

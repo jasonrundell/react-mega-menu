@@ -152,6 +152,53 @@ describe('Menu component', () => {
     expect(nav).not.toHaveClass('rmm__nav--closed')
   })
 
+  describe('id derivation (#101)', () => {
+    test('with no id prop the default ids are unchanged', () => {
+      const { container } = render(<Menu config={defaultConfig} />)
+      expect(container.querySelector('#rmm__menu')).toBeInTheDocument()
+      expect(container.querySelector('#rmm__nav')).toBeInTheDocument()
+      expect(container.querySelector('#rmm__main')).toBeInTheDocument()
+      expect(container.querySelector('#rmm__hamburger')).toBeInTheDocument()
+    })
+
+    test('with a custom id the shell gets it and the inner regions get derived ids', () => {
+      const { container } = render(
+        <Menu config={defaultConfig} id="site-menu" />
+      )
+      const shell = container.querySelector('#site-menu')
+      const nav = container.querySelector('#site-menu__nav')
+      const main = container.querySelector('#site-menu__main')
+
+      expect(shell).toBeInTheDocument()
+      expect(shell).toHaveClass('rmm__menu')
+      expect(nav).toBeInTheDocument()
+      expect(nav.tagName).toBe('NAV')
+      expect(main).toBeInTheDocument()
+      expect(main.tagName).toBe('UL')
+    })
+
+    test('with a custom id no two elements share an id', () => {
+      const { container } = render(
+        <Menu config={defaultConfig} id="site-menu" />
+      )
+      const ids = Array.from(container.querySelectorAll('[id]')).map(
+        (el) => el.id
+      )
+      const duplicates = ids.filter((id, i) => ids.indexOf(id) !== i)
+      expect(duplicates).toEqual([])
+    })
+
+    test('Hamburger aria-controls follows the derived Nav id', () => {
+      const { container } = render(
+        <Menu config={defaultConfig} id="site-menu" />
+      )
+      const hamburger = container.querySelector('#rmm__hamburger')
+      const nav = container.querySelector('nav')
+      expect(nav.id).toBe('site-menu__nav')
+      expect(hamburger).toHaveAttribute('aria-controls', 'site-menu__nav')
+    })
+  })
+
   test('Hamburger exposes aria-controls pointing at the Nav id', () => {
     const { container } = render(<Menu config={defaultConfig} />)
     const hamburger = container.querySelector('#rmm__hamburger')
