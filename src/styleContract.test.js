@@ -79,6 +79,83 @@ describe('shipped stylesheet contract', () => {
 })
 
 /**
+ * Body of the first top-level `<selector> { ... }` rule in the stylesheet
+ * (the one at column 0, outside any @media block). Rules are flat, so the
+ * first `}` after the opening brace closes it.
+ */
+const firstRuleBody = (css, selector) => {
+  const match = new RegExp(
+    `^${selector.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}(?:,\n[^{]*)? {`,
+    'm'
+  ).exec(css)
+  if (!match) {
+    throw new Error(`No top-level rule for ${selector} in stylesheet`)
+  }
+  const openBrace = css.indexOf('{', match.index)
+  return css.slice(openBrace + 1, css.indexOf('}', openBrace))
+}
+
+describe('panel chrome', () => {
+  // The v2 demo painted the off-canvas nav and the mega / sub panels from
+  // its theme CSS by reaching into Emotion internals; v3 dropped that with
+  // no token to replace it, so panels rendered transparent over page
+  // content. Every panel surface must now paint from --rmm-panel-bg.
+  const resolvedPath = path.resolve(__dirname, '..', styleExport)
+  const css = fs.readFileSync(resolvedPath, 'utf8')
+
+  it.each(['.rmm__nav', '.rmm__mega-list', '.rmm__nav-list--sub'])(
+    '%s paints its background from --rmm-panel-bg',
+    (selector) => {
+      expect(collapse(firstRuleBody(css, selector))).toMatch(
+        /background(?:-color)?: var\(--rmm-panel-bg\)/
+      )
+    }
+  )
+
+  it('no longer positions the hamburger by removed offset tokens', () => {
+    expect(rmmTokens).not.toContain('--rmm-hamburger-top')
+    expect(rmmTokens).not.toContain('--rmm-hamburger-left')
+  })
+})
+
+const collapse = (s) => s.replace(/\s+/g, ' ').trim()
+
+describe('slideDirection applies to every panel', () => {
+  // The mega and sub panels slide over the nav; under a right-sliding nav
+  // they must enter from the right too, or the levels fight each other.
+  const resolvedPath = path.resolve(__dirname, '..', styleExport)
+  const css = fs.readFileSync(resolvedPath, 'utf8')
+
+  it.each([
+    ['.rmm__nav--slide-right .rmm__mega-list--open', 'rmm-slide-open-right'],
+    [
+      '.rmm__nav--slide-right .rmm__mega-list--closed',
+      'rmm-slide-closed-right'
+    ],
+    [
+      '.rmm__nav--slide-right .rmm__nav-list--sub.rmm__nav-list--open',
+      'rmm-slide-open-right'
+    ],
+    [
+      '.rmm__nav--slide-right .rmm__nav-list--sub.rmm__nav-list--closed',
+      'rmm-slide-closed-right'
+    ]
+  ])('%s animates with %s', (selector, keyframes) => {
+    expect(collapse(firstRuleBody(css, selector))).toContain(
+      `animation-name: ${keyframes}`
+    )
+  })
+
+  it('rests right-sliding panels off the right edge', () => {
+    const body = collapse(
+      firstRuleBody(css, '.rmm__nav--slide-right .rmm__mega-list')
+    )
+    expect(body).toContain('left: auto')
+    expect(body).toContain('right: -100%')
+  })
+})
+
+/**
  * Extracts the body of a single `@keyframes <name> { ... }` block from raw
  * CSS text, using brace-depth counting rather than a non-greedy regex, since
  * the block itself contains nested `{ }` pairs (one per keyframe selector)

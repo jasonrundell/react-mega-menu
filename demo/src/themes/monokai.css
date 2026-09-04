@@ -15,4 +15,7 @@
   --rmm-text-muted: #a6a28c;
   --rmm-font-family: 'Fira Code', monospace;
   --rmm-focus-ring: 2px solid #66d9ef;
+  --rmm-panel-bg: #272822;
+  --rmm-panel-border: 1px solid #49483e;
+  --rmm-panel-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }

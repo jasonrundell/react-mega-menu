@@ -1,8 +1,9 @@
 /**
  * "synthwave" — a --rmm-* token-override example. See light.css for the
  * general note on what changed and what was dropped (icon assets, chrome
- * geometry, the neon top/bottom borders on #rmm__nav — no border token
- * exists on the shell besides --rmm-focus-ring).
+ * geometry). The neon borders on #rmm__nav come back through
+ * --rmm-panel-border, which paints the shell bottom and every panel edge,
+ * and the pixel font is stepped down a size so the panels stay readable.
  *
  * --rmm-menu-bg feeds a plain `background:` shorthand in the shipped
  * stylesheet (src/styles/style.css in the package root), so it can hold a
@@ -19,4 +20,9 @@
   --rmm-text-muted: #14ffec;
   --rmm-font-family: 'Press Start 2P', system-ui;
   --rmm-focus-ring: 2px solid #14ffec;
+  --rmm-panel-bg: #1a1740;
+  --rmm-panel-border: 1px solid #ff6ec7;
+  --rmm-panel-shadow: 0 0 24px rgba(255, 110, 199, 0.45);
+  --rmm-nav-item-font-size: 0.8rem;
+  --rmm-description-font-size: 0.6rem;
 }

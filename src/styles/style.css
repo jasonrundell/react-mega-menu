@@ -7,26 +7,34 @@
  *   - Every --rmm-* token below is defined as
  *     var(--topiary-<real-name>, <hardcoded fallback>) (or, where a rule
  *     composes several Topiary primitives — e.g. a focus ring or a border
- *     shorthand — as an expression built entirely from such var() calls).
- *     The fallback is today's pre-migration value, so the menu renders
- *     identically with Topiary's stylesheet absent. See
- *     docs/refactor/topiary-migration.md (Phase 2/3) and
+ *     shorthand — as an expression built entirely from such var() calls, or
+ *     derived from another --rmm-* token). See
+ *     docs/refactor/topiary-migration.md and
  *     docs/refactor/topiary-gap-report.md for the real Topiary 4.1.0 token
  *     names this file relies on.
  *   - Every declared token must be consumed by at least one rule in this
  *     file (enforced by src/styleContract.test.js) — no token exists purely
- *     for documentation. Panel chrome (a background, border, shadow, or
- *     radius on the mega/sub-menu panel) is deliberately NOT painted: the
- *     pre-migration Emotion styles never set one either, so this preserves
- *     the original appearance rather than adding new decoration. Giving the
- *     panel real chrome is an open design question left to a later ticket.
+ *     for documentation.
+ *   - Panel chrome: the off-canvas nav and every mega / sub panel paint a
+ *     background from --rmm-panel-bg, with a border and shadow from
+ *     --rmm-panel-border / --rmm-panel-shadow. Pre-v3 that chrome came from
+ *     the demo's theme CSS reaching into Emotion internals; the shipped
+ *     stylesheet now owns it (also enforced by src/styleContract.test.js).
  *   - The large-breakpoint media queries below use the literal placeholder
  *     __RMM_BP_LARGE__ in place of a length (e.g. "(min-width: __RMM_BP_LARGE__)").
  *     Custom properties cannot drive @media conditions, so this placeholder
  *     is substituted at build time (Vite plugin, see vite.config.js) with
  *     the value from src/config/breakpoints.js — the single source of truth
- *     shared with the JS mobile-detection check in Menu.jsx. See Step 5 of
- *     the migration ticket (#94) for the full mechanism.
+ *     shared with the JS mobile-detection check in Menu.jsx.
+ *
+ * Layout:
+ *   - Below the large breakpoint the shell is a single top bar (logo, title,
+ *     hamburger). The nav is an off-canvas panel below it; mega and sub
+ *     panels slide over the nav full-width, each with a "back" heading row.
+ *   - At the large breakpoint the top bar and the main list share one row
+ *     inside the shell, and each mega panel drops down full-width beneath it
+ *     as a grid of columns. Sub lists render inline inside their column and
+ *     the mobile-only "back" heading rows are hidden.
  */
 
 .rmm__menu {
@@ -39,29 +47,30 @@
   --rmm-focus-ring: var(--topiary-borderWidth-thick, 2px) solid
     var(--topiary-color-focus, currentColor);
 
+  /* Panel chrome (off-canvas nav, mega and sub panels) */
+  --rmm-panel-bg: var(--topiary-color-surface, #fefefe);
+  --rmm-panel-border: var(--topiary-borderWidth-hairline, 1px) solid
+    var(--topiary-color-border, #d9d9d9);
+  --rmm-panel-shadow: var(--topiary-shadow-lg, 0 8px 24px rgba(0, 0, 0, 0.12));
+  --rmm-panel-padding: var(--topiary-space-lg, 1.5rem);
+  --rmm-link-radius: var(--topiary-radius-md, 3px);
+  --rmm-icon-stroke: var(--topiary-borderWidth-thin, 2px);
+
   /* Stacking order */
   --rmm-menu-z: var(--topiary-zIndex-nav, 9000);
   --rmm-panel-z: var(--topiary-zIndex-overlay, 2);
   --rmm-list-z: var(--topiary-zIndex-base, 1);
 
   /* Structural sizing — no 1:1 Topiary analog, so these route through the
-     space scale via calc() to stay token-driven while the fallback keeps
-     today's exact pixel geometry. */
-  --rmm-menu-height: calc(var(--topiary-space-3xl, 4rem) * 2);
+     space scale via calc() to stay token-driven. */
+  --rmm-menu-height: var(--rmm-topbar-height);
   --rmm-menu-height-large: var(--topiary-space-3xl, 4rem);
   --rmm-topbar-height: var(--topiary-space-3xl, 4rem);
+  --rmm-gutter: var(--topiary-space-lg, 1.5rem);
+  --rmm-column-min-width: calc(var(--topiary-space-3xl, 4rem) * 3);
   --rmm-logo-height: var(--topiary-space-xl, 2rem);
   --rmm-hamburger-width: var(--topiary-space-xl, 2rem);
   --rmm-hamburger-height: var(--topiary-space-lg, 1.25rem);
-  /* Derived from --rmm-topbar-height (not an independent space-scale guess):
-     positioning the hamburger by an unrelated token risked it landing
-     *above* the topbar's bottom edge in a theme whose space scale runs
-     small relative to its own topbar height — confirmed visually in the
-     harness (Step 8) with real Topiary tokens loaded. Deriving it from the
-     same height token the topbar itself uses guarantees clearance in every
-     theme by construction. */
-  --rmm-hamburger-top: calc(var(--rmm-topbar-height) + var(--rmm-space-md));
-  --rmm-hamburger-left: var(--topiary-space-md, 1rem);
 
   /* Generic spacing scale */
   --rmm-space-xs: var(--topiary-space-2xs, 0.25rem);
@@ -71,6 +80,7 @@
 
   /* Typography */
   --rmm-font-family: var(--topiary-font-body, inherit);
+  --rmm-line-height: var(--topiary-lineHeight-normal, 1.5);
   --rmm-title-font-size: var(--topiary-fontSize-xl, 1.5rem);
   --rmm-nav-item-font-size: var(--topiary-fontSize-md, 1rem);
   --rmm-description-font-size: var(--topiary-fontSize-xs, 0.75rem);
@@ -87,299 +97,105 @@
   );
 }
 
-/* Menu shell — fixed top bar + off-canvas nav container */
+/* Menu shell — fixed top bar; the off-canvas nav hangs below it on mobile
+   and sits inline with the top bar at the large breakpoint. */
 .rmm__menu {
   position: fixed;
   top: 0;
   left: 0;
+  box-sizing: border-box;
   height: var(--rmm-menu-height);
   display: flex;
-  justify-content: flex-start;
-  align-content: center;
+  align-items: center;
   flex-direction: row;
   width: 100%;
+  padding: 0 var(--rmm-gutter);
   z-index: var(--rmm-menu-z);
   background: var(--rmm-menu-bg);
   color: var(--rmm-menu-text);
   font-family: var(--rmm-font-family);
+  line-height: var(--rmm-line-height);
+  border-bottom: var(--rmm-panel-border);
+}
+
+.rmm__menu *,
+.rmm__menu *::before,
+.rmm__menu *::after {
+  box-sizing: border-box;
 }
 
 @media (min-width: __RMM_BP_LARGE__) {
   .rmm__menu {
     height: var(--rmm-menu-height-large);
+    gap: var(--rmm-space-xl);
   }
 }
 
-/* TopBar — logo + title strip, fixed to the top of the menu shell */
+/* TopBar — logo + title strip */
 .rmm__topbar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
   height: var(--rmm-topbar-height);
+  flex: 1 1 auto;
+  min-width: 0;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
+  gap: var(--rmm-space-sm);
   overflow: hidden;
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__topbar {
+    flex: 0 0 auto;
+  }
 }
 
 /* TopBarTitle (Topiary Heading atom). Two-class specificity so this wins
    over Heading's own font-size variant class regardless of import order. */
 .rmm__menu .rmm__title {
   font-size: var(--rmm-title-font-size);
+  color: var(--rmm-menu-text);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Logo */
 .rmm__logo {
-  display: flex;
-  position: relative;
+  display: block;
+  flex: 0 0 auto;
   height: var(--rmm-logo-height);
-  margin-right: var(--rmm-space-md);
 }
 
-/* MainList (top-level item bar) and NavList's default/non-dropdown shape
-   share identical geometry today, so both are driven by the single
-   .rmm__nav-list class the caller already applies to each (see
-   src/helpers/menu.jsx and Menu.jsx). */
-.rmm__nav-list {
-  z-index: var(--rmm-list-z);
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-content: center;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: calc(100vh - var(--rmm-topbar-height));
-}
-
-@media (min-width: __RMM_BP_LARGE__) {
-  .rmm__nav-list {
-    flex-direction: row;
-    height: var(--rmm-topbar-height);
-  }
-
-  .rmm__nav-list li:first-of-type {
-    margin-left: 0;
-  }
-}
-
-/* NavList rendered as a nested sub-menu dropdown (type="sub") — full-screen
-   overlay on mobile, static inline list on large screens. */
-.rmm__nav-list--sub {
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: calc(100vh - var(--rmm-topbar-height));
-  display: flex;
-  flex-direction: column;
-  z-index: var(--rmm-panel-z);
-}
-
-@media (min-width: __RMM_BP_LARGE__) {
-  .rmm__nav-list--sub {
-    animation: none;
-    display: flex;
-    position: static;
-    top: 0;
-    left: 0;
-    opacity: 1;
-    height: auto;
-  }
-}
-
-.rmm__nav-list--sub.rmm__nav-list--open {
-  animation-duration: var(--rmm-motion-duration);
-  animation-fill-mode: both;
-  animation-name: rmm-slide-open;
-  animation-iteration-count: 1;
-}
-
-.rmm__nav-list--sub.rmm__nav-list--closed {
-  animation-duration: var(--rmm-motion-duration);
-  animation-fill-mode: both;
-  animation-name: rmm-slide-closed;
-  animation-iteration-count: 1;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .rmm__nav-list--sub.rmm__nav-list--open,
-  .rmm__nav-list--sub.rmm__nav-list--closed {
-    animation: none;
-  }
-
-  .rmm__nav-list--sub.rmm__nav-list--open {
-    transform: translate3d(100%, 0, 0);
-  }
-
-  .rmm__nav-list--sub.rmm__nav-list--closed {
-    transform: translate3d(-100%, 0, 0);
-  }
-}
-
-@media (min-width: __RMM_BP_LARGE__) {
-  .rmm__nav-list--sub.rmm__nav-list--open,
-  .rmm__nav-list--sub.rmm__nav-list--closed {
-    animation: none;
-    display: flex;
-    opacity: 1;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .rmm__nav-list--sub.rmm__nav-list--open,
-    .rmm__nav-list--sub.rmm__nav-list--closed {
-      transform: none;
-    }
-  }
-}
-
-/* MegaList — the top-level mega panel, one per top-nav "mega" item */
-.rmm__mega-list {
-  position: absolute;
-  z-index: var(--rmm-panel-z);
-  top: 0;
-  left: -100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-content: center;
-  width: 100%;
-  height: calc(100vh - var(--rmm-topbar-height));
-  margin: 0;
-  padding: 0;
-}
-
-@media (min-width: __RMM_BP_LARGE__) {
-  .rmm__mega-list {
-    position: absolute;
-    left: 0;
-    top: var(--rmm-topbar-height);
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: auto;
-    opacity: 0;
-  }
-}
-
-.rmm__mega-list--open {
-  animation-duration: var(--rmm-motion-duration);
-  animation-fill-mode: both;
-  animation-name: rmm-slide-open;
-  animation-iteration-count: 1;
-}
-
-.rmm__mega-list--closed {
-  animation-duration: var(--rmm-motion-duration);
-  animation-fill-mode: both;
-  animation-name: rmm-slide-closed;
-  animation-iteration-count: 1;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .rmm__mega-list--open,
-  .rmm__mega-list--closed {
-    animation: none;
-  }
-
-  .rmm__mega-list--open {
-    transform: translate3d(100%, 0, 0);
-  }
-
-  .rmm__mega-list--closed {
-    transform: translate3d(-100%, 0, 0);
-  }
-}
-
-@media (min-width: __RMM_BP_LARGE__) {
-  .rmm__mega-list--open {
-    animation: none;
-    display: flex;
-    opacity: 1;
-  }
-
-  .rmm__mega-list--closed {
-    animation: none;
-    display: none;
-    opacity: 0;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .rmm__mega-list--open,
-    .rmm__mega-list--closed {
-      transform: none;
-    }
-  }
-}
-
-/* Shared slide keyframes (slide-in-from-the-left direction). Nav's
-   rmm__nav--slide-left modifier reuses these same two keyframes. */
-@keyframes rmm-slide-open {
-  from {
-    transform: translate3d(-100%, 0, 0);
-  }
-  to {
-    transform: translate3d(100%, 0, 0);
-  }
-}
-
-@keyframes rmm-slide-closed {
-  from {
-    transform: translate3d(100%, 0, 0);
-  }
-  to {
-    transform: translate3d(-100%, 0, 0);
-  }
-}
-
-/* Mirror-image keyframes for Nav's rmm__nav--slide-right modifier
-   (issue #64 — configurable slide direction). Only Nav supports a
-   direction choice; the mega/sub panels above always use the left-slide
-   keyframes, matching their pre-migration behavior. */
-@keyframes rmm-slide-open-right {
-  from {
-    transform: translate3d(100%, 0, 0);
-  }
-  to {
-    transform: translate3d(-100%, 0, 0);
-  }
-}
-
-@keyframes rmm-slide-closed-right {
-  from {
-    transform: translate3d(-100%, 0, 0);
-  }
-  to {
-    transform: translate3d(100%, 0, 0);
-  }
-}
-
-/* Nav — the off-canvas panel holding the top-level MainList */
+/* Nav — the off-canvas panel holding the top-level MainList on mobile; an
+   inline flex child of the shell at the large breakpoint. */
 .rmm__nav {
   position: absolute;
   top: var(--rmm-menu-height);
   left: -100%;
   width: 100%;
-  height: calc(100vh - var(--rmm-topbar-height));
+  height: calc(100vh - var(--rmm-menu-height));
+  height: calc(100dvh - var(--rmm-menu-height));
   display: flex;
   flex-direction: column;
   margin: 0;
   padding: 0;
-  overflow-y: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: var(--rmm-panel-bg);
+  color: var(--rmm-menu-text);
 }
 
 @media (min-width: __RMM_BP_LARGE__) {
   .rmm__nav {
-    top: var(--rmm-menu-height-large);
-    left: 0;
-    height: var(--rmm-menu-height-large);
+    position: static;
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 100%;
     flex-direction: row;
-    overflow-y: initial;
+    overflow: visible;
+    background: transparent;
   }
 }
 
@@ -390,7 +206,7 @@
 
 @media (min-width: __RMM_BP_LARGE__) {
   .rmm__nav--slide-right {
-    left: 0;
+    left: auto;
     right: auto;
   }
 }
@@ -477,78 +293,398 @@
   }
 }
 
+/* MainList (top-level item bar) and NavList's default/non-dropdown shape
+   share identical geometry today, so both are driven by the single
+   .rmm__nav-list class the caller already applies to each (see
+   src/helpers/menu.jsx and Menu.jsx). On mobile it is the base layer the
+   mega / sub panels slide over. */
+.rmm__nav-list {
+  z-index: var(--rmm-list-z);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0;
+  padding: var(--rmm-space-md) var(--rmm-gutter);
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__nav-list {
+    position: static;
+    flex-direction: row;
+    align-items: stretch;
+    gap: var(--rmm-space-xs);
+    padding: 0;
+    height: 100%;
+  }
+}
+
+/* NavList rendered as a nested sub-menu dropdown (type="sub") — full-screen
+   overlay on mobile, static inline list on large screens. */
+.rmm__nav-list--sub {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  z-index: var(--rmm-panel-z);
+  overflow-y: auto;
+  background: var(--rmm-panel-bg);
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__nav-list--sub {
+    animation: none;
+    display: flex;
+    position: static;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    background: transparent;
+  }
+}
+
+.rmm__nav-list--sub.rmm__nav-list--open {
+  animation-duration: var(--rmm-motion-duration);
+  animation-fill-mode: both;
+  animation-name: rmm-slide-open;
+  animation-iteration-count: 1;
+}
+
+.rmm__nav-list--sub.rmm__nav-list--closed {
+  animation-duration: var(--rmm-motion-duration);
+  animation-fill-mode: both;
+  animation-name: rmm-slide-closed;
+  animation-iteration-count: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rmm__nav-list--sub.rmm__nav-list--open,
+  .rmm__nav-list--sub.rmm__nav-list--closed {
+    animation: none;
+  }
+
+  .rmm__nav-list--sub.rmm__nav-list--open {
+    transform: translate3d(100%, 0, 0);
+  }
+
+  .rmm__nav-list--sub.rmm__nav-list--closed {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__nav-list--sub.rmm__nav-list--open,
+  .rmm__nav-list--sub.rmm__nav-list--closed {
+    animation: none;
+    display: flex;
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rmm__nav-list--sub.rmm__nav-list--open,
+    .rmm__nav-list--sub.rmm__nav-list--closed {
+      transform: none;
+    }
+  }
+}
+
+/* MegaList — the top-level mega panel, one per top-nav "mega" item. A
+   full-width overlay on mobile; a full-width dropdown grid of columns
+   beneath the shell at the large breakpoint.
+
+   At the large breakpoint its containing block must be the fixed shell
+   (.rmm__menu) so `top: 100%` / `left: 0` / `width: 100%` span the full
+   bar: .rmm__main-nav-item, .rmm__nav-list and .rmm__nav are all left (or
+   explicitly set) `position: static` there. A stray `position: relative`
+   on any of them would silently shrink the panel to that ancestor. */
+.rmm__mega-list {
+  position: absolute;
+  z-index: var(--rmm-panel-z);
+  top: 0;
+  left: -100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: var(--rmm-space-md) var(--rmm-gutter);
+  overflow-y: auto;
+  background: var(--rmm-panel-bg);
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__mega-list {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(var(--rmm-column-min-width), 1fr)
+    );
+    column-gap: var(--rmm-space-xl);
+    row-gap: var(--rmm-space-md);
+    align-items: start;
+    width: 100%;
+    height: auto;
+    max-height: calc(100vh - var(--rmm-menu-height-large));
+    max-height: calc(100dvh - var(--rmm-menu-height-large));
+    padding: var(--rmm-panel-padding) var(--rmm-gutter);
+    opacity: 0;
+    border-bottom: var(--rmm-panel-border);
+    box-shadow: var(--rmm-panel-shadow);
+  }
+}
+
+.rmm__mega-list--open {
+  animation-duration: var(--rmm-motion-duration);
+  animation-fill-mode: both;
+  animation-name: rmm-slide-open;
+  animation-iteration-count: 1;
+}
+
+.rmm__mega-list--closed {
+  animation-duration: var(--rmm-motion-duration);
+  animation-fill-mode: both;
+  animation-name: rmm-slide-closed;
+  animation-iteration-count: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rmm__mega-list--open,
+  .rmm__mega-list--closed {
+    animation: none;
+  }
+
+  .rmm__mega-list--open {
+    transform: translate3d(100%, 0, 0);
+  }
+
+  .rmm__mega-list--closed {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__mega-list--open {
+    animation: none;
+    display: grid;
+    opacity: 1;
+  }
+
+  .rmm__mega-list--closed {
+    animation: none;
+    display: none;
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rmm__mega-list--open,
+    .rmm__mega-list--closed {
+      transform: none;
+    }
+  }
+}
+
+/* Shared slide keyframes (slide-in-from-the-left direction). Nav's
+   rmm__nav--slide-left modifier reuses these same two keyframes. */
+@keyframes rmm-slide-open {
+  from {
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@keyframes rmm-slide-closed {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+/* Mirror-image keyframes for the rmm__nav--slide-right modifier (issue
+   #64 — configurable slide direction). The mega / sub panels inside a
+   right-sliding nav reuse them too (see "slideDirection for every panel"
+   below), so every level enters from the same side. */
+@keyframes rmm-slide-open-right {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes rmm-slide-closed-right {
+  from {
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+/* slideDirection for every panel — the mega and sub panels slide over the
+   nav, so under rmm__nav--slide-right they rest off the right edge and use
+   the mirror-image keyframes. Each selector carries one more class than the
+   left-slide rule it overrides so it wins on specificity; the reduced-motion
+   and large-breakpoint blocks below repeat that so they keep winning there. */
+.rmm__nav--slide-right .rmm__mega-list,
+.rmm__nav--slide-right .rmm__nav-list--sub {
+  left: auto;
+  right: -100%;
+}
+
+.rmm__nav--slide-right .rmm__mega-list--open,
+.rmm__nav--slide-right .rmm__nav-list--sub.rmm__nav-list--open {
+  animation-name: rmm-slide-open-right;
+}
+
+.rmm__nav--slide-right .rmm__mega-list--closed,
+.rmm__nav--slide-right .rmm__nav-list--sub.rmm__nav-list--closed {
+  animation-name: rmm-slide-closed-right;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rmm__nav--slide-right .rmm__mega-list--open,
+  .rmm__nav--slide-right .rmm__mega-list--closed,
+  .rmm__nav--slide-right .rmm__nav-list--sub.rmm__nav-list--open,
+  .rmm__nav--slide-right .rmm__nav-list--sub.rmm__nav-list--closed {
+    animation: none;
+  }
+
+  .rmm__nav--slide-right .rmm__mega-list--open,
+  .rmm__nav--slide-right .rmm__nav-list--sub.rmm__nav-list--open {
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  .rmm__nav--slide-right .rmm__mega-list--closed,
+  .rmm__nav--slide-right .rmm__nav-list--sub.rmm__nav-list--closed {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__nav--slide-right .rmm__mega-list,
+  .rmm__nav--slide-right .rmm__nav-list--sub {
+    left: 0;
+    right: auto;
+  }
+
+  .rmm__nav--slide-right .rmm__mega-list--open,
+  .rmm__nav--slide-right .rmm__mega-list--closed,
+  .rmm__nav--slide-right .rmm__nav-list--sub.rmm__nav-list--open,
+  .rmm__nav--slide-right .rmm__nav-list--sub.rmm__nav-list--closed {
+    animation: none;
+    transform: none;
+  }
+}
+
 /* MainNavItem — top-level <li> */
 .rmm__main-nav-item {
   list-style: none;
-  margin-top: 0;
-  margin-right: 0;
-  margin-bottom: var(--rmm-space-md);
-  margin-left: 0;
+  margin: 0 0 var(--rmm-space-xs);
+  padding: 0;
 }
 
 @media (min-width: __RMM_BP_LARGE__) {
   .rmm__main-nav-item {
     display: flex;
-    flex-direction: column;
-    height: auto;
-    margin-top: 0;
-    margin-right: 0;
-    margin-bottom: 0;
-    margin-left: var(--rmm-space-xl);
     align-items: center;
+    height: auto;
+    margin: 0;
   }
 }
 
 /* NavItem — nested <li>, inside a mega/sub panel */
 .rmm__nav-item {
   list-style: none;
-  margin-top: 0;
-  margin-right: 0;
-  margin-bottom: var(--rmm-space-md);
-  margin-left: 0;
+  margin: 0 0 var(--rmm-space-xs);
+  padding: 0;
+  min-width: 0;
 }
 
 @media (min-width: __RMM_BP_LARGE__) {
   .rmm__nav-item {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     justify-content: flex-start;
     height: auto;
-    margin-top: 0;
-    margin-bottom: 0;
+    margin: 0;
+  }
+}
+
+/* The mobile-only "back" heading row that opens each mega / sub panel */
+.rmm__nav-item--heading {
+  margin: 0 0 var(--rmm-space-sm);
+  padding: 0 0 var(--rmm-space-sm);
+  border-bottom: var(--rmm-panel-border);
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__nav-item--heading {
+    display: none;
   }
 }
 
 /* NavItemDescription */
 .rmm__nav-item-description {
   font-size: var(--rmm-description-font-size);
+  line-height: var(--rmm-line-height);
   color: var(--rmm-text-muted);
-  margin-bottom: var(--rmm-space-md);
+  margin: 0 0 var(--rmm-space-sm);
+  padding: 0 var(--rmm-space-sm);
 }
 
 /* NavItemLink / MainNavItemLink (Topiary Link atom). Layout doesn't fight
    Link's own compiled class (it carries no layout rules), so a single class
-   is enough there; color/hover/focus DO fight it, so those use the
-   .rmm__menu .rmm__<x> two-class pattern to win regardless of import order. */
-.rmm__nav-item-link {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  position: relative;
-  margin-bottom: var(--rmm-space-md);
-}
-
+   is enough there; color/hover/focus/decoration DO fight it, so those use
+   the .rmm__menu .rmm__<x> two-class pattern to win regardless of import
+   order. */
+.rmm__nav-item-link,
 .rmm__main-nav-item-link {
   width: 100%;
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rmm-space-sm);
   position: relative;
+  padding: var(--rmm-space-sm) var(--rmm-space-md);
+  border-radius: var(--rmm-link-radius);
+}
+
+.rmm__nav-item-link {
+  padding: var(--rmm-space-xs) var(--rmm-space-sm);
 }
 
 @media (min-width: __RMM_BP_LARGE__) {
   .rmm__main-nav-item-link {
-    align-items: center;
-    height: var(--rmm-topbar-height);
+    width: auto;
+    justify-content: center;
+    white-space: nowrap;
+  }
+
+  /* Direct children of a mega panel are its column headings */
+  .rmm__mega-list > .rmm__nav-item > .rmm__nav-item-link {
+    font-weight: var(--rmm-font-weight-bold);
   }
 }
 
@@ -556,29 +692,72 @@
 .rmm__menu .rmm__main-nav-item-link {
   color: var(--rmm-link-color);
   font-size: var(--rmm-nav-item-font-size);
+  line-height: var(--rmm-line-height);
+  text-decoration: none;
+  transition: background-color var(--rmm-hamburger-slice-transition-duration)
+    var(--rmm-motion-easing);
 }
 
+/* The :has() branch keeps a mega link highlighted while its panel is open.
+   It is an enhancement only: where :has() is unsupported the chevron still
+   flips and the panel still opens, the link just loses its resting tint. */
 .rmm__menu .rmm__nav-item-link:hover,
 .rmm__menu .rmm__nav-item-link:focus-visible,
 .rmm__menu .rmm__main-nav-item-link:hover,
-.rmm__menu .rmm__main-nav-item-link:focus-visible {
+.rmm__menu .rmm__main-nav-item-link:focus-visible,
+.rmm__menu .rmm__main-nav-item-link:has(.rmm__main-nav-item-link--icon.active) {
   background-color: var(--rmm-link-hover-bg);
+  text-decoration: none;
 }
 
 .rmm__menu .rmm__nav-item-link:focus-visible,
 .rmm__menu .rmm__main-nav-item-link:focus-visible {
   outline: var(--rmm-focus-ring);
+  outline-offset: 0;
 }
 
-/* isActive rotate — carried over verbatim from the pre-migration Emotion
-   rule. It has no visible effect (no `content` is set on ::after, so no
-   pseudo-element box is generated) and no current caller ever sets
-   isActive on NavItemLink; preserved as-is rather than "fixed" as part of
-   a styling-parity migration. */
+/* Chevrons — drawn from two borders so no icon assets ship. The main
+   "mega" link carries a real <span class="rmm__main-nav-item-link--icon">;
+   forward / back nav item links draw theirs as pseudo-elements. */
+.rmm__main-nav-item-link--icon,
+.rmm__nav-item-link--forward::after,
+.rmm__nav-item-link--back::before {
+  content: '';
+  display: inline-block;
+  flex: 0 0 auto;
+  width: var(--rmm-space-sm);
+  height: var(--rmm-space-sm);
+  border-right: var(--rmm-icon-stroke) solid currentColor;
+  border-bottom: var(--rmm-icon-stroke) solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform var(--rmm-hamburger-slice-transition-duration)
+    var(--rmm-motion-easing);
+}
+
+.rmm__nav-item-link--back::before {
+  transform: rotate(135deg);
+}
+
+/* Heading links carry a "back" chevron: keep the label beside it */
+.rmm__nav-item--heading .rmm__nav-item-link {
+  justify-content: flex-start;
+  font-weight: var(--rmm-font-weight-bold);
+}
+
 @media (min-width: __RMM_BP_LARGE__) {
-  .rmm__nav-item-link--active::after {
-    transform: rotate(180deg);
-    top: 0;
+  /* Top-level mega links point down, and up while their panel is open */
+  .rmm__main-nav-item-link--icon {
+    transform: translateY(calc(-1 * var(--rmm-space-xs) / 2)) rotate(45deg);
+  }
+
+  .rmm__main-nav-item-link--icon.active {
+    transform: translateY(calc(var(--rmm-space-xs) / 2)) rotate(225deg);
+  }
+
+  /* Sub lists render inline at this width, so a forward chevron would
+     point at nothing */
+  .rmm__nav-item-link--forward::after {
+    display: none;
   }
 }
 
@@ -590,19 +769,19 @@
    to strip. */
 .rmm__menu .rmm__hamburger {
   transition: var(--rmm-hamburger-transition-duration) var(--rmm-motion-easing);
-  position: absolute;
-  top: var(--rmm-hamburger-top);
-  left: var(--rmm-hamburger-left);
+  flex: 0 0 auto;
+  height: var(--rmm-topbar-height);
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  gap: 0;
+  gap: var(--rmm-space-sm);
   padding: 0;
-  margin: 0;
+  margin: 0 0 0 var(--rmm-space-sm);
   border: none;
   border-radius: 0;
   box-shadow: none;
   background: transparent;
+  color: var(--rmm-menu-text);
   cursor: pointer;
 }
 
@@ -636,6 +815,7 @@
   transition: var(--rmm-hamburger-slice-transition-duration)
     var(--rmm-motion-easing);
   background-color: var(--rmm-menu-text);
+  border-radius: var(--rmm-link-radius);
 }
 
 .rmm__hamburger--slice:nth-of-type(1) {

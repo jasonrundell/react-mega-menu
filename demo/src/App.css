@@ -11,16 +11,18 @@
   background: var(--topiary-color-background, #fafaf9);
   color: var(--topiary-color-text, #0a0a0b);
   font-family: var(--topiary-font-body, system-ui, sans-serif);
+  line-height: var(--topiary-lineHeight-normal, 1.55);
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .demo-content {
-  /* Clears the menu's fixed shell (--rmm-menu-height / -large in
-     src/styles/style.css) with room to spare across every theme's
-     topbar height. */
-  margin-top: 10rem;
-  padding: 0 2rem 4rem;
-  max-width: 60rem;
+  /* Top padding clears the menu's fixed shell (one top bar tall at every
+     width; --rmm-topbar-height defaults to --topiary-space-3xl) and adds
+     --topiary-space-2xl of breathing room below it. */
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: calc(var(--topiary-space-3xl, 4rem) + var(--topiary-space-2xl, 3rem))
+    var(--topiary-space-lg, 1.5rem) var(--topiary-space-3xl, 4rem);
 }
 
 .demo-content a {
@@ -29,48 +31,140 @@
 
 .demo-content code {
   font-family: var(--topiary-font-mono, monospace);
+  font-size: 0.9em;
   background: var(--topiary-color-surfaceAlt, #f5f5f4);
   padding: 0.1rem 0.3rem;
   border-radius: var(--topiary-radius-sm, 2px);
 }
 
+/* Hero */
+.demo-hero {
+  margin-bottom: var(--topiary-space-2xl, 3rem);
+}
+
+.demo-hero h1 {
+  font-family: var(--topiary-font-heading, inherit);
+  font-weight: var(--topiary-fontWeight-heading, 600);
+  font-size: var(--topiary-fontSize-3xl, 2.25rem);
+  letter-spacing: var(--topiary-letterSpacing-heading, 0);
+  line-height: var(--topiary-lineHeight-tight, 1.2);
+  margin: 0 0 var(--topiary-space-md, 1rem);
+}
+
+.demo-lead {
+  font-size: var(--topiary-fontSize-lg, 1.125rem);
+  color: var(--topiary-color-textMuted, #57534e);
+  max-width: 40rem;
+  margin: 0 0 var(--topiary-space-lg, 1.5rem);
+}
+
+/* The live prop readout: a monospace pill */
 .demo-status {
   display: inline-block;
   font-family: var(--topiary-font-mono, monospace);
   font-size: var(--topiary-fontSize-sm, 0.875rem);
-  padding: 0.75rem 1rem;
-  border: var(--topiary-borderWidth-thin, 1px) solid
+  padding: var(--topiary-space-2xs, 0.25rem) var(--topiary-space-sm, 0.75rem);
+  border: var(--topiary-borderWidth-hairline, 1px) solid
     var(--topiary-color-border, #969492);
-  border-radius: var(--topiary-radius-md, 3px);
+  border-radius: var(--topiary-radius-full, 9999px);
   background: var(--topiary-color-surface, #fff);
+  color: var(--topiary-color-textMuted, #57534e);
 }
 
+/* Feature grid */
+.demo-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--topiary-space-sm, 0.75rem);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.demo-features li {
+  position: relative;
+  padding: var(--topiary-space-sm, 0.75rem) var(--topiary-space-md, 1rem)
+    var(--topiary-space-sm, 0.75rem) var(--topiary-space-xl, 2rem);
+  background: var(--topiary-color-surfaceAlt, #f5f5f4);
+  border-radius: var(--topiary-radius-md, 3px);
+  font-size: var(--topiary-fontSize-sm, 0.875rem);
+}
+
+.demo-features li::before {
+  content: '';
+  position: absolute;
+  left: var(--topiary-space-md, 1rem);
+  top: calc(var(--topiary-space-sm, 0.75rem) + 0.45em);
+  width: 0.55em;
+  height: 0.3em;
+  border-left: 2px solid var(--topiary-color-accent, #0f766e);
+  border-bottom: 2px solid var(--topiary-color-accent, #0f766e);
+  transform: rotate(-45deg);
+}
+
+/* Sections as cards */
 .demo-section {
-  margin: 2rem 0;
+  margin: 0 0 var(--topiary-space-lg, 1.5rem);
+  padding: var(--topiary-space-lg, 1.5rem);
+  background: var(--topiary-color-surface, #fff);
+  border: var(--topiary-borderWidth-hairline, 1px) solid
+    var(--topiary-color-border, #969492);
+  border-radius: var(--topiary-radius-lg, 4px);
+  box-shadow: var(--topiary-shadow-sm, none);
 }
 
+.demo-section h2 {
+  font-family: var(--topiary-font-heading, inherit);
+  font-weight: var(--topiary-fontWeight-heading, 600);
+  font-size: var(--topiary-fontSize-xl, 1.375rem);
+  letter-spacing: var(--topiary-letterSpacing-heading, 0);
+  line-height: var(--topiary-lineHeight-tight, 1.2);
+  margin: 0 0 var(--topiary-space-sm, 0.75rem);
+}
+
+.demo-section p {
+  margin: 0 0 var(--topiary-space-md, 1rem);
+}
+
+.demo-section p:last-child {
+  margin-bottom: 0;
+}
+
+.demo-note {
+  font-size: var(--topiary-fontSize-sm, 0.875rem);
+  color: var(--topiary-color-textMuted, #57534e);
+}
+
+/* Buttons */
 .demo-button-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--topiary-space-xs, 0.5rem);
   padding: 0;
-  margin: 0.75rem 0;
+  margin: 0 0 var(--topiary-space-md, 1rem);
   list-style: none;
 }
 
-.demo-button-group button {
+.demo-button-group button,
+.demo-button {
   font: inherit;
+  font-weight: var(--topiary-fontWeight-medium, 500);
   cursor: pointer;
-  padding: 0.5rem 1rem;
+  padding: var(--topiary-space-xs, 0.5rem) var(--topiary-space-md, 1rem);
   border: var(--topiary-borderWidth-thin, 1px) solid
     var(--topiary-color-border, #969492);
   border-radius: var(--topiary-radius-md, 3px);
   background: var(--topiary-color-surface, #fff);
   color: var(--topiary-color-text, #0a0a0b);
+  box-shadow: var(--topiary-shadow-sm, none);
+  transition: background-color var(--topiary-duration-fast, 90ms) ease,
+    box-shadow var(--topiary-duration-fast, 90ms) ease;
 }
 
-.demo-button-group button:hover {
+.demo-button-group button:hover,
+.demo-button:hover {
   background: var(--topiary-color-surfaceAlt, #f5f5f4);
+  box-shadow: var(--topiary-shadow-md, none);
 }
 
 .demo-button-group button[aria-pressed='true'] {
@@ -79,7 +173,8 @@
   border-color: var(--topiary-color-primary, #c2410c);
 }
 
-.demo-button-group button:focus-visible {
+.demo-button-group button:focus-visible,
+.demo-button:focus-visible {
   outline: var(--topiary-borderWidth-thick, 2px) solid
     var(--topiary-color-focus, #0369a1);
   outline-offset: 2px;

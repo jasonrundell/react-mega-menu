@@ -330,9 +330,22 @@ const menuConfig: MenuConfigShape = {
   }
 }
 
-function App() {
+type SlideDirection = 'left' | 'right'
+
+type AppProps = {
+  /**
+   * The slideDirection the page starts on. `/` starts on 'left' (the prop's
+   * default) and `/slide-right/` starts on 'right' — two entries of the same
+   * app (see vite.config.ts) so each side has a sharable page.
+   */
+  defaultSlideDirection?: SlideDirection
+}
+
+function App({ defaultSlideDirection = 'left' }: AppProps) {
   const [topiaryTheme, setTopiaryTheme] = useState<TopiaryTheme>('hangar')
-  const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('left')
+  const [slideDirection, setSlideDirection] = useState<SlideDirection>(
+    defaultSlideDirection
+  )
   const [overrideTheme, setOverrideTheme] = useState<OverrideTheme | ''>('')
 
   // states for toggling head styling, preserved from the pre-v3 demo: it
@@ -387,74 +400,83 @@ function App() {
         className={menuClassName}
       />
       <main className="demo-content">
-        <h1>React Mega Menu Demo</h1>
-        <p className="demo-status">
-          data-theme=&quot;{topiaryTheme}&quot;, slideDirection=&quot;
-          {slideDirection}&quot;
-          {overrideTheme && (
-            <>, className=&quot;rmm__theme--{overrideTheme}&quot;</>
-          )}
-        </p>
-        <hr />
-        <p>
-          A React library project which aims to be an accessible, responsive,
-          boilerplate top navigation menu with a &quot;Mega Menu&quot;!
-        </p>
-        <h2>Features</h2>
-        <ul>
-          <li>WCAG 2.1 AA compliant</li>
-          <li>W3C valid markup</li>
-          <li>Fly-out menus</li>
-          <li>Supports keyboard navigation and screen readers</li>
-          <li>
-            Responsively designed to adapt to modern mobile and desktop screen
-            sizes
-          </li>
-          <li>
-            Styled entirely through CSS custom properties: the menu ships a
-            documented <code>--rmm-*</code> token contract (
-            <a href="https://github.com/jasonrundell/react-mega-menu">
-              see rmmTokens.js
-            </a>
-            ), and every token resolves from{' '}
-            <a href="https://github.com/jasonrundell/topiary">
-              Topiary&apos;s <code>--topiary-*</code> tokens
-            </a>{' '}
-            with a hardcoded fallback — no Emotion, no runtime CSS-in-JS.
-          </li>
-          <li>
-            Off-canvas nav on mobile widths supports a configurable{' '}
-            <code>slideDirection</code> (&apos;left&apos; or &apos;right&apos;,
-            see below).
-          </li>
-          <li>Supports and tested against Edge, Safari, FireFox, and Chrome</li>
-          <li>
-            Includes CSS animations that respect the{' '}
-            <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion">
-              prefers-reduced-motion
-            </a>{' '}
-            media query for users who prefer reduced motion
-          </li>
-          <li>
-            Includes a demo project using Next.js, showcasing how to integrate
-            the menu with a Next.js application
-          </li>
-        </ul>
-        <hr />
-        <h3>Semantically designed structure</h3>
-        <p>
-          The menu is designed to be as semantically correct as possible. The
-          top-level menu items are <code>nav</code> elements, and the submenus
-          are <code>ul</code> elements. The menu items are <code>li</code>{' '}
-          elements, and the links are <code>a</code> elements. The menu is
-          accessible through keyboard navigation and screen readers.
-        </p>
-        <button onClick={toggleHead}>
-          {headEnabled ? 'Disable styling to view' : 'Re-enable styling'}
-        </button>
+        <header className="demo-hero">
+          <h1>React Mega Menu</h1>
+          <p className="demo-lead">
+            An accessible, responsive top navigation with a &quot;Mega
+            Menu&quot;, styled entirely through CSS custom properties. Open the
+            Store, Blog, Help or Settings items above to see it work.
+          </p>
+          <p className="demo-status">
+            data-theme=&quot;{topiaryTheme}&quot;, slideDirection=&quot;
+            {slideDirection}&quot;
+            {overrideTheme && (
+              <>, className=&quot;rmm__theme--{overrideTheme}&quot;</>
+            )}
+          </p>
+        </header>
 
-        <div className="demo-section">
-          <h3>Topiary theme</h3>
+        <section className="demo-section">
+          <h2>Features</h2>
+          <ul className="demo-features">
+            <li>WCAG 2.1 AA compliant</li>
+            <li>W3C valid markup</li>
+            <li>Fly-out menus</li>
+            <li>Supports keyboard navigation and screen readers</li>
+            <li>
+              Responsively designed to adapt to modern mobile and desktop screen
+              sizes
+            </li>
+            <li>
+              Styled entirely through CSS custom properties: a documented{' '}
+              <code>--rmm-*</code> token contract (
+              <a href="https://github.com/jasonrundell/react-mega-menu">
+                see rmmTokens.js
+              </a>
+              ) that resolves from{' '}
+              <a href="https://github.com/jasonrundell/topiary">
+                Topiary&apos;s <code>--topiary-*</code> tokens
+              </a>{' '}
+              with a hardcoded fallback — no Emotion, no runtime CSS-in-JS.
+            </li>
+            <li>
+              Off-canvas nav on mobile widths with a configurable{' '}
+              <code>slideDirection</code> (&apos;left&apos; or
+              &apos;right&apos;, see below).
+            </li>
+            <li>
+              Supports and tested against Edge, Safari, FireFox, and Chrome
+            </li>
+            <li>
+              CSS animations that respect the{' '}
+              <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion">
+                prefers-reduced-motion
+              </a>{' '}
+              media query
+            </li>
+            <li>
+              Includes a demo project using Next.js, showcasing how to integrate
+              the menu with a Next.js application
+            </li>
+          </ul>
+        </section>
+
+        <section className="demo-section">
+          <h2>Semantically designed structure</h2>
+          <p>
+            The menu is designed to be as semantically correct as possible. The
+            top-level menu items are <code>nav</code> elements, and the submenus
+            are <code>ul</code> elements. The menu items are <code>li</code>{' '}
+            elements, and the links are <code>a</code> elements. The menu is
+            accessible through keyboard navigation and screen readers.
+          </p>
+          <button className="demo-button" onClick={toggleHead}>
+            {headEnabled ? 'Disable styling to view' : 'Re-enable styling'}
+          </button>
+        </section>
+
+        <section className="demo-section">
+          <h2>Topiary theme</h2>
           <p>
             Four Topiary themes — <code>hangar</code>, <code>broadsheet</code>,{' '}
             <code>arcade</code>, <code>cascade</code> — are toggled by setting{' '}
@@ -476,15 +498,32 @@ function App() {
               </li>
             ))}
           </ul>
-        </div>
+        </section>
 
-        <div className="demo-section">
-          <h3>Slide direction (issue #64)</h3>
+        <section className="demo-section">
+          <h2>Slide direction</h2>
           <p>
             The <code>slideDirection</code> prop controls which side the
             off-canvas nav slides in from at mobile widths (below the{' '}
             <code>large</code> breakpoint). Resize the window below ~64rem and
             open the hamburger menu to see it.
+          </p>
+          <p>
+            This page starts on{' '}
+            <code>slideDirection=&quot;{defaultSlideDirection}&quot;</code>.{' '}
+            {defaultSlideDirection === 'left' ? (
+              <>
+                For a page that mounts the menu with{' '}
+                <code>slideDirection=&quot;right&quot;</code> from the first
+                render, open <a href="/slide-right/">/slide-right/</a>.
+              </>
+            ) : (
+              <>
+                The default page, which mounts the menu with{' '}
+                <code>slideDirection=&quot;left&quot;</code>, is at{' '}
+                <a href="/">/</a>.
+              </>
+            )}
           </p>
           <ul className="demo-button-group">
             <li>
@@ -507,61 +546,64 @@ function App() {
               <button onClick={toggleSlideDirection}>Toggle</button>
             </li>
           </ul>
-        </div>
+        </section>
 
-        <hr />
-        <h3>Custom token overrides — layered on top of the Topiary theme</h3>
-        <p>
-          Beyond a Topiary theme, the menu can be restyled further by overriding
-          its own <code>--rmm-*</code> tokens on a class layered onto{' '}
-          <code>
-            &lt;Menu className=&quot;rmm__theme--your-theme&quot; /&gt;
-          </code>
-          . The five examples below are the pre-v3 demo themes, rewritten to go
-          through that documented token contract instead of reaching into the
-          menu&apos;s internal selectors (see <code>demo/src/themes/*.css</code>{' '}
-          for the full conversion note — each theme file explains what it kept
-          and what it dropped).
-        </p>
-        <ul className="demo-button-group">
-          {OVERRIDE_THEMES.map((theme) => (
-            <li key={theme}>
+        <section className="demo-section">
+          <h2>Custom token overrides</h2>
+          <p>
+            Beyond a Topiary theme, the menu can be restyled further by
+            overriding its own <code>--rmm-*</code> tokens on a class layered
+            onto{' '}
+            <code>
+              &lt;Menu className=&quot;rmm__theme--your-theme&quot; /&gt;
+            </code>
+            . The five examples below are the pre-v3 demo themes, rewritten to
+            go through that documented token contract instead of reaching into
+            the menu&apos;s internal selectors (see{' '}
+            <code>demo/src/themes/*.css</code> for the full conversion note —
+            each theme file explains what it kept and what it dropped).
+          </p>
+          <ul className="demo-button-group">
+            {OVERRIDE_THEMES.map((theme) => (
+              <li key={theme}>
+                <button
+                  onClick={() => setOverrideTheme(theme)}
+                  aria-pressed={overrideTheme === theme}
+                >
+                  {capitalize(theme)}
+                </button>
+              </li>
+            ))}
+            <li>
               <button
-                onClick={() => setOverrideTheme(theme)}
-                aria-pressed={overrideTheme === theme}
+                onClick={() => setOverrideTheme('')}
+                aria-pressed={overrideTheme === ''}
               >
-                {capitalize(theme)}
+                None
               </button>
             </li>
-          ))}
-          <li>
-            <button
-              onClick={() => setOverrideTheme('')}
-              aria-pressed={overrideTheme === ''}
-            >
-              None
-            </button>
-          </li>
-        </ul>
-        <p>
-          <em>
+          </ul>
+          <p className="demo-note">
             Note how the token overrides only affect the mega menu, not the rest
             of the page — unlike the Topiary theme switcher above, which
             re-skins both from the same tokens.
-          </em>
-        </p>
-        <h3 id="contact">Showcase your theme</h3>
-        <p>
-          Submit a{' '}
-          <a
-            href="https://github.com/jasonrundell/react-mega-menu/compare"
-            target="_blank"
-            rel="noreferrer"
-          >
-            pull request
-          </a>{' '}
-          to add your theme to the demo!
-        </p>
+          </p>
+        </section>
+
+        <section className="demo-section">
+          <h2 id="contact">Showcase your theme</h2>
+          <p>
+            Submit a{' '}
+            <a
+              href="https://github.com/jasonrundell/react-mega-menu/compare"
+              target="_blank"
+              rel="noreferrer"
+            >
+              pull request
+            </a>{' '}
+            to add your theme to the demo!
+          </p>
+        </section>
       </main>
     </div>
   )

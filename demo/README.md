@@ -1,37 +1,39 @@
 # React Mega Menu demo (v3 / Topiary)
 
-A Vite + React 19 + TypeScript app that shows `@jasonrundell/react-mega-menu`
-v3 running on [Topiary](https://github.com/jasonrundell/topiary) tokens, with
-no Emotion or other CSS-in-JS anywhere. It's the "tokens drive form" evidence
-for the v3 migration: the same menu (and page) markup re-skins across four
-Topiary themes just by swapping which token set is active.
+A Vite + React 19 + TypeScript app that shows `@jasonrundell/react-mega-menu` v3
+running on [Topiary](https://github.com/jasonrundell/topiary) tokens, with no
+Emotion or other CSS-in-JS anywhere. It's the "tokens drive form" evidence for
+the v3 migration: the same menu (and page) markup re-skins across four Topiary
+themes just by swapping which token set is active.
 
 ## What this demo shows
 
 - **Both stylesheets, imported once at the app root** (`src/main.tsx`):
-  `@jasonrundell/topiary/style.css`, then `@jasonrundell/react-mega-menu/style.css`.
-  The menu's stylesheet reads Topiary's `--topiary-*` tokens through its own
-  documented `--rmm-*` custom property contract (see `rmmTokens.js` and
-  `styles/style.css` in the package root) — every `--rmm-*` token falls back
-  to a hardcoded value, so the menu still renders correctly even if Topiary's
-  stylesheet were absent.
+  `@jasonrundell/topiary/style.css`, then
+  `@jasonrundell/react-mega-menu/style.css`. The menu's stylesheet reads
+  Topiary's `--topiary-*` tokens through its own documented `--rmm-*` custom
+  property contract (see `rmmTokens.js` and `styles/style.css` in the package
+  root) — every `--rmm-*` token falls back to a hardcoded value, so the menu
+  still renders correctly even if Topiary's stylesheet were absent.
 - **A four-theme Topiary switcher** (`hangar` / `broadsheet` / `arcade` /
-  `cascade`), toggling `data-theme` on a wrapper that contains *both* the
-  `<Menu />` and this page's own content. Because CSS custom properties
-  inherit, one attribute re-skins everything below it from identical markup.
-  Sharable via a `?theme=` query parameter, e.g. `?theme=arcade`.
-- **A `slideDirection` toggle** (`left` / `right`) demonstrating the
-  off-canvas mobile nav's configurable slide-in side (issue #64). Resize the
-  window below the `large` breakpoint (~64rem) and open the hamburger menu to
-  see it.
-- **Five legacy token-override examples** (`light`, `dark`, `monokai`,
-  `retro`, `synthwave` — the pre-v3 demo's themes), rewritten to go through
-  the same `--rmm-*` contract instead of the old selector-level overrides
-  they used against Emotion's generated classes. See `src/themes/*.css` for
-  what each one kept and what it dropped (mostly per-theme icon assets and
-  chrome geometry that has no `--rmm-*` token to route through anymore —
-  that's Topiary's job now). These layer on top of the current Topiary
-  theme, via a `className="rmm__theme--<name>"` passed to `<Menu />`.
+  `cascade`), toggling `data-theme` on a wrapper that contains _both_ the
+  `<Menu />` and this page's own content. Because CSS custom properties inherit,
+  one attribute re-skins everything below it from identical markup. Sharable via
+  a `?theme=` query parameter, e.g. `?theme=arcade`.
+- **A `slideDirection` toggle** (`left` / `right`) demonstrating the off-canvas
+  mobile nav's configurable slide-in side (issue #64). Resize the window below
+  the `large` breakpoint (~64rem) and open the hamburger menu to see it.
+  `/slide-right/` is a second page of the same app (`slide-right/index.html` →
+  `src/slide-right.tsx`) that mounts the menu with `slideDirection="right"` from
+  the first render, so each side has a sharable URL.
+- **Five legacy token-override examples** (`light`, `dark`, `monokai`, `retro`,
+  `synthwave` — the pre-v3 demo's themes), rewritten to go through the same
+  `--rmm-*` contract instead of the old selector-level overrides they used
+  against Emotion's generated classes. See `src/themes/*.css` for what each one
+  kept and what it dropped (mostly per-theme icon assets and chrome geometry
+  that has no `--rmm-*` token to route through anymore — that's Topiary's job
+  now). These layer on top of the current Topiary theme, via a
+  `className="rmm__theme--<name>"` passed to `<Menu />`.
 
 ## Running it
 
@@ -53,8 +55,8 @@ npm run dev
 ```
 
 If you've just run `pack:demo` again after a package change, force a clean
-reinstall so the refreshed tarball is actually picked up (npm otherwise
-trusts the existing `node_modules` copy):
+reinstall so the refreshed tarball is actually picked up (npm otherwise trusts
+the existing `node_modules` copy):
 
 ```bash
 rm -rf node_modules package-lock.json
@@ -66,12 +68,12 @@ Other scripts: `npm run build` (typecheck + production build via Vite),
 
 ## Project structure
 
-- `src/main.tsx` — stylesheet imports, in the required order (Topiary, then
-  the menu).
+- `src/main.tsx` — stylesheet imports, in the required order (Topiary, then the
+  menu).
 - `src/App.tsx` — the menu config, the Topiary theme switcher, the
   `slideDirection` toggle, and the token-override theme buttons.
-- `src/App.css` / `src/index.css` — the page's own chrome, styled directly
-  from `--topiary-*` tokens so it re-skins alongside the menu.
+- `src/App.css` / `src/index.css` — the page's own chrome, styled directly from
+  `--topiary-*` tokens so it re-skins alongside the menu.
 - `src/themes/*.css` — the five legacy `--rmm-*` token-override examples.
 - Types come from the package itself (`dist/index.d.ts`, shipped in the
   tarball), so there is no local declaration shim; `npm run build` typechecks

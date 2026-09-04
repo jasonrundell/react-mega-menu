@@ -14,4 +14,7 @@
   --rmm-text-muted: #7a6a58;
   --rmm-font-family: 'Fredoka', sans-serif;
   --rmm-focus-ring: 2px solid #d94f04;
+  --rmm-panel-bg: #f4e3c1;
+  --rmm-panel-border: 2px solid #4a3f35;
+  --rmm-panel-shadow: 6px 6px 0 #4a3f35;
 }

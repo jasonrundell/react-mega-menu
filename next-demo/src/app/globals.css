@@ -21,7 +21,9 @@ body {
 .site-content {
   max-width: 42rem;
   margin: 0 auto;
-  padding: 2rem 1.5rem 4rem;
+  /* Clears the menu's fixed top bar (--rmm-topbar-height, one
+     --topiary-space-3xl tall at every width). */
+  padding: calc(var(--topiary-space-3xl, 4rem) + 2rem) 1.5rem 4rem;
 }
 
 .demo-status {
