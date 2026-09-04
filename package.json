@@ -1,6 +1,6 @@
 {
   "name": "@jasonrundell/react-mega-menu",
-  "version": "3.0.0-beta.2",
+  "version": "3.0.0",
   "author": "jasonrundell <jason.rundell@gmail.com>",
   "main": "dist/index.es.js",
   "module": "dist/index.es.js",
