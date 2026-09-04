@@ -120,6 +120,41 @@ describe('panel chrome', () => {
 
 const collapse = (s) => s.replace(/\s+/g, ' ').trim()
 
+describe('slideDirection applies to every panel', () => {
+  // The mega and sub panels slide over the nav; under a right-sliding nav
+  // they must enter from the right too, or the levels fight each other.
+  const resolvedPath = path.resolve(__dirname, '..', styleExport)
+  const css = fs.readFileSync(resolvedPath, 'utf8')
+
+  it.each([
+    ['.rmm__nav--slide-right .rmm__mega-list--open', 'rmm-slide-open-right'],
+    [
+      '.rmm__nav--slide-right .rmm__mega-list--closed',
+      'rmm-slide-closed-right'
+    ],
+    [
+      '.rmm__nav--slide-right .rmm__nav-list--sub.rmm__nav-list--open',
+      'rmm-slide-open-right'
+    ],
+    [
+      '.rmm__nav--slide-right .rmm__nav-list--sub.rmm__nav-list--closed',
+      'rmm-slide-closed-right'
+    ]
+  ])('%s animates with %s', (selector, keyframes) => {
+    expect(collapse(firstRuleBody(css, selector))).toContain(
+      `animation-name: ${keyframes}`
+    )
+  })
+
+  it('rests right-sliding panels off the right edge', () => {
+    const body = collapse(
+      firstRuleBody(css, '.rmm__nav--slide-right .rmm__mega-list')
+    )
+    expect(body).toContain('left: auto')
+    expect(body).toContain('right: -100%')
+  })
+})
+
 /**
  * Extracts the body of a single `@keyframes <name> { ... }` block from raw
  * CSS text, using brace-depth counting rather than a non-greedy regex, since

@@ -518,10 +518,10 @@
   }
 }
 
-/* Mirror-image keyframes for Nav's rmm__nav--slide-right modifier
-   (issue #64 — configurable slide direction). Only Nav supports a
-   direction choice; the mega/sub panels above always use the left-slide
-   keyframes, matching their pre-migration behavior. */
+/* Mirror-image keyframes for the rmm__nav--slide-right modifier (issue
+   #64 — configurable slide direction). The mega / sub panels inside a
+   right-sliding nav reuse them too (see "slideDirection for every panel"
+   below), so every level enters from the same side. */
 @keyframes rmm-slide-open-right {
   from {
     transform: translate3d(100%, 0, 0);
@@ -537,6 +537,62 @@
   }
   to {
     transform: translate3d(100%, 0, 0);
+  }
+}
+
+/* slideDirection for every panel — the mega and sub panels slide over the
+   nav, so under rmm__nav--slide-right they rest off the right edge and use
+   the mirror-image keyframes. Each selector carries one more class than the
+   left-slide rule it overrides so it wins on specificity; the reduced-motion
+   and large-breakpoint blocks below repeat that so they keep winning there. */
+.rmm__nav--slide-right .rmm__mega-list,
+.rmm__nav--slide-right .rmm__nav-list--sub {
+  left: auto;
+  right: -100%;
+}
+
+.rmm__nav--slide-right .rmm__mega-list--open,
+.rmm__nav--slide-right .rmm__nav-list--sub.rmm__nav-list--open {
+  animation-name: rmm-slide-open-right;
+}
+
+.rmm__nav--slide-right .rmm__mega-list--closed,
+.rmm__nav--slide-right .rmm__nav-list--sub.rmm__nav-list--closed {
+  animation-name: rmm-slide-closed-right;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rmm__nav--slide-right .rmm__mega-list--open,
+  .rmm__nav--slide-right .rmm__mega-list--closed,
+  .rmm__nav--slide-right .rmm__nav-list--sub.rmm__nav-list--open,
+  .rmm__nav--slide-right .rmm__nav-list--sub.rmm__nav-list--closed {
+    animation: none;
+  }
+
+  .rmm__nav--slide-right .rmm__mega-list--open,
+  .rmm__nav--slide-right .rmm__nav-list--sub.rmm__nav-list--open {
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  .rmm__nav--slide-right .rmm__mega-list--closed,
+  .rmm__nav--slide-right .rmm__nav-list--sub.rmm__nav-list--closed {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@media (min-width: __RMM_BP_LARGE__) {
+  .rmm__nav--slide-right .rmm__mega-list,
+  .rmm__nav--slide-right .rmm__nav-list--sub {
+    left: 0;
+    right: auto;
+  }
+
+  .rmm__nav--slide-right .rmm__mega-list--open,
+  .rmm__nav--slide-right .rmm__mega-list--closed,
+  .rmm__nav--slide-right .rmm__nav-list--sub.rmm__nav-list--open,
+  .rmm__nav--slide-right .rmm__nav-list--sub.rmm__nav-list--closed {
+    animation: none;
+    transform: none;
   }
 }
 

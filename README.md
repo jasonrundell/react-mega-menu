@@ -129,12 +129,12 @@ export const Header = () => <Menu config={config} slideDirection="right" />
 
 ### Props
 
-| Prop             | Type                | Default                  | Description                                                                                  |
-| ---------------- | ------------------- | ------------------------ | -------------------------------------------------------------------------------------------- |
-| `config`         | `MenuConfigShape`   | a built-in sample config | The top bar and item tree (above).                                                           |
-| `slideDirection` | `'left' \| 'right'` | `'left'`                 | Which side the off-canvas mobile nav slides in from. Both directions honor reduced motion.   |
-| `id`             | `string`            | `'rmm__menu'`            | Id of the menu shell; inner regions derive theirs from it (see [Element ids](#element-ids)). |
-| `className`      | `string`            |                          | Appended to the shell's `rmm__menu` class. Use it to scope token overrides.                  |
+| Prop             | Type                | Default                  | Description                                                                                                         |
+| ---------------- | ------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| `config`         | `MenuConfigShape`   | a built-in sample config | The top bar and item tree (above).                                                                                  |
+| `slideDirection` | `'left' \| 'right'` | `'left'`                 | Which side the off-canvas mobile nav and its mega / sub panels slide in from. Both directions honor reduced motion. |
+| `id`             | `string`            | `'rmm__menu'`            | Id of the menu shell; inner regions derive theirs from it (see [Element ids](#element-ids)).                        |
+| `className`      | `string`            |                          | Appended to the shell's `rmm__menu` class. Use it to scope token overrides.                                         |
 
 Any other `div` attribute (`data-*`, `aria-*`, event handlers) is passed through
 to the shell.
