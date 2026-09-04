@@ -18,5 +18,13 @@
   "devDependencies": {
     "eslint": "^9",
     "eslint-config-next": "15.5.25"
+  },
+  "overrides": {
+    "next": {
+      "postcss": "8.5.23"
+    },
+    "postcss": {
+      "postcss": "8.5.23"
+    }
   }
 }
