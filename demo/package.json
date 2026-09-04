@@ -11,7 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@jasonrundell/react-mega-menu": "file:../jasonrundell-react-mega-menu-3.0.0-beta.1.tgz",
+    "@jasonrundell/react-mega-menu": "file:../jasonrundell-react-mega-menu-3.0.0-beta.2.tgz",
     "@jasonrundell/topiary": "^4.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
