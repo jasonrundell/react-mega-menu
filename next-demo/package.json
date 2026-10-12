@@ -11,7 +11,7 @@
   "dependencies": {
     "@jasonrundell/react-mega-menu": "file:../jasonrundell-react-mega-menu-3.0.0.tgz",
     "@jasonrundell/topiary": "^4.1.0",
-    "next": "15.5.25",
+    "next": "15.5.27",
     "react": "^19",
     "react-dom": "^19"
   },
